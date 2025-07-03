@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/models/all_plants_model.dart';
+import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
 import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
@@ -49,8 +50,16 @@ class PlantCategory extends StatelessWidget {
         actions: [
           SearchButton(),
           WishlistIconWithBadge(),
-          CartIconWithBadge(),
-          SizedBox(width: 10.w),
+          CartIconWithBadge(
+            iconColor: colorScheme.onSurface,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
+          ),
+          SizedBox(width: 8.w),
         ],
       ),
       body: SafeArea(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/screens/entry%20screen/entry_screen.dart';
 import 'package:organicplants/services/all_plants_global_data.dart';
 import 'package:organicplants/services/app_sizes.dart';
@@ -46,7 +47,15 @@ class _StoreTabState extends State<StoreTab> {
         centerTitle: true,
         actions: [
           WishlistIconWithBadge(),
-          CartIconWithBadge(),
+          CartIconWithBadge(
+            iconColor: colorScheme.onSurface,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
+          ),
           SizedBox(width: 10.w),
         ],
       ),

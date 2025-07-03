@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.darkTheme,
+          theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeProvider.themeMode,
 
