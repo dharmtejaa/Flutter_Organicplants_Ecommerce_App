@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/services/app_sizes.dart';
+import 'package:organicplants/theme/app_theme.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -78,6 +79,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final notifier = isObscureNotifier ?? ValueNotifier<bool>(obsecureText);
 
     return SizedBox(
@@ -89,12 +91,23 @@ class CustomTextField extends StatelessWidget {
             controller: controller,
             obscureText: isObscure,
             keyboardType: keyboardType,
+            style: TextStyle(
+              fontSize: AppSizes.fontSm,
+              color: colorScheme.onSurface,
+            ),
             validator: _validateInput,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: InputDecoration(
               hintText: hintText,
-              contentPadding: const EdgeInsets.all(20),
-              prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+              hintStyle: TextStyle(
+                fontSize: AppSizes.fontSm,
+                color: colorScheme.onSecondary,
+              ),
+              contentPadding: EdgeInsets.all(AppSizes.paddingMd),
+              prefixIcon:
+                  prefixIcon != null
+                      ? Icon(prefixIcon, size: AppSizes.iconSm)
+                      : null,
               suffixIcon:
                   obsecureText
                       ? GestureDetector(
@@ -105,25 +118,56 @@ class CustomTextField extends StatelessWidget {
                       )
                       : null,
               filled: true,
-              fillColor: Colors.white,
+              fillColor:
+                  colorScheme.brightness == Brightness.dark
+                      ? AppTheme.darkBackground
+                      : const Color(0xFFF0F0F0),
+              suffixIconColor: colorScheme.onSurface,
+              prefixIconColor: colorScheme.onSurface,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                borderSide: BorderSide(color: Colors.green.shade400),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppSizes.radiusLg),
+                ),
+                borderSide: BorderSide(
+                  color:
+                      colorScheme.brightness == Brightness.dark
+                          ? colorScheme.surface
+                          : AppTheme.lightCard,
+                ),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                borderSide: BorderSide(color: Colors.green.shade400),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppSizes.radiusLg),
+                ),
+                borderSide: BorderSide(
+                  color:
+                      colorScheme.brightness == Brightness.dark
+                          ? colorScheme.surface
+                          : const Color(0xFFF0F0F0),
+                ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                borderSide: BorderSide(color: Colors.green.shade400),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppSizes.radiusLg),
+                ),
+                borderSide: BorderSide(
+                  color:
+                      colorScheme.brightness == Brightness.dark
+                          ? colorScheme.surface
+                          : const Color(0xFFF0F0F0),
+                ),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppSizes.radiusLg),
+                ),
+                borderSide: BorderSide(
+                  color:
+                      colorScheme.brightness == Brightness.dark
+                          ? colorScheme.surface
+                          : const Color(0xFFF0F0F0),
+                ),
               ),
-              suffixIconColor: Colors.green.shade400,
-              prefixIconColor: Colors.green.shade400,
             ),
           );
         },
