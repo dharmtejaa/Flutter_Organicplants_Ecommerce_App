@@ -1,0 +1,1017 @@
+[
+{
+    "id": "bonsai_ficus_001",
+    "common_name": "Ficus",
+    "scientific_name": "Ficus retusa",
+    "category": "Bonsai Plant",
+  "tags": ["indoor", "pet_friendly", "beginner_friendly", "low_maintenance", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/fk5nbSlAeQGLh3g3eIoAz8Gu_p_1Q4WQumWeDDT5CKI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hYmFu/YWhvbWVzLmNvbS9j/ZG4vc2hvcC9maWxl/cy9ncmFmdGVkLWZp/Y3VzLWJvbnNhaS1w/bGFudC1pbi1rYW1y/YWstcG90LXdpdGgt/ZmlndXJpbmUtZm9y/LWhvbWUtZGVjb3It/Mi5qcGc_dj0xNzM1/ODMxNzA0JndpZHRo/PTUzMw",
+        "alt_text": "Ficus Bonsai tree with dense green foliage",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/Q5_jfpFVN7GefkTxsVfbjsVnKnYiAmMS6EF0hGdZxBM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aWtlYS5jb20vdXMv/ZW4vaW1hZ2VzL3By/b2R1Y3RzL2ZpY3Vz/LXBsYW50LXdpdGgt/cG90LWJvbnNhaS1h/c3NvcnRlZC1jb2xv/cnNfXzA4MDQxMzdf/cGU3NjkwNzhfczUu/anBnP2Y9cw",
+        "alt_text": "Another view of Ficus Bonsai tree with dense green foliage",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 1199,
+      "offer_price": 959
+    },
+    "rating": 4.5,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-2 feet",
+      "width": "1-1.5 feet",
+      "sunlight": [
+        "Indirect Light"
+      ],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "The Ficus Bonsai is one of the most popular indoor bonsai plants, known for its easy care and attractive appearance.",
+      "water": "Water thoroughly when the top inch of soil is dry.",
+      "pet_friendly": "Yes, Ficus is non-toxic to pets.",
+      "beginner_friendly": "Yes, Ficus Bonsai is beginner-friendly and easy to maintain."
+    },
+    "how_to_plant": "Plant in a well-draining bonsai soil mix and ensure it gets bright, indirect light.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Once a week",
+        "description": "Water when the top inch of soil feels dry. Avoid over-watering."
+      },
+      "light": {
+        "description": "Needs bright, indirect light for best growth.",
+        "type": "Indirect Light"
+      },
+      "fertilizer": {
+        "description": "Feed once a month with a balanced liquid fertilizer.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-24°C",
+        "description": "Prefers warm temperatures and should not be exposed to drafts."
+      },
+      "humidity": {
+        "level": "Moderate",
+        "description": "Moderate humidity is ideal, but it can tolerate drier conditions."
+      }
+    },
+    "toxicity": "Non-toxic to pets.",
+    "season": "All year",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Bonsai soil mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "8-inch diameter",
+    "benefits": [
+      "Easy to care for",
+      "Great for beginners",
+      "Beautiful indoor decor"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water my Ficus Bonsai?",
+        "answer": "Water when the top inch of soil is dry to the touch."
+      },
+      {
+        "question": "Can Ficus Bonsai grow in low light?",
+        "answer": "Ficus prefers bright, indirect light, but it can tolerate lower light conditions."
+      },
+      {
+        "question": "Are Ficus Bonsai pet-friendly?",
+        "answer": "Yes, Ficus Bonsai is safe for pets."
+      },
+      {
+        "question": "Is Ficus Bonsai easy to care for?",
+        "answer": "Yes, Ficus Bonsai is considered one of the easiest bonsai plants to care for."
+      }
+    ]
+  },
+  {
+    "id": "bonsai_juniper_001",
+    "common_name": "Juniper",
+    "scientific_name": "Juniperus chinensis",
+    "category": "Bonsai Plant",
+  "tags": ["outdoor", "low_maintenance", "sun_loving", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/4k4WE9Js6yG6bzIW4BUEmpvF8lDsmi2Yr742lBuOA8g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/MS5iaWdjb21tZXJj/ZS5jb20vcy1iaXFz/enhiZHYwL2ltYWdl/cy9zdGVuY2lsLzU5/MHg1OTAvcHJvZHVj/dHMvMzcxLzEwMzM5/LzQzMjAwYmIyLWM0/YWUtNDBlYS1iNDUy/LTc5ZTY0YzBkN2Uy/YV9fMzYxNjguMTcz/NDM2Njk5NS5qcGc_/Yz0x",
+        "alt_text": "Juniper Bonsai tree with needle-like leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/E9Zl3_AlXq5RqXFZ7wUUYcu7xXDvROevRonVUxO5Yh4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/MS5iaWdjb21tZXJj/ZS5jb20vcy1iaXFz/enhiZHYwL2ltYWdl/cy9zdGVuY2lsLzU5/MHg1OTAvcHJvZHVj/dHMvNDg1NC84MTEw/LzgwNTU5MC0wMy0y/X182Mjk3Ni4xNzM1/MjM1MzcwLmpwZz9j/PTE",
+        "alt_text": "Another view of Juniper Bonsai tree with needle-like leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 1299,
+      "offer_price": 1039
+    },
+    "rating": 4.3,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "2-3 feet",
+      "width": "2-3 feet",
+      "sunlight": [
+        "Full Sun"
+      ],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Juniper Bonsai trees are famous for their twisting branches and need outdoor care to thrive.",
+      "water": "Water thoroughly when the soil feels dry to the touch.",
+      "pet_friendly": "Yes, Juniper is non-toxic to pets.",
+      "beginner_friendly": "Yes, Juniper is suitable for beginner bonsai growers."
+    },
+    "how_to_plant": "Plant in well-draining soil, and ensure the tree receives at least 4-6 hours of sunlight daily.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Once a week",
+        "description": "Water thoroughly when the soil feels dry. Avoid letting the soil stay soggy."
+      },
+      "light": {
+        "description": "Juniper Bonsai needs at least 4-6 hours of direct sunlight each day.",
+        "type": "Full Sun"
+      },
+      "fertilizer": {
+        "description": "Feed with bonsai fertilizer once a month during the growing season.",
+        "type": "Bonsai Fertilizer"
+      },
+      "temperature": {
+        "range": "15-25°C",
+        "description": "Juniper Bonsai prefers temperate climates and should be kept outdoors year-round."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Juniper Bonsai prefers low humidity and outdoor air circulation."
+      }
+    },
+    "toxicity": "Non-toxic to pets.",
+    "season": "Spring to Fall",
+    "flowering": false,
+    "placement": "Outdoor",
+    "soil_type": "Bonsai soil mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "12-inch diameter",
+    "benefits": [
+      "Beautiful outdoor plant",
+      "Great for beginner bonsai enthusiasts",
+      "Non-toxic to pets"
+    ],
+    "faqs": [
+      {
+        "question": "How much sunlight does a Juniper Bonsai need?",
+        "answer": "Juniper Bonsai needs at least 4-6 hours of direct sunlight each day."
+      },
+      {
+        "question": "Can I grow Juniper Bonsai indoors?",
+        "answer": "Juniper Bonsai prefers outdoor environments with plenty of sunlight."
+      },
+      {
+        "question": "Is Juniper Bonsai pet-friendly?",
+        "answer": "Yes, Juniper Bonsai is safe for pets."
+      },
+      {
+        "question": "How do I prune a Juniper Bonsai?",
+        "answer": "Prune the branches lightly in early spring to maintain the shape of the bonsai."
+      }
+    ]
+  },
+  {
+    "id": "bonsai_pine_001",
+    "common_name": "Pine",
+    "scientific_name": "Pinus thunbergii",
+    "category": "Bonsai Plant",
+  "tags": ["outdoor", "low_maintenance", "sun_loving", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/5S87OhmS3iTS1bdS4ODVeCoeBvyBc5x4HWhL1K8jnEQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/MS5iaWdjb21tZXJj/ZS5jb20vcy1iaXFz/enhiZHYwL2ltYWdl/cy9zdGVuY2lsLzYw/OHg2MDgvcHJvZHVj/dHMvNTA2OC84NTIy/LzgwNzgyMC0wMy0y/X18zODQ2My4xNzEx/NDAzNTMwLmpwZz9j/PTE",
+        "alt_text": "Pine Bonsai tree with long, slender needles",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/ZyrB2r5XF0Fx1c0WU-uiRE9DiVMtzTKS-ZR7kVu6x2I/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ib25z/YWlzdXBwbHkuY2Ev/Y2RuL3Nob3AvcHJv/ZHVjdHMvNTYyODEx/NzU3MF83MDc1NmMz/ZjBmX3pfNjAweEAy/eC5qcGc_dj0xNDk5/NDMzODk1",
+        "alt_text": "Another view of Pine Bonsai tree with long, slender needles",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 1999,
+      "offer_price": 1599
+    },
+    "rating": 4.6,
+      "in_stock": true,
+      "plant_quick_guide": {
+      "height": "2-5 feet",
+      "width": "2-4 feet",
+      "sunlight": [
+        "Full Sun"
+      ],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Pine Bonsai is a majestic tree with long needle-like leaves that thrive in outdoor environments.",
+      "water": "Water regularly when the soil feels dry, but avoid over-watering.",
+      "pet_friendly": "Yes, Pine Bonsai is non-toxic to pets.",
+      "beginner_friendly": "Yes, Pine Bonsai is a good choice for beginners who want an outdoor bonsai."
+    },
+    "how_to_plant": "Plant in well-draining soil in an outdoor location that receives full sun.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Once a week",
+        "description": "Water thoroughly when the soil feels dry to the touch."
+      },
+      "light": {
+        "description": "Pine Bonsai needs full sunlight for at least 6 hours a day.",
+        "type": "Full Sun"
+      },
+      "fertilizer": {
+        "description": "Feed with bonsai fertilizer once every 4 weeks during the growing season.",
+        "type": "Bonsai Fertilizer"
+      },
+      "temperature": {
+        "range": "15-30°C",
+        "description": "Pine Bonsai is hardy and can tolerate a range of temperatures, but it prefers cooler climates."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Pine Bonsai prefers low humidity and outdoor air circulation."
+      }
+    },
+    "toxicity": "Non-toxic to pets.",
+    "season": "Year-round",
+    "flowering": false,
+    "placement": "Outdoor",
+    "soil_type": "Bonsai soil mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "10-inch diameter",
+    "benefits": [
+      "Majestic outdoor tree",
+      "Non-toxic to pets",
+      "Great for beginner bonsai enthusiasts"
+    ],
+    "faqs": [
+      {
+        "question": "How do I take care of a Pine Bonsai?",
+        "answer": "Water when the soil feels dry and ensure it receives enough sunlight. Trim the needles and branches to maintain its shape."
+      },
+      {
+        "question": "Can I keep a Pine Bonsai indoors?",
+        "answer": "Pine Bonsai should be kept outdoors to thrive and get sufficient sunlight."
+      },
+      {
+        "question": "Is Pine Bonsai safe for pets?",
+        "answer": "Yes, Pine Bonsai is non-toxic to pets."
+      },
+      {
+        "question": "How often should I prune Pine Bonsai?",
+        "answer": "Prune in the late winter or early spring to maintain shape and remove any dead branches."
+      }
+    ]
+  },
+  {
+      "id": "bonsai_maple_001",
+      "common_name": "Maple",
+      "scientific_name": "Acer palmatum",
+      "category": "Bonsai Plant",
+  "tags": ["outdoor", "low_maintenance", "sun_loving", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": false,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+      "images": [
+        {
+          "url": "https://imgs.search.brave.com/R4RlQe6ip2z6C3HzQAd6uhQQlvmstVQwSeVbUZZz-ZI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/MS5iaWdjb21tZXJj/ZS5jb20vcy1iaXFz/enhiZHYwL2ltYWdl/cy9zdGVuY2lsLzU5/MHg1OTAvcHJvZHVj/dHMvNTI3MS84ODk0/LzgwOTk2MC0wMy0y/X18xMDM3NS4xNzQw/MDAxODgwLmpwZz9j/PTE",
+          "alt_text": "Maple Bonsai tree with delicate red leaves",
+          "type": "main"
+        },
+        {
+          "url": "https://imgs.search.brave.com/8iUzeAJGLMGdUremZYyQgZdH92sDN7IxkYXMDYzBatA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/MS5iaWdjb21tZXJj/ZS5jb20vcy1iaXFz/enhiZHYwL2ltYWdl/cy9zdGVuY2lsLzU5/MHg1OTAvcHJvZHVj/dHMvNjIwOS8xMDIx/Ni9lMzYyZmY4OC03/MzE3LTQyYjctOTMx/Yy01ODllYTJiMWNk/NmRfXzI5ODY0LjE3/MTM1NDQzMTkuanBn/P2M9MQ",
+          "alt_text": "Another view of Maple Bonsai tree with delicate red leaves",
+          "type": "side"
+        }
+      ],
+      "prices": {
+        "original_price": 2499,
+        "offer_price": 1999
+      },
+      "rating": 4.7,
+      "in_stock": true,
+      "plant_quick_guide": {
+        "height": "2-3 feet",
+        "width": "2-3 feet",
+        "sunlight": [
+          "Full Sun"
+        ],
+        "growth_rate": "Slow"
+      },
+      "description": {
+        "intro": "Maple Bonsai is known for its beautiful red foliage in fall and intricate leaf structure.",
+        "water": "Water when the top inch of soil feels dry, ensuring good drainage.",
+        "pet_friendly": "Yes, Maple Bonsai is non-toxic to pets.",
+        "beginner_friendly": "Moderate care required, best for those with some bonsai experience."
+      },
+      "how_to_plant": "Plant in well-draining soil with plenty of sunlight. Protect from frost in winter.",
+      "care_guide": {
+        "watering": {
+          "frequency": "Once a week",
+          "description": "Water thoroughly but avoid soggy soil. Ensure good drainage."
+        },
+        "light": {
+          "description": "Requires at least 4 hours of direct sunlight daily.",
+          "type": "Full Sun"
+        },
+        "fertilizer": {
+          "description": "Feed with bonsai fertilizer every 4 weeks during growing season.",
+          "type": "Bonsai Fertilizer"
+        },
+        "temperature": {
+          "range": "15-25°C",
+          "description": "Prefers cooler temperatures and protection from frost."
+        },
+        "humidity": {
+          "level": "Moderate",
+          "description": "Moderate humidity is ideal, avoid direct heat sources."
+        }
+      },
+      "toxicity": "Non-toxic to pets.",
+      "season": "Spring to Fall",
+      "flowering": false,
+      "placement": "Outdoor",
+      "soil_type": "Bonsai soil mix",
+      "lifecycle_stage": "Mature",
+      "recommended_pot_size": "10-inch diameter",
+      "benefits": [
+        "Beautiful foliage in all seasons",
+        "Non-toxic to pets",
+        "Ideal for experienced bonsai growers"
+      ],
+      "faqs": [
+        {
+          "question": "How often should I prune a Maple Bonsai?",
+          "answer": "Prune in early spring before new growth starts, removing dead or crossing branches."
+        },
+        {
+          "question": "Can Maple Bonsai grow in winter?",
+          "answer": "Maple Bonsai needs protection from frost and should be kept in a cold but sheltered place during winter."
+        },
+        {
+          "question": "Is Maple Bonsai safe for pets?",
+          "answer": "Yes, Maple Bonsai is non-toxic to pets."
+        },
+        {
+          "question": "How do I maintain the shape of my Maple Bonsai?",
+          "answer": "Prune regularly to remove unwanted growth, focusing on the inner branches to encourage a fuller shape."
+        }
+      ]
+  },
+  {
+      "id": "bonsai_chinese_elm_001",
+      "common_name": "Chinese Elm",
+      "scientific_name": "Ulmus parvifolia",
+      "category": "Bonsai Plant",
+  "tags": ["indoor", "pet_friendly", "beginner_friendly", "low_maintenance", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": true,
+    "is_edible": false
+  },
+      "images": [
+        {
+          "url": "https://m.media-amazon.com/images/I/71RVr2cZ2vL._AC_SY879_.jpg",
+          "alt_text": "Chinese Elm Bonsai tree with small leaves",
+          "type": "main"
+        },
+        {
+          "url": "https://m.media-amazon.com/images/I/61KjwHi40lL._AC_SY450_.jpg",
+          "alt_text": "Another view of Chinese Elm Bonsai tree with small leaves",
+          "type": "side"
+        }
+      ],
+      "prices": {
+        "original_price": 1799,
+        "offer_price": 1439
+      },
+      "rating": 4.8,
+      "in_stock": true,
+      "plant_quick_guide": {
+        "height": "1-2 feet",
+        "width": "1-2 feet",
+        "sunlight": [
+          "Indirect Light"
+        ],
+        "growth_rate": "Moderate"
+      },
+      "description": {
+        "intro": "Chinese Elm Bonsai is a hardy indoor bonsai known for its small, attractive leaves and graceful shape.",
+        "water": "Water when the soil feels dry. Avoid over-watering.",
+        "pet_friendly": "Yes, Chinese Elm Bonsai is non-toxic to pets.",
+        "beginner_friendly": "Yes, it is beginner-friendly and easy to care for."
+      },
+      "how_to_plant": "Plant in a well-draining soil mix and ensure it gets indirect sunlight. Keep in a room with moderate temperature.",
+      "care_guide": {
+        "watering": {
+          "frequency": "Twice a week",
+          "description": "Water when the top inch of soil feels dry. Make sure excess water can drain."
+        },
+        "light": {
+          "description": "Chinese Elm Bonsai thrives in bright, indirect light.",
+          "type": "Indirect Light"
+        },
+        "fertilizer": {
+          "description": "Feed with bonsai fertilizer once a month.",
+          "type": "Bonsai Fertilizer"
+        },
+        "temperature": {
+          "range": "18-24°C",
+          "description": "Prefers moderate temperatures, avoid exposure to drafts or sudden temperature changes."
+        },
+        "humidity": {
+          "level": "Moderate",
+          "description": "Likes moderate humidity. A humidity tray can help in dry indoor conditions."
+        }
+      },
+      "toxicity": "Non-toxic to pets.",
+      "season": "All year",
+      "flowering": false,
+      "placement": "Indoor",
+      "soil_type": "Bonsai soil mix",
+      "lifecycle_stage": "Mature",
+      "recommended_pot_size": "8-inch diameter",
+      "benefits": [
+        "Low-maintenance indoor plant",
+        "Non-toxic to pets",
+        "Perfect for beginners"
+      ],
+      "faqs": [
+        {
+          "question": "Can I keep Chinese Elm Bonsai outdoors?",
+          "answer": "Chinese Elm Bonsai is best kept indoors, but it can be placed outside during the warmer months."
+        },
+        {
+          "question": "How much sunlight does Chinese Elm Bonsai need?",
+          "answer": "It thrives in bright, indirect light."
+        },
+        {
+          "question": "Is Chinese Elm Bonsai safe for pets?",
+          "answer": "Yes, it is non-toxic to pets."
+        },
+        {
+          "question": "How do I maintain the shape of my Chinese Elm Bonsai?",
+          "answer": "Prune regularly to maintain a balanced shape and remove any dead branches."
+        }
+      ]
+  },
+  {
+      "id": "bonsai_bougainvillea_001",
+      "common_name": "Bougainvillea",
+      "scientific_name": "Bougainvillea glabra",
+      "category": "Bonsai Plant",
+  "tags": ["outdoor", "flowering", "low_maintenance", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": false,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+      "images": [
+        {
+          "url": "https://imgs.search.brave.com/zHsWu8B_LT3Wqf629Jk-KPR1C_LWtR1OkqNICTgsWH8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/LjE4MDBmbG93ZXJz/LmNvbS93Y3NzdG9y/ZS9GbG93ZXJzL2lt/YWdlcy9jYXRhbG9n/LzE1ODMyMXN4Lmpw/Zz9hdXRvPXdlYnA",
+          "alt_text": "Bougainvillea Bonsai with vibrant pink flowers",
+          "type": "main"
+        },
+        {
+          "url": "https://imgs.search.brave.com/tr51lCnAP4YTV32qyZSX1Se8H0kLQxvMb0rrXdyJcd0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvOTMz/MzkyNDAvcGhvdG8v/YmVhdXR5LWJvdWdh/aW52aWxsZWEuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPTZl/UWh1Wkw3WUpmM2lU/LVhmSG1NdlV0YldK/dlJxTDBtelQzdXFS/Y0NtcGc9",
+          "alt_text": "Another view of Bougainvillea Bonsai with vibrant pink flowers",
+          "type": "side"
+        }
+      ],
+      "prices": {
+        "original_price": 799,
+        "offer_price": 639
+      },
+      "rating": 4.4,
+      "in_stock": true,
+      "plant_quick_guide": {
+        "height": "1-3 feet",
+        "width": "1-2 feet",
+        "sunlight": [
+          "Full Sun"
+        ],
+        "growth_rate": "Moderate"
+      },
+      "description": {
+        "intro": "Bougainvillea Bonsai is admired for its vibrant flowers and twisting branches, making it a popular choice for bonsai enthusiasts.",
+        "water": "Water when the soil feels dry, but ensure good drainage.",
+        "pet_friendly": "No, Bougainvillea Bonsai is not recommended for homes with pets as its thorns can be sharp.",
+        "beginner_friendly": "Moderate care is required, best for those with some experience in bonsai care."
+      },
+      "how_to_plant": "Plant in well-draining soil, keep it in a sunny spot, and prune regularly to encourage flowering.",
+      "care_guide": {
+        "watering": {
+          "frequency": "Once a week",
+          "description": "Water thoroughly but allow the soil to dry between waterings."
+        },
+        "light": {
+          "description": "Bougainvillea needs full sun for at least 6 hours a day to encourage blooming.",
+          "type": "Full Sun"
+        },
+        "fertilizer": {
+          "description": "Fertilize once a month with a balanced fertilizer.",
+          "type": "Balanced Fertilizer"
+        },
+        "temperature": {
+          "range": "20-30°C",
+          "description": "Prefers warm temperatures and should not be exposed to frost."
+        },
+        "humidity": {
+          "level": "Moderate",
+          "description": "Needs moderate humidity and good air circulation."
+        }
+      },
+      "toxicity": "Non-toxic to pets.",
+      "season": "Spring to Fall",
+      "flowering": true,
+      "placement": "Outdoor",
+      "soil_type": "Bonsai soil mix",
+      "lifecycle_stage": "Mature",
+      "recommended_pot_size": "10-inch diameter",
+      "benefits": [
+        "Vibrant flowers",
+        "Beautiful outdoor decor",
+        "Moderate maintenance"
+      ],
+      "faqs": [
+        {
+          "question": "How often does Bougainvillea Bonsai bloom?",
+          "answer": "Bougainvillea Bonsai blooms during the spring and summer months, but may flower intermittently year-round in warm climates."
+        },
+        {
+          "question": "Can Bougainvillea Bonsai be kept indoors?",
+          "answer": "Bougainvillea Bonsai thrives best outdoors in full sun, but can be kept indoors with proper light and care."
+        },
+        {
+          "question": "Are Bougainvillea Bonsai pet-friendly?",
+          "answer": "No, Bougainvillea Bonsai is not recommended for households with pets due to its sharp thorns."
+        },
+        {
+          "question": "How do I prune a Bougainvillea Bonsai?",
+          "answer": "Prune to shape the bonsai and remove dead or unruly branches. Pruning after flowering encourages new growth."
+        }
+      ]
+  },
+  {
+        "id": "bonsai_hibiscus_001",
+        "common_name": "Hibiscus",
+        "scientific_name": "Hibiscus rosa-sinensis",
+        "category": "Bonsai Plant",
+  "tags": ["outdoor", "flowering", "low_maintenance", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": false,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+        "images": [
+          {
+            "url": "https://imgs.search.brave.com/ENL0SKdDFSWj6o_Qh2RbB4XnlFKTXUaiDXxdIkjyf8Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLmV0/c3lzdGF0aWMuY29t/LzYyNzM0MzYvci9p/bC83MzE1YWUvMzkz/MjQ3MTc2NC9pbF82/MDB4NjAwLjM5MzI0/NzE3NjRfdGxtZS5q/cGc",
+            "alt_text": "Hibiscus Bonsai with vibrant flowers",
+            "type" : "main"
+          },
+          {
+            "url": "https://imgs.search.brave.com/t4bKWio0lDJ5bLJRI_ohHm8TZFfWf49apqcoBFsZ0xI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFnVDR1UStpbUwu/anBn",
+            "alt_text": "Another view of Hibiscus Bonsai with vibrant flowers",
+            "type" : "side"
+          }
+        ],
+        "prices": {
+          "original_price": 799,
+          "offer_price": 639
+        },
+        "rating": 4.6,
+        "in_stock": true,
+        "plant_quick_guide": {
+          "height": "2-3 feet",
+          "width": "2 feet",
+          "sunlight": "Full Sun",
+          "growth_rate": "Moderate"
+        },
+        "description": {
+          "intro": "Hibiscus Bonsai produces beautiful, large flowers and is a striking plant for both indoor and outdoor spaces.",
+          "water": "Water regularly, keeping the soil moist but not soggy.",
+          "pet_friendly": "No, Hibiscus Bonsai is not pet-safe.",
+          "beginner_friendly": "Moderate care required, suitable for those with some gardening experience."
+        },
+        "how_to_plant": "Plant in well-draining soil and provide it with full sunlight to encourage flowering.",
+        "care_guide": {
+          "watering": {
+            "frequency": "2-3 times a week",
+            "description": "Water thoroughly when the top inch of soil is dry."
+          },
+          "light": {
+            "description": "Requires full sun, ideally 6-8 hours per day."
+          },
+          "fertilizer": {
+            "description": "Use a balanced fertilizer every 4-6 weeks during the growing season."
+          },
+          "temperature": {
+            "range": "18-24°C",
+            "description": "Prefers warm temperatures and should be kept indoors during cold weather."
+          },
+          "humidity": {
+            "level": "Moderate",
+            "description": "Keep in moderate humidity, mist occasionally if air is dry."
+          }
+        },
+        "toxicity": "Toxic to pets if ingested.",
+        "season": "Spring to Fall",
+        "flowering": true,
+        "placement": "Indoor/Outdoor",
+        "soil_type": "Well-draining, acidic soil",
+        "lifecycle_stage": "Mature",
+        "recommended_pot_size": "10-inch diameter",
+        "benefits": [
+          "Vibrant flowers",
+          "Perfect for decorative purposes",
+          "Good for experienced gardeners"
+        ],
+        "faqs": [
+          {
+            "question": "Can Hibiscus Bonsai be grown indoors?",
+            "answer": "Yes, it can be grown indoors with sufficient sunlight."
+          },
+          {
+            "question": "How often should I prune Hibiscus Bonsai?",
+            "answer": "Prune in early spring before new growth starts to shape and maintain size."
+          },
+          {
+            "question": "Is Hibiscus Bonsai safe for pets?",
+            "answer": "No, Hibiscus is toxic to pets if ingested."
+          },
+          {
+            "question": "Does Hibiscus Bonsai need full sunlight?",
+            "answer": "Yes, it requires at least 6-8 hours of full sunlight daily."
+          }
+        ]
+  },
+  {
+        "id": "bonsai_jade_001",
+        "common_name": "Jade Plant",
+        "scientific_name": "Crassula ovata",
+        "category": "Bonsai Plant",
+  "tags": ["indoor", "pet_friendly", "beginner_friendly", "low_maintenance", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+        "images": [
+          {
+            "url": "https://imgs.search.brave.com/q0HMt0YS28Twn0VJShlZG-1bdl2olG6_-xtxTpJ58r0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/OTF2TUJ1RGM3N0wu/anBn",
+            "alt_text": "Jade Plant Bonsai with thick, fleshy leaves",
+            "type" : "main"
+          },
+          {
+            "url": "https://imgs.search.brave.com/F_JkYAS5TsTcVVW9G1E5C0LF7BM0H_Aez-s1oJGDVPw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTI4/OTM3MTUwNS9waG90/by9ib25zYWktamFk/ZS1wbGFudC1pbi1h/LWNsYXktcG90Lmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1r/VVZ5b1JHd0dIRTJi/Q0xJbG9ucS02UVl5/eVpRakFyb25KRi0z/bnljYWdRPQ",
+            "alt_text": "Another view of Jade Plant Bonsai with thick, fleshy leaves",
+            "type" : "side"
+          }
+        ],
+        "prices": {
+          "original_price": 599,
+          "offer_price": 479
+        },
+        "rating": 4.8,
+        "in_stock": true,
+        "plant_quick_guide": {
+          "height": "1-2 feet",
+          "width": "1-2 feet",
+          "sunlight": "Full Sun",
+          "growth_rate": "Slow"
+        },
+        "description": {
+          "intro": "Jade Plant Bonsai is known for its thick, fleshy leaves and low maintenance care requirements.",
+          "water": "Water when the soil is completely dry to the touch.",
+          "pet_friendly": "Yes, Jade Plant Bonsai is non-toxic to pets.",
+          "beginner_friendly": "Yes, it is easy to care for and perfect for beginners."
+        },
+        "how_to_plant": "Plant in well-draining soil. Keep in an area that gets full sunlight.",
+        "care_guide": {
+          "watering": {
+            "frequency": "Once every 2-3 weeks",
+            "description": "Allow soil to dry out completely between watering. Water sparingly in winter."
+          },
+          "light": {
+            "description": "Requires bright, indirect light but can tolerate some direct sunlight."
+          },
+          "fertilizer": {
+            "description": "Fertilize every 4-6 weeks with a balanced fertilizer during the growing season."
+          },
+          "temperature": {
+            "range": "18-24°C",
+            "description": "Prefers warm temperatures and should be kept indoors during colder months."
+          },
+          "humidity": {
+            "level": "Low",
+            "description": "It tolerates dry air but benefits from occasional misting."
+          }
+        },
+        "toxicity": "Non-toxic to pets.",
+        "season": "All year",
+        "flowering": true,
+        "placement": "Indoor",
+        "soil_type": "Well-draining soil mix",
+        "lifecycle_stage": "Mature",
+        "recommended_pot_size": "8-inch diameter",
+        "benefits": [
+          "Low maintenance",
+          "Great for indoor spaces",
+          "Non-toxic to pets"
+        ],
+        "faqs": [
+          {
+            "question": "How often should I water Jade Plant Bonsai?",
+            "answer": "Water when the soil is completely dry, approximately once every 2-3 weeks."
+          },
+          {
+            "question": "Is Jade Plant Bonsai pet-safe?",
+            "answer": "Yes, it is non-toxic to pets."
+          },
+          {
+            "question": "Does Jade Plant Bonsai need a lot of sunlight?",
+            "answer": "It thrives in bright, indirect sunlight but can tolerate some direct sun."
+          },
+          {
+            "question": "Can Jade Plant Bonsai be grown outdoors?",
+            "answer": "It is primarily an indoor plant, but it can be placed outdoors in warm climates."
+          }
+        ]
+  },
+  {
+        "id": "bonsai_schefflera_001",
+        "common_name": "Schefflera",
+        "scientific_name": "Schefflera arboricola",
+        "category": "Bonsai Plant",
+  "tags": ["indoor", "pet_friendly", "low_maintenance", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": true,
+    "is_edible": false
+  },
+        "images": [
+          {
+            "url": "https://imgs.search.brave.com/r5qnQxUUvwv4onfbsq34LYhe1yUn4I4nFhp8F7Nu_uc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGhlc3BydWNlLmNv/bS90aG1iL1FFQ1B1/blhwYkFBZGpfQnZY/YWlfUERVUVd0dz0v/MTUwMHgwL2ZpbHRl/cnM6bm9fdXBzY2Fs/ZSgpOm1heF9ieXRl/cygxNTAwMDApOnN0/cmlwX2ljYygpL0th/cmFSaWxleVNjaGVm/ZmxlcmEtUkVDSVJD/LWNkY2U3MzEwNjdk/NDQ5ZDRiNGExN2U4/NTA1ZWY5ZjI0Lmpw/Zw",
+            "alt_text": "Schefflera Bonsai with glossy green leaves",
+            "type" : "main"
+          },
+          {
+            "url": "https://imgs.search.brave.com/0viGEA19Fxx_2zDnHd_fDoRAEPndW39Qx0116Hk4Rvs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaW1tZWRpYXRl/LmNvLnVrL3Byb2R1/Y3Rpb24vdm9sYXRp/bGUvc2l0ZXMvMTAv/MjAyMy8xMC8yMDQ4/eDEzNjUtQmVkcm9v/bS1ob3VzZXBsYW50/cy1TRU8tR2V0dHlJ/bWFnZXMtMTMxNjQx/MTA2NS1jODg1Yjc4/LmpwZz9xdWFsaXR5/PTkwJnJlc2l6ZT01/NTYsMzcx",
+            "alt_text": "Another view of Schefflera Bonsai with glossy green leaves",
+            "type" : "side"
+          }
+        ],
+        "prices": {
+          "original_price": 899,
+          "offer_price": 719
+        },
+        "rating": 4.3,
+        "in_stock": true,
+        "plant_quick_guide": {
+          "height": "2-3 feet",
+          "width": "1-2 feet",
+          "sunlight": "Indirect Light",
+          "growth_rate": "Moderate"
+        },
+        "description": {
+          "intro": "Schefflera Bonsai, also known as the Umbrella Tree, has glossy green leaves and is easy to care for.",
+          "water": "Water when the soil feels dry, but avoid waterlogging.",
+          "pet_friendly": "Yes, Schefflera Bonsai is non-toxic to pets.",
+          "beginner_friendly": "Yes, very easy to care for, making it perfect for beginners."
+        },
+        "how_to_plant": "Plant in well-draining soil and keep in an area with indirect light.",
+        "care_guide": {
+          "watering": {
+            "frequency": "Once a week",
+            "description": "Water when the top inch of soil feels dry. Avoid overwatering."
+          },
+          "light": {
+            "description": "Prefers bright, indirect light but can tolerate lower light levels."
+          },
+          "fertilizer": {
+            "description": "Feed with a balanced liquid fertilizer every month during the growing season."
+          },
+          "temperature": {
+            "range": "18-24°C",
+            "description": "Prefers warmer indoor temperatures."
+          },
+          "humidity": {
+            "level": "Moderate",
+            "description": "It prefers moderate humidity but can adapt to average indoor conditions."
+          }
+        },
+        "toxicity": "Non-toxic to pets.",
+        "season": "All year",
+        "flowering": false,
+        "placement": "Indoor",
+        "soil_type": "Well-draining soil mix",
+        "lifecycle_stage": "Mature",
+        "recommended_pot_size": "8-inch diameter",
+        "benefits": [
+          "Easy to care for",
+          "Non-toxic to pets",
+          "Low maintenance"
+        ],
+        "faqs": [
+          {
+            "question": "How often should I water Schefflera Bonsai?",
+            "answer": "Water once a week or when the top inch of soil is dry."
+          },
+          {
+            "question": "Is Schefflera Bonsai safe for pets?",
+            "answer": "Yes, it is non-toxic to pets."
+          },
+          {
+            "question": "Does Schefflera Bonsai need direct sunlight?",
+            "answer": "No, it prefers bright, indirect light."
+          },
+          {
+            "question": "How large can Schefflera Bonsai grow?",
+            "answer": "It can grow up to 3 feet tall with proper care."
+          }
+        ]
+  },
+  {
+        "id": "bonsai_azalea_001",
+        "common_name": "Azalea",
+        "scientific_name": "Rhododendron indicum",
+        "category": "Bonsai Plant",
+  "tags": ["outdoor", "flowering", "low_maintenance", "bonsai"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": false,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+        "images": [
+          {
+            "url": "https://cdn.shopify.com/s/files/1/0507/3754/5401/files/PB43_LOL_preset_ftd-mx-hero-sv-new.jpg?v=1717427709&width=768",
+            "alt_text": "Azalea Bonsai with colorful blooms",
+            "type" : "main"
+          },
+          {
+            "url": "https://cdn.shopify.com/s/files/1/0507/3754/5401/t/1/assets/PB43_ALT_V2_preset_ftd-mx-hero-sv-alt.jpeg?v=1659375268&width=768",
+            "alt_text": "Anotherr view of Azalea Bonsai with colorful blooms",
+            "type" : "side"
+          }
+        ],
+        "prices": {
+          "original_price": 1199,
+          "offer_price": 959
+        },
+        "rating": 4.5,
+        "in_stock": true,
+        "plant_quick_guide": {
+          "height": "1-2 feet",
+          "width": "1-2 feet",
+          "sunlight": "Partial Sun",
+          "growth_rate": "Moderate"
+        },
+        "description": {
+          "intro": "Azalea Bonsai produces beautiful, colorful blooms and is a popular choice for bonsai enthusiasts.",
+          "water": "Water thoroughly when the top inch of soil dries out.",
+          "pet_friendly": "No, Azalea Bonsai is toxic to pets.",
+          "beginner_friendly": "Moderate care, suitable for those with some gardening experience."
+        },
+        "how_to_plant": "Plant in acidic, well-draining soil and provide partial sunlight for best growth.",
+        "care_guide": {
+          "watering": {
+            "frequency": "Once a week",
+            "description": "Water thoroughly when the top inch of soil feels dry, avoid letting it dry out completely."
+          },
+          "light": {
+            "description": "Prefers partial sunlight, avoid full sun exposure."
+          },
+          "fertilizer": {
+            "description": "Use a fertilizer designed for acid-loving plants every 4-6 weeks."
+          },
+          "temperature": {
+            "range": "10-24°C",
+            "description": "Prefers cooler temperatures, avoid temperatures above 25°C."
+          },
+          "humidity": {
+            "level": "High",
+            "description": "Azalea Bonsai thrives in higher humidity levels."
+          }
+        },
+        "toxicity": "Toxic to pets if ingested.",
+        "season": "Spring to Fall",
+        "flowering": true,
+        "placement": "Outdoor",
+        "soil_type": "Acidic, well-draining soil",
+        "lifecycle_stage": "Mature",
+        "recommended_pot_size": "8-inch diameter",
+        "benefits": [
+          "Beautiful blooms",
+          "Great for outdoor spaces",
+          "Moderate care required"
+        ],
+        "faqs": [
+          {
+            "question": "Is Azalea Bonsai safe for pets?",
+            "answer": "No, Azalea Bonsai is toxic to pets."
+          },
+          {
+            "question": "When does Azalea Bonsai bloom?",
+            "answer": "Azalea Bonsai typically blooms in spring."
+          },
+          {
+            "question": "How do I prune Azalea Bonsai?",
+            "answer": "Prune after blooming to shape the plant and maintain its size."
+          },
+          {
+            "question": "Does Azalea Bonsai need full sunlight?",
+            "answer": "No, it prefers partial sunlight, avoid direct sun exposure."
+          }
+        ]
+  }
+
+]

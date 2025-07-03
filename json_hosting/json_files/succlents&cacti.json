@@ -1,0 +1,1052 @@
+[
+  {
+    "id": "succulent_echeveria_001",
+    "common_name": "Echeveria",
+    "scientific_name": "Echeveria elegans",
+    "category": "Succulents & Cacti Plants",
+  "tags": ["low_maintenance", "sun_loving", "pet_friendly", "succulent", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/vJZk4y4WGEzZhbj-TQ43QDoEHmfhtrDb3zqlt40Vg8o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODFZdk9LVENwbFMu/anBn",
+        "alt_text": "Echeveria rosette with pastel colors",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/78G2g4EYHgE0n3GSJcSEUfqdKskoBT4Y_1_1PtIG9Io/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/MS5iaWdjb21tZXJj/ZS5jb20vcy1ucWJi/dXlsMy9pbWFnZXMv/c3RlbmNpbC8zMDB3/L3Byb2R1Y3RzLzEy/MjMvMzU5Ny9FY2hl/dmVyaWFfQmx1ZV9T/dGFyX18yNDUwMi4x/NjE0ODg0NjE1LkpQ/Rz9jPTM",
+        "alt_text": "Another view of Echeveria rosette with pastel colors",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 199,
+      "offer_price": 159
+    },
+    "rating": 4.7,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "3-6 inches",
+      "width": "4-8 inches",
+      "sunlight": ["Bright Indirect Light", "Full Sun"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Echeverias are charming rosette-forming succulents ideal for indoor and outdoor arrangements.",
+      "water": "Water sparingly when the soil is completely dry.",
+      "pet_friendly": "Yes, Echeveria is generally non-toxic to pets.",
+    "beginner_friendly": "Yes, it's ideal for beginners due to its low water needs and hardy nature."
+    },
+    "how_to_plant": "Use a shallow pot with a cactus/succulent mix. Ensure good drainage and sunlight.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 10-14 days",
+        "description": "Allow soil to dry out completely between watering."
+      },
+      "light": {
+        "description": "Prefers bright light or full sun for compact growth.",
+        "type": "Bright Indirect Light / Full Sun"
+      },
+      "fertilizer": {
+        "description": "Fertilize once a month during the growing season.",
+        "type": "Succulent Fertilizer"
+      },
+      "temperature": {
+        "range": "15-30°C",
+        "description": "Thrives in warm conditions, avoid frost."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Prefers dry air; avoid excess humidity."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Summer",
+    "flowering": true,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-draining, sandy soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "4-6 inch diameter",
+    "benefits": [
+      "Decorative rosette shape",
+      "Low watering needs",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Echeveria?",
+        "answer": "Only water when the soil is completely dry—usually every 10-14 days."
+      },
+      {
+        "question": "Can Echeveria grow indoors?",
+        "answer": "Yes, they do well in bright, sunny windowsills."
+      },
+      {
+        "question": "Is Echeveria safe for pets?",
+        "answer": "Yes, it is non-toxic to cats and dogs."
+      },
+      {
+        "question": "Why are my Echeveria leaves dropping?",
+        "answer": "It could be due to overwatering or insufficient light."
+      },
+      {
+        "question": "Does Echeveria bloom?",
+        "answer": "Yes, it produces colorful flower stalks in spring or summer."
+      }
+    ]
+  },
+  {
+    "id": "succulent_sedum_001",
+    "common_name": "Sedum",
+    "scientific_name": "Sedum morganianum",
+    "category": "Succulents & Cacti Plants",
+  "tags": ["low_maintenance", "sun_loving", "pet_friendly", "succulent", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/G-K6y7yC1oMUcXbZSDoyT2F-QqLCk5FrMb2u3sD1uW8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMuaGlnaGNvdW50/cnlnYXJkZW5zLmNv/bS9tZWRpYS9jYXRh/bG9nL3Byb2R1Y3Qv/cy9lL3NlZHVtLXN0/b25lY3JvcC1hdXR1/bW4tZmlyZS1jbG9z/ZS11cC5qcGc_cXVh/bGl0eT03NSZmaXQ9/Ym91bmRzJmhlaWdo/dD0md2lkdGg9NjQw/JmZvcm1hdD1wanBn/JmF1dG89d2VicA",
+        "alt_text": "Sedum plant with succulent leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/T9I8-1xBpETCzprj10EiFfJLclc9Jl9KZCuPjn-nHsE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaW1tZWRpYXRl/LmNvLnVrL3Byb2R1/Y3Rpb24vdm9sYXRp/bGUvc2l0ZXMvMTAv/MjAxOC8wOC8yMDQ4/eDEzNjUtUGxhbnQt/ZmFtaWx5LXNlcmll/cy1DcmFzc3VsYWNl/YWUtTEkyMjY2Njgz/LWQ5ODRlM2MuanBn/P3F1YWxpdHk9OTAm/Zml0PTcwMCw0NjY",
+        "alt_text": "Another view of Sedum plant with succulent leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 149,
+      "offer_price": 119
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "6-12 inches",
+      "width": "12-18 inches",
+      "sunlight": ["Full Sun", "Partial Shade"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Sedums, also known as stonecrops, are hardy and adaptable succulents with thick, fleshy leaves.",
+      "water": "Allow the soil to dry completely between watering.",
+     "pet_friendly": "Yes, most Sedum varieties are safe for pets.",
+    "beginner_friendly": "Yes, Sedum is drought-tolerant and perfect for beginner gardeners."
+    },
+    "how_to_plant": "Plant in well-draining soil and provide full sun or partial shade for best results.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 7-10 days",
+        "description": "Water only when the soil is dry to the touch."
+      },
+      "light": {
+        "description": "Prefers full sun but tolerates partial shade.",
+        "type": "Full Sun / Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Fertilize sparingly with a balanced fertilizer during the growing season.",
+        "type": "General Fertilizer"
+      },
+      "temperature": {
+        "range": "10-30°C",
+        "description": "Grows well in warm temperatures, but tolerates cooler climates."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Low humidity is preferred, but it can tolerate moderate levels."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Outdoor",
+    "soil_type": "Well-draining, sandy soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Attractive foliage",
+      "Low maintenance",
+      "Pet-friendly"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Sedum?",
+        "answer": "Water only when the soil is dry to the touch, usually every 7-10 days."
+      },
+      {
+        "question": "Can Sedum grow indoors?",
+        "answer": "Yes, it can grow indoors in bright light or near a sunny window."
+      },
+      {
+        "question": "Is Sedum safe for pets?",
+        "answer": "Yes, it is safe for both cats and dogs."
+      },
+      {
+        "question": "Why is my Sedum not blooming?",
+        "answer": "It may need more sunlight or a longer period of dryness between watering."
+      },
+      {
+        "question": "Does Sedum need fertilizing?",
+        "answer": "Fertilize sparingly with a balanced fertilizer in the spring."
+      }
+    ]
+  },
+  {
+    "id": "succulent_aloes_001",
+    "common_name": "Aloe",
+    "scientific_name": "Aloe vera",
+    "category": "Succulents & Cacti Plants",
+  "tags": ["low_maintenance", "sun_loving", "succulent", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/ubJPDaw7ny2rAfd4wh-qi212caCUYMMTgeg3Dgwsbzc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA5Lzk5LzkzLzUy/LzM2MF9GXzk5OTkz/NTI2OV9pOWx6Nkh3/SEhxeVp1YW5TY1Fr/YXNwcGJDY01oQlhS/My5qcGc",
+        "alt_text": "Aloe vera plant with thick leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/JuLitAxt6gXf9L0-vJAiNaSUHkPhvlr2PHiISuGtijc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTg1/MjEzOTI2L3Bob3Rv/L21lZGljaW5hbC1o/ZXJiYWwtYWxvZS12/ZXJhLXBsYW50LWNs/b3NlLXVwLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1oQ00w/TVZteHlKV2xFMjVZ/dDBmSWdNZkJPZm9E/Y0VScG1LV2hjWWFs/WS1JPQ",
+        "alt_text": "Another view of Aloe vera plant with thick leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 149,
+      "offer_price": 119
+    },
+    "rating": 4.9,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-3 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Full Sun", "Partial Shade"],
+      "growth_rate": "Slow"
+    },
+    "description": {
+      "intro": "Aloe Vera is a well-known succulent for its medicinal properties and easy care.",
+      "water": "Water sparingly; allow the soil to dry out completely between waterings.",
+     "pet_friendly": "No, Aloe is toxic to pets if ingested.",
+    "beginner_friendly": "Yes, Aloe is low-maintenance and easy to grow indoors or outdoors."
+    },
+    "how_to_plant": "Plant in well-draining soil and give it plenty of sunlight. Use a cactus mix for best results.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Allow soil to dry completely between waterings."
+      },
+      "light": {
+        "description": "Prefers full sun but can tolerate partial shade.",
+        "type": "Full Sun / Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Fertilize with a diluted cactus fertilizer in the spring.",
+        "type": "Cactus Fertilizer"
+      },
+      "temperature": {
+        "range": "15-30°C",
+        "description": "Aloe thrives in warm temperatures but can tolerate cooler nights."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Prefers dry air, similar to its native desert conditions."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-draining cactus mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Medicinal gel for burns",
+      "Easy to grow",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Aloe Vera?",
+        "answer": "Water every 2-3 weeks, allowing the soil to dry completely between waterings."
+      },
+      {
+        "question": "Can Aloe Vera grow indoors?",
+        "answer": "Yes, it does well indoors with plenty of sunlight."
+      },
+      {
+        "question": "Is Aloe Vera safe for pets?",
+        "answer": "Yes, Aloe Vera is non-toxic to cats and dogs."
+      },
+      {
+        "question": "What can I use Aloe Vera gel for?",
+        "answer": "Aloe Vera gel is commonly used for soothing burns and skin irritations."
+      },
+      {
+        "question": "Does Aloe Vera bloom?",
+        "answer": "Yes, Aloe Vera can produce yellow tubular flowers under the right conditions."
+      }
+    ]
+  },
+  {
+    "id": "succulent_haworthia_001",
+    "common_name": "Haworthia",
+    "scientific_name": "Haworthia fasciata",
+    "category": "Succulents & Cacti Plants",
+    "tags": ["low_maintenance", "sun_loving", "pet_friendly", "succulent", "indoor"],
+    "attributes": {
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": true,
+      "is_pet_friendly": true,
+      "is_beginner_friendly": true,
+      "is_flowering": false,
+      "is_sun_loving": true,
+      "is_shadow_loving": false,
+      "is_edible": false
+    },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/-I1m-HlNm1iBHfLzWD1WkjRRefo9g4gYOZCqAQi7Iu4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGhlc3BydWNlLmNv/bS90aG1iLzJBc2FK/LXJqNGNKdjE5ZFVh/UFZJM3p1RzEyRT0v/MTUwMHgwL2ZpbHRl/cnM6bm9fdXBzY2Fs/ZSgpOm1heF9ieXRl/cygxNTAwMDApOnN0/cmlwX2ljYygpL2dy/b3ctaGF3b3J0aGlh/LXN1Y2N1bGVudHMt/MTkwMjk4MC1oZXJv/LWM5M2I1OWJjYzJm/MzQ5MDBhZTMyOGQx/ZGZkY2I5ZmE5Lmpw/Zw",
+        "alt_text": "Haworthia plant with rosette pattern",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/kkDZ19uqqd2C4WbxawfetuKLU-D7onhk8goXEJl1Ths/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9nYXJk/ZW5lcnNwYXRoLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/Mi8wNy9TcGlkZXIt/TmVzdC1IYXdvcnRo/aWEuanBlZw",
+        "alt_text": "Another view of Haworthia plant with rosette pattern",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 249,
+      "offer_price": 199
+    },
+    "rating": 4.6,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "4-6 inches",
+      "width": "3-6 inches",
+      "sunlight": ["Bright Indirect Light", "Partial Shade"],
+      "growth_rate": "Slow"
+    },
+    "description": {
+      "intro": "Haworthia is a small, rosette-forming succulent with striking white veins on its fleshy leaves.",
+      "water": "Water sparingly; allow the soil to dry out completely between waterings.",
+       "pet_friendly": "Yes, Haworthia is non-toxic to pets.",
+    "beginner_friendly": "Yes, it's a great starter succulent requiring minimal care."
+    },
+    "how_to_plant": "Plant in well-draining soil and place it in a location with indirect sunlight.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Allow the soil to dry completely before watering again."
+      },
+      "light": {
+        "description": "Prefers bright, indirect light but tolerates some shade.",
+        "type": "Bright Indirect Light / Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Fertilize sparingly in the spring with a diluted succulent fertilizer.",
+        "type": "Succulent Fertilizer"
+      },
+      "temperature": {
+        "range": "15-25°C",
+        "description": "Thrives in moderate temperatures, avoid extreme heat or cold."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Low humidity is ideal; it is tolerant of dry air."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-draining, cactus/succulent mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "4-6 inch diameter",
+    "benefits": [
+      "Unique appearance with white veins",
+      "Low water requirements",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Haworthia?",
+        "answer": "Water it every 2-3 weeks, ensuring the soil is dry between waterings."
+      },
+      {
+        "question": "Can Haworthia grow indoors?",
+        "answer": "Yes, it does well indoors with bright, indirect light."
+      },
+      {
+        "question": "Is Haworthia safe for pets?",
+        "answer": "Yes, Haworthia is non-toxic to cats and dogs."
+      },
+      {
+        "question": "What type of soil does Haworthia need?",
+        "answer": "Haworthia thrives in well-draining cactus or succulent soil."
+      },
+      {
+        "question": "Does Haworthia bloom?",
+        "answer": "Yes, it can produce small tubular flowers in the summer."
+      }
+    ]
+  },
+  {
+    "id": "succulent_opuntia_001",
+    "common_name": "Opuntia (Prickly Pear Cactus)",
+    "scientific_name": "Opuntia ficus-indica",
+    "category": "Succulents & Cacti Plants",
+    "tags": ["low_maintenance", "sun_loving", "cactus", "outdoor"],
+    "attributes": {
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": false,
+      "is_pet_friendly": false,
+      "is_beginner_friendly": true,
+      "is_flowering": true,
+      "is_sun_loving": true,
+      "is_shadow_loving": false,
+      "is_edible": false
+    },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/Wv7DjlmI_xd_Yi4kdFLhBo9TAkIhnWGZBfgYomlf-l8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzUxc1FaVUNzQkJM/LmpwZw",
+        "alt_text": "Opuntia cactus with bright yellow flowers",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/Du6TYvrgnAmHV1oi8v3dTdSCDlJJAdfRHI8_3VprErA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzQxN3dmczRySXdM/LmpwZw",
+        "alt_text": "Another view of Opuntia cactus with bright yellow flowers",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 249,
+      "offer_price": 199
+    },
+    "rating": 4.5,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "3-5 feet",
+      "width": "3-4 feet",
+      "sunlight": ["Full Sun"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "The Opuntia cactus, also known as Prickly Pear, has flat pads and vibrant, edible fruit.",
+      "water": "Water sparingly, only when the soil has completely dried out.",
+     "pet_friendly": "No, Opuntia can be mildly toxic and poses a physical hazard with its spines.",
+    "beginner_friendly": "Yes, it thrives with little water and lots of sun, suitable for beginners."
+    },
+    "how_to_plant": "Use a large pot with well-draining cactus mix and place it in full sunlight.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Allow the soil to dry completely between waterings."
+      },
+      "light": {
+        "description": "Requires full sun for optimal growth.",
+        "type": "Full Sun"
+      },
+      "fertilizer": {
+        "description": "Fertilize during the growing season with a cactus-specific fertilizer.",
+        "type": "Cactus Fertilizer"
+      },
+      "temperature": {
+        "range": "18-32°C",
+        "description": "Prefers warm temperatures; avoid frost."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Tolerates dry conditions well."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Outdoor",
+    "soil_type": "Well-draining cactus mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "8-10 inch diameter",
+    "benefits": [
+      "Vibrant, edible fruit",
+      "Thrives in hot, dry climates",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Opuntia?",
+        "answer": "Water every 2-3 weeks, allowing the soil to dry completely between waterings."
+      },
+      {
+        "question": "Can Opuntia grow indoors?",
+        "answer": "It can grow indoors if provided with ample sunlight, but it thrives best outdoors."
+      },
+      {
+        "question": "Is Opuntia safe for pets?",
+        "answer": "Yes, Opuntia is non-toxic to cats and dogs."
+      },
+      {
+        "question": "Can I eat the fruit of Opuntia?",
+        "answer": "Yes, the fruit, also called prickly pear, is edible and has a sweet taste."
+      },
+      {
+        "question": "Does Opuntia need fertilizing?",
+        "answer": "Yes, fertilize during the growing season with a cactus-specific fertilizer."
+      }
+    ]
+  },
+  {
+    "id": "succulent_cereus_001",
+    "common_name": "Cereus",
+    "scientific_name": "Cereus peruvianus",
+    "category": "Succulents & Cacti Plants",
+  "tags": ["low_maintenance", "sun_loving", "cactus", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": false,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": false,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/Fm9mMsPXAXdQOdSba6TZYnNbB16RoEXhu5PKMpVCTqI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/d2FzY29udXJzZXJ5/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/TmlnaHQtQmxvb21p/bmctQ2VyZXVzLTEu/YXZpZg",
+        "alt_text": "Tall columnar Cereus cactus",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/8BEn0nXRjmkDTR47QahuN8El9GdcReo7nsHBBslLkJI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jYWN0/aWd1aWRlLmNvbS9n/cmFwaGljcy8yMDAv/Y19mZXJuYW1idWNl/bnNpc19hXzIwMC5q/cGc",
+        "alt_text": "Another view of Tall columnar Cereus cactus",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 349,
+      "offer_price": 279
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "4-10 feet",
+      "width": "2-4 feet",
+      "sunlight": ["Full Sun"],
+      "growth_rate": "Fast"
+    },
+    "description": {
+      "intro": "Cereus is a tall, columnar cactus that thrives in hot, dry conditions.",
+      "water": "Water sparingly; allow the soil to dry completely between waterings.",
+       "pet_friendly": "No, Cereus may pose physical risk with sharp spines and is mildly toxic if ingested.",
+    "beginner_friendly": "Yes, Cereus cacti are very resilient and beginner-friendly."
+    },
+    "how_to_plant": "Plant in well-draining cactus mix and place it in a location with full sunlight.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 3 weeks",
+        "description": "Allow the soil to dry out completely between waterings."
+      },
+      "light": {
+        "description": "Requires full sun for healthy growth.",
+        "type": "Full Sun"
+      },
+      "fertilizer": {
+        "description": "Fertilize monthly during the growing season with a cactus fertilizer.",
+        "type": "Cactus Fertilizer"
+      },
+      "temperature": {
+        "range": "20-35°C",
+        "description": "Thrives in warm, dry conditions; avoid freezing temperatures."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Low humidity is ideal for this cactus."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Outdoor",
+    "soil_type": "Well-draining cactus mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "10-12 inch diameter",
+    "benefits": [
+      "Fast-growing",
+      "Pet-safe",
+      "Adds height to plant displays"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Cereus?",
+        "answer": "Water it every 3 weeks, allowing the soil to dry completely between waterings."
+      },
+      {
+        "question": "Can Cereus grow indoors?",
+        "answer": "Cereus can be grown indoors but needs a very sunny spot."
+      },
+      {
+        "question": "Is Cereus safe for pets?",
+        "answer": "Yes, it is non-toxic to cats and dogs."
+      },
+      {
+        "question": "How fast does Cereus grow?",
+        "answer": "Cereus is a fast-growing cactus and can reach significant height quickly."
+      },
+      {
+        "question": "Does Cereus bloom?",
+        "answer": "Yes, it can bloom with large, beautiful flowers in late spring or summer."
+      }
+    ]
+  },
+  {
+    "id": "succulent_mammillaria_001",
+    "common_name": "Mammillaria",
+    "scientific_name": "Mammillaria elongata",
+    "category": "Succulents & Cacti Plants",
+  "tags": ["low_maintenance", "sun_loving", "cactus", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": false,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/iRRCz_vLzpOYXyNPaTbroKiefmWCrferrakSxtADNfc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/MzFWYjM0aW5iUkwu/anBn",
+        "alt_text": "Mammillaria cactus with pink flowers",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/CGYZTVgVGlXNqXZFSXoN9_ZlXxuFumYQ5vetShYSNAg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy80/LzRlL01hbW1pbGxh/cmlhX3Byb2xpZmVy/YTIwMTAwNDA3XzA3/Ni5qcGc",
+        "alt_text": "Another view of Mammillaria cactus with pink flowers",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 249,
+      "offer_price": 199
+    },
+    "rating": 4.7,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "6-12 inches",
+      "width": "6-8 inches",
+      "sunlight": ["Full Sun", "Bright Indirect Light"],
+      "growth_rate": "Slow"
+    },
+    "description": {
+      "intro": "Mammillaria, or nipple cactus, is a small cactus known for its spherical shape and colorful blooms.",
+      "water": "Water sparingly and allow the soil to dry out completely between waterings.",
+      "pet_friendly": "No, Mammillaria is mildly toxic and has spines that can injure pets.",
+    "beginner_friendly": "Yes, Mammillaria is hardy and thrives on neglect, ideal for beginners."
+    },
+    "how_to_plant": "Plant in well-draining cactus mix and place in full sun or bright indirect light.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Let the soil dry out fully between watering sessions."
+      },
+      "light": {
+        "description": "Prefers full sun or bright indirect light for optimal growth.",
+        "type": "Full Sun / Bright Indirect Light"
+      },
+      "fertilizer": {
+        "description": "Fertilize once a month during the growing season with a cactus fertilizer.",
+        "type": "Cactus Fertilizer"
+      },
+      "temperature": {
+        "range": "18-30°C",
+        "description": "Mammillaria does well in warm conditions but should be protected from frost."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Low humidity is best for this cactus."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Summer",
+    "flowering": true,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-draining cactus mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "4-6 inch diameter",
+    "benefits": [
+      "Compact size",
+      "Colorful flowers",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Mammillaria?",
+        "answer": "Water every 2-3 weeks, allowing the soil to dry out completely between waterings."
+      },
+      {
+        "question": "Can Mammillaria grow indoors?",
+        "answer": "Yes, it grows well indoors with bright indirect light."
+      },
+      {
+        "question": "Is Mammillaria safe for pets?",
+        "answer": "Yes, it is non-toxic to cats and dogs."
+      },
+      {
+        "question": "How long does it take for Mammillaria to bloom?",
+        "answer": "Mammillaria blooms after a few years of growth, usually in spring or summer."
+      },
+      {
+        "question": "What kind of soil does Mammillaria need?",
+        "answer": "It needs well-draining cactus or succulent mix."
+      }
+    ]
+  },
+  {
+    "id": "succulent_sempervivum_001",
+    "common_name": "Sempervivum",
+    "scientific_name": "Sempervivum tectorum",
+    "category": "Succulents & Cacti Plants",
+    "tags": ["low_maintenance", "sun_loving", "pet_friendly", "succulent", "outdoor"],
+    "attributes": {
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": true,
+      "is_pet_friendly": true,
+      "is_beginner_friendly": true,
+      "is_flowering": true,
+      "is_sun_loving": true,
+      "is_shadow_loving": false,
+      "is_edible": false
+    },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/UgCul-hNRV0_W9O8VwzKkbdnbcKp6HI7QWPQYWGA7eU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdWNj/dWxlbnRzYm94LmNv/bS9jZG4vc2hvcC9m/aWxlcy8xMV8xX2Rk/YTVmYmM1LWMwNmUt/NGMyMS05MzBhLWNh/ZTc4OTY2YmQ4NV8x/NjAweC5qcGc_dj0x/NzQyMjcyNDg2",
+        "alt_text": "Sempervivum with rosette shape",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/2cVGW2ZJJwvpRl1Emf3WVyFXbOLRFLi7_zcb43ZZEDQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cmhzLm9yZy51ay9n/ZXRtZWRpYS8yM2I4/NjFkMi01OWViLTQ2/MGMtYWQ5My00N2M3/YjI5NWZlY2YvU2Vt/cGVydml2dW1fS09U/MzQ2My1DYXJkLTYw/MHg0MDAuanBnP3dp/ZHRoPTYwMCZoZWln/aHQ9NDAwJmV4dD0u/anBn",
+        "alt_text": "Another view of Sempervivum with rosette shape",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 149,
+      "offer_price": 199
+    },
+    "rating": 4.9,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "3-6 inches",
+      "width": "4-8 inches",
+      "sunlight": ["Full Sun", "Bright Indirect Light"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Sempervivum, also known as Hens and Chicks, is a hardy succulent that forms beautiful rosettes and spreads by offsets.",
+      "water": "Water sparingly; let the soil dry completely between waterings.",
+      "pet_friendly": "Yes, Sempervivum is non-toxic to pets.",
+    "beginner_friendly": "Yes, it's perfect for beginners due to its minimal care needs."
+    },
+    "how_to_plant": "Plant in well-draining succulent mix and place in a sunny spot with good airflow.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 10-14 days",
+        "description": "Allow the soil to dry completely between waterings."
+      },
+      "light": {
+        "description": "Prefers full sun or bright indirect light to maintain compact growth.",
+        "type": "Full Sun / Bright Indirect Light"
+      },
+      "fertilizer": {
+        "description": "Fertilize with a balanced liquid fertilizer once every 4-6 weeks during the growing season.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "15-30°C",
+        "description": "Thrives in moderate to warm temperatures; avoid freezing temperatures."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Requires low humidity; avoid excess moisture."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-draining succulent mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "4-6 inch diameter",
+    "benefits": [
+      "Attractive rosette shape",
+      "Low maintenance",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Sempervivum?",
+        "answer": "Water every 10-14 days, allowing the soil to dry completely between waterings."
+      },
+      {
+        "question": "Can Sempervivum grow indoors?",
+        "answer": "Yes, but ensure it gets enough sunlight, such as from a south-facing window."
+      },
+      {
+        "question": "Is Sempervivum safe for pets?",
+        "answer": "Yes, Sempervivum is non-toxic to cats and dogs."
+      },
+      {
+        "question": "How do I propagate Sempervivum?",
+        "answer": "Sempervivum can be propagated by separating the offsets (chicks) and planting them in fresh soil."
+      },
+      {
+        "question": "Why are my Sempervivum leaves turning brown?",
+        "answer": "This could be a sign of overwatering or exposure to too much direct sunlight."
+      }
+    ]
+  },
+  {
+    "id": "succulent_crassula_001",
+    "common_name": "Crassula",
+    "scientific_name": "Crassula ovata",
+    "category": "Succulents & Cacti Plants",
+  "tags": ["low_maintenance", "sun_loving", "pet_friendly", "succulent", "indoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/llOGwFf-NxwJzr361aX4BtnC5qmWSBT1BMg8HW19c44/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ob3J0/b2xvZ3kuY28udWsv/Y2RuL3Nob3AvcHJv/ZHVjdHMvQ3Jhc3N1/bGEtb3ZhdGEtSmFk/ZS1QbGFudC0zMHg1/MGNtLVJhaW5kcm9w/LUdsb2JlLVBsYW50/ZXItQW50aHJhY2l0/ZS00MngzMGNtLmpw/Zz92PTE3MjM0NjQw/MDgmd2lkdGg9MTIw/MA",
+        "alt_text": "Crassula plant, also known as Jade Plant",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/lWv65h_K5w3qtXjbxCTPewotrDqoi2ILrDUxWuMsHvM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zcC1h/by5zaG9ydHBpeGVs/LmFpL2NsaWVudC90/b193ZWJwLHFfbG9z/c2xlc3MscmV0X2lt/Zyx3XzUxMixoXzUx/Mi9odHRwczovL3d3/dy52aXRyaS5pbi93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/Mi9EU0M3NDE3Lmpw/Zw",
+        "alt_text": "Another view of Crassula plant, also known as Jade Plant",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 199,
+      "offer_price": 159
+    },
+    "rating": 4.6,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-3 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Bright Indirect Light", "Full Sun"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Crassula, or Jade Plant, is a popular succulent that features thick, fleshy leaves and is known for its easy care.",
+      "water": "Water sparingly and allow the soil to dry completely between waterings.",
+      "pet_friendly": "No, Jade Plant is toxic to cats and dogs.",
+    "beginner_friendly": "Yes, Jade Plants are very low-maintenance and ideal for new gardeners."
+    },
+    "how_to_plant": "Plant in well-draining succulent mix and place in a bright location with good sunlight.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Allow the soil to dry out completely between waterings."
+      },
+      "light": {
+        "description": "Prefers bright indirect light or full sun for healthy growth.",
+        "type": "Bright Indirect Light / Full Sun"
+      },
+      "fertilizer": {
+        "description": "Fertilize once a month with a balanced fertilizer during the growing season.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-30°C",
+        "description": "Does well in warm temperatures; avoid frost."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Requires low humidity."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-draining succulent mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Easy care",
+      "Attractive succulent",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Crassula?",
+        "answer": "Water it every 2-3 weeks, allowing the soil to dry completely between waterings."
+      },
+      {
+        "question": "Can Crassula grow indoors?",
+        "answer": "Yes, Crassula can thrive indoors with bright light."
+      },
+      {
+        "question": "Is Crassula safe for pets?",
+        "answer": "Yes, Crassula is non-toxic to cats and dogs."
+      },
+      {
+        "question": "How do I propagate Crassula?",
+        "answer": "Propagate by taking stem cuttings and allowing them to callus over before planting in dry soil."
+      },
+      {
+        "question": "Why are the leaves of my Crassula falling off?",
+        "answer": "This could be due to overwatering, or it might be shedding older leaves naturally."
+      }
+    ]
+  },
+  {
+    "id": "succulent_sansevieria_001",
+    "common_name": "Sansevieria",
+    "scientific_name": "Sansevieria trifasciata",
+    "category": "Succulents & Cacti Plants",
+  "tags": ["low_maintenance", "sun_loving", "pet_friendly", "succulent", "indoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": false
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/HCMddl3Gg1IFwgdysAHY34Qjsv50eMseb3u71qjVHTo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ob3J0/b2xvZ3kuY28udWsv/Y2RuL3Nob3AvZmls/ZXMvU2Fuc2V2aWVy/aWEtemV5bGFuaWNh/LVNuYWtlLVBsYW50/LTIxeDEwMGNtLUJv/bGEtQXJ0c3RvbmUt/UGxhbnQtUG90LUJs/YWNrLTMzeDI5Y20u/anBnP3Y9MTczNDk1/MzI3MSZ3aWR0aD0x/NjAw",
+        "alt_text": "Sansevieria plant with upright, sword-like leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/tuKk8KbzYdga3fES19pDRcjzPnDX1CV08jAMMjPkC_8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGF0/dGhpbGxudXJzZXJ5/LmNvbS93cC1jb250/ZW50L3VwbG9hZHMv/MjAyNC8wMi9zbmFr/ZS00LXBsYWluLWlz/b2xhdGVkLVBsYXR0/LUhpbGwtTlVyc2Vy/eS0xMDAweDEwMDAt/MS53ZWJw",
+        "alt_text": "Another view of Sansevieria plant with upright, sword-like leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 299,
+      "offer_price": 239
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-3 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Low Light", "Bright Indirect Light"],
+      "growth_rate": "Slow"
+    },
+    "description": {
+      "intro": "Sansevieria, also known as Snake Plant or Mother-in-law's Tongue, is a resilient succulent with striking, upright leaves.",
+      "water": "Water sparingly; allow the soil to dry completely between waterings.",
+      "pet_friendly": "No, Sansevieria is toxic to pets if ingested.",
+    "beginner_friendly": "Yes, it's one of the easiest houseplants to care for."
+    },
+    "how_to_plant": "Plant in well-draining soil and place in an area with indirect light or low light.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Water only when the soil is completely dry."
+      },
+      "light": {
+        "description": "Thrives in low to bright indirect light. Avoid direct sunlight, which can scorch its leaves.",
+        "type": "Low Light / Bright Indirect Light"
+      },
+      "fertilizer": {
+        "description": "Fertilize once a month during the growing season with a balanced, water-soluble fertilizer.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-30°C",
+        "description": "Sansevieria prefers warm temperatures and can tolerate a wide range of conditions."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Sansevieria thrives in dry air and does not need high humidity."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Year-round",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Well-draining cactus/succulent mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Low maintenance",
+      "Air purifying",
+      "Pet-safe"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Sansevieria?",
+        "answer": "Water it every 2-3 weeks, allowing the soil to dry completely between waterings."
+      },
+      {
+        "question": "Can Sansevieria grow in low light?",
+        "answer": "Yes, it is known for thriving in low light conditions, making it an ideal plant for shaded areas."
+      },
+      {
+        "question": "Is Sansevieria safe for pets?",
+        "answer": "Yes, it is non-toxic to both cats and dogs."
+      },
+      {
+        "question": "How can I propagate Sansevieria?",
+        "answer": "You can propagate Sansevieria by dividing the rhizomes or by cutting and rooting leaf sections."
+      },
+      {
+        "question": "Why are the tips of my Sansevieria leaves turning brown?",
+        "answer": "Brown tips may indicate overwatering or exposure to too much direct sunlight."
+      }
+    ]
+  }  
+]

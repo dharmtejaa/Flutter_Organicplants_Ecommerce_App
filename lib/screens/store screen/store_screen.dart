@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/screens/entry%20screen/entry_screen.dart';
+import 'package:organicplants/services/all_plants_global_data.dart';
+import 'package:organicplants/services/app_sizes.dart';
+import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
+import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
+import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
+
+class StoreTab extends StatefulWidget {
+  const StoreTab({super.key});
+
+  @override
+  State<StoreTab> createState() => _StoreTabState();
+}
+
+class _StoreTabState extends State<StoreTab> {
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    // double height = MediaQuery.of(context).size.height;
+    // double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        //automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          iconSize: AppSizes.iconMd,
+          color: colorScheme.onSurface,
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => EntryScreen()),
+            );
+          },
+        ),
+        title: Text(
+          "Organic Plants Store",
+          style: TextStyle(
+            color: colorScheme.onSurface,
+            fontSize: AppSizes.fontLg,
+            //fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          WishlistIconWithBadge(),
+          CartIconWithBadge(),
+          SizedBox(width: 10.w),
+        ],
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: AppSizes.paddingAllXs,
+          child: Column(
+            children: [
+              Expanded(
+                child: GridView.builder(
+                  itemCount: categories.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1, // Adjusted for better aspect ratio
+                  ),
+
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 0.5.w,
+                        vertical: 0.5.h,
+                      ), //
+                      child: GestureDetector(
+                        onTap: () {
+                          // Navigate to PlantCategory with the selected category
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => PlantCategory(
+                                    plant: getPlantsByCategory(
+                                      categories[index]['filterTag']!
+                                          .toLowerCase()
+                                          .trim(),
+                                    ),
+                                    category: categories[index]['title']!,
+                                  ),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ClipOval(
+                              child: Image.asset(
+                                categories[index]['imagePath']!,
+                                width: 0.30.sw,
+                                height: 0.14.sh,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              categories[index]['title']!,
+                              //textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: AppSizes.fontLg,
+                                color: colorScheme.onSurface,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

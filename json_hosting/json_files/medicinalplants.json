@@ -1,0 +1,1052 @@
+[
+  {
+    "id": "medicinal_aloevera_001",
+    "common_name": "Aloe Vera",
+    "scientific_name": "Aloe barbadensis miller",
+    "category": "Medicinal Plants",
+  "tags": ["air_purifying", "low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/OBVJJkUKK_W6maxluWLgyT2-NmxZwAk0I5e4KtGdt-g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ob3J0/b2xvZ3kuY28udWsv/Y2RuL3Nob3AvZmls/ZXMvQWxvZS12ZXJh/LTE1eDUwY20tTW9u/emEtUGxhbnQtUG90/LUJvdGFuaWNhbC1G/ZXJuLTE3eDE3Y21f/ZTkyNTdhMjAtMTkx/ZC00NzM0LWJiYzIt/ODcxYWQ3NjlkMzQw/XzE2MDB4LmpwZz92/PTE3Mzk5ODM2OTU",
+        "alt_text": "Mature Aloe Vera plant with thick green leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/04z2VeLmSd4LOLU515Vo4AXYmLqrnTHF36bC6ZISftg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGFu/dG9sb2d5dXNhLmNv/bS9jZG4vc2hvcC9w/cm9kdWN0cy9hbG9l/LXZlcmEtbWVkaWNp/bmFsLWFsb2UtcGxh/bnRvbG9neXVzYS1t/ZWRpdW0tMTQtMTgt/NzIzMzI2LmpwZz92/PTE3MzUyODQxNTQm/d2lkdGg9NDgw",
+        "alt_text": "Another view of Mature Aloe Vera plant with thick green leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 149,
+      "offer_price": 119
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-2 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Bright Indirect Light", "Full Sun"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Aloe Vera is a succulent known for its healing gel used to soothe skin, burns, and other ailments.",
+      "water": "Allow soil to dry out between waterings.",
+      "pet_friendly": "No, Aloe Vera is toxic to pets (cats and dogs).",
+    "beginner_friendly": "Yes, Aloe Vera is very easy to grow and suitable for beginners."
+    },
+    "how_to_plant": "Plant in well-draining soil, preferably a cactus mix, and place in a bright, sunny location.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2 weeks",
+        "description": "Water thoroughly only when soil is completely dry."
+      },
+      "light": {
+        "description": "Prefers bright, indirect sunlight or partial sun.",
+        "type": "Bright Indirect Light / Partial Sun"
+      },
+      "fertilizer": {
+        "description": "Feed with succulent fertilizer once a month during spring and summer.",
+        "type": "Succulent Fertilizer"
+      },
+      "temperature": {
+        "range": "15-30°C",
+        "description": "Thrives in warm climates; avoid freezing temperatures."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Prefers dry air environments."
+      }
+    },
+    "toxicity": "Mildly toxic to pets if ingested",
+    "season": "Spring to Summer",
+    "flowering": false,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-draining, sandy soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Natural skin soother",
+      "Supports wound healing",
+      "Low water needs"
+    ],
+    "faqs": [
+      {
+        "question": "Can I use Aloe Vera directly on my skin?",
+        "answer": "Yes, the gel inside the leaves can be used to treat burns and skin irritation."
+      },
+      {
+        "question": "How often should I water Aloe Vera?",
+        "answer": "Water every 2-3 weeks, allowing the soil to dry out completely."
+      },
+      {
+        "question": "Is Aloe Vera safe for pets?",
+        "answer": "No, it can cause mild irritation if ingested by cats or dogs."
+      },
+      {
+        "question": "Does Aloe Vera need a lot of sunlight?",
+        "answer": "It prefers bright light but can tolerate some direct sun."
+      },
+      {
+        "question": "How do I propagate Aloe Vera?",
+        "answer": "By separating the offsets or 'pups' from the base and replanting them."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_tulsi_001",
+    "common_name": "Tulsi (Holy Basil)",
+    "scientific_name": "Ocimum tenuiflorum",
+    "category": "Medicinal Plants",
+  "tags": ["air_purifying", "low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/Bqtwtr97OEluuoaVyccfLKtjnTgAW-CcPq17U9ejoNk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NTFKQXZZV3JZSkwu/anBn",
+        "alt_text": "Tulsi plant with green leaves in a pot",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/eMWqHRhO4_8CMzzsnmhKu1rwktztJB660GYxw6HrMrU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NDFUdHJxeVJFYUwu/anBn",
+        "alt_text": "Another view of Tulsi plant with green leaves in a pot",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 79,
+      "offer_price": 64
+    },
+    "rating": 4.9,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-2 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Full Sun", "Partial Shade"],
+      "growth_rate": "Fast"
+    },
+    "description": {
+      "intro": "Tulsi, or Holy Basil, is revered for its spiritual significance and wide range of medicinal benefits.",
+      "water": "Keep soil moist but not waterlogged.",
+      "pet_friendly": "Yes, Tulsi is generally considered safe for pets.",
+    "beginner_friendly": "Yes, Tulsi is easy to grow both indoors and outdoors and great for beginners."
+    },
+    "how_to_plant": "Plant in well-drained, fertile soil and place in full sunlight. Water regularly.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times per week",
+        "description": "Water when the top inch of soil feels dry."
+      },
+      "light": {
+        "description": "Thrives in direct sun but can tolerate partial shade.",
+        "type": "Full Sun / Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Use organic compost or liquid fertilizer once a month.",
+        "type": "Organic Fertilizer"
+      },
+      "temperature": {
+        "range": "20-35°C",
+        "description": "Prefers warm temperatures and does not tolerate frost."
+      },
+      "humidity": {
+        "level": "Moderate",
+        "description": "Can handle typical indoor humidity levels well."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Early Winter",
+    "flowering": true,
+    "placement": "Outdoor/Indoor near window",
+    "soil_type": "Fertile, well-drained soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Boosts immunity",
+      "Used in Ayurvedic medicine",
+      "Acts as a natural air purifier"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water Tulsi?",
+        "answer": "Water 2-3 times per week, keeping the soil slightly moist."
+      },
+      {
+        "question": "Can Tulsi be grown indoors?",
+        "answer": "Yes, as long as it receives plenty of sunlight."
+      },
+      {
+        "question": "Is Tulsi edible?",
+        "answer": "Yes, it’s often used in herbal teas and remedies."
+      },
+      {
+        "question": "Does Tulsi require full sunlight?",
+        "answer": "Yes, it grows best in direct sunlight for several hours a day."
+      },
+      {
+        "question": "How do I prune Tulsi?",
+        "answer": "Pinch off the tops regularly to encourage bushier growth."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_neem_001",
+    "common_name": "Neem",
+    "scientific_name": "Azadirachta indica",
+    "category": "Medicinal Plants",
+  "tags": ["low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/hEf5OvPcDtOTQwzhMBtCLjiIxrys_9H_qog58ZKPVpc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTQz/NzkzMjA4MS9waG90/by9wb3R0ZWQtcGxh/bnQtYWdhaW5zdC13/aGl0ZS1iYWNrZ3Jv/dW5kLmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz0yQjBETVNf/MERnRXpKR1V5VVpl/UndpdWVpNkQtVEFR/ZGJ6eTdyRVBoY2xn/PQ",
+        "alt_text": "Neem plant with bright green serrated leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/8mHK8vEsLVIz072YySnYLDP20A4jmeTnefh6dx8hXoo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAwLzM1Lzk4LzYx/LzM2MF9GXzM1OTg2/MTc2X2RndkFySFJs/NGlqNTdtVGtNREdF/Ym91SWdzVzR4WElR/LmpwZw",
+        "alt_text": "Another view of Neem plant with bright green serrated leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 119,
+      "offer_price": 96
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "3-6 feet (container); up to 50 feet in ground",
+      "width": "2-4 feet (container); 20 feet in ground",
+      "sunlight": ["Full Sun"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Neem is a powerful medicinal plant known for its antibacterial, antifungal, and insect-repelling properties.",
+      "water": "Water only when the top 2 inches of soil are dry.",
+      "pet_friendly": "Yes, Neem is generally non-toxic but should not be consumed in large amounts by pets.",
+    "beginner_friendly": "Yes, Neem is hardy and beginner-friendly when grown in warm climates."
+    },
+    "how_to_plant": "Plant in a large container or outdoors in full sun. Use well-drained, loamy soil.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Once a week",
+        "description": "Let the soil dry out between waterings."
+      },
+      "light": {
+        "description": "Needs direct sunlight for optimal growth.",
+        "type": "Full Sun"
+      },
+      "fertilizer": {
+        "description": "Apply compost or a balanced organic fertilizer once a month.",
+        "type": "Organic Fertilizer"
+      },
+      "temperature": {
+        "range": "20-38°C",
+        "description": "Thrives in hot, dry climates."
+      },
+      "humidity": {
+        "level": "Low to Moderate",
+        "description": "Prefers dry air and is drought tolerant."
+      }
+    },
+    "toxicity": "Mildly toxic to pets if ingested in large quantities",
+    "season": "Year-round in warm climates",
+    "flowering": true,
+    "placement": "Outdoor (or sunny balcony)",
+    "soil_type": "Loamy, well-draining soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "12-14 inch diameter or larger",
+    "benefits": [
+      "Natural pesticide",
+      "Antibacterial and antifungal uses",
+      "Air purification"
+    ],
+    "faqs": [
+      {
+        "question": "Is Neem safe for pets?",
+        "answer": "Neem can be mildly toxic if ingested by pets in large quantities."
+      },
+      {
+        "question": "Can Neem be grown indoors?",
+        "answer": "It's best grown outdoors but can survive indoors with enough sunlight."
+      },
+      {
+        "question": "What are Neem's medicinal uses?",
+        "answer": "Neem leaves and oil are used for skin care, dental care, and as a natural insect repellent."
+      },
+      {
+        "question": "Does Neem need frequent watering?",
+        "answer": "No, it's drought-tolerant and should be watered only when the soil is dry."
+      },
+      {
+        "question": "How fast does Neem grow?",
+        "answer": "It has a moderate growth rate, faster in warm, sunny environments."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_turmeric_001",
+    "common_name": "Turmeric",
+    "scientific_name": "Curcuma longa",
+    "category": "Medicinal Plants",
+  "tags": ["low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": false,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/25ewqq-lRyaKfAfpcgrzNvssgtrkulseL9G5akq_Bj0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc3F1YXJlc3Bh/Y2UtY2RuLmNvbS9j/b250ZW50L3YxLzYw/NzQ1M2NhNDBjZjlh/NzkwOTM3NWFiOC8x/NjIyNTcwNTA3Mjc4/LUY0N0syVkdOVVRD/UFo2RU5KWUI4L251/cnNlcnlsaXZlLXBs/YW50cy10dXJtZXJp/Yy1oYWxkaS1wbGFu/dC1jdXJjdW1hLWxv/bmdhLXBsYW50LTE2/OTY5NDA3NDYzNTY0/XzUxMng1MTIuanBn",
+        "alt_text": "Turmeric plant with broad green leaves and yellow-orange rhizomes",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/EFQm1e-qXk3NbEIkxr1yE_1G5N-eY-tEyteGxCAsVgc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc3F1YXJlc3Bh/Y2UtY2RuLmNvbS9j/b250ZW50L3YxLzUy/ZjcwOTQ2ZTRiMDQ1/ZmFlOTEzMjVjOS8x/NDk5MzkxNDg3MzI3/LTNWM1dTUEwyRDM0/TERNVFRCVDVYL3R1/cm1lcmljLXBsYW50/LXJvb3Qtcmhpem9t/ZS5qcGc",
+        "alt_text": "Another view of Turmeric plant with broad green leaves and yellow-orange rhizomes",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 119,
+      "offer_price": 96
+    },
+    "rating": 4.6,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "2-3 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Partial Shade", "Filtered Sunlight"],
+      "growth_rate": "Moderate to Fast"
+    },
+    "description": {
+      "intro": "Turmeric is a tropical plant prized for its rhizomes, which are widely used for medicinal and culinary purposes.",
+      "water": "Keep soil consistently moist but not soggy.",
+      "pet_friendly": "Yes, Turmeric is safe for pets in small amounts.",
+    "beginner_friendly": "Yes, Turmeric is easy to grow in warm and humid climates, ideal for beginners."
+    },
+    "how_to_plant": "Plant turmeric rhizomes 2 inches deep in rich, well-drained soil. Choose a warm, humid spot with filtered sunlight.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times a week",
+        "description": "Ensure soil stays moist during active growth, reduce watering after leaves yellow."
+      },
+      "light": {
+        "description": "Prefers partial shade or filtered sunlight; avoid direct harsh sun.",
+        "type": "Partial Shade / Filtered Sunlight"
+      },
+      "fertilizer": {
+        "description": "Use compost or a balanced fertilizer monthly.",
+        "type": "Organic Fertilizer"
+      },
+      "temperature": {
+        "range": "20-35°C",
+        "description": "Loves warm, humid climates and cannot tolerate frost."
+      },
+      "humidity": {
+        "level": "High",
+        "description": "Prefers high humidity and warm conditions."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Outdoor or bright indoor space",
+    "soil_type": "Rich, well-drained loamy soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "12-14 inch depth container",
+    "benefits": [
+      "Anti-inflammatory properties",
+      "Used in cooking and herbal medicine",
+      "Bright, ornamental foliage"
+    ],
+    "faqs": [
+      {
+        "question": "Can I grow turmeric indoors?",
+        "answer": "Yes, if you can provide warmth, humidity, and filtered sunlight."
+      },
+      {
+        "question": "When is turmeric ready to harvest?",
+        "answer": "Typically 8-10 months after planting, when the leaves begin to yellow and die back."
+      },
+      {
+        "question": "Is turmeric safe for pets?",
+        "answer": "Yes, turmeric is generally considered non-toxic to pets."
+      },
+      {
+        "question": "How do I store harvested turmeric?",
+        "answer": "Dry or refrigerate the rhizomes. You can also process them into powder."
+      },
+      {
+        "question": "Does turmeric flower?",
+        "answer": "Yes, it produces cone-shaped flowers, though flowering is rare indoors."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_ginger_001",
+    "common_name": "Ginger",
+    "scientific_name": "Zingiber officinale",
+    "category": "Medicinal Plants",
+  "tags": ["low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": false,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://balconygardenweb.b-cdn.net/wp-content/uploads/2019/03/grow-ginger-in-pot.jpg",
+        "alt_text": "Ginger plant with upright green leaves and visible rhizomes",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/C4-y4KGOPboxqsiudOe7HvGNVmZdE8RBy9d9wnnpAlU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAwLzk3LzcyLzA1/LzM2MF9GXzk3NzIw/NTc2X1lXS0JkRHF6/RjhkT1ZVMDNFUWZJ/V096Q09RVGM2ZGlW/LmpwZw",
+        "alt_text": "Another view of Ginger plant with upright green leaves and visible rhizomes",
+        "type": "side"
+      }   
+    ],
+    "prices": {
+      "original_price": 99,
+      "offer_price": 79
+    },
+    "rating": 4.7,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "2-4 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Partial Shade"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Ginger is a tropical plant grown for its aromatic rhizomes, widely used in cooking and traditional medicine.",
+      "water": "Keep the soil consistently moist, especially during active growth.",
+      "pet_friendly": "Yes, Ginger is safe for pets in small quantities.",
+    "beginner_friendly": "Yes, Ginger grows well in containers and is beginner-friendly."
+    },
+    "how_to_plant": "Plant ginger rhizomes 2-3 inches deep in moist, well-draining soil in a warm, humid spot.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times a week",
+        "description": "Water regularly to keep the soil moist but not waterlogged."
+      },
+      "light": {
+        "description": "Thrives in partial shade with indirect sunlight.",
+        "type": "Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Feed with a balanced organic fertilizer every 4 weeks during the growing season.",
+        "type": "Organic Fertilizer"
+      },
+      "temperature": {
+        "range": "20-30°C",
+        "description": "Prefers warm temperatures and cannot tolerate frost."
+      },
+      "humidity": {
+        "level": "High",
+        "description": "Grows best in humid conditions; mist the plant if kept indoors."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor near a bright window or shaded outdoor garden",
+    "soil_type": "Moist, rich, well-drained soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "14-16 inch wide, deep container",
+    "benefits": [
+      "Aids digestion",
+      "Boosts immunity",
+      "Popular spice in culinary dishes"
+    ],
+    "faqs": [
+      {
+        "question": "How long does ginger take to grow?",
+        "answer": "It typically takes 8-10 months to mature for harvesting."
+      },
+      {
+        "question": "Can I grow ginger indoors?",
+        "answer": "Yes, as long as it receives warmth, humidity, and indirect light."
+      },
+      {
+        "question": "Is ginger pet-friendly?",
+        "answer": "Yes, it is considered non-toxic to pets."
+      },
+      {
+        "question": "How do I know when ginger is ready to harvest?",
+        "answer": "Harvest when leaves begin to yellow and die back, usually 8+ months after planting."
+      },
+      {
+        "question": "Can I grow ginger from store-bought rhizomes?",
+        "answer": "Yes, if they're fresh, firm, and have visible buds or eyes."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_ashwagandha_001",
+    "common_name": "Ashwagandha",
+    "scientific_name": "Withania somnifera",
+    "category": "Medicinal Plants",
+  "tags": ["low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/NkTQB-nZWbTtiqtWyajWyCZQ3wy5VjAlOq7-OGvLJa4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bGlscGxhbnRzLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/Ny8wOC9Bc2h3YWdh/bmRoYS1QbGFudC0x/LTYwMHg2MDAuanBn",
+        "alt_text": "Ashwagandha plant with green leaves and red berries",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/NkTQB-nZWbTtiqtWyajWyCZQ3wy5VjAlOq7-OGvLJa4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bGlscGxhbnRzLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/Ny8wOC9Bc2h3YWdh/bmRoYS1QbGFudC0x/LTYwMHg2MDAuanBn",
+        "alt_text": "Another view of Ashwagandha plant with green leaves and red berries",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 119,
+      "offer_price": 96
+    },
+    "rating": 4.6,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "2-3 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Full Sun"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Ashwagandha is a powerful adaptogenic herb known for reducing stress, improving energy, and boosting overall well-being.",
+      "water": "Water moderately and allow the soil to dry out between waterings.",
+      "pet_friendly": "Yes, Ashwagandha is generally safe for pets but avoid excessive ingestion.",
+    "beginner_friendly": "Yes, Ashwagandha is drought-tolerant and easy to grow, good for beginners."
+    },
+    "how_to_plant": "Sow seeds directly into well-drained soil in full sun. Space plants 2 feet apart.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Once a week",
+        "description": "Water deeply but infrequently, once the topsoil dries out."
+      },
+      "light": {
+        "description": "Requires full sun exposure for optimal growth.",
+        "type": "Full Sun"
+      },
+      "fertilizer": {
+        "description": "Minimal fertilization needed; compost once during early growth is sufficient.",
+        "type": "Organic Compost"
+      },
+      "temperature": {
+        "range": "20-35°C",
+        "description": "Prefers hot, dry climates and does not tolerate frost."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Thrives in dry conditions; avoid high humidity."
+      }
+    },
+    "toxicity": "Mildly toxic if ingested in large amounts (especially berries)",
+    "season": "Spring to Autumn",
+    "flowering": true,
+    "placement": "Outdoor garden or large container in sunlit areas",
+    "soil_type": "Sandy, well-drained soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "12-14 inch deep container",
+    "benefits": [
+      "Reduces stress and anxiety",
+      "Boosts immunity",
+      "Improves sleep and vitality"
+    ],
+    "faqs": [
+      {
+        "question": "Is Ashwagandha easy to grow?",
+        "answer": "Yes, it’s drought-tolerant and requires minimal maintenance."
+      },
+      {
+        "question": "Can I consume the leaves or roots?",
+        "answer": "Yes, but roots are traditionally used after drying and processing."
+      },
+      {
+        "question": "Is Ashwagandha safe for pets?",
+        "answer": "No, it is considered mildly toxic to cats and dogs."
+      },
+      {
+        "question": "How long does Ashwagandha take to mature?",
+        "answer": "It takes about 150-180 days to reach full maturity."
+      },
+      {
+        "question": "Can I grow Ashwagandha in pots?",
+        "answer": "Yes, as long as the container has good drainage and full sun exposure."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_brahmi_001",
+    "common_name": "Brahmi",
+    "scientific_name": "Bacopa monnieri",
+    "category": "Medicinal Plants",
+  "tags": ["air_purifying", "low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/q9ZUBj6USNk9WVx4aT-Z_AR5FSze1PRKtdE8eR16U14/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93ZWtu/b3d3YXRlcmdhcmRl/bnMuY29tLmF1L2Nk/bi9zaG9wL3Byb2R1/Y3RzL2JyYWhtaV9i/YWNvcGFfbW9ubmll/cmlfeF8xLmpwZz92/PTE1NjU4MzY0Njkm/d2lkdGg9MTIwMA",
+        "alt_text": "Brahmi plant with small green leaves and white flowers",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/s8bMGXPvEFaAbpdZkitJdbbSzJpCP4aO0iglkiyQ5QM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hcXVh/cml1bXBsYW50c2Zh/Y3RvcnkuY29tL2Nk/bi9zaG9wL3Byb2R1/Y3RzL2JhY29wYS1t/b25uaWVyaS00Mjk4/NTkuanBnP3Y9MTYy/NTAxMzkyNiZ3aWR0/aD0xNjAw",
+        "alt_text": "Another view of Brahmi plant with small green leaves and white flowers",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 99,
+      "offer_price": 79
+    },
+    "rating": 4.7,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "4-6 inches",
+      "width": "spreading ground cover",
+      "sunlight": ["Full Sun", "Partial Shade"],
+      "growth_rate": "Fast"
+    },
+    "description": {
+      "intro": "Brahmi is a creeping herb known for its cognitive-enhancing and stress-relieving properties.",
+      "water": "Prefers consistently moist soil. Avoid letting it dry out completely.",
+      "pet_friendly": "Yes, Brahmi is non-toxic to pets.",
+    "beginner_friendly": "Yes, Brahmi is a fast-growing plant that is beginner-friendly."
+    },
+    "how_to_plant": "Plant in moist soil in a sunny or partially shaded area. Ideal for hanging baskets or as ground cover.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times a week",
+        "description": "Keep the soil moist but not soggy. Do not allow it to dry out completely."
+      },
+      "light": {
+        "description": "Thrives in full sun but tolerates partial shade.",
+        "type": "Full Sun to Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Apply balanced liquid fertilizer once every 2 weeks.",
+        "type": "Balanced Liquid Fertilizer"
+      },
+      "temperature": {
+        "range": "18-32°C",
+        "description": "Prefers warm climates; protect from frost."
+      },
+      "humidity": {
+        "level": "Medium to High",
+        "description": "Enjoys moderate to high humidity environments."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Autumn",
+    "flowering": true,
+    "placement": "Indoor hanging basket or outdoor herb garden",
+    "soil_type": "Rich, moist soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "8-10 inch hanging basket or shallow container",
+    "benefits": [
+      "Improves memory and concentration",
+      "Relieves anxiety and stress",
+      "Used in Ayurvedic medicine"
+    ],
+    "faqs": [
+      {
+        "question": "Can I grow Brahmi indoors?",
+        "answer": "Yes, it does well in containers with enough moisture and light."
+      },
+      {
+        "question": "Is Brahmi edible?",
+        "answer": "Yes, its leaves are commonly used in herbal medicine and teas."
+      },
+      {
+        "question": "Is Brahmi safe for pets?",
+        "answer": "Yes, it is non-toxic to cats and dogs."
+      },
+      {
+        "question": "How do I use Brahmi for health benefits?",
+        "answer": "Leaves can be dried and used in teas or taken as a supplement."
+      },
+      {
+        "question": "Does Brahmi need a lot of sunlight?",
+        "answer": "It thrives in full sun but tolerates partial shade too."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_peppermint_001",
+    "common_name": "Peppermint",
+    "scientific_name": "Mentha piperita",
+    "category": "Medicinal Plants",
+  "tags": ["low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/emoYLAYfgaG94ufblCYlzdhkJ8XaIyQI9OfW53DqbFQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMx/NjQzNDQyNy9waG90/by9wZXBwZXJtaW50/LWluLXBvdC13aXRo/LXdoaXRlLWJhY2tn/cm91bmQuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPVN6Vk1L/QUtZQ2JCUEFjWW85/N3JzT1g2aTBUVWVO/emVncWRPUk1QMloz/a009",
+        "alt_text": "Peppermint plant with bright green leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/qI_lUN1qQwEugj2JqBfvvCqXfqJfX-iShX1kiU2vQ6A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTA5/MDk5MDc0Mi9waG90/by9mcmVzaC1taW50/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz1sbURiT3ZQSFZ6/VUs2OTZDOGszUkZk/ZG93N1AxS1ZLNzNU/bGNRd1NxV0c4PQ",
+        "alt_text": "Another view of Peppermint plant with bright green leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 79,
+      "offer_price": 64
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "12-24 inches",
+      "width": "24-36 inches",
+      "sunlight": ["Full Sun", "Partial Shade"],
+      "growth_rate": "Fast"
+    },
+    "description": {
+      "intro": "Peppermint is a highly aromatic herb used for its medicinal, digestive, and culinary properties.",
+      "water": "Keep the soil moist, but avoid waterlogging.",
+      "pet_friendly": "Yes, Peppermint is generally safe, but large amounts can cause mild issues.",
+    "beginner_friendly": "Yes, Peppermint is one of the easiest herbs to grow and great for beginners."
+    },
+    "how_to_plant": "Plant in a sunny or partially shaded spot with moist, well-drained soil. Use containers to contain its spread.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times a week",
+        "description": "Keep the soil consistently moist, but ensure good drainage to prevent root rot."
+      },
+      "light": {
+        "description": "Prefers full sun but can tolerate partial shade.",
+        "type": "Full Sun to Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Fertilize with a balanced liquid fertilizer once every 4-6 weeks.",
+        "type": "Balanced Liquid Fertilizer"
+      },
+      "temperature": {
+        "range": "15-30°C",
+        "description": "Peppermint prefers moderate to warm temperatures and should be protected from frost."
+      },
+      "humidity": {
+        "level": "Medium",
+        "description": "Enjoys moderate humidity, but can tolerate dry air in the absence of extreme conditions."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Autumn",
+    "flowering": true,
+    "placement": "Indoor container or outdoor garden",
+    "soil_type": "Moist, well-drained soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "8-10 inch diameter container",
+    "benefits": [
+      "Relieves digestive issues like bloating and indigestion",
+      "Used in teas for calming effects",
+      "Aromatherapy benefits"
+    ],
+    "faqs": [
+      {
+        "question": "How do I use peppermint for digestion?",
+        "answer": "Brew fresh peppermint leaves into tea or chew the leaves directly for relief."
+      },
+      {
+        "question": "Can peppermint be grown in pots?",
+        "answer": "Yes, growing peppermint in pots helps to control its spreading habit."
+      },
+      {
+        "question": "Is peppermint safe for pets?",
+        "answer": "Yes, peppermint is non-toxic to pets, but it should be kept away from excessive amounts."
+      },
+      {
+        "question": "Does peppermint need full sun?",
+        "answer": "Peppermint thrives in full sun but can tolerate partial shade."
+      },
+      {
+        "question": "How often should I water peppermint?",
+        "answer": "Water peppermint regularly, keeping the soil moist but not waterlogged."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_chamomile_001",
+    "common_name": "Chamomile",
+    "scientific_name": "Matricaria chamomilla",
+    "category": "Medicinal Plants",
+    "tags": ["low_maintenance", "medicinal", "edible", "outdoor"],
+    "attributes": {
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": false,
+      "is_pet_friendly": true,
+      "is_beginner_friendly": true,
+      "is_flowering": true,
+      "is_sun_loving": true,
+      "is_shadow_loving": false,
+      "is_edible": true
+    },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/7sUzcRK5LKXqfIUvKUIXvKPiCLe2Zzezc0uKWZy9O_s/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aGVyYmNvdHRhZ2Uu/Y29tLmF1L2Nkbi9z/aG9wL3Byb2R1Y3Rz/L2NoYW1vbWlsZS1n/ZXJtYW5fMjI2eC5q/cGc_dj0xNjQ0ODI4/MTIx",
+        "alt_text": "Chamomile flowers with delicate white petals",
+        "type": "main"
+      }, 
+      {
+        "url": "https://imgs.search.brave.com/UDTWGGTLkBL1f-Xxnek_13XI8snRwuXvtRqm7I6wtQc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGhlc3BydWNlLmNv/bS90aG1iL2JpR04w/V050WHJpeEhNMEVi/Q01QdWp2VWV3Zz0v/MTUwMHgwL2ZpbHRl/cnM6bm9fdXBzY2Fs/ZSgpOm1heF9ieXRl/cygxNTAwMDApOnN0/cmlwX2ljYygpL2hv/dy10by1ncm93LWNo/YW1vbWlsZS0xNDAy/NjI3LTAxLWE0MzAz/NjM2ZTNlYzRjM2U5/Yzk2MDI1MWE4NjY5/MDU4LmpwZw",
+        "alt_text": "Another view of Chamomile flowers with delicate white petals",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 119,
+      "offer_price": 96
+    },
+    "rating": 4.9,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "8-24 inches",
+      "width": "12-18 inches",
+      "sunlight": ["Full Sun", "Partial Shade"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Chamomile is known for its calming properties and is widely used in teas and essential oils.",
+      "water": "Keep the soil evenly moist, but not soggy.",
+"pet_friendly": "No, Chamomile can be mildly toxic to pets (especially cats and dogs) if ingested in large amounts.",
+    "beginner_friendly": "Yes, Chamomile is easy to grow and suitable for beginner gardeners."
+    },
+    "how_to_plant": "Plant chamomile in well-drained soil in a sunny or partially shaded spot. It grows well in containers or in the ground.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times a week",
+        "description": "Ensure the soil stays moist, but avoid waterlogging. Allow the topsoil to dry out slightly between waterings."
+      },
+      "light": {
+        "description": "Chamomile thrives in full sun but will also do well in partial shade.",
+        "type": "Full Sun to Partial Shade"
+      },
+      "fertilizer": {
+        "description": "Chamomile does not require heavy fertilization. Use a balanced fertilizer once a month during the growing season.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "15-25°C",
+        "description": "Chamomile prefers moderate temperatures and can tolerate light frost."
+      },
+      "humidity": {
+        "level": "Medium",
+        "description": "Prefers moderate humidity, especially when grown indoors."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor or Outdoor",
+    "soil_type": "Well-drained, sandy or loamy soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter pot",
+    "benefits": [
+      "Calming and stress-relieving properties",
+      "Used in teas to aid sleep",
+      "Good for digestive health"
+    ],
+    "faqs": [
+      {
+        "question": "How do I use chamomile for sleep?",
+        "answer": "Brew chamomile flowers into tea before bed to help calm the mind and promote restful sleep."
+      },
+      {
+        "question": "Can chamomile be grown indoors?",
+        "answer": "Yes, chamomile can be grown indoors on a sunny windowsill."
+      },
+      {
+        "question": "Is chamomile safe for pets?",
+        "answer": "Yes, chamomile is non-toxic to pets, but it should be consumed in moderation."
+      },
+      {
+        "question": "Does chamomile need full sun?",
+        "answer": "Chamomile grows best in full sun but can tolerate partial shade."
+      },
+      {
+        "question": "How often should I water chamomile?",
+        "answer": "Water chamomile regularly to keep the soil moist, but avoid overwatering as it does not like soggy soil."
+      }
+    ]
+  },
+  {
+    "id": "medicinal_gotu_kola_001",
+    "common_name": "Gotu Kola",
+    "scientific_name": "Centella asiatica",
+    "category": "Medicinal Plants",
+  "tags": ["low_maintenance", "medicinal", "edible", "outdoor"],
+  "attributes": {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": true,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": true,
+    "is_shadow_loving": false,
+    "is_edible": true
+  },
+    "images": [
+      {
+        "url": "https://imgs.search.brave.com/JqsMREYVOhZ4EjWZWZ177FJG4D-TUKDvAnOm4dicebc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aGVyYmNvdHRhZ2Uu/Y29tLmF1L2Nkbi9z/aG9wL3Byb2R1Y3Rz/L2dvdHUta29sYV80/XzIyNnguanBnP3Y9/MTY0NDgyNjc5Mg",
+        "alt_text": "Gotu Kola leaves with vibrant green color",
+        "type": "main"
+      },
+      {
+        "url": "https://imgs.search.brave.com/wK_0ljrHIUb2UJczEiT3E9LNroWX9m8Rjp_rcdPUhrE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLmV0/c3lzdGF0aWMuY29t/LzIwOTk0NTE0L3Iv/aWwvZDZiNjc5LzM2/MDgzOTAxNzEvaWxf/NjAweDYwMC4zNjA4/MzkwMTcxX2tjZjQu/anBn",
+        "alt_text": "Another view of Gotu Kola leaves with vibrant green color",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 119,
+      "offer_price": 96
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "6-12 inches",
+      "width": "12-18 inches",
+      "sunlight": ["Partial Shade", "Full Sun"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Gotu Kola is highly valued in traditional medicine for its cognitive-enhancing and skin-healing properties.",
+      "water": "Keep the soil moist, especially in warm weather.",
+      "pet_friendly": "Yes, Gotu Kola is considered safe for pets.",
+    "beginner_friendly": "Yes, Gotu Kola is a low-maintenance plant and beginner-friendly."
+    },
+    "how_to_plant": "Plant Gotu Kola in rich, well-drained soil in a location with partial shade or filtered sunlight. It is ideal for containers or garden beds.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times a week",
+        "description": "Water regularly to keep the soil evenly moist but not soggy."
+      },
+      "light": {
+        "description": "Prefers partial shade but can tolerate full sun in cooler climates.",
+        "type": "Partial Shade to Full Sun"
+      },
+      "fertilizer": {
+        "description": "Feed with a balanced liquid fertilizer once a month during the growing season.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-30°C",
+        "description": "Prefers warm climates and should be kept in temperatures above 18°C to thrive."
+      },
+      "humidity": {
+        "level": "High",
+        "description": "Gotu Kola enjoys high humidity, so it's best to mist it regularly or keep it in a humid environment."
+      }
+    },
+    "toxicity": "Non-toxic",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor/Outdoor",
+    "soil_type": "Well-drained, fertile soil",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Improves cognitive function",
+      "Aids in skin healing",
+      "Reduces stress and anxiety"
+    ],
+    "faqs": [
+      {
+        "question": "What are the health benefits of Gotu Kola?",
+        "answer": "Gotu Kola is known to improve mental clarity, reduce anxiety, and promote wound healing."
+      },
+      {
+        "question": "How do I grow Gotu Kola indoors?",
+        "answer": "Gotu Kola does well indoors with access to bright, indirect light. Ensure that the soil stays moist and provide humidity if necessary."
+      },
+      {
+        "question": "Is Gotu Kola safe for pets?",
+        "answer": "Yes, Gotu Kola is non-toxic and safe for pets."
+      },
+      {
+        "question": "Can Gotu Kola help with memory?",
+        "answer": "Yes, Gotu Kola is traditionally used to enhance memory and cognitive function."
+      },
+      {
+        "question": "Does Gotu Kola need a lot of sunlight?",
+        "answer": "Gotu Kola prefers partial shade but can tolerate full sun in cooler climates."
+      }
+    ]
+  }
+]  

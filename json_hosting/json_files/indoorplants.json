@@ -1,0 +1,1051 @@
+[
+  {
+    "id": "indoorPlant_snake_001",
+    "common_name": "Snake Plant",
+    "scientific_name": "Sansevieria trifasciata",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes": {
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": true,
+      "is_pet_friendly": false,
+      "is_beginner_friendly": true,
+      "is_flowering": false,
+      "is_sun_loving": false,
+      "is_shadow_loving": true,
+      "is_edible": false
+    },
+
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/2123482/pexels-photo-2123482.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "A close-up of Snake Plant",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/14076390/pexels-photo-14076390.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Snake Plant",
+        "type": "side"
+      }
+    ],
+    "prices": { "original_price": 299, "offer_price": 239 },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "2-4 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Low Light", "Bright Indirect"],
+      "growth_rate": "Slow to Moderate"
+    },
+    "description": {
+      "intro": "The resilient Snake Plant, also known as Mojther-in-Law's Tongue, is a stylish and low-maintenance choice for any indoor space. It's also known for its air-purifying qualities.",
+      "water": "Water when the soil is completely dry, typically every 2-4 weeks.",
+       "pet_friendly": "No, Snake Plant is toxic to pets (cats and dogs).",
+    "beginner_friendly": "Yes, Snake Plant is very easy to care for and ideal for beginners."
+    },
+    "how_to_plant": "Plant in well-draining potting mix in a pot with drainage holes.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-4 weeks",
+        "description": "Let the soil dry out completely before watering."
+      },
+      "light": {
+        "description": "Bright, indirect sunlight is best.",
+        "type": "Indirect"
+      },
+      "fertilizer": {
+        "description": "Feed once a month during growing season.",
+        "type": "General Houseplant Fertilizer"
+      },
+      "temperature": {
+        "range": "15-30°C",
+        "description": "Ideal temperature range for healthy growth."
+      },
+      "humidity": {
+        "level": "Average indoor humidity levels",
+        "description": "Ideal humidity for the plant."
+      }
+    },
+    "toxicity": "Toxic to pets",
+    "season": "All year",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Well-draining potting mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "10-inch diameter",
+    "benefits": [
+      "Air purifier",
+      "Low maintenance",
+      "Stylish decor"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water it?",
+        "answer": "Every 2-4 weeks, allowing the soil to dry out completely."
+      },
+      {
+        "question": "What light does it need?",
+        "answer": "Low to bright indirect light."
+      },
+      {
+        "question": "Is it safe for pets?",
+        "answer": "No, it is toxic if ingested."
+      },
+      {
+        "question": "Is it easy to care for?",
+        "answer": "Yes, it's very low-maintenance."
+      },
+      {
+        "question": "Does it clean the air?",
+        "answer": "Yes, it's known for its air-purifying abilities."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_zz_001",
+    "common_name": "ZZ Plant",
+    "scientific_name": "Zamioculcas zamiifolia",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes" : {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": false,
+    "is_shadow_loving": true,
+    "is_edible": false
+    },
+
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/4753285/pexels-photo-4753285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "A close-up of ZZ Plant",
+        "type": "main"
+      },
+      {
+        "url": " https://images.pexels.com/photos/11363516/pexels-photo-11363516.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of ZZ Plant",
+        "type": "side"
+      }
+
+    ],
+    "prices": {
+      "original_price": 399, "offer_price": 319
+    },
+    "rating": 4.7,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "2-3 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Low Light", "Bright Indirect"],
+      "growth_rate": "Slow"
+    },
+    "description": {
+      "intro": "The ZZ Plant is a robust and resilient plant, perfect for low-light environments. It's known for its glossy leaves and ease of care.",
+      "water": "Water when the soil is completely dry, usually every 2-3 weeks.",
+      "pet_friendly": "No, ZZ Plant is toxic to pets (especially cats and dogs).",
+    "beginner_friendly": "Yes, ZZ Plant is low-maintenance and thrives in low light, making it great for beginners."
+    },
+    "how_to_plant": "Plant in a well-draining potting mix and choose a pot with drainage holes.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Water thoroughly when the soil is dry to the touch, and ensure that the pot has drainage to avoid waterlogging."
+      },
+      "light": {
+        "description": "It prefers low to bright indirect light but can tolerate lower light levels for a long time."
+      },
+      "fertilizer": {
+        "description": "Feed monthly during the growing season (spring to summer) with a balanced fertilizer.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-24°C",
+        "description": "Thrives in normal indoor temperatures."
+      },
+      "humidity": {
+        "level": "Average indoor humidity",
+        "description": "It tolerates dry air well."
+      }
+    },
+    "toxicity": "Toxic to pets",
+    "season": "All year",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Well-draining potting mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Low maintenance",
+      "Tolerates low light",
+      "Air purifier"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water it?",
+        "answer": "Water it every 2-3 weeks, ensuring the soil is completely dry before watering. ZZ plants are drought-tolerant."
+      },
+      {
+        "question": "What light does it need?",
+        "answer": "ZZ Plants can tolerate low light but thrive in bright indirect light. Avoid direct sunlight, as it can burn the leaves."
+      },
+      {
+        "question": "Is it safe for pets?",
+        "answer": "No, ZZ Plants are toxic to cats, dogs, and other pets if ingested."
+      },
+      {
+        "question": "Is it easy to care for?",
+        "answer": "Yes, the ZZ Plant is very low-maintenance, making it perfect for beginners or busy plant owners."
+      },
+      {
+        "question": "How can I help it grow better?",
+        "answer": "To encourage healthy growth, ensure it's in well-draining soil, not overwatered, and gets enough light."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_pothos_001",
+    "common_name": "Pothos",
+    "scientific_name": "Epipremnum aureum",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes" : {
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": false,
+    "is_shadow_loving": true,
+    "is_edible": false
+    },
+    "images": [
+      {
+        "url": "https://example.com/images/pothos_1.jpg",
+        "alt_text": "A close-up of Pothos",
+        "type": "main"
+      }
+    ],
+    "prices": {
+      "original_price": 199,
+      "offer_price": 159
+    },
+    "rating": 4.6,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "6-10 feet",
+      "width": "2-3 feet",
+      "sunlight": ["Low Light", "Bright Indirect"],
+      "growth_rate": "Fast"
+    },
+    "description": {
+      "intro": "Pothos is an easy-care, fast-growing plant with beautiful trailing vines. It's perfect for adding greenery to any space.",
+      "water": "Water when the top inch of soil is dry. It prefers to dry out between waterings.",
+      "pet_friendly": "No, Pothos is toxic to pets (cats and dogs).",
+    "beginner_friendly": "Yes, Pothos is a fast-growing and easy-to-care-for plant, perfect for beginners."
+    },
+    "how_to_plant": "Plant in a well-draining, fast-drying potting mix and choose a pot with drainage holes.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 1-2 weeks",
+        "description": "Water when the top inch of soil feels dry. Overwatering can lead to root rot."
+      },
+      "light": {
+        "description": "Pothos can grow well in low to bright indirect light. It can also tolerate some direct sunlight."
+      },
+      "fertilizer": {
+        "description": "Feed monthly during the growing season (spring to summer) with a balanced fertilizer.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-29°C",
+        "description": "Ideal temperature range for healthy growth."
+      },
+      "humidity": {
+        "level": "Average indoor humidity",
+        "description": "Pothos can tolerate dry air but thrives in moderate humidity."
+      }
+    },
+    "toxicity": "Toxic to pets",
+    "season": "All year",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Well-draining potting mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Low maintenance",
+      "Air purifier",
+      "Fast-growing"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water it?",
+        "answer": "Water when the top inch of soil is dry. Ensure the pot has proper drainage to avoid root rot."
+      },
+      {
+        "question": "What light does it need?",
+        "answer": "It thrives in low to bright indirect light but can also tolerate some direct sunlight."
+      },
+      {
+        "question": "Is it safe for pets?",
+        "answer": "No, Pothos is toxic to cats, dogs, and other pets if ingested."
+      },
+      {
+        "question": "How fast does it grow?",
+        "answer": "Pothos is a fast-growing plant that can quickly fill a space with its trailing vines."
+      },
+      {
+        "question": "How do I propagate it?",
+        "answer": "You can propagate Pothos by cutting a stem just below a node, placing it in water until roots grow, and then transplanting it into soil."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_peace_lily_001",
+    "common_name": "Peace Lily",
+    "scientific_name": "Spathiphyllum spp.",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "flowering", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes" :{
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": true,
+    "is_sun_loving": false,
+    "is_shadow_loving": true,
+    "is_edible": false
+    },
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/12531511/pexels-photo-12531511.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "A close-up of Peace Lily",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/19404633/pexels-photo-19404633/free-photo-of-potted-plant-on-a-coffee-table.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Peace Lily",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 349,
+      "offer_price": 279
+    },
+    "rating": 4.8,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-2 feet",
+      "width": "1-1.5 feet",
+      "sunlight": ["Low Light", "Bright Indirect"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Peace Lily is a popular flowering plant known for its elegant white blooms and air-purifying properties. It's a great addition to any indoor space.",
+      "water": "Water once a week or when the top of the soil feels dry.",
+       "pet_friendly": "No, Peace Lily is toxic to pets (cats and dogs).",
+    "beginner_friendly": "Yes, Peace Lily is an easy-to-care-for plant, known for its air-purifying qualities and beautiful flowers."
+    },
+    "how_to_plant": "Plant in well-draining soil and choose a pot with drainage holes.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every week",
+        "description": "Water when the top of the soil feels dry, but don't let it sit in water."
+      },
+      "light": {
+        "description": "It thrives in low to bright indirect light. Direct sunlight can burn the leaves."
+      },
+      "fertilizer": {
+        "description": "Feed monthly during the growing season (spring to summer) with a balanced fertilizer.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-24°C",
+        "description": "Ideal temperature range for healthy growth."
+      },
+      "humidity": {
+        "level": "Moderate indoor humidity",
+        "description": "It prefers moderate humidity but can tolerate average indoor humidity."
+      }
+    },
+    "toxicity": "Toxic to pets",
+    "season": "All year",
+    "flowering": true,
+    "placement": "Indoor",
+    "soil_type": "Well-draining potting mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "8-inch diameter",
+    "benefits": [
+      "Air purifier",
+      "Beautiful white flowers",
+      "Low maintenance"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water it?",
+        "answer": "Water when the top of the soil feels dry, usually once a week."
+      },
+      {
+        "question": "What light does it need?",
+        "answer": "It thrives in low to bright indirect light. Avoid direct sunlight, which can cause leaf burn."
+      },
+      {
+        "question": "Is it safe for pets?",
+        "answer": "No, Peace Lilies are toxic to cats, dogs, and other pets. Keep them out of reach."
+      },
+      {
+        "question": "How do I encourage blooming?",
+        "answer": "Peace Lilies bloom more with brighter indirect light and consistent watering. Regular feeding during the growing season also helps."
+      },
+      {
+        "question": "How do I propagate Peace Lily?",
+        "answer": "You can propagate Peace Lily by dividing the root ball in spring. Each division should have roots and leaves."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_spider_plant_001",
+    "common_name": "Spider Plant",
+    "scientific_name": "Chlorophytum comosum",
+    "category":  "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "pet_friendly", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes":{
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": true,
+      "is_pet_friendly": true,
+      "is_beginner_friendly": true,
+      "is_flowering": false,
+      "is_sun_loving": false,
+      "is_shadow_loving": true,
+      "is_edible": false
+    },
+  
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/4753285/pexels-photo-4753285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "A close-up of Spider Plant",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/11363516/pexels-photo-11363516.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Spider Plant",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 199,
+      "offer_price": 159
+    },
+    "rating": 4.7,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "12-24 inches",
+      "width": "12-24 inches",
+      "sunlight": ["Bright Indirect", "Low Light"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "The Spider Plant is an easy-to-grow houseplant known for its air-purifying qualities and beautiful trailing foliage.",
+      "water": "Water when the top of the soil feels dry, usually every 1-2 weeks.",
+      "pet_friendly": "Yes, Spider Plant is safe for pets.",
+    "beginner_friendly": "Yes, Spider Plant is easy to grow and maintain, making it a great choice for beginners."
+    },
+    "how_to_plant": "Plant in well-draining soil and choose a pot with drainage holes.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 1-2 weeks",
+        "description": "Allow the top of the soil to dry out before watering."
+      },
+      "light": {
+        "description": "Thrives in bright, indirect light but can tolerate low light."
+      },
+      "fertilizer": {
+        "description": "Feed once a month during the growing season (spring to summer) with a balanced fertilizer.",
+        "type": "Balanced Fertilizer"
+      },
+      "temperature": {
+        "range": "18-24°C",
+        "description": "Best in moderate temperatures."
+      },
+      "humidity": {
+        "level": "Average indoor humidity",
+        "description": "Prefers moderate humidity but can tolerate average levels."
+      }
+    },
+    "toxicity": "Non-toxic to pets",
+    "season": "All year",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Well-draining potting mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6-8 inch diameter",
+    "benefits": [
+      "Air purifier",
+      "Low maintenance",
+      "Non-toxic to pets"
+    ],
+    "faqs": [
+      {
+        "question": "How often should I water it?",
+        "answer": "Water when the top inch of the soil feels dry, usually every 1-2 weeks."
+      },
+      {
+        "question": "What light does it need?",
+        "answer": "Spider Plants thrive in bright, indirect light but can tolerate lower light levels."
+      },
+      {
+        "question": "Is it safe for pets?",
+        "answer": "Yes, Spider Plants are non-toxic to pets and safe to have around cats and dogs."
+      },
+      {
+        "question": "How do I propagate it?",
+        "answer": "You can propagate Spider Plants by separating the baby plants (pups) and potting them in new soil."
+      },
+      {
+        "question": "How fast does it grow?",
+        "answer": "Spider Plants grow relatively quickly, especially when placed in bright, indirect light. They produce small plantlets that can be propagated."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_monstera_001",
+    "common_name": "Monstera Deliciosa",
+    "scientific_name": "Monstera deliciosa",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes":{
+    "is_air_purifying": true,
+    "is_low_maintenance": true,
+    "is_foliage": true,
+    "is_pet_friendly": false,
+    "is_beginner_friendly": true,
+    "is_flowering": false,
+    "is_sun_loving": false,
+    "is_shadow_loving": true,
+    "is_edible": false
+    },
+
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/8581366/pexels-photo-8581366.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Monstera Deliciosa with split leaves",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/31726655/pexels-photo-31726655/free-photo-of-lush-monstera-plant-in-modern-interior-setting.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Monstera Deliciosa",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 799,
+      "offer_price": 639
+    },
+    "rating": 4.7,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "3-10 feet",
+      "width": "2-8 feet",
+      "sunlight": ["Bright Indirect Light"],
+      "growth_rate": "Moderate to Fast"
+    },
+    "description": {
+      "intro": "Monstera Deliciosa, also known as the Swiss Cheese Plant, is a stunning tropical plant known for its large, split leaves. It's a favorite for adding a jungle vibe indoors.",
+      "water": "Water when the top 2 inches of soil feel dry. Usually once a week.",
+       "pet_friendly": "No, Monstera Deliciosa is toxic to pets (cats and dogs).",
+    "beginner_friendly": "Yes, Monstera is relatively easy to care for, especially if you provide it with the right amount of light."
+    },
+    "how_to_plant": "Use a rich, well-draining soil mix in a pot with drainage holes. Repot when roots outgrow the pot.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Once a week",
+        "description": "Allow topsoil to dry before watering. Avoid overwatering."
+      },
+      "light": {
+        "description": "Thrives in bright, indirect sunlight.",
+        "type": "Indirect"
+      },
+      "fertilizer": {
+        "description": "Feed monthly during spring and summer.",
+        "type": "Balanced houseplant fertilizer"
+      },
+      "temperature": {
+        "range": "18-30°C",
+        "description": "Prefers warm, humid environments."
+      },
+      "humidity": {
+        "level": "High",
+        "description": "Enjoys extra humidity; mist regularly or use a humidifier."
+      }
+    },
+    "toxicity": "Toxic to pets",
+    "season": "All year (active growth in spring/summer)",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Peat-based or rich potting mix with drainage",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "12-inch diameter or larger",
+    "benefits": ["Air purifier", "Statement decor plant", "Fast-growing foliage"],
+    "faqs": [
+      {
+        "question": "How often should I water Monstera Deliciosa?",
+        "answer": "Water weekly or when the top 2 inches of soil feel dry. Reduce watering in winter."
+      },
+      {
+        "question": "What type of light does Monstera need?",
+        "answer": "Bright, indirect light is ideal. Avoid harsh direct sunlight."
+      },
+      {
+        "question": "Is Monstera Deliciosa pet safe?",
+        "answer": "No, it is toxic to cats and dogs if ingested."
+      },
+      {
+        "question": "Why are my Monstera's leaves not splitting?",
+        "answer": "This can be due to insufficient light or the plant being too young. Provide brighter light and time to mature."
+      },
+      {
+        "question": "Can I grow Monstera in water?",
+        "answer": "Monstera cuttings can root in water, but for long-term growth, soil is preferred."
+      },
+      {
+        "question": "Does Monstera need support?",
+        "answer": "Yes, as it grows larger, it may need a moss pole or stake to support its climbing nature."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_calathea_001",
+    "common_name": "Calathea",
+    "scientific_name": "Calathea orbifolia",
+    "category":  "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "pet_friendly", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes":{
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": true,
+      "is_pet_friendly": true,
+      "is_beginner_friendly": true,
+      "is_flowering": false,
+      "is_sun_loving": false,
+      "is_shadow_loving": true,
+      "is_edible": false
+    },
+
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/19411205/pexels-photo-19411205/free-photo-of-potted-plant-on-a-wooden-table.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Calathea with striking leaf patterns",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/6754892/pexels-photo-6754892.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Calathea leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 499,
+      "offer_price": 399
+    },
+    "rating": 4.5,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-2 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Medium Indirect", "Low Light"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Calatheas are prized for their uniquely patterned leaves and movement — they open and close in response to light. Ideal for shaded indoor spots with high humidity.",
+      "water": "Keep soil consistently moist but not soggy. Water when the top inch of soil feels dry.",
+       "pet_friendly": "Yes, Calathea is safe for pets.",
+    "beginner_friendly": "Yes, Calathea is beginner-friendly, though it requires attention to humidity and light conditions."
+    },
+    "how_to_plant": "Plant in a well-draining, moisture-retentive soil. Use a pot with good drainage and keep it in a warm, humid spot.",
+    "care_guide": {
+      "watering": {
+        "frequency": "2-3 times per week or when topsoil dries",
+        "description": "Keep soil evenly moist; do not let it dry out completely."
+      },
+      "light": {
+        "description": "Prefers medium to low indirect light. Avoid direct sunlight.",
+        "type": "Indirect"
+      },
+      "fertilizer": {
+        "description": "Feed every 4 weeks during growing season.",
+        "type": "Diluted balanced liquid fertilizer"
+      },
+      "temperature": {
+        "range": "18-26°C",
+        "description": "Sensitive to temperature drops and drafts."
+      },
+      "humidity": {
+        "level": "High",
+        "description": "Thrives in high humidity; mist often or use a humidifier."
+      }
+    },
+    "toxicity": "Non-toxic to pets",
+    "season": "All year (slows growth in winter)",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Moisture-retentive potting mix with perlite or orchid bark",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "8 to 10-inch diameter",
+    "benefits": ["Pet-friendly", "Decorative foliage", "Air purifying"],
+    "faqs": [
+      {
+        "question": "How often should I water Calathea?",
+        "answer": "Water when the top inch of soil feels dry. Avoid using hard tap water — filtered or distilled is better."
+      },
+      {
+        "question": "Why are the leaf edges turning brown?",
+        "answer": "Usually caused by low humidity or fluoride in water. Increase humidity and use purified water."
+      },
+      {
+        "question": "Is Calathea safe for pets?",
+        "answer": "Yes, Calatheas are non-toxic to both cats and dogs."
+      },
+      {
+        "question": "Does Calathea need sunlight?",
+        "answer": "Yes, but only indirect light. Bright direct sun will scorch the leaves."
+      },
+      {
+        "question": "Do Calatheas close at night?",
+        "answer": "Yes, they perform nyctinasty — the leaves fold up at night and open in the morning."
+      },
+      {
+        "question": "How can I keep the humidity high?",
+        "answer": "Mist the plant daily, use a humidity tray, or run a humidifier nearby."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_fiddle_leaf_fig_001",
+    "common_name": "Fiddle Leaf Fig",
+    "scientific_name": "Ficus lyrata",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "foliage", "shadow_loving", "indoor"],
+     "attributes":{
+      "is_air_purifying": true,
+      "is_low_maintenance": false,
+      "is_foliage": true,
+      "is_pet_friendly": false,
+      "is_beginner_friendly": false,
+      "is_flowering": false,
+      "is_sun_loving": false,
+      "is_shadow_loving": true,
+      "is_edible": false
+     },
+
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/15191694/pexels-photo-15191694/free-photo-of-a-person-holding-a-potted-ficus-lyrata.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Tall Fiddle Leaf Fig in a white ceramic pot",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/5825583/pexels-photo-5825583.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Fiddle Leaf Fig leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 999,
+      "offer_price": 799
+    },
+    "rating": 4.3,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "4-6 feet (indoor)",
+      "width": "2-3 feet",
+      "sunlight": ["Bright Indirect"],
+      "growth_rate": "Moderate to Fast"
+    },
+    "description": {
+      "intro": "The Fiddle Leaf Fig is a striking indoor plant known for its large, violin-shaped leaves and sculptural form, perfect for making a bold decor statement.",
+      "water": "Allow the top 2 inches of soil to dry before watering. Avoid overwatering.",
+      "pet_friendly": "No, Fiddle Leaf Fig is toxic to pets (especially cats and dogs).",
+    "beginner_friendly": "Yes, Fiddle Leaf Fig can be a bit tricky, but with the right care, it’s suitable for beginners."
+    },
+    "how_to_plant": "Use a well-draining soil mix in a sturdy pot with drainage. Place in a bright spot with indirect light.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Once every 7-10 days",
+        "description": "Water thoroughly but infrequently. Allow soil to partially dry out."
+      },
+      "light": {
+        "description": "Needs bright, indirect sunlight. Can tolerate some morning sun.",
+        "type": "Bright Indirect"
+      },
+      "fertilizer": {
+        "description": "Feed every 4-6 weeks during spring and summer.",
+        "type": "Balanced liquid fertilizer"
+      },
+      "temperature": {
+        "range": "18-24°C",
+        "description": "Keep away from cold drafts or sudden changes in temperature."
+      },
+      "humidity": {
+        "level": "Moderate",
+        "description": "Prefers moderate humidity. Mist occasionally if air is dry."
+      }
+    },
+    "toxicity": "Toxic to pets",
+    "season": "Spring and Summer for active growth",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Well-draining potting mix with peat and perlite",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "12 to 14-inch diameter",
+    "benefits": [
+      "Bold decorative statement",
+      "Air purifying",
+      "Fast-growing under right conditions"
+    ],
+    "faqs": [
+      {
+        "question": "Why are the leaves turning brown at the edges?",
+        "answer": "This could be due to inconsistent watering or low humidity. Keep the watering schedule regular and increase humidity if needed."
+      },
+      {
+        "question": "Does the Fiddle Leaf Fig need direct sunlight?",
+        "answer": "No, it prefers bright indirect light. Too much direct sun may burn the leaves."
+      },
+      {
+        "question": "Is the Fiddle Leaf Fig pet safe?",
+        "answer": "No, it is toxic to both cats and dogs if ingested."
+      },
+      {
+        "question": "Can I prune a Fiddle Leaf Fig?",
+        "answer": "Yes, pruning encourages branching and helps maintain size and shape."
+      },
+      {
+        "question": "How often should I repot it?",
+        "answer": "Every 1-2 years or when it becomes root-bound. Use a slightly larger pot each time."
+      },
+      {
+        "question": "What causes leaf drop in Fiddle Leaf Figs?",
+        "answer": "Common causes include overwatering, low light, sudden relocation, or drafts. Keep conditions consistent."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_chinese_evergreen_001",
+    "common_name": "Chinese Evergreen",
+    "scientific_name": "Aglaonema commutatum",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "beginner_friendly", "shadow_loving", "indoor"],
+    "attributes":{
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": true,
+      "is_pet_friendly": false,
+      "is_beginner_friendly": true,
+      "is_flowering": false,
+      "is_sun_loving": false,
+      "is_shadow_loving": true,
+      "is_edible": false
+    },
+
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/9311882/pexels-photo-9311882.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Chinese Evergreen in a decorative indoor pot",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/12243534/pexels-photo-12243534.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Chinese Evergreen leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 499,
+      "offer_price": 319
+    },
+    "rating": 4.6,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-3 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Low Light", "Medium Indirect"],
+      "growth_rate": "Slow to Moderate"
+    },
+    "description": {
+      "intro": "Chinese Evergreen is a versatile and attractive houseplant with patterned foliage that thrives in low light and is very beginner-friendly.",
+      "water": "Water when the top 1-2 inches of soil feel dry. Avoid soggy soil.",
+       "pet_friendly": "No, Chinese Evergreen is toxic to pets (cats and dogs).",
+    "beginner_friendly": "Yes, Chinese Evergreen is an easy-to-care-for plant that thrives in low light and is a great choice for beginners."
+    },
+    "how_to_plant": "Plant in well-draining soil in a pot with drainage holes. Place in a spot with low to medium light.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 7-10 days",
+        "description": "Water sparingly, letting the soil dry slightly between waterings."
+      },
+      "light": {
+        "description": "Tolerates low light but prefers filtered, indirect sunlight.",
+        "type": "Low to Medium Indirect"
+      },
+      "fertilizer": {
+        "description": "Fertilize monthly during spring and summer.",
+        "type": "Balanced liquid houseplant fertilizer"
+      },
+      "temperature": {
+        "range": "18-27°C",
+        "description": "Keep in warm spots away from cold drafts."
+      },
+      "humidity": {
+        "level": "Moderate",
+        "description": "Can tolerate average home humidity, but enjoys extra humidity if available."
+      }
+    },
+    "toxicity": "Toxic to pets",
+    "season": "All year",
+    "flowering": false,
+    "placement": "Indoor",
+    "soil_type": "Peat-based, well-draining mix",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "8 to 10-inch diameter",
+    "benefits": ["Air purifying", "Tolerates low light", "Low maintenance", "Decorative foliage"],
+    "faqs": [
+      {
+        "question": "Can Chinese Evergreen grow in dark rooms?",
+        "answer": "Yes, it's highly tolerant of low light, making it ideal for offices and dim rooms."
+      },
+      {
+        "question": "How often should I water a Chinese Evergreen?",
+        "answer": "About once a week or when the top inch of soil is dry. Avoid overwatering."
+      },
+      {
+        "question": "Is Chinese Evergreen toxic to pets?",
+        "answer": "Yes, it contains calcium oxalate crystals which can irritate the mouth and digestive system if ingested."
+      },
+      {
+        "question": "Why are the leaf tips turning brown?",
+        "answer": "This is often due to low humidity or over-fertilization. Mist the plant occasionally and reduce feeding if needed."
+      },
+      {
+        "question": "Does it need pruning?",
+        "answer": "Only to remove yellowing or old leaves. It requires very little maintenance."
+      },
+      {
+        "question": "Can I propagate Chinese Evergreen?",
+        "answer": "Yes, via stem cuttings or division during repotting."
+      }
+    ]
+  },
+  {
+    "id": "indoorPlant_aloe_vera_001",
+    "common_name": "Aloe Vera",
+    "scientific_name": "Aloe barbadensis miller",
+    "category": "Indoor Plant",
+    "tags": ["air_purifying", "low_maintenance", "foliage", "beginner_friendly", "sun_loving", "edible", "indoor", "medicinal"],
+    "attributes":{
+      "is_air_purifying": true,
+      "is_low_maintenance": true,
+      "is_foliage": true,
+      "is_pet_friendly": false,
+      "is_beginner_friendly": true,
+      "is_flowering": false,
+      "is_sun_loving": true,
+      "is_shadow_loving": false,
+      "is_edible": true
+    },
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/7663180/pexels-photo-7663180.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Aloe Vera plant in a ceramic pot",
+        "type": "main"
+      },
+      {
+        "url": "https://images.pexels.com/photos/3234638/pexels-photo-3234638.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        "alt_text": "Another view of Aloe Vera leaves",
+        "type": "side"
+      }
+    ],
+    "prices": {
+      "original_price": 149,
+      "offer_price": 119
+    },
+    "rating": 4.9,
+    "in_stock": true,
+    "plant_quick_guide": {
+      "height": "1-2 feet",
+      "width": "1-2 feet",
+      "sunlight": ["Bright Light", "Direct Sunlight"],
+      "growth_rate": "Moderate"
+    },
+    "description": {
+      "intro": "Aloe Vera is a succulent plant known for its medicinal properties and minimal care requirements. Great for sunny spots indoors.",
+      "water": "Water only when the soil is completely dry, approximately every 2–3 weeks.",
+      "pet_friendly": "No, Aloe Vera is toxic to pets (cats and dogs).",
+    "beginner_friendly": "Yes, Aloe Vera is easy to care for and is great for beginners, although you need to be cautious around pets."
+    },
+    "how_to_plant": "Use a cactus or succulent mix in a pot with excellent drainage. Place it in bright, sunny spots.",
+    "care_guide": {
+      "watering": {
+        "frequency": "Every 2-3 weeks",
+        "description": "Allow soil to completely dry before watering again to avoid root rot."
+      },
+      "light": {
+        "description": "Prefers full sun to partial shade.",
+        "type": "Direct to Bright Indirect"
+      },
+      "fertilizer": {
+        "description": "Feed with a diluted succulent fertilizer once in spring and once in summer.",
+        "type": "Cactus/Succulent Fertilizer"
+      },
+      "temperature": {
+        "range": "18–30°C",
+        "description": "Thrives in warm temperatures and should be protected from frost."
+      },
+      "humidity": {
+        "level": "Low",
+        "description": "Does well in dry indoor air; no extra humidity required."
+      }
+    },
+    "toxicity": "Mildly toxic to pets",
+    "season": "Spring to Fall",
+    "flowering": true,
+    "placement": "Indoor near windows or outdoor in sun",
+    "soil_type": "Cactus/succulent mix, well-draining",
+    "lifecycle_stage": "Mature",
+    "recommended_pot_size": "6 to 8-inch diameter",
+    "benefits": ["Air purifying", "Medicinal use", "Drought-tolerant", "Low maintenance"],
+    "faqs": [
+      {
+        "question": "Can I use Aloe Vera gel from the plant directly?",
+        "answer": "Yes, the gel inside the leaves is commonly used for soothing burns, cuts, and skin irritation."
+      },
+      {
+        "question": "How do I know if I'm overwatering Aloe Vera?",
+        "answer": "Soft, mushy, or browning leaves are a sign of overwatering. Ensure the soil dries completely before watering again."
+      },
+      {
+        "question": "Can Aloe Vera survive without sunlight?",
+        "answer": "No, it needs at least 6 hours of bright sunlight daily to thrive."
+      },
+      {
+        "question": "Is Aloe Vera safe for pets?",
+        "answer": "No, it can cause digestive upset if ingested by cats or dogs."
+      },
+      {
+        "question": "How do I propagate Aloe Vera?",
+        "answer": "By separating the offsets (pups) from the base and repotting them in a new container."
+      },
+      {
+        "question": "Does Aloe Vera flower indoors?",
+        "answer": "It can flower in ideal light and temperature conditions, producing tall spikes with tubular flowers."
+      }
+    ]
+  }
+]

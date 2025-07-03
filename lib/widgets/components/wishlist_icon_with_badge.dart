@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:organicplants/screens/wishlist%20screen/wishlist_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:organicplants/providers/wishlist_provider.dart';
+import 'package:organicplants/services/app_sizes.dart';
+
+class WishlistIconWithBadge extends StatelessWidget {
+  const WishlistIconWithBadge({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Consumer<WishlistProvider>(
+      builder: (context, wishlistProvider, child) {
+        //final wishlistCount = wishlistProvider.wishList.length;
+
+        return IconButton(
+          iconSize: AppSizes.iconMd,
+          color: colorScheme.onSurface,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const WishlistScreen()),
+            );
+          },
+          icon: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              const Icon(Icons.favorite_border),
+              // Animated badge
+              // if (wishlistCount > 0)
+              //   Positioned(
+              //     right: -7,
+              //     top: -6,
+              //     child: AnimatedSwitcher(
+              //       duration: const Duration(milliseconds: 300),
+              //       transitionBuilder:
+              //           (child, animation) =>
+              //               ScaleTransition(scale: animation, child: child),
+              //       child: CircleAvatar(
+              //         key: ValueKey(wishlistCount),
+              //         radius: 8.r,
+              //         backgroundColor: colorScheme.primary,
+              //         child: Text(
+              //           '$wishlistCount',
+              //           style: const TextStyle(
+              //             fontSize: 8,
+              //             color: Colors.white,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

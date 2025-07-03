@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "662081729826",
+    "project_id": "organicplants143",
+    "storage_bucket": "organicplants143.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662081729826:android:6db49ff6e6f8abaf37e17b",
+        "android_client_info": {
+          "package_name": "com.example.organicplants"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfbYeG53nOm2E0amp-XNe2SSuCdkiI8v8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
