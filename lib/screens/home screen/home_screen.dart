@@ -59,81 +59,78 @@ class _HomeTabState extends State<HomeScreen> {
         ],
       ),
 
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(height: 0.006.sh),
-              AutoBannerWithNotifier(),
-              SizedBox(height: 0.006.sh),
-              SearchByCategory(),
-              PlantSectionWidget(
-                title: "Air Purifying",
-                onSeeAll: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => PlantCategory(
-                            plant: airPurifyingPlants,
-                            category: "Air Purifying Plants",
-                          ),
-                    ),
-                  );
-                },
-                plants: airPurifyingPlants,
-              ),
-              PlantSectionWidget(
-                title: "Low Maintenance",
-                onSeeAll: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => PlantCategory(
-                            plant: lowMaintenancePlants,
-                            category: "Low Maintenance Plants",
-                          ),
-                    ),
-                  );
-                },
-                plants: lowMaintenancePlants,
-              ),
-              PlantSectionWidget(
-                title: "Pet Friendly",
-                onSeeAll: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => PlantCategory(
-                            plant: petFriendlyPlants,
-                            category: "Pet Friendly Plants",
-                          ),
-                    ),
-                  );
-                },
-                plants: petFriendlyPlants,
-              ),
-              PlantSectionWidget(
-                title: "Sun Loving",
-                onSeeAll: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => PlantCategory(
-                            plant: petFriendlyPlants,
-                            category: "Sun Loving Plants",
-                          ),
-                    ),
-                  );
-                },
-                plants: sunLovingPlants,
-              ),
-            ],
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          SizedBox(height: 5.h),
+          AutoBannerWithNotifier(),
+          SizedBox(height: 5.h),
+          SearchByCategory(),
+          PlantSectionWidget(
+            title: "Air Purifying",
+            onSeeAll: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => PlantCategory(
+                        plant: airPurifyingPlants,
+                        category: "Air Purifying Plants",
+                      ),
+                ),
+              );
+            },
+            plants: airPurifyingPlants,
           ),
-        ),
+          PlantSectionWidget(
+            title: "Low Maintenance",
+            onSeeAll: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => PlantCategory(
+                        plant: lowMaintenancePlants,
+                        category: "Low Maintenance Plants",
+                      ),
+                ),
+              );
+            },
+            plants: lowMaintenancePlants,
+          ),
+          PlantSectionWidget(
+            title: "Pet Friendly",
+            onSeeAll: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => PlantCategory(
+                        plant: petFriendlyPlants,
+                        category: "Pet Friendly Plants",
+                      ),
+                ),
+              );
+            },
+            plants: petFriendlyPlants,
+          ),
+          PlantSectionWidget(
+            title: "Sun Loving",
+            onSeeAll: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => PlantCategory(
+                        plant: petFriendlyPlants,
+                        category: "Sun Loving Plants",
+                      ),
+                ),
+              );
+            },
+            plants: sunLovingPlants,
+          ),
+        ],
       ),
     );
   }

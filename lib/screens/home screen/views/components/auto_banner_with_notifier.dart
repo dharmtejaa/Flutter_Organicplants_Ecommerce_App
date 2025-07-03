@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as carousel_slider;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/services/all_plants_global_data.dart';
@@ -17,8 +17,8 @@ class AutoBannerWithNotifier extends StatefulWidget {
 
 class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
   final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
-  final CarouselSliderController _carouselController =
-      CarouselSliderController();
+  final carousel_slider.CarouselController _carouselController =
+      carousel_slider.CarouselController();
 
   @override
   // ignore: override_on_non_overriding_member
@@ -34,10 +34,10 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        CarouselSlider.builder(
+        carousel_slider.CarouselSlider.builder(
           carouselController: _carouselController,
           itemCount: banners.length,
-          options: CarouselOptions(
+          options: carousel_slider.CarouselOptions(
             height: 0.21.sh,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 4),
@@ -50,104 +50,101 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
               _currentIndex.value = index;
             },
           ),
-          itemBuilder: (context, index, realIndex) {
-            final banner = banners[index];
-            return GestureDetector(
-              onTap: () {
-                // Navigate to the appropriate category based on the banner's filter tag
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (_) => PlantCategory(
-                          plant: getPlantsByTag(
-                            banner['filterTag']!.toLowerCase(),
-                          ),
-                          category: banner['title'] ?? 'Unknown',
-                        ),
-                  ),
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Image.asset(banner['imagePath']!, fit: BoxFit.fill),
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            // ignore: deprecated_member_use
-                            Colors.black.withOpacity(0.3),
-                            Colors.transparent,
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                    ),
-                    //banner text
-                    Positioned(
-                      left: 15,
-                      bottom: 25,
-                      right: 15,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            banner['title']!,
-                            style: TextStyle(
-                              color: AppTheme.lightBackground,
-                              //fontStyle: FontStyle.italic,
-                              fontSize: AppSizes.fontMd,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 0.03.h),
-                          Text(
-                            banner['subtitle']!,
-                            style: TextStyle(
-                              color: AppTheme.lightBackground,
-                              fontSize: AppSizes.fontSm,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
+          itemBuilder: (context, index, _) {
+            return _buildBannerCard(context, banners[index]);
           },
         ),
         Positioned(
           bottom: 6,
           child: ValueListenableBuilder<int>(
             valueListenable: _currentIndex,
-            builder:
-                (context, value, _) => AnimatedSmoothIndicator(
-                  duration: Duration(milliseconds: 300),
-                  activeIndex: _currentIndex.value,
-                  count: banners.length,
-                  effect: ExpandingDotsEffect(
-                    dotHeight: AppSizes.fontUxs,
-                    dotWidth: AppSizes.fontUxs,
-                    expansionFactor: 3,
-                    // ignore: deprecated_member_use
-                    dotColor: AppColors.cardBackground.withOpacity(0.7),
-                    // ignore: deprecated_member_use
-                    activeDotColor: const Color(0xFFF0F0F0),
-                    spacing: 12,
-                  ),
-                  onDotClicked: (index) {
-                    _carouselController.animateToPage(index);
-                  },
+            builder: (context, value, _) {
+              return AnimatedSmoothIndicator(
+                activeIndex: value,
+                count: banners.length,
+                effect: ExpandingDotsEffect(
+                  dotHeight: AppSizes.fontUxs,
+                  dotWidth: AppSizes.fontUxs,
+                  expansionFactor: 3,
+                  dotColor: AppColors.cardBackground.withOpacity(0.7),
+                  activeDotColor: const Color(0xFFF0F0F0),
+                  spacing: 12,
                 ),
+                onDotClicked: (index) {
+                  _carouselController.animateToPage(index);
+                },
+              );
+            },
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildBannerCard(BuildContext context, Map<String, String> banner) {
+    final title = banner['title'] ?? 'Unknown';
+    final subtitle = banner['subtitle'] ?? '';
+    final imagePath = banner['imagePath'] ?? 'assets/default_banner.jpg';
+    final filterTag = banner['filterTag']?.toLowerCase() ?? '';
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (_) => PlantCategory(
+                  plant: getPlantsByTag(filterTag),
+                  category: title,
+                ),
+          ),
+        );
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(imagePath, fit: BoxFit.fill),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.black.withOpacity(0.3), Colors.transparent],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+              ),
+            ),
+            Positioned(
+              left: 15,
+              bottom: 25,
+              right: 15,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: AppTheme.lightBackground,
+                      fontSize: AppSizes.fontMd,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 0.03.h),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      color: AppTheme.lightBackground,
+                      fontSize: AppSizes.fontSm,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
