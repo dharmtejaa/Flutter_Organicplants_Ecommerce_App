@@ -148,7 +148,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           style: TextStyle(
                             fontSize: AppSizes.fontXxl,
                             fontWeight: FontWeight.w400,
-                            color: colorScheme.onSecondary,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                       ],

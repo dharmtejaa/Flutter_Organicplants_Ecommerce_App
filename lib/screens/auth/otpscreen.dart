@@ -183,7 +183,7 @@ class _OTPscreenState extends State<OTPscreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 20.h),
                   RichText(
                     text: TextSpan(
                       text: "OTP ",
@@ -197,22 +197,22 @@ class _OTPscreenState extends State<OTPscreen> {
                           text: "Verification",
                           style: TextStyle(
                             fontSize: AppSizes.fontXxl,
-                            color: colorScheme.onSecondary,
+                            color: colorScheme.onSurface,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 5.h),
+                  SizedBox(height: 15.h),
                   RichText(
                     text: TextSpan(
                       text:
                           "Please enter the verification code we've sent you on\n\n+91-${widget.text} ",
                       style: TextStyle(
-                        fontSize: AppSizes.fontMd,
-                        color: colorScheme.onSecondary,
-                        fontWeight: FontWeight.w500,
+                        fontSize: AppSizes.fontSm,
+                        color: colorScheme.onSurface,
+                        fontWeight: FontWeight.w400,
                       ),
                       children: [
                         TextSpan(
@@ -239,7 +239,7 @@ class _OTPscreenState extends State<OTPscreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 55.h),
             Expanded(
               child: Container(
                 padding: AppSizes.paddingSymmetricMd,
@@ -329,14 +329,14 @@ class _OTPscreenState extends State<OTPscreen> {
                       text: 'Verify Code',
                       textColor: Colors.white,
                     ),
-                    SizedBox(height: 0.02.sh),
+                    SizedBox(height: 10.h),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: AppSizes.paddingSm,
                       ),
                       child: RichTextLine(),
                     ),
-                    SizedBox(height: 0.02.sh),
+                    //SizedBox(height: 0.02.sh),
                   ],
                 ),
               ),
