@@ -112,88 +112,98 @@ class _BasicdetailsState extends State<Basicdetails> {
               ),
               child: Form(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(height: 13.h),
-                    CustomTextField(
-                      hintText: "Name",
-                      controller: userName,
-                      keyboardType: TextInputType.name,
-                      prefixIcon: Icons.person,
-                    ),
-                    SizedBox(height: 5.h),
-                    CustomTextField(
-                      hintText: "Email",
-                      controller: email,
-                      prefixIcon: Icons.email_outlined,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    SizedBox(height: 5.h),
-                    CustomTextField(
-                      hintText: "DD/MM/YYYY",
-                      controller: dob, // ✅ Fixed controller
-                      keyboardType: TextInputType.datetime,
-                      prefixIcon: Icons.calendar_month,
-                    ),
-                    SizedBox(height: 5.h),
-                    Text(
-                      "Select Gender",
-                      style: TextStyle(
-                        color: colorScheme.onSecondary,
-                        fontSize: AppSizes.fontMd,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    ValueListenableBuilder<Gender?>(
-                      valueListenable: selectedGender,
-                      builder: (context, value, _) {
-                        return Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment
-                                  .spaceAround, // Adjust spacing between items
-                          children:
-                              Gender.values.map((gender) {
-                                return Row(
-                                  children: [
-                                    Radio<Gender>(
-                                      value: gender,
-                                      groupValue: value,
-                                      onChanged:
-                                          (val) => selectedGender.value = val,
-                                      activeColor: colorScheme.primary,
-                                    ),
-                                    Text(
-                                      gender.label,
-                                      style: TextStyle(
-                                        fontSize: AppSizes.fontSm,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }).toList(),
-                        );
-                      },
-                    ),
-                    const Spacer(), // push button to bottom
-                    CustomButton(
-                      ontap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EntryScreen(),
+                    Column(
+                      children: [
+                        SizedBox(height: 13.h),
+                        CustomTextField(
+                          hintText: "Name",
+                          controller: userName,
+                          keyboardType: TextInputType.name,
+                          prefixIcon: Icons.person,
+                        ),
+                        SizedBox(height: 5.h),
+                        CustomTextField(
+                          hintText: "Email",
+                          controller: email,
+                          prefixIcon: Icons.email_outlined,
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(height: 5.h),
+                        CustomTextField(
+                          hintText: "DD/MM/YYYY",
+                          controller: dob, // ✅ Fixed controller
+                          keyboardType: TextInputType.datetime,
+                          prefixIcon: Icons.calendar_month,
+                        ),
+                        SizedBox(height: 5.h),
+                        Text(
+                          "Select Gender",
+                          style: TextStyle(
+                            color: colorScheme.onSecondary,
+                            fontSize: AppSizes.fontMd,
+                            fontWeight: FontWeight.w400,
                           ),
-                        );
-                      },
-                      backgroundColor: colorScheme.primary,
-                      text: 'Continue',
-                      textColor: AppTheme.lightBackground,
+                        ),
+                        ValueListenableBuilder<Gender?>(
+                          valueListenable: selectedGender,
+                          builder: (context, value, _) {
+                            return Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceAround, // Adjust spacing between items
+                              children:
+                                  Gender.values.map((gender) {
+                                    return Row(
+                                      children: [
+                                        Radio<Gender>(
+                                          value: gender,
+                                          groupValue: value,
+                                          onChanged:
+                                              (val) =>
+                                                  selectedGender.value = val,
+                                          activeColor: colorScheme.primary,
+                                        ),
+                                        Text(
+                                          gender.label,
+                                          style: TextStyle(
+                                            fontSize: AppSizes.fontSm,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }).toList(),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 10.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppSizes.paddingSm,
-                      ),
-                      child: RichTextLine(),
+                    // push button to bottom
+                    Column(
+                      children: [
+                        CustomButton(
+                          ontap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EntryScreen(),
+                              ),
+                            );
+                          },
+                          backgroundColor: colorScheme.primary,
+                          text: 'Continue',
+                          textColor: AppTheme.lightBackground,
+                        ),
+                        SizedBox(height: 10.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppSizes.paddingSm,
+                          ),
+                          child: RichTextLine(),
+                        ),
+                      ],
                     ),
                   ],
                 ),

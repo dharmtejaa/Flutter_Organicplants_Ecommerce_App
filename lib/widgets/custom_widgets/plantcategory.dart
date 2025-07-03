@@ -86,7 +86,7 @@ class PlantCategory extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 9,
                     mainAxisSpacing: 2,
-                    childAspectRatio: 0.8, // Adjusted for better aspect ratio
+                    childAspectRatio: 0.76, // Adjusted for better aspect ratio
                   ),
                   itemBuilder: (context, index) {
                     return isMainCategory

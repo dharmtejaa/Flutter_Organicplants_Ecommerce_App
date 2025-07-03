@@ -178,36 +178,44 @@ class _LoginscreenState extends State<Loginscreen> {
                 child: Form(
                   key: formKey,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(height: 20.h),
-                      CustomTextField(
-                        hintText: 'Number',
-                        controller: number,
-                        keyboardType: TextInputType.phone,
-                        prefixIcon: Icons.phone_outlined,
+                      Column(
+                        children: [
+                          SizedBox(height: 20.h),
+                          CustomTextField(
+                            hintText: 'Number',
+                            controller: number,
+                            keyboardType: TextInputType.phone,
+                            prefixIcon: Icons.phone_outlined,
+                          ),
+                          SizedBox(height: 10.h),
+                          Text(
+                            "You'll receive an OTP on the number above.",
+                            style: TextStyle(
+                              fontSize: AppSizes.fontSm,
+                              color: colorScheme.onSecondary,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 10.h),
-                      Text(
-                        "You'll receive an OTP on the number above.",
-                        style: TextStyle(
-                          fontSize: AppSizes.fontSm,
-                          color: colorScheme.onSecondary,
-                        ),
-                      ),
-                      const Spacer(), // push button to bottom
-                      CustomButton(
-                        ontap: login,
-                        backgroundColor: colorScheme.primary,
-                        text: 'Continue',
-                        textColor: AppTheme.lightBackground,
-                      ),
-                      SizedBox(height: 10.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: AppSizes.paddingSm,
-                        ),
-                        child: RichTextLine(),
+                      //const Spacer(), // push button to bottom
+                      Column(
+                        children: [
+                          CustomButton(
+                            ontap: login,
+                            backgroundColor: colorScheme.primary,
+                            text: 'Continue',
+                            textColor: AppTheme.lightBackground,
+                          ),
+                          SizedBox(height: 10.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppSizes.paddingSm,
+                            ),
+                            child: RichTextLine(),
+                          ),
+                        ],
                       ),
                     ],
                   ),

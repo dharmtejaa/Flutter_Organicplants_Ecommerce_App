@@ -253,88 +253,96 @@ class _OTPscreenState extends State<OTPscreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Form(
-                      key: formKey,
-
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: AppSizes.marginSm,
-                          vertical: AppSizes.marginLg,
-                        ),
-                        child: Pinput(
-                          length: 6,
-                          controller: controller,
-                          keyboardType: TextInputType.number,
-                          focusNode: focusNode,
-                          autofocus: true,
-                          pinAnimationType: PinAnimationType.slide,
-                          defaultPinTheme: defaultPinTheme,
-                          showCursor: true,
-                          cursor: cursor,
-                          submittedPinTheme: defaultPinTheme.copyWith(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: colorScheme.primary,
-                                  width: 3,
+                    Column(
+                      children: [
+                        Form(
+                          key: formKey,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: AppSizes.marginSm,
+                              vertical: AppSizes.marginLg,
+                            ),
+                            child: Pinput(
+                              length: 6,
+                              controller: controller,
+                              keyboardType: TextInputType.number,
+                              focusNode: focusNode,
+                              autofocus: true,
+                              pinAnimationType: PinAnimationType.slide,
+                              defaultPinTheme: defaultPinTheme,
+                              showCursor: true,
+                              cursor: cursor,
+                              submittedPinTheme: defaultPinTheme.copyWith(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: colorScheme.primary,
+                                      width: 3,
+                                    ),
+                                  ),
                                 ),
                               ),
+                              preFilledWidget: preFilledWidget,
+                              hapticFeedbackType:
+                                  HapticFeedbackType.mediumImpact,
                             ),
                           ),
-                          preFilledWidget: preFilledWidget,
-                          hapticFeedbackType: HapticFeedbackType.mediumImpact,
                         ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: ValueListenableBuilder<int>(
-                        valueListenable: timerValue,
-                        builder: (context, value, child) {
-                          return GestureDetector(
-                            onTap:
-                                _isResendEnabled
-                                    ? () {
-                                      startTimer();
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text("OTP resent"),
-                                        ),
-                                      );
-                                    }
-                                    : null,
-                            child: Text(
-                              _isResendEnabled
-                                  ? "Resend Code"
-                                  : "Resend Code in $value s",
-                              style: TextStyle(
-                                color:
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: ValueListenableBuilder<int>(
+                            valueListenable: timerValue,
+                            builder: (context, value, child) {
+                              return GestureDetector(
+                                onTap:
                                     _isResendEnabled
-                                        ? colorScheme.primary
-                                        : colorScheme.onSecondary,
-                                fontWeight: FontWeight.w500,
-                                fontSize: AppSizes.fontSm,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                                        ? () {
+                                          startTimer();
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text("OTP resent"),
+                                            ),
+                                          );
+                                        }
+                                        : null,
+                                child: Text(
+                                  _isResendEnabled
+                                      ? "Resend Code"
+                                      : "Resend Code in $value s",
+                                  style: TextStyle(
+                                    color:
+                                        _isResendEnabled
+                                            ? colorScheme.primary
+                                            : colorScheme.onSecondary,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: AppSizes.fontSm,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    CustomButton(
-                      ontap: verifyOTP,
-                      backgroundColor: colorScheme.primary,
-                      text: 'Verify Code',
-                      textColor: Colors.white,
-                    ),
-                    SizedBox(height: 10.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppSizes.paddingSm,
-                      ),
-                      child: RichTextLine(),
+                    //const Spacer(),
+                    Column(
+                      children: [
+                        CustomButton(
+                          ontap: verifyOTP,
+                          backgroundColor: colorScheme.primary,
+                          text: 'Verify Code',
+                          textColor: Colors.white,
+                        ),
+                        SizedBox(height: 10.h),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppSizes.paddingSm,
+                          ),
+                          child: RichTextLine(),
+                        ),
+                      ],
                     ),
                     //SizedBox(height: 0.02.sh),
                   ],

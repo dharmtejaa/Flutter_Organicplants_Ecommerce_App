@@ -85,14 +85,14 @@ class PlantSectionWidget extends StatelessWidget {
 
             /// Horizontal List of Product Cards
             SizedBox(
-              height: 0.26.sh,
+              height: 0.28.sh,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: displayPlants.length,
                 // padding: EdgeInsets.symmetric(
                 //   horizontal: ThemeConstants.paddingSmall,
                 // ),
-                separatorBuilder: (context, index) => SizedBox(width: 6.w),
+                separatorBuilder: (context, index) => SizedBox(width: 7.w),
                 itemBuilder: (context, index) {
                   final plant = displayPlants[index];
                   return ProductCard(plant: plant);

@@ -53,35 +53,33 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Padding(
-            padding: AppSizes.marginSymmetricSm,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Lottie.asset(
-                  'assets/splash screen/earth_animation.json',
-                  height: 300.h,
-                  width: 300.w,
-                  repeat: false,
-                ),
-                SizedBox(height: 80.h),
-                Text(
-                  'O R G A N I C\nP L A N T S',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: AppSizes.fontXxl,
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: AppSizes.marginSymmetricSm,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Lottie.asset(
+                'assets/splash screen/earth_animation.json',
+                height: 300.h,
+                width: 300.w,
+                repeat: false,
+              ),
+              SizedBox(height: 80.h),
+              Text(
+                'O R G A N I C\nP L A N T S',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: AppSizes.fontXxl,
 
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                SizedBox(height: 100.h),
-              ],
-            ),
+              ),
+              SizedBox(height: 100.h),
+            ],
           ),
         ),
       ),

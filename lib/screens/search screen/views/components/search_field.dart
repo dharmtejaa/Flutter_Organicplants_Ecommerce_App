@@ -33,7 +33,7 @@ class SearchFieldState extends State<SearchField> {
           children: [
             if (searchProvider.searchText.isEmpty)
               Positioned(
-                top: 12,
+                top: 15,
                 left: 55,
                 //right: 0,
                 child: SizedBox(
@@ -43,14 +43,13 @@ class SearchFieldState extends State<SearchField> {
                     animatedTexts:
                         (List<String>.from(hintProvider.hints)..shuffle())
                             .map(
-                              (hint) => RotateAnimatedText(
+                              (hint) => TyperAnimatedText(
                                 hint,
                                 textStyle: TextStyle(
                                   fontSize: AppSizes.fontSm,
                                   color: colorScheme.onSecondary,
                                 ),
-                                alignment: Alignment.centerLeft,
-                                duration: const Duration(seconds: 2),
+                                textAlign: TextAlign.left,
                               ),
                             )
                             .toList(),
@@ -61,12 +60,13 @@ class SearchFieldState extends State<SearchField> {
                 ),
               ),
             SizedBox(
-              height: 46.h,
-              width: 0.89.sw,
+              height: 47.h,
+              width: 0.8.sw,
               child: TextFormField(
+                textAlign: TextAlign.left,
                 controller: widget.searchController,
                 style: TextStyle(
-                  fontSize: AppSizes.fontMd,
+                  fontSize: AppSizes.fontSm,
                   color: colorScheme.onSurface,
                 ),
                 cursorErrorColor: colorScheme.error,
@@ -106,6 +106,7 @@ class SearchFieldState extends State<SearchField> {
                   }
                 },
                 decoration: InputDecoration(
+                  contentPadding: AppSizes.paddingAllSm,
                   prefixIcon: Icon(
                     Icons.search,
                     color: colorScheme.onSurface,

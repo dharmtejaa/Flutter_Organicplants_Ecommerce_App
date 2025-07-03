@@ -30,50 +30,37 @@ class CustomTextField extends StatelessWidget {
       return 'Field cannot be empty!';
     }
 
-    switch (hintText.toLowerCase()) {
-      case "email":
-        if (!RegExp(
-          r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-        ).hasMatch(value)) {
-          return 'Enter a valid email!';
-        }
-        break;
-      case "password":
-      case "new password":
-      case "confirm password":
-        if (value.length < 8) return 'Password must be at least 8 characters!';
-        if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) {
-          return 'Must contain uppercase letter!';
-        }
-        if (!RegExp(r'(?=.*[0-9])').hasMatch(value)) {
-          return 'Must contain a number!';
-        }
-        if (!RegExp(r'(?=.*[!@#$%^&*])').hasMatch(value)) {
-          return 'Must contain a special character!';
-        }
-        break;
-      case "phone":
-        if (!RegExp(r"^\d{10,}$").hasMatch(value)) {
-          return 'Enter a valid phone number!';
-        }
-        break;
-      case "name":
-        if (value.length < 3) return 'Name too short!';
-        if (!RegExp(r"^[a-zA-Z\s]+$").hasMatch(value)) {
-          return 'Only letters allowed!';
-        }
-        break;
-      default:
-        return null;
-    }
+    final hint = hintText.toLowerCase();
 
-    // Optional: Match confirm password
-    if (hintText.toLowerCase() == "confirm password" &&
-        confirmPasswordController != null &&
-        confirmPasswordController!.text != value) {
-      return "Passwords do not match!";
+    if (hint == "email") {
+      if (!RegExp(
+        r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+      ).hasMatch(value)) {
+        return 'Enter a valid email!';
+      }
+    } else if (hint == "password" ||
+        hint == "new password" ||
+        hint == "confirm password") {
+      if (value.length < 8) return 'Password must be at least 8 characters!';
+      if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) {
+        return 'Password must contain at least one uppercase letter!';
+      }
+      if (!RegExp(r'(?=.*[0-9])').hasMatch(value)) {
+        return 'Password must contain at least one number!';
+      }
+      if (!RegExp(r'(?=.*[!@#$%^&*])').hasMatch(value)) {
+        return 'Password must contain at least one special character!';
+      }
+    } else if (hint == "number") {
+      if (!RegExp(r"^\d{10,}$").hasMatch(value)) {
+        return 'Enter a valid phone number!';
+      }
+    } else if (hint == "name") {
+      if (value.length < 3) return 'Name must be at least 3 characters!';
+      if (!RegExp(r"^[a-zA-Z\s]+$").hasMatch(value)) {
+        return 'Name must contain only letters!';
+      }
     }
-
     return null;
   }
 

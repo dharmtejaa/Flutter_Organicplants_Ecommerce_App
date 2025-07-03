@@ -35,7 +35,7 @@ class ProductCard extends StatelessWidget {
     // final height = MediaQuery.of(context).size.height;
     // final width = MediaQuery.of(context).size.width;
     final cardWidth = 160.w;
-    final imageHeight = cardWidth * 0.78.h;
+    final imageHeight = cardWidth * 0.7.h;
 
     final offerPrice = (plant.prices?.offerPrice ?? 0).toInt();
     final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
