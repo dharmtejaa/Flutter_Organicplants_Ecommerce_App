@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/screens/entry%20screen/entry_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/app_theme.dart';
 import 'package:organicplants/screens/cart%20screen/views/components/card_tile.dart';
@@ -25,19 +26,30 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => EntryScreen()),
+            );
           },
-          icon: Icon(Icons.arrow_back_sharp, color: colorScheme.onSurface),
+          icon: Icon(
+            Icons.arrow_back_sharp,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
         ),
         title: Text(
-          "My Cart",
+          "My cart",
           style: TextStyle(
             color: colorScheme.onSurface,
             fontSize: AppSizes.fontXl,
           ),
         ),
         centerTitle: true,
-        actions: [SearchButton(), WishlistIconWithBadge()],
+        actions: [
+          SearchButton(),
+          WishlistIconWithBadge(),
+          SizedBox(width: 10.w),
+        ],
       ),
 
       body: Flexible(

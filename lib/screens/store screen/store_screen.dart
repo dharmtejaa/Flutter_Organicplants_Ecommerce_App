@@ -47,6 +47,7 @@ class _StoreTabState extends State<StoreTab> {
         centerTitle: true,
         actions: [
           WishlistIconWithBadge(),
+          SizedBox(width: 10.w),
           CartIconWithBadge(
             iconColor: colorScheme.onSurface,
             onPressed: () {

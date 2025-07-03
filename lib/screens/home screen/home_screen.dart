@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/screens/home%20screen/views/components/auto_banner_with_notifier.dart';
 import 'package:organicplants/screens/home%20screen/views/components/plant_section_widget.dart';
 import 'package:organicplants/screens/home%20screen/views/components/search_by_category.dart';
 import 'package:organicplants/services/all_plants_global_data.dart';
 import 'package:organicplants/services/app_sizes.dart';
+import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
 import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
 import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
 import 'package:organicplants/widgets/customButtons/searchbutton.dart';
@@ -40,7 +42,21 @@ class _HomeTabState extends State<HomeScreen> {
             color: colorScheme.primary,
           ),
         ),
-        actions: [SearchButton(), WishlistIconWithBadge()],
+        actions: [
+          SearchButton(),
+          WishlistIconWithBadge(),
+          SizedBox(width: 10.w),
+          CartIconWithBadge(
+            iconColor: colorScheme.onSurface,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
+          ),
+          SizedBox(width: 10.w),
+        ],
       ),
 
       body: SingleChildScrollView(

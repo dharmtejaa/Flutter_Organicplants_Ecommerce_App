@@ -15,19 +15,21 @@ class WishlistIconWithBadge extends StatelessWidget {
       builder: (context, wishlistProvider, child) {
         //final wishlistCount = wishlistProvider.wishList.length;
 
-        return IconButton(
-          iconSize: AppSizes.iconMd,
-          color: colorScheme.onSurface,
-          onPressed: () {
+        return GestureDetector(
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const WishlistScreen()),
             );
           },
-          icon: Stack(
+          child: Stack(
             clipBehavior: Clip.none,
             children: [
-              const Icon(Icons.favorite_border),
+              Icon(
+                Icons.favorite_border,
+                size: AppSizes.iconMd,
+                color: colorScheme.onSurface,
+              ),
               // Animated badge
               // if (wishlistCount > 0)
               //   Positioned(

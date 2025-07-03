@@ -50,6 +50,7 @@ class PlantCategory extends StatelessWidget {
         actions: [
           SearchButton(),
           WishlistIconWithBadge(),
+          SizedBox(width: 10.w),
           CartIconWithBadge(
             iconColor: colorScheme.onSurface,
             onPressed: () {
@@ -59,7 +60,7 @@ class PlantCategory extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 8.w),
+          SizedBox(width: 10.w),
         ],
       ),
       body: SafeArea(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/providers/search_screen_provider.dart';
+import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/screens/search%20screen/views/components/empty_message.dart';
 import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
@@ -27,10 +28,9 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back),
-        //   color: colorScheme.primary,
-        //   onPressed: () {
+        // leading: GestureDetector(
+        //   child: Icon(Icons.arrow_back, color: colorScheme.primary),
+        //   onTap: () {
         //     Navigator.pop(context);
         //   },
         // ),
@@ -38,11 +38,15 @@ class SearchScreen extends StatelessWidget {
         title: Form(child: SearchField(searchController: searchController)),
         actions: [
           WishlistIconWithBadge(),
+          SizedBox(width: 10.w),
           CartIconWithBadge(
-            iconColor:
-                colorScheme.brightness == Brightness.dark
-                    ? colorScheme.onSecondary
-                    : colorScheme.onSurface,
+            iconColor: colorScheme.onSurface,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
           ),
           SizedBox(width: 10.w),
         ],
