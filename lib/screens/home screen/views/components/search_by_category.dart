@@ -19,7 +19,7 @@ class SearchByCategory extends StatelessWidget {
       child: Container(
         //margin: AppSizes.marginAllXs,
         width: double.infinity,
-        height: 0.2.sh, // Adjusted height
+        //height: 0.2.sh, // Adjusted height
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSizes.radiusLg),
           color: colorScheme.surface,
@@ -38,38 +38,47 @@ class SearchByCategory extends StatelessWidget {
             ),
           ],
         ),
-        padding: EdgeInsets.all(AppSizes.paddingMd),
+        padding: EdgeInsets.only(
+          left: AppSizes.paddingMd,
+          top: AppSizes.paddingSm,
+          bottom: AppSizes.paddingSm,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // Title Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Select by Category',
-                  style: TextStyle(
-                    fontSize: AppSizes.fontMd,
-                    //fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => StoreTab()),
-                    );
-                  },
-                  child: Text(
-                    'View All',
+            Padding(
+              padding: EdgeInsets.only(right: AppSizes.paddingSm),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Select by Category',
                     style: TextStyle(
-                      fontSize: AppSizes.fontSm,
+                      fontSize: AppSizes.fontMd,
+                      //fontWeight: FontWeight.bold,
                       color: colorScheme.onSurface,
                     ),
                   ),
-                ),
-              ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => StoreTab()),
+                      );
+                    },
+                    child: Text(
+                      'View All',
+                      style: TextStyle(
+                        fontSize: AppSizes.fontSm,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
 
             //SizedBox(height: height * 0.01),

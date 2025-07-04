@@ -49,7 +49,11 @@ class PlantSectionWidget extends StatelessWidget {
             ),
           ],
         ),
-        padding: AppSizes.paddingAllSm,
+        padding: EdgeInsets.only(
+          left: AppSizes.paddingSm,
+          top: AppSizes.paddingMd,
+          bottom: AppSizes.paddingSm,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +61,10 @@ class PlantSectionWidget extends StatelessWidget {
           children: [
             /// Title Row
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.only(
+                right: AppSizes.paddingSm,
+                left: AppSizes.paddingSm,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
