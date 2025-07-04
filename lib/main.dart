@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/providers/bottom_nav_provider.dart';
 import 'package:organicplants/providers/carousel_provider.dart';
@@ -6,7 +7,7 @@ import 'package:organicplants/providers/cart_provider.dart';
 import 'package:organicplants/providers/hint_text_provider.dart';
 import 'package:organicplants/providers/onboarding_provider.dart';
 import 'package:organicplants/providers/search_screen_provider.dart';
-import 'package:organicplants/providers/theme_provider.dart';
+import 'package:organicplants/providers/theme_provider.dart'; // Ensure this is imported
 import 'package:organicplants/providers/wishlist_provider.dart';
 import 'package:organicplants/screens/splash%20screen/splashscreen.dart';
 import 'package:organicplants/theme/app_theme.dart';
@@ -15,6 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyBfbYeG53nOm2E0amp-XNe2SSuCdkiI8v8",
@@ -33,7 +35,9 @@ void main() async {
         ChangeNotifierProvider(create: (_) => HintTextProvider()),
         ChangeNotifierProvider(create: (_) => WishlistProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        ), // Your ThemeProvider
         ChangeNotifierProvider(create: (_) => CarouselProvider()),
       ],
       child: const MyApp(),
@@ -50,9 +54,10 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812), // Design size for scaling
       minTextAdapt: true, // Enable text scaling
       splitScreenMode: true, // Enable split screen mode for better performance
-      //useInheritedMediaQuery: true, // Use inherited media query for better responsiveness
       builder: (context, child) {
-        final themeProvider = Provider.of<ThemeProvider>(context);
+        final themeProvider = Provider.of<ThemeProvider>(
+          context,
+        ); // Get the theme provider
         return MaterialApp(
           builder: (context, widget) {
             // 👇 Overrides global system font scaling
@@ -64,17 +69,17 @@ class MyApp extends StatelessWidget {
             );
           },
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: themeProvider.themeMode,
-
+          theme: AppTheme.lightTheme, // Your light theme
+          darkTheme: AppTheme.darkTheme, // Your dark theme
+          themeMode:
+              themeProvider
+                  .themeMode, // This will dynamically change based on provider
           home: const Splashscreen(),
         );
       },
     );
   }
 }
-
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 

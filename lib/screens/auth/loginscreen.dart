@@ -181,6 +181,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 20.h),
                           CustomTextField(
@@ -191,7 +192,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           ),
                           SizedBox(height: 10.h),
                           Text(
-                            "You'll receive an OTP on the number above.",
+                            " You'll receive an OTP on the number above.",
                             style: TextStyle(
                               fontSize: AppSizes.fontSm,
                               color: colorScheme.onSecondary,

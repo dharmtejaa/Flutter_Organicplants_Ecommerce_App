@@ -5,7 +5,7 @@ import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
 import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
-import 'package:organicplants/widgets/custom_widgets/productcard.dart';
+import 'package:organicplants/widgets/custom_widgets/plant_card_grid.dart';
 import 'package:organicplants/widgets/customButtons/searchbutton.dart';
 
 class PlantCategory extends StatelessWidget {
@@ -86,12 +86,12 @@ class PlantCategory extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 9,
                     mainAxisSpacing: 2,
-                    childAspectRatio: 0.76, // Adjusted for better aspect ratio
+                    childAspectRatio: 0.72, // Adjusted for better aspect ratio
                   ),
                   itemBuilder: (context, index) {
                     return isMainCategory
-                        ? ProductCard(plant: plant[index], scifiname: true)
-                        : ProductCard(plant: plant[index]);
+                        ? ProductCardGrid(plant: plant[index], scifiname: true)
+                        : ProductCardGrid(plant: plant[index]);
                   },
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/services/app_sizes.dart';
+import 'package:organicplants/theme/app_theme.dart';
 import 'package:organicplants/theme/appcolors.dart';
 
 class DeliveryCheckWidget extends StatelessWidget {
@@ -22,14 +23,23 @@ class DeliveryCheckWidget extends StatelessWidget {
       height: 45.h,
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F0F0),
+        color:
+            colorScheme.brightness == Brightness.dark
+                ? AppTheme.darkCard
+                : AppTheme.lightCard,
         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-        border: Border.all(color: colorScheme.primary),
+        border: Border.all(
+          color:
+              colorScheme.brightness == Brightness.dark
+                  ? colorScheme.surface
+                  : const Color(0xFFF0F0F0),
+        ),
       ),
       child: Row(
         children: [
           Expanded(
             child: TextFormField(
+              //textAlign: TextAlign.center,
               controller: searchController,
               maxLength: 6,
               keyboardType: TextInputType.number,
@@ -42,10 +52,13 @@ class DeliveryCheckWidget extends StatelessWidget {
                 counterText: '',
                 hintStyle: TextStyle(
                   fontSize: AppSizes.fontSm,
-                  color: AppColors.mutedText,
+                  color: colorScheme.onSecondary,
                 ),
                 filled: true,
-                fillColor: const Color(0xFFF0F0F0),
+                fillColor:
+                    colorScheme.brightness == Brightness.dark
+                        ? AppTheme.darkCard
+                        : AppTheme.lightCard,
                 contentPadding: EdgeInsets.symmetric(vertical: 10.h),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSizes.radiusSm),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:organicplants/screens/auth/loginscreen.dart';
+import 'package:organicplants/screens/onboarding%20screen/onboarding_screen.dart';
 import 'package:organicplants/services/all_plants_global_data.dart';
 import 'package:organicplants/services/plantservices.dart';
 import 'package:organicplants/services/app_sizes.dart';
@@ -32,7 +33,6 @@ class _SplashscreenState extends State<Splashscreen> {
       floweringPlants = getPlantsByCategory('Flowering plant');
       bonsaiPlants = getPlantsByCategory('Bonsai plant');
       succulentsCactiPlants = getPlantsByCategory('Succulents & Cacti Plants');
-
       petFriendlyPlants = getPlantsByTag('Pet_Friendly');
       lowMaintenancePlants = getPlantsByTag('Low_Maintenance');
       airPurifyingPlants = getPlantsByTag('Air_Purifying');
@@ -44,7 +44,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const Loginscreen()),
+        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
       );
     } catch (e) {
       debugPrint('Error loading data in Splashscreen: $e');
@@ -54,6 +54,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: AppSizes.marginSymmetricSm,

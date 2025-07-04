@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android") // Modern Kotlin plugin
+    id("org.jetbrains.kotlin.android")
     id("dev.flutter.flutter-gradle-plugin")
-    id("com.google.gms.google-services") // Firebase
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -16,6 +16,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -29,7 +30,6 @@ android {
 
     buildTypes {
         release {
-            // Replace with your real keystore in production
             signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
             isShrinkResources = false
@@ -38,8 +38,16 @@ android {
 }
 
 dependencies {
+    // UPDATED: Firebase Android BoM (Bill of Materials) for consistent versions.
+    // As of July 4, 2025, 33.1.0 is the latest stable.
+    implementation(platform("com.google.firebase:firebase-bom:33.16.0")) // <--- UPDATED THIS LINE
+
     implementation("com.google.firebase:firebase-analytics-ktx")
-    // Add other Firebase or Kotlin libraries as needed
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
 flutter {

@@ -4,13 +4,14 @@ import 'package:organicplants/providers/search_screen_provider.dart';
 import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/screens/search%20screen/views/components/empty_message.dart';
+import 'package:organicplants/theme/app_theme.dart';
 import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
 import 'package:organicplants/widgets/components/no_result_found.dart';
 import 'package:organicplants/screens/search%20screen/views/components/search_field.dart';
 import 'package:organicplants/widgets/components/section_header.dart';
 import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
+import 'package:organicplants/widgets/custom_widgets/plant_card_grid.dart';
 import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
-import 'package:organicplants/widgets/custom_widgets/productcard.dart';
 
 import 'package:provider/provider.dart';
 
@@ -72,26 +73,26 @@ class SearchScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 10.h),
                     SectionHeader(
-                      title: "Recent Searches",
+                      title: "Recent searches",
                       showClear: hasSearches,
                       onClear: provider.clearSearchHistory,
                     ),
                     SizedBox(height: 5.h),
                     hasSearches
                         ? _buildRecentSearches(context, provider)
-                        : EmptyMessage("No recent searches."),
+                        : EmptyMessage("  No recent searches."),
 
                     SizedBox(height: 20.h),
 
                     SectionHeader(
-                      title: "Recently Viewed Plants",
+                      title: "Recently viewed plants",
                       showClear: hasViewed,
                       onClear: provider.clearRecentlyViewed,
                     ),
                     SizedBox(height: 5.h),
                     hasViewed
                         ? _buildRecentViewed(provider)
-                        : EmptyMessage("No recently viewed plants."),
+                        : EmptyMessage("  No recently viewed plants."),
                   ],
                 ),
             ],
@@ -145,7 +146,17 @@ class SearchScreen extends StatelessWidget {
                 deleteIcon: const Icon(Icons.close),
                 //backgroundColor: Colors.transparent,
                 shape: const StadiumBorder(),
-                side: BorderSide(color: colorScheme.onSurface),
+                color: WidgetStateProperty.all<Color>(
+                  colorScheme.brightness == Brightness.dark
+                      ? AppTheme.darkCard
+                      : AppTheme.lightCard,
+                ),
+                side: BorderSide(
+                  color:
+                      colorScheme.brightness == Brightness.dark
+                          ? colorScheme.surface
+                          : const Color(0xFFF0F0F0),
+                ),
                 onDeleted: () => provider.removeSearchHistory(query),
               ),
             );
@@ -168,13 +179,13 @@ class SearchScreen extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 8,
+        crossAxisSpacing: 9,
         mainAxisSpacing: 2,
-        childAspectRatio: 0.73,
+        childAspectRatio: 0.69,
       ),
       itemCount: provider.recentViewedPlants.length,
       itemBuilder: (context, index) {
-        return ProductCard(plant: provider.recentViewedPlants[index]);
+        return ProductCardGrid(plant: provider.recentViewedPlants[index]);
       },
     );
   }

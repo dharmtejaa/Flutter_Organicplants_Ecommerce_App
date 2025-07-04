@@ -57,23 +57,25 @@ class PlantDetails extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 6.h),
       child: Row(
-        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 3,
             child: Text(
-              maxLines: 2,
               label,
+              // Remove maxLines: 2 here for now, or consider
+              // removing it if it's not strictly necessary.
+              // If you need it, consider wrapping the Text in Flexible instead of Expanded
+              // or adding an Overflow.ellipsis
               style: TextStyle(fontSize: 14.sp, color: Colors.grey[700]),
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
-              maxLines: 2,
               value,
               textAlign: TextAlign.start,
+              // Remove maxLines: 2 here as well.
               style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
             ),
           ),

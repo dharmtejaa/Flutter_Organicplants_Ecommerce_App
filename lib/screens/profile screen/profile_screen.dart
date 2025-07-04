@@ -20,7 +20,6 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDarkMode = themeProvider.isDarkMode;
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +37,7 @@ class _ProfileTabState extends State<ProfileTab> {
           ),
         ),
         title: Text(
-          "Profie",
+          "Profile", // Corrected typo from "Profie"
           style: TextStyle(
             color: colorScheme.onSurface,
             fontSize: AppSizes.fontXl,
@@ -68,30 +67,63 @@ class _ProfileTabState extends State<ProfileTab> {
             _buildProfileHeader(context),
             SizedBox(height: AppSizes.spaceMd),
             const Divider(),
-            ListTile(
-              leading: const Icon(Icons.dark_mode),
-              title: const Text("Dark Mode"),
-              trailing: Switch(
-                value: isDarkMode,
-                onChanged: (value) => themeProvider.toggleTheme(value),
+
+            // Theme Selection Section (using RadioListTile for better choice)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSizes.vPaddingSm),
+              child: Text(
+                "App Theme",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
               ),
             ),
+            _buildThemeOption(
+              context,
+              themeProvider,
+              ThemeMode.system,
+              "System Default",
+              Icons.brightness_auto, // Icon for system default
+            ),
+            _buildThemeOption(
+              context,
+              themeProvider,
+              ThemeMode.light,
+              "Light Mode",
+              Icons.light_mode, // Icon for light mode
+            ),
+            _buildThemeOption(
+              context,
+              themeProvider,
+              ThemeMode.dark,
+              "Dark Mode",
+              Icons.dark_mode, // Icon for dark mode
+            ),
+            const Divider(), // Optional divider after theme options
+
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text("Account Settings"),
-              onTap: () {},
+              onTap: () {
+                // Handle account settings tap
+              },
             ),
             ListTile(
               leading: const Icon(Icons.info_outline),
               title: const Text("About Us"),
-              onTap: () {},
+              onTap: () {
+                // Handle about us tap
+              },
             ),
             const Spacer(),
             Center(
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.logout),
                 label: const Text("Logout"),
-                onPressed: () {},
+                onPressed: () {
+                  // Handle logout
+                },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(
                     horizontal: AppSizes.paddingLg,
@@ -123,9 +155,7 @@ class _ProfileTabState extends State<ProfileTab> {
           children: [
             Text(
               "John Doe",
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
@@ -135,6 +165,28 @@ class _ProfileTabState extends State<ProfileTab> {
           ],
         ),
       ],
+    );
+  }
+
+  // Helper method to create a RadioListTile for each theme option
+  Widget _buildThemeOption(
+    BuildContext context,
+    ThemeProvider themeProvider,
+    ThemeMode mode,
+    String title,
+    IconData icon,
+  ) {
+    return RadioListTile<ThemeMode>(
+      title: Text(title),
+      secondary: Icon(icon, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+      value: mode,
+      groupValue: themeProvider.themeMode, // The currently selected mode from the provider
+      onChanged: (ThemeMode? newValue) {
+        if (newValue != null) {
+          themeProvider.setThemeMode(newValue); // Call the new setThemeMode method
+        }
+      },
+      activeColor: Theme.of(context).colorScheme.primary, // Color when selected
     );
   }
 }

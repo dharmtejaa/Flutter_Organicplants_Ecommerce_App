@@ -12,11 +12,11 @@ import 'package:organicplants/widgets/customButtons/add_to_cart_button.dart';
 import 'package:organicplants/screens/product%20Screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCardGrid extends StatelessWidget {
   final AllPlantsModel plant;
   final bool? scifiname;
 
-  const ProductCard({super.key, required this.plant, this.scifiname});
+  const ProductCardGrid({super.key, required this.plant, this.scifiname});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,6 @@ class ProductCard extends StatelessWidget {
       listen: false,
     );
 
-    final cardWidth =
-        160.w; // Card width remains fixed for horizontal scrolling
-    final imageHeight = cardWidth * 0.75;
     final offerPrice = (plant.prices?.offerPrice ?? 0).toInt();
     final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
     final discountPercent =
@@ -42,6 +39,9 @@ class ProductCard extends StatelessWidget {
             ? ((originalPrice - offerPrice) / originalPrice) * 100
             : 0;
     final discount = discountPercent.toInt().toString();
+    final cardWidth =
+        160.w; // Card width remains fixed for horizontal scrolling
+    final imageHeight = cardWidth * 0.85;
 
     return GestureDetector(
       onTap: () {
@@ -57,24 +57,19 @@ class ProductCard extends StatelessWidget {
         }
       },
       child: Container(
-        width: cardWidth,
-
-        // *** KEY CHANGE 1: Remove fixed height or IntrinsicHeight from here. ***
-        // This Container will now take the height provided by its parent (the ListView item extent).
-        // If there was an IntrinsicHeight wrapping the Column, remove it.
-        // The `height: imageHeight` from earlier (cardWidth * 0.7.h) was for the image, not the whole card.
-        // The overall card height will now be determined by the parent.
-        margin: EdgeInsets.only(bottom: AppSizes.vMarginSm),
+        // The width and height of this Container will be governed by the GridView's delegate
+        // and its available space. Remove fixed width/height here.
+        margin: EdgeInsets.only(
+          bottom: AppSizes.vMarginSm,
+        ), // Provides spacing between grid items
         decoration: BoxDecoration(
           color:
-              colorScheme.brightness == Brightness.dark
-                  ? AppTheme.darkCard
-                  : AppTheme.lightCard.withOpacity(0.8),
+              isDark ? AppTheme.darkCard : AppTheme.lightCard.withOpacity(0.8),
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           boxShadow: [
             BoxShadow(
               color:
-                  colorScheme.brightness == Brightness.dark
+                  isDark
                       ? Colors.black.withOpacity(0.1)
                       : Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
@@ -83,32 +78,35 @@ class ProductCard extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(2),
-        // *** KEY CHANGE 2: Use a Column directly and use Expanded for flexible sizing. ***
+        padding: const EdgeInsets.all(2), // Small internal padding for content
         child: Stack(
-          // Re-wrap with Stack to keep Positioned widgets
           children: [
             Column(
-              // Main content column
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
+              // Make the Column fill the available height of the Container
+              // In a GridView, the item usually defines its own dimensions,
+              // so the Column can expand within those bounds.
               children: [
+                // Product Image section - takes flexible space
                 Stack(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppSizes.radiusSm),
                       child: Image.network(
                         plant.images![0].url!,
-                        height: imageHeight,
-                        width: double.infinity,
-                        fit: BoxFit.contain,
+                        width: double.infinity, // Image fills card width
+                        height:
+                            imageHeight, // Image fills available height from Expanded
+                        fit:
+                            BoxFit
+                                .contain, // Ensures the image fills the space, cropping if necessary
                         errorBuilder:
                             (_, __, ___) =>
                                 const Center(child: Icon(Icons.broken_image)),
                       ),
                     ),
+                    // Wishlist icon
                     Positioned(
-                      // Wishlist icon
                       top: 2,
                       right: 2,
                       child: Consumer<WishlistProvider>(
@@ -166,12 +164,15 @@ class ProductCard extends StatelessWidget {
                     ),
                   ],
                 ),
+
+                // Text Info section - takes minimum space needed
                 Padding(
-                  // Text info
                   padding: EdgeInsets.all(AppSizes.paddingXs),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize:
+                        MainAxisSize
+                            .min, // Essential for text to only take needed space
                     children: [
                       Text(
                         plant.commonName ?? 'Unknown Plant',
@@ -205,14 +206,19 @@ class ProductCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Text(
-                        '$discount% off',
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          fontSize: AppSizes.fontXs,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            '$discount% off',
+                            style: TextStyle(
+                              color: colorScheme.onSurface,
+                              fontSize: AppSizes.fontXs,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 0.001.sh),
+                      // Rating
                       Row(
                         children: [
                           ...List.generate(5, (index) {
@@ -239,9 +245,10 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
-            // Add to Cart Button (remains here as it uses Positioned)
+            // Add to Cart Button (positioned on top of the Column)
             Positioned(
-              bottom: -2,
+              bottom:
+                  -2, // Adjusted slightly to integrate better, feel free to fine-tune
               right: -2,
               child: AddToCartButton(cartProvider: cartProvider, plant: plant),
             ),

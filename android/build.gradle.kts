@@ -1,3 +1,5 @@
+// android/build.gradle.kts (Project-level)
+
 buildscript {
     repositories {
         google()
@@ -7,13 +9,16 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.3.0")
         classpath("com.google.gms:google-services:4.4.1")
+        // Explicitly declare the Kotlin Gradle Plugin version here for the build script.
+        // This version should be compatible with your Firebase/Android dependencies.
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.10") // Or '2.0.10' / '2.2.0' if 2.0.0 still fails.
     }
 }
 
 allprojects {
     repositories {
         google()
-        mavenCentral()
+        mavenCentral() // <--- FIX THIS LINE: Changed from 'mavenCenter' to 'mavenCentral()'
     }
 }
 
@@ -29,7 +34,7 @@ subprojects {
 
 // Ensure subprojects are evaluated after ":app" project
 subprojects {
-    project.evaluationDependsOn(":app")
+    evaluationDependsOn(":app")
 }
 
 // Register a clean task to delete the shared build directory

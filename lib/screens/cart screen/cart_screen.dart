@@ -52,31 +52,29 @@ class CartScreen extends StatelessWidget {
         ],
       ),
 
-      body: Flexible(
-        child: Consumer<CartProvider>(
-          builder: (context, value, child) {
-            return cartItems.isEmpty
-                ? Center(
-                  child: NoResultsFound(
-                    title: "Your cart is empty",
-                    message: "Add some plants to get started!",
-                    imagePath: "assets/No_Plant_Found.png",
-                  ),
-                )
-                : Padding(
-                  padding: EdgeInsets.only(bottom: 180.h),
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    //shrinkWrap: true,
-                    itemCount: cartItems.length,
-                    itemBuilder: (context, index) {
-                      final CartItem item = cartItems[index];
-                      return CardTile(plant: item.plant);
-                    },
-                  ),
-                );
-          },
-        ),
+      body: Consumer<CartProvider>(
+        builder: (context, value, child) {
+          return cartItems.isEmpty
+              ? Center(
+                child: NoResultsFound(
+                  title: "Your cart is empty",
+                  message: "Add some plants to get started!",
+                  imagePath: "assets/No_Plant_Found.png",
+                ),
+              )
+              : Padding(
+                padding: EdgeInsets.only(bottom: 180.h),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  //shrinkWrap: true,
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) {
+                    final CartItem item = cartItems[index];
+                    return CardTile(plant: item.plant);
+                  },
+                ),
+              );
+        },
       ),
       bottomSheet:
           cartItems.isNotEmpty

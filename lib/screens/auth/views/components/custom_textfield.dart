@@ -79,15 +79,15 @@ class CustomTextField extends StatelessWidget {
             obscureText: isObscure,
             keyboardType: keyboardType,
             style: TextStyle(
-              fontSize: AppSizes.fontSm,
+              fontSize: AppSizes.fontMd,
               color: colorScheme.onSurface,
             ),
             validator: _validateInput,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
-                fontSize: AppSizes.fontSm,
+                fontSize: AppSizes.fontMd,
                 color: colorScheme.onSecondary,
               ),
               contentPadding: EdgeInsets.all(AppSizes.paddingMd),

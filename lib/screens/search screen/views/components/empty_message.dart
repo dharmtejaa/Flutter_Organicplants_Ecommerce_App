@@ -13,7 +13,7 @@ class EmptyMessage extends StatelessWidget {
       message,
       style: TextStyle(
         color: AppColors.mutedText,
-        fontSize: AppSizes.fontMd,
+        fontSize: AppSizes.fontSm,
         fontStyle: FontStyle.italic,
       ),
     );

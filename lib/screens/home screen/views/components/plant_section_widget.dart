@@ -30,7 +30,7 @@ class PlantSectionWidget extends StatelessWidget {
       padding: AppSizes.paddingSymmetricSm,
       child: Container(
         width: double.infinity,
-        height: 0.33.sh,
+        //height: 0.34.sh,
         decoration: BoxDecoration(
           color: colorScheme.surface,
           borderRadius: BorderRadius.circular(AppSizes.radiusLg),
@@ -51,6 +51,8 @@ class PlantSectionWidget extends StatelessWidget {
         ),
         padding: AppSizes.paddingAllSm,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             /// Title Row
@@ -80,12 +82,11 @@ class PlantSectionWidget extends StatelessWidget {
                 ],
               ),
             ),
-
-            //SizedBox(height: 5.h),
+            SizedBox(height: 8.h),
 
             /// Horizontal List of Product Cards
             SizedBox(
-              height: 0.28.sh,
+              height: 220.h,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: displayPlants.length,

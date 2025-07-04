@@ -18,6 +18,7 @@ class WishlistScreen extends StatelessWidget {
       context,
       listen: false,
     );
+    final wishlistItems = wishListProvider.wishList;
 
     return Scaffold(
       appBar: AppBar(
@@ -53,8 +54,9 @@ class WishlistScreen extends StatelessWidget {
           SizedBox(width: 8.w),
         ],
       ),
-      body:
-          wishListProvider.wishList.isEmpty
+      body: Consumer<WishlistProvider>(
+        builder: (context, value, child) {
+          return wishlistItems.isEmpty
               ? Center(
                 child: NoResultsFound(
                   title: "Your Wishlist is empty",
@@ -62,35 +64,31 @@ class WishlistScreen extends StatelessWidget {
                   imagePath: "assets/No_Plant_Found.png",
                 ),
               )
-              : Flexible(
-                child: Consumer<WishlistProvider>(
-                  builder: (context, value, child) {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
+              : ListView.builder(
+                scrollDirection: Axis.vertical,
 
-                      shrinkWrap: true,
-                      //physics: NeverScrollableScrollPhysics(),
-                      itemCount: value.wishList.length,
-                      itemBuilder: (context, index) {
-                        return ProductTile(plant: value.wishList[index]);
-                      },
-                    );
-                  },
+                shrinkWrap: true,
+                //physics: NeverScrollableScrollPhysics(),
+                itemCount: value.wishList.length,
+                itemBuilder: (context, index) {
+                  return ProductTile(plant: value.wishList[index]);
+                },
+              );
+        },
 
-                  // child: GridView.builder(
-                  //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //     crossAxisCount: 2,
-                  //     crossAxisSpacing: 5,
-                  //     mainAxisSpacing: 15,
-                  //     childAspectRatio: 0.6,
-                  //   ),
-                  //   itemCount: value.wishList.length,
-                  //   itemBuilder: (context, index) {
-                  //     return ProductCard(plant: value.wishList[index]);
-                  //   },
-                  // ),
-                ),
-              ),
+        // child: GridView.builder(
+        //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //     crossAxisCount: 2,
+        //     crossAxisSpacing: 5,
+        //     mainAxisSpacing: 15,
+        //     childAspectRatio: 0.6,
+        //   ),
+        //   itemCount: value.wishList.length,
+        //   itemBuilder: (context, index) {
+        //     return ProductCard(plant: value.wishList[index]);
+        //   },
+        // ),
+      ),
     );
   }
 }

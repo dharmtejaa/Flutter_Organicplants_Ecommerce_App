@@ -115,6 +115,7 @@ class _BasicdetailsState extends State<Basicdetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    //text form field
                     Column(
                       children: [
                         SizedBox(height: 13.h),
