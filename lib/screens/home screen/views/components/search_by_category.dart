@@ -46,11 +46,11 @@ class SearchByCategory extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Title Row
             Padding(
-              padding: EdgeInsets.only(right: AppSizes.paddingSm),
+              padding: EdgeInsets.only(right: AppSizes.paddingMd),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

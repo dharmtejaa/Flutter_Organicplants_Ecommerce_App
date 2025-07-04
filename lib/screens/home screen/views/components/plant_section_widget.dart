@@ -57,12 +57,12 @@ class PlantSectionWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             /// Title Row
             Padding(
               padding: EdgeInsets.only(
-                right: AppSizes.paddingSm,
+                right: AppSizes.paddingMd,
                 left: AppSizes.paddingSm,
               ),
               child: Row(
@@ -100,7 +100,7 @@ class PlantSectionWidget extends StatelessWidget {
                 // padding: EdgeInsets.symmetric(
                 //   horizontal: ThemeConstants.paddingSmall,
                 // ),
-                separatorBuilder: (context, index) => SizedBox(width: 7.w),
+                separatorBuilder: (context, index) => SizedBox(width: 8.w),
                 itemBuilder: (context, index) {
                   final plant = displayPlants[index];
                   return ProductCard(plant: plant);

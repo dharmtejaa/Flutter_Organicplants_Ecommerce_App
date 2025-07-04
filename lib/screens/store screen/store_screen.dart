@@ -103,12 +103,12 @@ class _StoreTabState extends State<StoreTab> {
                             ClipOval(
                               child: Image.asset(
                                 categories[index]['imagePath']!,
-                                width: 0.30.sw,
-                                height: 0.14.sh,
+                                width: 0.25.sw,
+                                height: 0.1.sh,
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            SizedBox(height: 4.h),
+                            //SizedBox(height: 4.h),
                             Text(
                               categories[index]['title']!,
                               //textAlign: TextAlign.center,
