@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/app_theme.dart';
-import 'package:organicplants/theme/appcolors.dart';
 
 class DeliveryCheckWidget extends StatelessWidget {
   final TextEditingController searchController;
