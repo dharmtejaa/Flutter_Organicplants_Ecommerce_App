@@ -18,7 +18,7 @@ class DeliveryCheckWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      width: 220.w,
+      width: 200.w,
       height: 45.h,
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
@@ -34,40 +34,19 @@ class DeliveryCheckWidget extends StatelessWidget {
                   : const Color(0xFFF0F0F0),
         ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              //textAlign: TextAlign.center,
-              controller: searchController,
-              maxLength: 6,
-              keyboardType: TextInputType.number,
-              style: TextStyle(
-                fontSize: AppSizes.fontMd,
-                color: colorScheme.onSurface,
-              ),
-              decoration: InputDecoration(
-                hintText: "Enter Pincode",
-                counterText: '',
-                hintStyle: TextStyle(
-                  fontSize: AppSizes.fontSm,
-                  color: colorScheme.onSecondary,
-                ),
-                filled: true,
-                fillColor:
-                    colorScheme.brightness == Brightness.dark
-                        ? AppTheme.darkCard
-                        : AppTheme.lightCard,
-                contentPadding: EdgeInsets.symmetric(vertical: 10.h),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(AppSizes.radiusSm),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 8.w),
-          GestureDetector(
+      child: TextFormField(
+        //textAlign: TextAlign.center,
+        controller: searchController,
+        maxLength: 6,
+        keyboardType: TextInputType.number,
+        style: TextStyle(
+          fontSize: AppSizes.fontMd,
+          color: colorScheme.onSurface,
+        ),
+        decoration: InputDecoration(
+          hintText: "Enter Pincode",
+          enabled: true,
+          suffix: GestureDetector(
             onTap: onCheck,
             child: Text(
               'Check',
@@ -78,7 +57,22 @@ class DeliveryCheckWidget extends StatelessWidget {
               ),
             ),
           ),
-        ],
+          counterText: '',
+          hintStyle: TextStyle(
+            fontSize: AppSizes.fontSm,
+            color: colorScheme.onSecondary,
+          ),
+          filled: true,
+          fillColor:
+              colorScheme.brightness == Brightness.dark
+                  ? AppTheme.darkCard
+                  : AppTheme.lightCard,
+          contentPadding: EdgeInsets.symmetric(vertical: 10.h),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+            borderSide: BorderSide.none,
+          ),
+        ),
       ),
     );
   }

@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +11,7 @@ import 'package:organicplants/screens/product%20Screen/views/components/faq_sect
 import 'package:organicplants/screens/product%20Screen/views/components/plant_details.dart';
 import 'package:organicplants/screens/product%20Screen/views/components/product_feature_card.dart';
 import 'package:organicplants/screens/product%20Screen/views/components/quick_guide_table.dart';
+import 'package:organicplants/theme/appcolors.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -40,9 +40,16 @@ class _ProductScreenState extends State<ProductScreen> {
 
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor:
+          colorScheme.brightness == Brightness.dark ? null : Colors.white,
       appBar: AppBar(
+        backgroundColor:
+            colorScheme.brightness == Brightness.dark ? null : Colors.white,
         centerTitle: true,
-        title: Text(widget.plants.commonName ?? "empty"),
+        title: Text(
+          widget.plants.commonName ?? "empty",
+          style: TextStyle(color: colorScheme.onSecondary),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -75,7 +82,6 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
               ),
               SizedBox(height: 5.h),
-
               //image indicators
               Center(
                 child: AnimatedSmoothIndicator(
@@ -88,7 +94,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 15.h),
               //plant name and category name
               RichText(
                 text: TextSpan(
@@ -103,21 +109,22 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                     ),
                     WidgetSpan(child: SizedBox(width: 10.w)),
+                    // TextSpan(
+                    //   text: '(${widget.plants.scientificName ?? 'Unknown'})\n',
+                    //   style: TextStyle(
+                    //     //fontWeight: FontWeight.bold,
+                    //     fontStyle: FontStyle.italic,
+                    //     color: colorScheme.onSecondary,
+                    //     fontSize: AppSizes.fontMd,
+                    //   ),
+                    // ),
+                    // WidgetSpan(child: SizedBox(height: 25.h)),
                     TextSpan(
-                      text: '(${widget.plants.scientificName ?? 'Unknown'})\n',
+                      text: '(${widget.plants.category})' ?? '',
                       style: TextStyle(
-                        //fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
                         color: colorScheme.onSecondary,
-                        fontSize: AppSizes.fontMd,
-                      ),
-                    ),
-                    WidgetSpan(child: SizedBox(height: 20.h)),
-                    TextSpan(
-                      text: widget.plants.category ?? '',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: AppSizes.fontMd,
+                        // fontStyle: FontStyle.italic,
+                        fontSize: AppSizes.fontSm,
                       ),
                     ),
                   ],
@@ -139,7 +146,6 @@ class _ProductScreenState extends State<ProductScreen> {
               //                     word[0].toUpperCase() + word.substring(1),
               //               )
               //               .join(' ');
-
               //           return Container(
               //             padding: EdgeInsets.symmetric(
               //               horizontal: 5.w,
@@ -162,58 +168,49 @@ class _ProductScreenState extends State<ProductScreen> {
               //           );
               //         }).toList(),
               //   ),
-              SizedBox(height: 5.h),
+              SizedBox(height: 10.h),
               Row(
                 children: [
-                  Icon(
-                    Icons.star,
-                    size: AppSizes.iconMd,
-                    color: AppTheme.starColor,
-                  ),
-                  SizedBox(width: 2.w),
+                  ...List.generate(5, (index) {
+                    return Icon(
+                      index < widget.plants.rating!.floor()
+                          ? Icons.star_rounded
+                          : Icons.star_half_rounded,
+                      size: AppSizes.iconSm,
+                      color: colorScheme.primary,
+                    );
+                  }),
+                  SizedBox(width: 0.01.sw),
                   Text(
                     widget.plants.rating!.toStringAsFixed(1),
                     style: TextStyle(
-                      fontSize: AppSizes.fontMd,
+                      fontSize: AppSizes.fontSm,
                       color: colorScheme.onSurface,
                     ),
                   ),
-
                   SizedBox(width: 10.w),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 4.w,
-                      vertical: 2.h,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppSizes.radiusSm),
-                      shape: BoxShape.rectangle,
-                      color: colorScheme.primary,
-                    ),
-
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.check_circle_outline_outlined,
-                          color: colorScheme.onPrimary,
-                          size: AppSizes.iconXs,
-                        ),
-                        SizedBox(width: 5.w),
-                        (widget.plants.inStock ?? false)
-                            ? Text(
-                              'In Stock',
-                              style: TextStyle(
-                                color: colorScheme.onPrimary,
-                                fontSize: AppSizes.fontXs,
-                              ),
-                            )
-                            : SizedBox.shrink(),
-                      ],
-                    ),
-                  ),
                 ],
               ),
-              SizedBox(height: 5.h),
+              // Row(
+              //   children: [
+              //     Icon(
+              //       Icons.star,
+              //       size: AppSizes.iconMd,
+              //       color: colorScheme.primary,
+              //     ),
+              //     SizedBox(width: 2.w),
+              //     Text(
+              //       widget.plants.rating!.toStringAsFixed(1),
+              //       style: TextStyle(
+              //         fontSize: AppSizes.fontMd,
+              //         color: colorScheme.onSurface,
+              //       ),
+              //     ),
+              //
+              //     ),
+              //   ],
+              // ),
+              SizedBox(height: 10.h),
               // Price row
               Row(
                 children: [
@@ -236,7 +233,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     '₹$originalPrice',
                     style: TextStyle(
                       fontSize: AppSizes.fontSm,
-                      color: colorScheme.onSurface,
+                      color: colorScheme.onSecondary,
                       decoration: TextDecoration.lineThrough,
                     ),
                   ),
@@ -247,12 +244,43 @@ class _ProductScreenState extends State<ProductScreen> {
                     '₹$offerPrice',
                     style: TextStyle(
                       fontSize: AppSizes.fontLg,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
               ),
+              // Container(
+              //   width: 80.w,
+              //   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.horizontal(
+              //       left: Radius.circular(AppSizes.radiusMd),
+              //       right: Radius.circular(AppSizes.radiusMd),
+              //     ),
+              //     shape: BoxShape.rectangle,
+              //     color: colorScheme.primary,
+              //   ),
+              //   child: Row(
+              //     children: [
+              //       Icon(
+              //         Icons.check_circle_outline_outlined,
+              //         color: colorScheme.onPrimary,
+              //         size: AppSizes.iconXs,
+              //       ),
+              //       SizedBox(width: 4.w),
+              //       (widget.plants.inStock ?? false)
+              //           ? Text(
+              //             'In Stock',
+              //             style: TextStyle(
+              //               color: colorScheme.onPrimary,
+              //               fontSize: AppSizes.fontXs,
+              //             ),
+              //           )
+              //           : SizedBox.shrink(),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: 10.h),
               Container(
                 width: double.infinity,
@@ -261,25 +289,48 @@ class _ProductScreenState extends State<ProductScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   // ignore: deprecated_member_use
-                  color: colorScheme.primary.withOpacity(0.6),
+                  color: colorScheme.primary.withOpacity(0.3),
                 ),
                 child: Text(
-                  'OFFER VALIDITY TILL LAST STOCK',
+                  'OFFER  VALIDITY  TILL  LAST  STOCK',
                   style: TextStyle(
-                    wordSpacing: 5,
+                    //wordSpacing: 5,
                     color: colorScheme.onSurface,
-                    //fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                     fontSize: AppSizes.fontMd,
                   ),
                 ),
               ),
               SizedBox(height: 10.h),
-              Divider(),
+              Divider(
+                //indent: 10.w,
+                //endIndent: 10.w,
+                thickness: 2.sp,
+                //radius: BorderRadius.circular((AppSizes.radiusLg)),
+                //height: 10.h,
+                color:
+                    colorScheme.brightness == Brightness.dark
+                        ? colorScheme.onSecondary
+                        : const Color(0xFFF0F0F0),
+              ),
+              SizedBox(height: 5.h),
               heading(colorScheme, 'Check Delivery'),
               SizedBox(height: 5.h),
               DeliveryCheckWidget(
                 searchController: searchController,
                 onCheck: () {},
+              ),
+              SizedBox(height: 10.h),
+              Divider(
+                indent: 5.w,
+                endIndent: 5.w,
+                thickness: 1.sp,
+                radius: BorderRadius.circular((AppSizes.radiusLg)),
+                //height: 10.h,
+                color:
+                    colorScheme.brightness == Brightness.dark
+                        ? colorScheme.onSecondary
+                        : const Color(0xFFF0F0F0),
               ),
               SizedBox(height: 10.h),
               Row(
@@ -303,7 +354,19 @@ class _ProductScreenState extends State<ProductScreen> {
                 ],
               ),
               SizedBox(height: 10.h),
-              Divider(color: Colors.grey, thickness: 2),
+              Divider(
+                //indent: 10.w,
+                //endIndent: 10.w,
+                thickness: 2.sp,
+                //radius: BorderRadius.circular((AppSizes.radiusLg)),
+                //height: 10.h,
+                color:
+                    colorScheme.brightness == Brightness.dark
+                        ? colorScheme.onSecondary
+                        : const Color(0xFFF0F0F0),
+              ),
+              SizedBox(height: 10.h),
+              //Divider(color: Colors.grey, thickness: 2),
               heading(colorScheme, 'Plant Highlights :'),
               SizedBox(height: 5.h),
               QuickGuideCard(plants: widget.plants),
