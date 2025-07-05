@@ -178,6 +178,7 @@ class _ProfileTabState extends State<ProfileTab> {
   ) {
     return RadioListTile<ThemeMode>(
       title: Text(title),
+      // ignore: deprecated_member_use
       secondary: Icon(icon, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
       value: mode,
       groupValue: themeProvider.themeMode, // The currently selected mode from the provider

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
-import 'package:organicplants/services/app_sizes.dart';
 import 'package:provider/provider.dart';
 
 class CartIconWithBadge extends StatelessWidget {

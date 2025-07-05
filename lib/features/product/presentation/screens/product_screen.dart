@@ -118,7 +118,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     // ),
                     // WidgetSpan(child: SizedBox(height: 25.h)),
                     TextSpan(
-                      text: '(${widget.plants.category})' ?? '',
+                      text: '(${widget.plants.category})',
                       style: TextStyle(
                         color: colorScheme.onSecondary,
                         // fontStyle: FontStyle.italic,

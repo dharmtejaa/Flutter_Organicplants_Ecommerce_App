@@ -8,7 +8,6 @@ import 'package:organicplants/features/product/presentation/screens/product_scre
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/models/all_plants_model.dart';
-import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/shared/buttons/add_to_cart_button.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -79,13 +78,16 @@ class ProductCardGrid extends StatelessWidget {
         ), // Provides spacing between grid items
         decoration: BoxDecoration(
           color:
+              // ignore: deprecated_member_use
               isDark ? AppTheme.darkCard : AppTheme.lightCard.withOpacity(0.8),
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           boxShadow: [
             BoxShadow(
               color:
                   isDark
+                      // ignore: deprecated_member_use
                       ? Colors.black.withOpacity(0.1)
+                      // ignore: deprecated_member_use
                       : Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 2,

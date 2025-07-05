@@ -18,6 +18,7 @@ class ThemeProvider with ChangeNotifier {
   bool get isDarkMode {
     // If ThemeMode is system, check the actual platform brightness
     if (_themeMode == ThemeMode.system) {
+      // ignore: deprecated_member_use
       return WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
     }
     return _themeMode == ThemeMode.dark;

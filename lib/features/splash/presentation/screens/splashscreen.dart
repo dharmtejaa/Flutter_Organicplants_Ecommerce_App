@@ -6,7 +6,6 @@ import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plantservices.dart';
 import 'package:organicplants/features/onboarding/presentation/screens/onboarding_screen.dart';
-import 'package:organicplants/services/app_sizes.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});

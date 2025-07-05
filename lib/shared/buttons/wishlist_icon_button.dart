@@ -49,7 +49,9 @@ class WishlistIconButton extends StatelessWidget {
               radius: 15,
               backgroundColor:
                   isDark
+                      // ignore: deprecated_member_use
                       ? Colors.grey.withOpacity(0.2)
+                      // ignore: deprecated_member_use
                       : colorScheme.primary.withOpacity(0.1),
               child: Icon(
                 isWishListed ? Icons.favorite : Icons.favorite_border,

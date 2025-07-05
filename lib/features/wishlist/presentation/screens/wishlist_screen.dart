@@ -4,7 +4,6 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/features/wishlist/presentation/widgets/product_tile.dart';
-import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/widgets/no_result_found.dart';
 import 'package:provider/provider.dart';

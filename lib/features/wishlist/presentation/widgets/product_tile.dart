@@ -6,7 +6,6 @@ import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/models/all_plants_model.dart';
-import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/shared/buttons/add_to_cart_button.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
