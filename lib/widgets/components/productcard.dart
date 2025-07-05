@@ -116,7 +116,7 @@ class ProductCard extends StatelessWidget {
                         plant.images![0].url!,
                         height: imageHeight,
                         width: double.infinity,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                         errorBuilder:
                             (_, __, ___) =>
                                 const Center(child: Icon(Icons.broken_image)),

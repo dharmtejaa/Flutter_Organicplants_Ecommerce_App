@@ -113,7 +113,7 @@ class ProductCardGrid extends StatelessWidget {
                             imageHeight, // Image fills available height from Expanded
                         fit:
                             BoxFit
-                                .contain, // Ensures the image fills the space, cropping if necessary
+                                .cover, // Ensures the image fills the space, cropping if necessary
                         errorBuilder:
                             (_, __, ___) =>
                                 const Center(child: Icon(Icons.broken_image)),

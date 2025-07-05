@@ -314,7 +314,7 @@ class CardTile extends StatelessWidget {
                     plant.images?[0].url ?? '',
                     height: 0.1.sh,
                     width: 0.22.sw,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 SizedBox(width: 10.w),

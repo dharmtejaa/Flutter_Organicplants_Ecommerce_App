@@ -178,7 +178,7 @@ class _SearchFieldState extends State<SearchField> {
                                 .toList(),
                         isRepeatingAnimation: true,
                         repeatForever: true,
-                        pause: const Duration(seconds: 2),
+                        pause: const Duration(seconds: 1),
                       ),
                     ),
                   ),
