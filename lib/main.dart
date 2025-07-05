@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/providers/bottom_nav_provider.dart';
-import 'package:organicplants/providers/carousel_provider.dart';
-import 'package:organicplants/providers/cart_provider.dart';
-import 'package:organicplants/providers/hint_text_provider.dart';
-import 'package:organicplants/providers/onboarding_provider.dart';
-import 'package:organicplants/providers/search_screen_provider.dart';
-import 'package:organicplants/providers/theme_provider.dart'; // Ensure this is imported
-import 'package:organicplants/providers/wishlist_provider.dart';
-import 'package:organicplants/screens/splash%20screen/splashscreen.dart';
-import 'package:organicplants/theme/app_theme.dart';
+import 'package:organicplants/core/theme/app_theme.dart';
+import 'package:organicplants/features/cart/logic/cart_provider.dart';
+import 'package:organicplants/features/entry/logic/bottom_nav_provider.dart';
+import 'package:organicplants/features/home/logic/onboarding_provider.dart';
+import 'package:organicplants/features/product/logic/carousel_provider.dart';
+import 'package:organicplants/features/search/logic/hint_text_provider.dart';
+import 'package:organicplants/features/search/logic/search_screen_provider.dart';
+import 'package:organicplants/features/splash/presentation/screens/splashscreen.dart';
+import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
+import 'package:organicplants/shared/logic/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
