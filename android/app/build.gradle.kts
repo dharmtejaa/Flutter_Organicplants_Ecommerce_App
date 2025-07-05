@@ -25,8 +25,9 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "17"
-    }
+    jvmTarget = "17"
+    freeCompilerArgs += listOf("-Xjvm-default=all")
+}
 
     buildTypes {
         release {
@@ -41,6 +42,7 @@ dependencies {
     // UPDATED: Firebase Android BoM (Bill of Materials) for consistent versions.
     // As of July 4, 2025, 33.1.0 is the latest stable.
     implementation(platform("com.google.firebase:firebase-bom:33.16.0")) // <--- UPDATED THIS LINE
+     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")

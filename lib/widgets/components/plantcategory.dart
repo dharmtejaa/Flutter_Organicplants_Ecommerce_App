@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
-import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
-import 'package:organicplants/widgets/custom_widgets/plant_card_grid.dart';
+import 'package:organicplants/widgets/components/plant_card_grid.dart';
 import 'package:organicplants/widgets/customButtons/searchbutton.dart';
+import 'package:organicplants/widgets/custome%20widgets/cart_icon_with_batdge.dart';
+import 'package:organicplants/widgets/custome%20widgets/wishlist_icon_with_badge.dart';
 
 class PlantCategory extends StatelessWidget {
   final List<AllPlantsModel> plant;

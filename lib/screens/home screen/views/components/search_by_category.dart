@@ -4,7 +4,7 @@ import 'package:organicplants/screens/store%20screen/store_screen.dart';
 import 'package:organicplants/services/all_plants_global_data.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/app_theme.dart';
-import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
+import 'package:organicplants/widgets/components/plantcategory.dart';
 
 class SearchByCategory extends StatelessWidget {
   const SearchByCategory({super.key});

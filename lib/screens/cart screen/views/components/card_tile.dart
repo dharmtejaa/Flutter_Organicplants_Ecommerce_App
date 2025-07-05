@@ -248,8 +248,8 @@ import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/providers/cart_provider.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/appcolors.dart';
-import 'package:organicplants/widgets/components/custom_snackbar.dart';
 import 'package:organicplants/screens/product%20Screen/product_screen.dart';
+import 'package:organicplants/widgets/custome%20widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class CardTile extends StatelessWidget {

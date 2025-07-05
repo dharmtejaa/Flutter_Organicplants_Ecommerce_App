@@ -5,7 +5,7 @@ import 'package:organicplants/services/all_plants_global_data.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/app_theme.dart';
 import 'package:organicplants/theme/appcolors.dart';
-import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
+import 'package:organicplants/widgets/components/plantcategory.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AutoBannerWithNotifier extends StatefulWidget {

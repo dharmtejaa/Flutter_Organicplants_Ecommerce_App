@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/providers/cart_provider.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/components/custom_snackbar.dart';
+import 'package:organicplants/widgets/custome%20widgets/custom_snackbar.dart';
 
 class AddToCartButton extends StatelessWidget {
   const AddToCartButton({

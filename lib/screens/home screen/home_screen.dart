@@ -6,10 +6,10 @@ import 'package:organicplants/screens/home%20screen/views/components/plant_secti
 import 'package:organicplants/screens/home%20screen/views/components/search_by_category.dart';
 import 'package:organicplants/services/all_plants_global_data.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
-import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
-import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
+import 'package:organicplants/widgets/components/plantcategory.dart';
 import 'package:organicplants/widgets/customButtons/searchbutton.dart';
+import 'package:organicplants/widgets/custome%20widgets/cart_icon_with_batdge.dart';
+import 'package:organicplants/widgets/custome%20widgets/wishlist_icon_with_badge.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

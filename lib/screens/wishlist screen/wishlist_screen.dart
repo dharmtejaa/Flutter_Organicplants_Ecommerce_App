@@ -4,8 +4,8 @@ import 'package:organicplants/providers/wishlist_provider.dart';
 import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/screens/wishlist%20screen/views/components/product_tile.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
-import 'package:organicplants/widgets/components/no_result_found.dart';
+import 'package:organicplants/widgets/custome%20widgets/cart_icon_with_batdge.dart';
+import 'package:organicplants/widgets/custome%20widgets/no_result_found.dart';
 import 'package:provider/provider.dart';
 
 class WishlistScreen extends StatelessWidget {

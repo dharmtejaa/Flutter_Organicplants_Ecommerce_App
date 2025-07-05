@@ -5,13 +5,13 @@ import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/screens/search%20screen/views/components/empty_message.dart';
 import 'package:organicplants/theme/app_theme.dart';
-import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
-import 'package:organicplants/widgets/components/no_result_found.dart';
 import 'package:organicplants/screens/search%20screen/views/components/search_field.dart';
-import 'package:organicplants/widgets/components/section_header.dart';
-import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
-import 'package:organicplants/widgets/custom_widgets/plant_card_grid.dart';
-import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
+import 'package:organicplants/widgets/components/plant_card_grid.dart';
+import 'package:organicplants/widgets/components/plantcategory.dart';
+import 'package:organicplants/widgets/custome%20widgets/cart_icon_with_batdge.dart';
+import 'package:organicplants/widgets/custome%20widgets/no_result_found.dart';
+import 'package:organicplants/widgets/custome%20widgets/section_header.dart';
+import 'package:organicplants/widgets/custome%20widgets/wishlist_icon_with_badge.dart';
 
 import 'package:provider/provider.dart';
 

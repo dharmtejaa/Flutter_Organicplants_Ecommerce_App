@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/custom_widgets/productcard.dart';
+import 'package:organicplants/widgets/components/productcard.dart';
 
 class PlantSectionWidget extends StatelessWidget {
   final String title;

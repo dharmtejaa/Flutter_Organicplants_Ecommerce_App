@@ -6,9 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/screens/auth/basicdetails.dart';
 import 'package:organicplants/screens/auth/loginscreen.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/components/custom_snackbar.dart';
 import 'package:organicplants/widgets/customButtons/custombutton.dart';
 import 'package:organicplants/screens/auth/views/components/rich_text_line.dart';
+import 'package:organicplants/widgets/custome%20widgets/custom_snackbar.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPscreen extends StatefulWidget {

@@ -4,19 +4,20 @@ import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/providers/cart_provider.dart';
 import 'package:organicplants/providers/search_screen_provider.dart';
 import 'package:organicplants/providers/wishlist_provider.dart';
+import 'package:organicplants/widgets/customButtons/wishlist_icon_button.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/app_theme.dart';
 import 'package:organicplants/theme/appcolors.dart';
-import 'package:organicplants/widgets/components/custom_snackbar.dart';
+import 'package:organicplants/widgets/custome%20widgets/custom_snackbar.dart';
 import 'package:organicplants/widgets/customButtons/add_to_cart_button.dart';
 import 'package:organicplants/screens/product%20Screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
-class ProductCardGrid extends StatelessWidget {
+class ProductCard extends StatelessWidget {
   final AllPlantsModel plant;
   final bool? scifiname;
 
-  const ProductCardGrid({super.key, required this.plant, this.scifiname});
+  const ProductCard({super.key, required this.plant, this.scifiname});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,10 @@ class ProductCardGrid extends StatelessWidget {
       context,
       listen: false,
     );
-
+    print('widget rebulding in product card');
+    final cardWidth =
+        160.w; // Card width remains fixed for horizontal scrolling
+    final imageHeight = cardWidth * 0.75;
     final offerPrice = (plant.prices?.offerPrice ?? 0).toInt();
     final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
     final discountPercent =
@@ -39,9 +43,6 @@ class ProductCardGrid extends StatelessWidget {
             ? ((originalPrice - offerPrice) / originalPrice) * 100
             : 0;
     final discount = discountPercent.toInt().toString();
-    final cardWidth =
-        160.w; // Card width remains fixed for horizontal scrolling
-    final imageHeight = cardWidth * 0.85;
 
     return GestureDetector(
       onTap: () {
@@ -51,25 +52,44 @@ class ProductCardGrid extends StatelessWidget {
           MaterialPageRoute(builder: (context) => ProductScreen(plants: plant)),
         );
       },
+
       onDoubleTap: () {
-        if (!wishlistProvider.isInWishlist(plant.id.toString())) {
-          wishlistProvider.toggleWishList(plant);
-        }
+        //final isWishListed = wishlistProvider.isInWishlist(plant.id!);
+        wishlistProvider.toggleWishList(plant);
+        final isNowWishlisted = wishlistProvider.isInWishlist(plant.id!);
+        showCustomSnackbar(
+          context: context,
+          message:
+              isNowWishlisted
+                  ? '${plant.commonName} Added to wishlist!'
+                  : '${plant.commonName} Removed from wishlist.',
+          type: isNowWishlisted ? SnackbarType.success : SnackbarType.info,
+          actionLabel: isNowWishlisted ? 'Undo' : null,
+          onAction:
+              isNowWishlisted
+                  ? () => wishlistProvider.toggleWishList(plant)
+                  : null,
+        );
       },
       child: Container(
-        // The width and height of this Container will be governed by the GridView's delegate
-        // and its available space. Remove fixed width/height here.
-        margin: EdgeInsets.only(
-          bottom: AppSizes.vMarginSm,
-        ), // Provides spacing between grid items
+        width: cardWidth,
+
+        // *** KEY CHANGE 1: Remove fixed height or IntrinsicHeight from here. ***
+        // This Container will now take the height provided by its parent (the ListView item extent).
+        // If there was an IntrinsicHeight wrapping the Column, remove it.
+        // The `height: imageHeight` from earlier (cardWidth * 0.7.h) was for the image, not the whole card.
+        // The overall card height will now be determined by the parent.
+        margin: EdgeInsets.only(bottom: AppSizes.vMarginSm),
         decoration: BoxDecoration(
           color:
-              isDark ? AppTheme.darkCard : AppTheme.lightCard.withOpacity(0.8),
+              colorScheme.brightness == Brightness.dark
+                  ? AppTheme.darkCard
+                  : AppTheme.lightCard.withOpacity(0.8),
           borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           boxShadow: [
             BoxShadow(
               color:
-                  isDark
+                  colorScheme.brightness == Brightness.dark
                       ? Colors.black.withOpacity(0.1)
                       : Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
@@ -78,101 +98,44 @@ class ProductCardGrid extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(2), // Small internal padding for content
+        padding: const EdgeInsets.all(2),
+        // *** KEY CHANGE 2: Use a Column directly and use Expanded for flexible sizing. ***
         child: Stack(
+          // Re-wrap with Stack to keep Positioned widgets
           children: [
             Column(
+              // Main content column
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              // Make the Column fill the available height of the Container
-              // In a GridView, the item usually defines its own dimensions,
-              // so the Column can expand within those bounds.
               children: [
-                // Product Image section - takes flexible space
                 Stack(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppSizes.radiusSm),
                       child: Image.network(
                         plant.images![0].url!,
-                        width: double.infinity, // Image fills card width
-                        height:
-                            imageHeight, // Image fills available height from Expanded
-                        fit:
-                            BoxFit
-                                .contain, // Ensures the image fills the space, cropping if necessary
+                        height: imageHeight,
+                        width: double.infinity,
+                        fit: BoxFit.contain,
                         errorBuilder:
                             (_, __, ___) =>
                                 const Center(child: Icon(Icons.broken_image)),
                       ),
                     ),
-                    // Wishlist icon
                     Positioned(
+                      // Wishlist icon
                       top: 2,
                       right: 2,
-                      child: Consumer<WishlistProvider>(
-                        builder: (context, value, child) {
-                          final isWishListed = value.isInWishlist(plant.id!);
-                          return InkWell(
-                            onTap: () {
-                              value.toggleWishList(plant);
-                              final isNowWishlisted = value.isInWishlist(
-                                plant.id!,
-                              );
-                              showCustomSnackbar(
-                                context: context,
-                                message:
-                                    isNowWishlisted
-                                        ? '${plant.commonName} Added to wishlist!'
-                                        : '${plant.commonName} Removed from wishlist.',
-                                type:
-                                    isNowWishlisted
-                                        ? SnackbarType.success
-                                        : SnackbarType.info,
-                                actionLabel: isNowWishlisted ? 'Undo' : null,
-                                onAction:
-                                    isNowWishlisted
-                                        ? () => value.toggleWishList(plant)
-                                        : null,
-                              );
-                            },
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              transitionBuilder:
-                                  (child, animation) => ScaleTransition(
-                                    scale: animation,
-                                    child: child,
-                                  ),
-                              child: CircleAvatar(
-                                radius: 15,
-                                backgroundColor:
-                                    isDark
-                                        ? Colors.grey.withOpacity(0.2)
-                                        : colorScheme.primary.withOpacity(0.1),
-                                child: Icon(
-                                  isWishListed
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  size: AppSizes.iconMd,
-                                  key: ValueKey<bool>(isWishListed),
-                                  color: colorScheme.primary,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                      child: WishlistIconButton(plant: plant, isDark: isDark),
                     ),
                   ],
                 ),
-
-                // Text Info section - takes minimum space needed
                 Padding(
+                  // Text info
                   padding: EdgeInsets.all(AppSizes.paddingXs),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize:
-                        MainAxisSize
-                            .min, // Essential for text to only take needed space
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         plant.commonName ?? 'Unknown Plant',
@@ -206,19 +169,14 @@ class ProductCardGrid extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            '$discount% off',
-                            style: TextStyle(
-                              color: colorScheme.onSurface,
-                              fontSize: AppSizes.fontXs,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        '$discount% off',
+                        style: TextStyle(
+                          color: colorScheme.onSurface,
+                          fontSize: AppSizes.fontXs,
+                        ),
                       ),
                       SizedBox(height: 0.001.sh),
-                      // Rating
                       Row(
                         children: [
                           ...List.generate(5, (index) {
@@ -245,10 +203,9 @@ class ProductCardGrid extends StatelessWidget {
                 ),
               ],
             ),
-            // Add to Cart Button (positioned on top of the Column)
+            // Add to Cart Button (remains here as it uses Positioned)
             Positioned(
-              bottom:
-                  -2, // Adjusted slightly to integrate better, feel free to fine-tune
+              bottom: -2,
               right: -2,
               child: AddToCartButton(cartProvider: cartProvider, plant: plant),
             ),

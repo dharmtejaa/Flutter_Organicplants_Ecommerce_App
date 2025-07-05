@@ -5,8 +5,8 @@ import 'package:organicplants/providers/hint_text_provider.dart';
 import 'package:organicplants/providers/search_screen_provider.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/app_theme.dart';
-import 'package:organicplants/widgets/components/custom_snackbar.dart';
-import 'package:organicplants/widgets/custom_widgets/plantcategory.dart';
+import 'package:organicplants/widgets/components/plantcategory.dart';
+import 'package:organicplants/widgets/custome%20widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class SearchField extends StatefulWidget {

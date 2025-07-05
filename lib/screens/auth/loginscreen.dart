@@ -5,10 +5,10 @@ import 'package:organicplants/screens/auth/otpscreen.dart';
 import 'package:organicplants/screens/entry%20screen/entry_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
 import 'package:organicplants/theme/app_theme.dart';
-import 'package:organicplants/widgets/components/custom_snackbar.dart';
 import 'package:organicplants/widgets/customButtons/custombutton.dart';
 import 'package:organicplants/screens/auth/views/components/custom_textfield.dart';
 import 'package:organicplants/screens/auth/views/components/rich_text_line.dart';
+import 'package:organicplants/widgets/custome%20widgets/custom_snackbar.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});

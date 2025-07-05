@@ -4,8 +4,8 @@ import 'package:organicplants/providers/theme_provider.dart';
 import 'package:organicplants/screens/cart%20screen/cart_screen.dart';
 import 'package:organicplants/screens/entry%20screen/entry_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
-import 'package:organicplants/widgets/components/wishlist_icon_with_badge.dart';
+import 'package:organicplants/widgets/custome%20widgets/cart_icon_with_batdge.dart';
+import 'package:organicplants/widgets/custome%20widgets/wishlist_icon_with_badge.dart';
 import 'package:provider/provider.dart';
 
 class ProfileTab extends StatefulWidget {

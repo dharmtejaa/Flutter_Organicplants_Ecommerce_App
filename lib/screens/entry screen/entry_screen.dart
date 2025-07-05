@@ -5,7 +5,7 @@ import 'package:organicplants/screens/profile%20screen/profile_screen.dart';
 import 'package:organicplants/screens/search%20screen/search_screen.dart';
 import 'package:organicplants/screens/store%20screen/store_screen.dart';
 import 'package:organicplants/services/app_sizes.dart';
-import 'package:organicplants/widgets/components/cart_icon_with_batdge.dart';
+import 'package:organicplants/widgets/custome%20widgets/cart_icon_with_batdge.dart';
 import 'package:provider/provider.dart';
 import '../../providers/bottom_nav_provider.dart';
 
