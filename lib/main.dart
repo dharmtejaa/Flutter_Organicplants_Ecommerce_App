@@ -6,6 +6,7 @@ import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/entry/logic/bottom_nav_provider.dart';
 import 'package:organicplants/features/home/logic/onboarding_provider.dart';
 import 'package:organicplants/features/product/logic/carousel_provider.dart';
+import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/features/search/logic/hint_text_provider.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/splash/presentation/screens/splashscreen.dart';
@@ -35,6 +36,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => HintTextProvider()),
         ChangeNotifierProvider(create: (_) => WishlistProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(),
         ), // Your ThemeProvider

@@ -28,30 +28,14 @@ class IndividualExpansionTile extends StatelessWidget {
           icon != null
               ? Icon(icon, color: colorScheme.primary, size: AppSizes.iconSm)
               : null,
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: AppSizes.fontMd,
-          fontWeight: FontWeight.w600,
-          color: colorScheme.onSurface,
-        ),
-      ),
+      title: Text(title, style: Theme.of(context).textTheme.bodyMedium),
       children: [
         description != null
             ? Text(
               '$value - $description',
-              style: TextStyle(
-                fontSize: AppSizes.fontSm,
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodySmall,
             )
-            : Text(
-              value,
-              style: TextStyle(
-                fontSize: AppSizes.fontSm,
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ),
+            : Text(value, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
   }

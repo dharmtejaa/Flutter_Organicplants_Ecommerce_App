@@ -29,7 +29,7 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
 
   @override
   Widget build(BuildContext context) {
-    //final colorScheme = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
     //final height = MediaQuery.of(context).size.height;
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -90,27 +90,63 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                     //banner text
                     Positioned(
                       left: 15,
-                      bottom: 25,
+                      bottom: 20,
                       right: 15,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            banner['title']!,
-                            style: TextStyle(
-                              color: AppTheme.lightBackground,
-                              //fontStyle: FontStyle.italic,
-                              fontSize: AppSizes.fontMd,
-                              fontWeight: FontWeight.bold,
+                          // Text content on the left
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // Title with enhanced styling
+                                Text(
+                                  banner['title']!,
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                SizedBox(height: 2.h),
+
+                                // Subtitle with compact design
+                                Text(
+                                  banner['subtitle']!,
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 0.03.h),
-                          Text(
-                            banner['subtitle']!,
-                            style: TextStyle(
-                              color: AppTheme.lightBackground,
-                              fontSize: AppSizes.fontSm,
-                              fontWeight: FontWeight.bold,
+
+                          SizedBox(width: 12.w),
+
+                          // Compact Explore Button on the right
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 6.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.primary,
+                              borderRadius: BorderRadius.circular(
+                                AppSizes.radiusLg,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Explore',
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                                SizedBox(width: 4.w),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: AppColors.background,
+                                  size: 10.sp,
+                                ),
+                              ],
                             ),
                           ),
                         ],

@@ -14,21 +14,23 @@ class CustomRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return RichText(
       text: TextSpan(
         text: text1,
-        // ignore: deprecated_member_use
-        style: TextStyle(fontSize: 20, color: Colors.black.withOpacity(0.8)),
+        style: TextStyle(
+          fontSize: 20,
+          color: colorScheme.onSurface.withValues(alpha: 0.8),
+        ),
         children: [
           TextSpan(
             recognizer: TapGestureRecognizer()..onTap = ontap,
             text: text2,
             style: TextStyle(
               fontSize: 20,
-              color: Colors.green.shade400,
+              color: colorScheme.primary,
               decoration: TextDecoration.underline,
-
-              decorationColor: Colors.green.shade400,
+              decorationColor: colorScheme.primary,
             ),
           ),
         ],

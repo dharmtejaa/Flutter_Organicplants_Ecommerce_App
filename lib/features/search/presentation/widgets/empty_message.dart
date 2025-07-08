@@ -11,11 +11,9 @@ class EmptyMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       message,
-      style: TextStyle(
-        color: AppColors.mutedText,
-        fontSize: AppSizes.fontSm,
-        fontStyle: FontStyle.italic,
-      ),
+      style: Theme.of(context).textTheme.bodySmall,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

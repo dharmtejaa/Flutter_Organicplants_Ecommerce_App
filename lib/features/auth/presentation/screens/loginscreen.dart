@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/auth/presentation/screens/otpscreen.dart';
@@ -9,6 +9,7 @@ import 'package:organicplants/features/auth/presentation/widgets/terms_and_polic
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
+import 'package:organicplants/shared/widgets/skip_button.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
@@ -29,25 +30,13 @@ class _LoginscreenState extends State<Loginscreen> {
         auth.verifyPhoneNumber(
           phoneNumber: "+91${number.text}",
           verificationCompleted: (_) {
-            showCustomSnackbar(
-              context: context,
-              message: "Verification Completed! 🎉",
-              type: SnackbarType.success,
-            );
+            CustomSnackBar.showSuccess(context, "Verification Completed! 🎉");
           },
           verificationFailed: (e) {
-            showCustomSnackbar(
-              context: context,
-              message: "Verification Failed! ❌",
-              type: SnackbarType.error,
-            );
+            CustomSnackBar.showError(context, "Verification Failed! ❌");
           },
           codeSent: (String verificationId, int? resendToken) {
-            showCustomSnackbar(
-              context: context,
-              message: 'Otp sentsuccessfully ',
-              type: SnackbarType.success,
-            );
+            CustomSnackBar.showSuccess(context, 'OTP sent successfully');
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -60,19 +49,11 @@ class _LoginscreenState extends State<Loginscreen> {
             );
           },
           codeAutoRetrievalTimeout: (e) {
-            showCustomSnackbar(
-              context: context,
-              message: "Code Auto Retrieval Timeout! ❌",
-              type: SnackbarType.error,
-            );
+            CustomSnackBar.showError(context, "Code Auto Retrieval Timeout! ❌");
           },
         );
       } else {
-        showCustomSnackbar(
-          context: context,
-          message: "Please enter a valid phone number",
-          type: SnackbarType.error,
-        );
+        CustomSnackBar.showError(context, "Please enter a valid phone number");
       }
     }
 
@@ -103,22 +84,15 @@ class _LoginscreenState extends State<Loginscreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           actions: [
-            GestureDetector(
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EntryScreen()),
-                  ),
-              child: Padding(
-                padding: EdgeInsets.only(right: 0.04.sw),
-                child: Text(
-                  "Skip",
-                  style: TextStyle(
-                    fontSize: AppSizes.fontLg,
-                    color: colorScheme.onSurface,
-                    //fontWeight: FontWeight.w500,
-                  ),
-                ),
+            Padding(
+              padding: EdgeInsets.only(right: AppSizes.paddingSm),
+              child: SkipButton(
+                onPressed:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EntryScreen()),
+                    ),
+                text: 'Skip',
               ),
             ),
           ],
@@ -137,19 +111,11 @@ class _LoginscreenState extends State<Loginscreen> {
                   RichText(
                     text: TextSpan(
                       text: "Login \n",
-                      style: TextStyle(
-                        fontSize: AppSizes.fontDisplay,
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                       children: [
                         TextSpan(
                           text: "to get Started",
-                          style: TextStyle(
-                            fontSize: AppSizes.fontXxl,
-                            fontWeight: FontWeight.w400,
-                            color: colorScheme.onSurface,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
                     ),
@@ -193,10 +159,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           SizedBox(height: 10.h),
                           Text(
                             " You'll receive an OTP on the number above.",
-                            style: TextStyle(
-                              fontSize: AppSizes.fontSm,
-                              color: colorScheme.onSecondary,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
@@ -207,7 +170,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             ontap: login,
                             backgroundColor: colorScheme.primary,
                             text: 'Continue',
-                            textColor: AppTheme.lightBackground,
+                            textColor: colorScheme.onPrimary,
                           ),
                           SizedBox(height: 10.h),
                           Padding(

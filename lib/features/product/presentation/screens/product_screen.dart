@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/product/logic/carousel_provider.dart';
@@ -12,6 +13,7 @@ import 'package:organicplants/features/product/presentation/widgets/quick_guide_
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:organicplants/features/cart/presentation/screens/checkout_screen.dart';
 
 class ProductScreen extends StatefulWidget {
   final AllPlantsModel plants;
@@ -24,6 +26,7 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final searchController = TextEditingController();
   int activeIndex = 0;
+  final ValueNotifier<bool> showFullDescription = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -35,370 +38,851 @@ class _ProductScreenState extends State<ProductScreen> {
             : 0;
     final discount = discountPercent.toInt().toString();
     final carouselProvider = Provider.of<CarouselProvider>(context);
-
     final colorScheme = Theme.of(context).colorScheme;
+    final inStock = widget.plants.inStock ?? false;
+
     return Scaffold(
-      backgroundColor:
-          colorScheme.brightness == Brightness.dark ? null : Colors.white,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor:
-            colorScheme.brightness == Brightness.dark ? null : Colors.white,
+        backgroundColor: colorScheme.surface,
+        elevation: 0,
         centerTitle: true,
-        title: Text(
-          widget.plants.commonName ?? "empty",
-          style: TextStyle(color: colorScheme.onSecondary),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Semantics(
+              label: 'Plant icon',
+              child: Icon(
+                Icons.local_florist,
+                color: colorScheme.primary,
+                size: 24.sp,
+              ),
+            ),
+            SizedBox(width: 8.w),
+            Semantics(
+              label: 'Product name: ${widget.plants.commonName ?? "empty"}',
+              child: Text(
+                widget.plants.commonName ?? "empty",
+                style: TextStyle(
+                  color: colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24.sp, // Larger font
+                  letterSpacing: 0.2,
+                ),
+              ),
+            ),
+          ],
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(AppSizes.paddingSm),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //plant images
-              CarouselSlider.builder(
-                itemCount: widget.plants.images?.length ?? 0,
-                itemBuilder: (context, index, realIndex) {
-                  final imageUrl = widget.plants.images?[index].url ?? '';
-                  return ClipRRect(
-                    //borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                    child: Image.network(
-                      imageUrl,
-                      height: 250.h,
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 250.h,
-                  viewportFraction: 1,
-                  onPageChanged: (index, reason) {
-                    carouselProvider.setIndex(index);
-                  },
-                ),
-              ),
-              SizedBox(height: 5.h),
-              //image indicators
-              Center(
-                child: AnimatedSmoothIndicator(
-                  activeIndex: carouselProvider.activeIndex,
-                  count: widget.plants.images?.length ?? 0,
-                  effect: ExpandingDotsEffect(
-                    activeDotColor: colorScheme.primary,
-                    dotHeight: 8.h,
-                    dotWidth: 8.w,
-                  ),
-                ),
-              ),
-              SizedBox(height: 15.h),
-              //plant name and category name
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: widget.plants.commonName ?? '',
-                      style: TextStyle(
-                        // fontWeight: FontWeight.w600,
-                        fontSize: AppSizes.fontXl,
-                        fontWeight: FontWeight.w600,
-                        color: colorScheme.onSurface,
-                      ),
-                    ),
-                    WidgetSpan(child: SizedBox(width: 10.w)),
-                    // TextSpan(
-                    //   text: '(${widget.plants.scientificName ?? 'Unknown'})\n',
-                    //   style: TextStyle(
-                    //     //fontWeight: FontWeight.bold,
-                    //     fontStyle: FontStyle.italic,
-                    //     color: colorScheme.onSecondary,
-                    //     fontSize: AppSizes.fontMd,
-                    //   ),
-                    // ),
-                    // WidgetSpan(child: SizedBox(height: 25.h)),
-                    TextSpan(
-                      text: '(${widget.plants.category})',
-                      style: TextStyle(
-                        color: colorScheme.onSecondary,
-                        // fontStyle: FontStyle.italic,
-                        fontSize: AppSizes.fontSm,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              //SizedBox(height: 10.h),
-              // Tags as Chips
-              // if (widget.plants.tags != null && widget.plants.tags!.isNotEmpty)
-              //   Wrap(
-              //     spacing: 8.w,
-              //     runSpacing: 8.h,
-              //     children:
-              //         widget.plants.tags!.map((tag) {
-              //           final formattedTag = tag
-              //               .replaceAll('_', ' ')
-              //               .split(' ')
-              //               .map(
-              //                 (word) =>
-              //                     word[0].toUpperCase() + word.substring(1),
-              //               )
-              //               .join(' ');
-              //           return Container(
-              //             padding: EdgeInsets.symmetric(
-              //               horizontal: 5.w,
-              //               vertical: 4.h,
-              //             ),
-              //             decoration: BoxDecoration(
-              //               // ignore: deprecated_member_use
-              //               color: colorScheme.primary.withOpacity(0.1),
-              //               borderRadius: BorderRadius.circular(8.r),
-              //               border: Border.all(color: colorScheme.primary),
-              //             ),
-              //             child: Text(
-              //               formattedTag,
-              //               style: TextStyle(
-              //                 color: colorScheme.onSurface,
-              //                 fontSize: AppSizes.fontXs,
-              //                 fontWeight: FontWeight.w500,
-              //               ),
-              //             ),
-              //           );
-              //         }).toList(),
-              //   ),
-              SizedBox(height: 10.h),
-              Row(
-                children: [
-                  ...List.generate(5, (index) {
-                    return Icon(
-                      index < widget.plants.rating!.floor()
-                          ? Icons.star_rounded
-                          : Icons.star_half_rounded,
-                      size: AppSizes.iconSm,
-                      color: colorScheme.primary,
-                    );
-                  }),
-                  SizedBox(width: 0.01.sw),
-                  Text(
-                    widget.plants.rating!.toStringAsFixed(1),
-                    style: TextStyle(
-                      fontSize: AppSizes.fontSm,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
-                  SizedBox(width: 10.w),
-                ],
-              ),
-              // Row(
-              //   children: [
-              //     Icon(
-              //       Icons.star,
-              //       size: AppSizes.iconMd,
-              //       color: colorScheme.primary,
-              //     ),
-              //     SizedBox(width: 2.w),
-              //     Text(
-              //       widget.plants.rating!.toStringAsFixed(1),
-              //       style: TextStyle(
-              //         fontSize: AppSizes.fontMd,
-              //         color: colorScheme.onSurface,
-              //       ),
-              //     ),
-              //
-              //     ),
-              //   ],
-              // ),
-              SizedBox(height: 10.h),
-              // Price row
-              Row(
-                children: [
-                  Icon(
-                    Icons.arrow_downward_outlined,
-                    size: AppSizes.iconSm,
-                    color: colorScheme.primary,
-                  ),
-                  Text(
-                    '$discount%',
-                    style: TextStyle(
-                      color: colorScheme.primary,
-
-                      //fontWeight: FontWeight.bold,
-                      fontSize: AppSizes.fontMd,
-                    ),
-                  ),
-                  SizedBox(width: 10.w),
-                  Text(
-                    '₹$originalPrice',
-                    style: TextStyle(
-                      fontSize: AppSizes.fontSm,
-                      color: colorScheme.onSecondary,
-                      decoration: TextDecoration.lineThrough,
-                    ),
-                  ),
-
-                  SizedBox(width: 10.w),
-
-                  Text(
-                    '₹$offerPrice',
-                    style: TextStyle(
-                      fontSize: AppSizes.fontLg,
-                      fontWeight: FontWeight.w500,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
-                ],
-              ),
-              // Container(
-              //   width: 80.w,
-              //   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.horizontal(
-              //       left: Radius.circular(AppSizes.radiusMd),
-              //       right: Radius.circular(AppSizes.radiusMd),
-              //     ),
-              //     shape: BoxShape.rectangle,
-              //     color: colorScheme.primary,
-              //   ),
-              //   child: Row(
-              //     children: [
-              //       Icon(
-              //         Icons.check_circle_outline_outlined,
-              //         color: colorScheme.onPrimary,
-              //         size: AppSizes.iconXs,
-              //       ),
-              //       SizedBox(width: 4.w),
-              //       (widget.plants.inStock ?? false)
-              //           ? Text(
-              //             'In Stock',
-              //             style: TextStyle(
-              //               color: colorScheme.onPrimary,
-              //               fontSize: AppSizes.fontXs,
-              //             ),
-              //           )
-              //           : SizedBox.shrink(),
-              //     ],
-              //   ),
-              // ),
-              SizedBox(height: 10.h),
-              Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical: 2.w),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  // ignore: deprecated_member_use
-                  color: colorScheme.primary.withOpacity(0.3),
-                ),
-                child: Text(
-                  'OFFER  VALIDITY  TILL  LAST  STOCK',
-                  style: TextStyle(
-                    //wordSpacing: 5,
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.w500,
-                    fontSize: AppSizes.fontMd,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10.h),
-              Divider(
-                //indent: 10.w,
-                //endIndent: 10.w,
-                thickness: 2.sp,
-                //radius: BorderRadius.circular((AppSizes.radiusLg)),
-                //height: 10.h,
-                color:
-                    colorScheme.brightness == Brightness.dark
-                        ? colorScheme.onSecondary
-                        : const Color(0xFFF0F0F0),
-              ),
-              SizedBox(height: 5.h),
-              heading(colorScheme, 'Check Delivery'),
-              SizedBox(height: 5.h),
-              DeliveryCheckWidget(
-                searchController: searchController,
-                onCheck: () {},
-              ),
-              SizedBox(height: 10.h),
-              Divider(
-                indent: 5.w,
-                endIndent: 5.w,
-                thickness: 1.sp,
-                radius: BorderRadius.circular((AppSizes.radiusLg)),
-                //height: 10.h,
-                color:
-                    colorScheme.brightness == Brightness.dark
-                        ? colorScheme.onSecondary
-                        : const Color(0xFFF0F0F0),
-              ),
-              SizedBox(height: 10.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ProductFeatureCard(
-                    title: 'Free Delivary',
-                    subtitle: 'On Orders Above ₹499',
-                    imagePath: 'assets/features/free-shipping.png',
-                  ),
-                  ProductFeatureCard(
-                    title: 'Guaranteed Replacement',
-                    subtitle: 'Hassle-free 7-days return',
-                    imagePath: 'assets/features/exchange.png',
-                  ),
-                  ProductFeatureCard(
-                    title: 'Eco-Packaging',
-                    subtitle: '100% sustainable materials used.',
-                    imagePath: 'assets/features/eco_packing.png',
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              Divider(
-                //indent: 10.w,
-                //endIndent: 10.w,
-                thickness: 2.sp,
-                //radius: BorderRadius.circular((AppSizes.radiusLg)),
-                //height: 10.h,
-                color:
-                    colorScheme.brightness == Brightness.dark
-                        ? colorScheme.onSecondary
-                        : const Color(0xFFF0F0F0),
-              ),
-              SizedBox(height: 10.h),
-              //Divider(color: Colors.grey, thickness: 2),
-              heading(colorScheme, 'Plant Highlights :'),
-              SizedBox(height: 5.h),
-              QuickGuideCard(plants: widget.plants),
-              SizedBox(height: 10.h),
-              Divider(color: Colors.grey, thickness: 2),
-              heading(colorScheme, 'Plant Care Guide:'),
-              SizedBox(height: 5.h),
-              CareGuideSection(plant: widget.plants),
-              SizedBox(height: 10.h),
-              Divider(color: Colors.grey, thickness: 2),
-              heading(colorScheme, 'Description'),
-              SizedBox(height: 10.h),
-              Text(widget.plants.description!.intro!.toString()),
-              SizedBox(height: 10.h),
-              Divider(color: Colors.grey, thickness: 2),
-              PlantDetails(plant: widget.plants),
-              Divider(color: Colors.grey, thickness: 2),
-              heading(colorScheme, 'Faqs:'),
-              SizedBox(height: 5.h),
-              FAQSection(plant: widget.plants),
-            ],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.share, color: colorScheme.primary),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+            },
+            tooltip: 'Share',
           ),
-        ),
+          IconButton(
+            icon: Icon(Icons.favorite_border, color: colorScheme.primary),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+            },
+            tooltip: 'Wishlist',
+          ),
+        ],
       ),
-    );
-  }
-
-  Text heading(ColorScheme colorScheme, String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: AppSizes.fontMd,
-        color: colorScheme.onSurface,
-        fontWeight: FontWeight.w600,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 90.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Image Gallery
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.h,
+                  ),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(18.r),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(18.r),
+                      child: Container(
+                        color: colorScheme.surfaceContainerHighest,
+                        child: Column(
+                          children: [
+                            CarouselSlider.builder(
+                              itemCount: widget.plants.images?.length ?? 0,
+                              itemBuilder: (context, index, realIndex) {
+                                final imageUrl =
+                                    widget.plants.images?[index].url ?? '';
+                                return GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder:
+                                          (_) => Dialog(
+                                            backgroundColor: Colors.transparent,
+                                            child: InteractiveViewer(
+                                              child: Image.network(
+                                                imageUrl,
+                                                fit: BoxFit.contain,
+                                                loadingBuilder: (
+                                                  context,
+                                                  child,
+                                                  loadingProgress,
+                                                ) {
+                                                  if (loadingProgress == null)
+                                                    return child;
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                },
+                                                errorBuilder:
+                                                    (
+                                                      context,
+                                                      error,
+                                                      stackTrace,
+                                                    ) => Image.asset(
+                                                      'assets/No_Plant_Found.png',
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                              ),
+                                            ),
+                                          ),
+                                    );
+                                  },
+                                  child: Image.network(
+                                    imageUrl,
+                                    height: 260.h,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (
+                                      context,
+                                      child,
+                                      loadingProgress,
+                                    ) {
+                                      if (loadingProgress == null) return child;
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Image.asset(
+                                              'assets/No_Plant_Found.png',
+                                              fit: BoxFit.cover,
+                                            ),
+                                  ),
+                                );
+                              },
+                              options: CarouselOptions(
+                                height: 260.h,
+                                viewportFraction: 1,
+                                onPageChanged: (index, reason) {
+                                  carouselProvider.setIndex(index);
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            // Thumbnails
+                            if ((widget.plants.images?.length ?? 0) > 1)
+                              SizedBox(
+                                height: 54.h,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: widget.plants.images!.length,
+                                  separatorBuilder:
+                                      (_, __) => SizedBox(width: 8.w),
+                                  itemBuilder: (context, index) {
+                                    final thumbUrl =
+                                        widget.plants.images![index].url ?? '';
+                                    return GestureDetector(
+                                      onTap:
+                                          () =>
+                                              carouselProvider.setIndex(index),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color:
+                                                carouselProvider.activeIndex ==
+                                                        index
+                                                    ? colorScheme.primary
+                                                    : Colors.transparent,
+                                            width: 2,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            8.r,
+                                          ),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            8.r,
+                                          ),
+                                          child: Image.network(
+                                            thumbUrl,
+                                            width: 54.w,
+                                            height: 54.h,
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (
+                                                  context,
+                                                  error,
+                                                  stackTrace,
+                                                ) => Image.asset(
+                                                  'assets/No_Plant_Found.png',
+                                                  fit: BoxFit.cover,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            SizedBox(height: 8.h),
+                            AnimatedSmoothIndicator(
+                              activeIndex: carouselProvider.activeIndex,
+                              count: widget.plants.images?.length ?? 0,
+                              effect: ExpandingDotsEffect(
+                                activeDotColor: colorScheme.primary,
+                                dotHeight: 8.h,
+                                dotWidth: 8.w,
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 18.w,
+                    vertical: 6.h,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Title, Category, Rating
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Semantics(
+                                  label:
+                                      'Product name: ${widget.plants.commonName ?? ''}',
+                                  child: Text(
+                                    widget.plants.commonName ?? '',
+                                    style: TextStyle(
+                                      fontSize: 28.sp, // Larger font
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme.onSurface,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 8.h), // More spacing
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w,
+                                        vertical: 6.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: colorScheme.primary.withOpacity(
+                                          0.10,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          18.r,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.category,
+                                            color: colorScheme.primary,
+                                            size: 16.sp,
+                                          ),
+                                          SizedBox(width: 4.w),
+                                          Text(
+                                            widget.plants.category ?? '',
+                                            style: TextStyle(
+                                              color: colorScheme.primary,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 12.w),
+                                    Row(
+                                      children: [
+                                        ...List.generate(5, (index) {
+                                          return Icon(
+                                            index <
+                                                    widget.plants.rating!
+                                                        .floor()
+                                                ? Icons.star_rounded
+                                                : Icons.star_border_rounded,
+                                            size: 20.sp,
+                                            color: colorScheme.primary,
+                                          );
+                                        }),
+                                        SizedBox(width: 6.w),
+                                        Text(
+                                          widget.plants.rating!.toStringAsFixed(
+                                            1,
+                                          ),
+                                          style: TextStyle(
+                                            fontSize: 15.sp,
+                                            color: colorScheme.onSurface,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 6.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  inStock
+                                      ? Colors.green.withOpacity(0.12)
+                                      : Colors.red.withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(18.r),
+                              border: Border.all(
+                                color: inStock ? Colors.green : Colors.red,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Semantics(
+                              label: inStock ? 'In Stock' : 'Out of Stock',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    inStock ? Icons.check_circle : Icons.cancel,
+                                    color: inStock ? Colors.green : Colors.red,
+                                    size: 18.r,
+                                  ),
+                                  SizedBox(width: 6.w),
+                                  Text(
+                                    inStock ? 'In Stock' : 'Out of Stock',
+                                    style: TextStyle(
+                                      color:
+                                          inStock ? Colors.green : Colors.red,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (inStock)
+                        Padding(
+                          padding: EdgeInsets.only(top: 6.h, left: 2.w),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.access_time,
+                                color: colorScheme.primary,
+                                size: 16.sp,
+                              ),
+                              SizedBox(width: 4.w),
+                              Text(
+                                'Delivery by June 10', // Ideally, this would be dynamic
+                                style: TextStyle(
+                                  color: colorScheme.primary,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      SizedBox(height: 20.h), // More spacing
+                      // Price & Discount
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '₹$offerPrice',
+                            style: TextStyle(
+                              fontSize: 30.sp, // Larger font
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                          SizedBox(width: 14.w),
+                          if (originalPrice > offerPrice)
+                            Text(
+                              '₹$originalPrice',
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                color: colorScheme.onSurfaceVariant,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                          if (originalPrice > offerPrice)
+                            Container(
+                              margin: EdgeInsets.only(left: 10.w),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 6.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: colorScheme.error.withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(18.r),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.local_offer,
+                                    color: colorScheme.error,
+                                    size: 16.sp,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  Text(
+                                    '$discount% OFF',
+                                    style: TextStyle(
+                                      color: colorScheme.error,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                      if (originalPrice > offerPrice)
+                        Padding(
+                          padding: EdgeInsets.only(top: 6.h, left: 2.w),
+                          child: Text(
+                            'You save ₹${originalPrice - offerPrice}!',
+                            style: TextStyle(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13.sp,
+                            ),
+                          ),
+                        ),
+                      SizedBox(height: 18.h), // More spacing
+                      // Section headers with icons
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.local_shipping,
+                            color: colorScheme.primary,
+                            size: 18.sp,
+                          ),
+                          SizedBox(width: 6.w),
+                          Text(
+                            'Free Delivery',
+                            style: TextStyle(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(width: 16.w),
+                          Icon(
+                            Icons.verified,
+                            color: colorScheme.primary,
+                            size: 18.sp,
+                          ),
+                          SizedBox(width: 6.w),
+                          Text(
+                            'Inclusive of all taxes',
+                            style: TextStyle(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.h), // More spacing
+                      // Delivery Check
+                      Card(
+                        elevation: 0,
+                        color: colorScheme.surfaceContainerHighest,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(10.w),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: searchController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter delivery pincode',
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: colorScheme.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                    vertical: 8.h,
+                                  ),
+                                ),
+                                child: Text(
+                                  'Check',
+                                  style: TextStyle(
+                                    color: colorScheme.onPrimary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 14.h),
+                      // Key Features
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Tooltip(
+                              message: 'Free shipping on orders above ₹499',
+                              child: ProductFeatureCard(
+                                title: 'Free Delivery',
+                                subtitle: 'On Orders Above ₹499',
+                                imagePath: 'assets/features/free-shipping.png',
+                                icon: Icons.local_shipping,
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Tooltip(
+                              message: '7-Day hassle-free replacement',
+                              child: ProductFeatureCard(
+                                title: '7-Day Replacement',
+                                subtitle: 'Hassle-free return',
+                                imagePath: 'assets/features/exchange.png',
+                                icon: Icons.autorenew,
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Tooltip(
+                              message: 'Eco-friendly, sustainable packaging',
+                              child: ProductFeatureCard(
+                                title: 'Eco Packaging',
+                                subtitle: '100% sustainable',
+                                imagePath: 'assets/features/eco_packing.png',
+                                icon: Icons.eco,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      // Expandable Description
+                      ValueListenableBuilder<bool>(
+                        valueListenable: showFullDescription,
+                        builder:
+                            (context, expanded, _) => GestureDetector(
+                              onTap: () {
+                                showFullDescription.value = !expanded;
+                              },
+                              child: Card(
+                                elevation: 1,
+                                color: colorScheme.surfaceContainerHighest,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(14.w),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.description,
+                                            color: colorScheme.primary,
+                                            size: 18.sp,
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          Text(
+                                            'Description',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.sp,
+                                              color: colorScheme.onSurface,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 4.h),
+                                      Stack(
+                                        children: [
+                                          Text(
+                                            widget.plants.description?.intro ??
+                                                '',
+                                            maxLines: expanded ? null : 3,
+                                            overflow:
+                                                expanded
+                                                    ? TextOverflow.visible
+                                                    : TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 13.sp,
+                                              color:
+                                                  colorScheme.onSurfaceVariant,
+                                            ),
+                                          ),
+                                          if (!expanded)
+                                            Positioned(
+                                              left: 0,
+                                              right: 0,
+                                              bottom: 0,
+                                              height: 32,
+                                              child: IgnorePointer(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment.topCenter,
+                                                      end:
+                                                          Alignment
+                                                              .bottomCenter,
+                                                      colors: [
+                                                        Colors.transparent,
+                                                        colorScheme
+                                                            .surfaceContainerHighest
+                                                            .withOpacity(0.9),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 4.h),
+                                      Text(
+                                        expanded ? 'Show less' : 'Read more',
+                                        style: TextStyle(
+                                          color: colorScheme.primary,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12.sp,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                      ),
+                      SizedBox(height: 16.h),
+                      Divider(),
+                      Text(
+                        'Plant Highlights',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      QuickGuideCard(plants: widget.plants),
+                      SizedBox(height: 16.h),
+                      Divider(),
+                      // Care Guide
+                      ExpansionTile(
+                        leading: Icon(Icons.spa, color: colorScheme.primary),
+                        title: Text(
+                          'Plant Care Guide',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                        children: [CareGuideSection(plant: widget.plants)],
+                      ),
+                      SizedBox(height: 16.h),
+                      Divider(),
+                      // Details
+                      ExpansionTile(
+                        leading: Icon(
+                          Icons.info_outline,
+                          color: colorScheme.primary,
+                        ),
+                        title: Text(
+                          'Details',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                        children: [PlantDetails(plant: widget.plants)],
+                      ),
+                      SizedBox(height: 16.h),
+                      Divider(),
+                      // FAQs
+                      ExpansionTile(
+                        leading: Icon(
+                          Icons.question_answer,
+                          color: colorScheme.primary,
+                        ),
+                        title: Text(
+                          'FAQs',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                        children: [FAQSection(plant: widget.plants)],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Sticky Bottom Bar
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: Offset(0, -2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  // Favorite button
+                  Container(
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary.withOpacity(0.12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Semantics(
+                      label: 'Add to Wishlist',
+                      button: true,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.favorite_border,
+                          color: colorScheme.primary,
+                        ),
+                        onPressed: () {},
+                        tooltip: 'Add to Wishlist',
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Semantics(
+                      label: 'Add to Cart',
+                      button: true,
+                      child: ElevatedButton.icon(
+                        onPressed: inStock ? () {} : null,
+                        icon: Icon(Icons.shopping_cart_outlined),
+                        label: Text(
+                          'Add to Cart',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.sp,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: colorScheme.primary,
+                          foregroundColor: colorScheme.onPrimary,
+                          padding: EdgeInsets.symmetric(vertical: 14.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          textStyle: TextStyle(fontSize: 15.sp),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Semantics(
+                      label: 'Buy Now',
+                      button: true,
+                      child: ElevatedButton.icon(
+                        onPressed:
+                            inStock
+                                ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => CheckoutScreen(
+                                            buyNowPlant: widget.plants,
+                                          ),
+                                    ),
+                                  );
+                                }
+                                : null,
+                        icon: Icon(Icons.flash_on),
+                        label: Text(
+                          'Buy Now',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.sp,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orangeAccent.shade700,
+                          foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 14.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          textStyle: TextStyle(fontSize: 15.sp),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/widgets/productcard.dart';
@@ -19,96 +19,90 @@ class PlantSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    if (plants.isEmpty) return const SizedBox.shrink();
+    final textTheme = Theme.of(context).textTheme;
 
-    // double height = MediaQuery.of(context).size.height;
-    //double width = MediaQuery.of(context).size.width;
+    if (plants.isEmpty) return const SizedBox.shrink();
 
     final List<AllPlantsModel> displayPlants = [...plants]..shuffle();
 
-    return Padding(
-      padding: AppSizes.paddingSymmetricSm,
-      child: Container(
-        width: double.infinity,
-        //height: 0.34.sh,
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-          boxShadow: [
-            BoxShadow(
-              // ignore: deprecated_member_use
-              color:
-                  colorScheme.brightness == Brightness.dark
-                      // ignore: deprecated_member_use
-                      ? Colors.black.withOpacity(0.1)
-                      // ignore: deprecated_member_use
-                      : Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        padding: EdgeInsets.only(
-          left: AppSizes.paddingSm,
-          top: AppSizes.paddingMd,
-          bottom: AppSizes.paddingSm,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            /// Title Row
-            Padding(
-              padding: EdgeInsets.only(
-                right: AppSizes.paddingMd,
-                left: AppSizes.paddingSm,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: AppSizes.fontMd,
-                      //fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.shadow.withValues(alpha: 0.1),
+            spreadRadius: AppSizes.borderWidth,
+            blurRadius: AppSizes.shadowBlurRadius,
+            offset: Offset(0, AppSizes.shadowOffset),
+          ),
+        ],
+      ),
+      padding: AppSizes.paddingAllMd,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Section
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: textTheme.headlineSmall),
+                    SizedBox(height: AppSizes.spaceXs),
+                    Text(
+                      '${displayPlants.length} plants available',
+                      style: textTheme.bodySmall,
                     ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: onSeeAll,
+                child: Container(
+                  padding: AppSizes.paddingSymmetricSm,
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                   ),
-                  GestureDetector(
-                    onTap: onSeeAll,
-                    child: Text(
-                      'View All',
-                      style: TextStyle(
-                        color: colorScheme.onSurface,
-                        fontSize: AppSizes.fontSm,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('View All', style: textTheme.labelLarge),
+                      SizedBox(width: AppSizes.spaceXs),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: AppSizes.iconXs,
+                        color: colorScheme.onPrimaryContainer,
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-            SizedBox(height: 8.h),
+            ],
+          ),
 
-            /// Horizontal List of Product Cards
-            SizedBox(
-              height: 220.h,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: displayPlants.length,
-                // padding: EdgeInsets.symmetric(
-                //   horizontal: ThemeConstants.paddingSmall,
-                // ),
-                separatorBuilder: (context, index) => SizedBox(width: 8.w),
-                itemBuilder: (context, index) {
-                  final plant = displayPlants[index];
-                  return ProductCard(plant: plant);
-                },
-              ),
+          SizedBox(height: AppSizes.spaceMd),
+
+          // Product Cards List
+          SizedBox(
+            height: AppSizes.homeProductCardHeight + AppSizes.spaceLg,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: displayPlants.length,
+              separatorBuilder:
+                  (context, index) => SizedBox(width: AppSizes.spaceSm),
+              itemBuilder: (context, index) {
+                final plant = displayPlants[index];
+                return ProductCard(plant: plant);
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -3,11 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
+
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/home/logic/onboarding_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:organicplants/shared/widgets/skip_button.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -39,24 +40,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               currentPage <
                       totalPages -
                           1 // Use totalPages here for clarity
-                  ? GestureDetector(
-                    onTap:
-                        () => provider.skipToEnd(
-                          // Use 'provider' here
-                          _controller,
-                          totalPages,
-                        ),
-                    child: Padding(
-                      padding: EdgeInsets.only(right: AppSizes.paddingMd),
-                      child: Text(
-                        'Skip',
-                        style: TextStyle(
-                          fontSize: AppSizes.fontLg,
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                  ? SkipButton(
+                    onPressed:
+                        () => provider.skipToEnd(_controller, totalPages),
                   )
                   : SizedBox(),
             ],
@@ -94,10 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               Text(
                                 onboardingData[index]['title']!,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: AppSizes.fontXxl,
-                                  color: colorScheme.primary,
-                                ),
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               SizedBox(height: 12.h),
                               Padding(
@@ -107,10 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 child: Text(
                                   onboardingData[index]['description']!,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: AppSizes.fontSm,
-                                    color: colorScheme.onSecondary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
                             ],
@@ -133,7 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 controller: _controller,
                                 count: totalPages, // Use totalPages here
                                 effect: ExpandingDotsEffect(
-                                  dotColor: colorScheme.onSurface,
+                                  dotColor: colorScheme.outline,
                                   activeDotColor: colorScheme.primary,
                                   dotHeight: 8.h,
                                   dotWidth: 8.w,
@@ -161,27 +141,46 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      padding: AppSizes.paddingAllSm,
-
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: AppSizes.paddingMd,
+                                        vertical: AppSizes.paddingSm,
+                                      ),
                                       backgroundColor: colorScheme.primary,
+                                      foregroundColor:
+                                          colorScheme
+                                              .onPrimary, // Explicitly set
                                       shape: StadiumBorder(),
                                     ),
-                                    child:
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
                                         currentPage ==
                                                 totalPages -
                                                     1 // Use totalPages here
                                             ? Text(
-                                              'Login',
-                                              style: TextStyle(
-                                                color: AppTheme.lightBackground,
-                                                fontSize: AppSizes.fontMd,
-                                              ),
+                                              'Get Started',
+                                              style:
+                                                  Theme.of(
+                                                    context,
+                                                  ).textTheme.labelLarge,
                                             )
-                                            : Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              color: AppTheme.lightBackground,
-                                              size: AppSizes.fontMd,
+                                            : Text(
+                                              'Next',
+                                              style:
+                                                  Theme.of(
+                                                    context,
+                                                  ).textTheme.labelLarge,
                                             ),
+                                        SizedBox(width: 8.w),
+                                        Icon(
+                                          currentPage == totalPages - 1
+                                              ? Icons.login_rounded
+                                              : Icons.arrow_forward_ios_rounded,
+                                          color: colorScheme.onPrimary,
+                                          size: AppSizes.fontMd,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

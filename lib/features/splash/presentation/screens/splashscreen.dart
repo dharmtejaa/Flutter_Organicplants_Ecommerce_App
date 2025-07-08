@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/services/plantservices.dart';
+import 'package:organicplants/core/services/plant_services.dart';
 import 'package:organicplants/features/onboarding/presentation/screens/onboarding_screen.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -23,7 +23,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
   Future<void> _loadInitialData() async {
     try {
-      allPlantsGlobal = await Plantservices.loadAllPlantsApi();
+      allPlantsGlobal = await PlantServices.loadAllPlantsApi();
 
       indoorPlants = getPlantsByCategory('Indoor plant');
       outdoorPlants = getPlantsByCategory('Outdoor plant');
@@ -52,6 +52,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -67,18 +68,14 @@ class _SplashscreenState extends State<Splashscreen> {
                 width: 300.w,
                 repeat: false,
               ),
-              SizedBox(height: 80.h),
+              SizedBox(height: 50.h),
               Text(
                 'O R G A N I C\nP L A N T S',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: AppSizes.fontXxl,
-
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                style: textTheme.displaySmall,
               ),
-              SizedBox(height: 100.h),
+              SizedBox(height: 80.h),
+              Text("developed by: dharmtejaa", style: textTheme.bodySmall),
             ],
           ),
         ),

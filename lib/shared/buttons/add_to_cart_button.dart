@@ -29,20 +29,20 @@ class AddToCartButton extends StatelessWidget {
         final alreadyInCart = cartProvider.items.containsKey(plant.id);
         if (!alreadyInCart) {
           cartProvider.addToCart(plant);
-          showCustomSnackbar(
-            context: context,
-            message: '${plant.commonName} has been added to the cart!',
-            type: SnackbarType.success,
+          CustomSnackBar.showSuccess(
+            context,
+            '${plant.commonName} has been added to the cart!',
+            plantName: plant.commonName,
             actionLabel: 'Undo',
             onAction: () {
               cartProvider.removeFromCart(plant.id!);
             },
           );
         } else {
-          showCustomSnackbar(
-            context: context,
-            message: '${plant.commonName} is already in the cart!',
-            type: SnackbarType.info,
+          CustomSnackBar.showInfo(
+            context,
+            '${plant.commonName} is already in the cart!',
+            plantName: plant.commonName,
             actionLabel: 'View Cart',
           );
         }

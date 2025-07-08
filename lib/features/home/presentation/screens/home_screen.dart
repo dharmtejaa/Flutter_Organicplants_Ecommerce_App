@@ -10,6 +10,8 @@ import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 import 'package:organicplants/shared/widgets/plant_section_widget.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
+import 'package:provider/provider.dart';
+import 'package:organicplants/features/profile/logic/profile_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,6 +21,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeScreen> {
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good Morning';
+    } else if (hour < 17) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -33,14 +46,31 @@ class _HomeTabState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-
-        title: Text(
-          'Organic Plants',
-          style: TextStyle(
-            fontSize: AppSizes.fontXxl,
-            fontWeight: FontWeight.bold,
-            color: colorScheme.primary,
-          ),
+        title: Consumer<ProfileProvider>(
+          builder: (context, profileProvider, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Organic Plants',
+                  style: TextStyle(
+                    fontSize: AppSizes.fontXxl,
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.primary,
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Text(
+                  '${getGreeting()}, ${profileProvider.userName}! 🌱',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
         actions: [
           SearchButton(),

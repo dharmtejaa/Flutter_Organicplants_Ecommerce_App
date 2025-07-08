@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+
 // ignore: camel_case_types
 class RichTextLine extends StatelessWidget {
   const RichTextLine({super.key});

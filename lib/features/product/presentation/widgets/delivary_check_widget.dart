@@ -39,29 +39,16 @@ class DeliveryCheckWidget extends StatelessWidget {
         controller: searchController,
         maxLength: 6,
         keyboardType: TextInputType.number,
-        style: TextStyle(
-          fontSize: AppSizes.fontMd,
-          color: colorScheme.onSurface,
-        ),
+        style: Theme.of(context).textTheme.bodyMedium,
         decoration: InputDecoration(
           hintText: "Enter Pincode",
           enabled: true,
           suffix: GestureDetector(
             onTap: onCheck,
-            child: Text(
-              'Check',
-              style: TextStyle(
-                fontSize: AppSizes.fontSm,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.primary,
-              ),
-            ),
+            child: Text('Check', style: Theme.of(context).textTheme.bodySmall),
           ),
           counterText: '',
-          hintStyle: TextStyle(
-            fontSize: AppSizes.fontSm,
-            color: colorScheme.onSecondary,
-          ),
+          hintStyle: Theme.of(context).textTheme.bodySmall,
           filled: true,
           fillColor:
               colorScheme.brightness == Brightness.dark

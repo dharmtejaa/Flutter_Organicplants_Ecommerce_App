@@ -42,23 +42,23 @@ class CartBottomSheet extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _summaryRow("Total Price", totalPrice),
+          _summaryRow(context, "Total Price", totalPrice),
           _summaryRow(
+            context,
             "Discount",
             -discount,
             colorOverride: discountColor ?? Colors.red,
           ),
           Divider(thickness: 0.5, height: 10.h),
-          _summaryRow("Final Price", finalPrice, isBold: true),
+          _summaryRow(context, "Final Price", finalPrice, isBold: true),
           SizedBox(height: 12.h),
           CustomButton(
             ontap:
                 onCheckout ??
                 () {
-                  showCustomSnackbar(
-                    context: context,
-                    message: 'Checkout is not implemented yet.',
-                    type: SnackbarType.error,
+                  CustomSnackBar.showError(
+                    context,
+                    'Checkout is not implemented yet.',
                   );
                 },
             textColor: Colors.white,
@@ -71,6 +71,7 @@ class CartBottomSheet extends StatelessWidget {
   }
 
   Widget _summaryRow(
+    BuildContext context,
     String label,
     double amount, {
     bool isBold = false,
@@ -81,19 +82,10 @@ class CartBottomSheet extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: labelColor ?? Colors.black,
-            ),
-          ),
+          Text(label, style: Theme.of(context).textTheme.bodyMedium),
           Text(
             "₹${amount.toStringAsFixed(2)}",
-            style: TextStyle(
-              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: colorOverride ?? valueColor ?? Colors.black,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
       ),

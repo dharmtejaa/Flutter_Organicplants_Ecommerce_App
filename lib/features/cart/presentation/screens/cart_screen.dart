@@ -7,6 +7,7 @@ import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/cart/presentation/widgets/card_tile.dart';
 import 'package:organicplants/features/cart/presentation/widgets/cart_bottom_sheet.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
+import 'package:organicplants/features/cart/presentation/screens/checkout_screen.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -37,13 +38,7 @@ class CartScreen extends StatelessWidget {
             size: AppSizes.iconMd,
           ),
         ),
-        title: Text(
-          "My cart",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: AppSizes.fontXl,
-          ),
-        ),
+        title: Text("My cart", style: Theme.of(context).textTheme.titleLarge),
         centerTitle: true,
         actions: [
           SearchButton(),
@@ -56,10 +51,10 @@ class CartScreen extends StatelessWidget {
         builder: (context, value, child) {
           return cartItems.isEmpty
               ? Center(
-                child: NoResultsFound(
+                child: NoResultFound(
                   title: "Your cart is empty",
-                  message: "Add some plants to get started!",
-                  imagePath: "assets/No_Plant_Found.png",
+                  subtitle: "Add some plants to get started!",
+                  icon: Icons.shopping_cart_outlined,
                 ),
               )
               : Padding(
@@ -88,10 +83,17 @@ class CartScreen extends StatelessWidget {
                 valueColor: colorScheme.onSurface,
 
                 onCheckout: () {
-                  showCustomSnackbar(
-                    context: context,
-                    message: 'Checkout is not implemented yet.',
-                    type: SnackbarType.error,
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => CheckoutScreen(
+                            cartItems: cartItems,
+                            totalOriginalPrice: cartProvider.totalOriginalPrice,
+                            totalOfferPrice: cartProvider.totalOfferPrice,
+                            totalDiscount: cartProvider.totalDiscount,
+                          ),
+                    ),
                   );
                 },
               )

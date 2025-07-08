@@ -87,11 +87,7 @@ class ProductTile extends StatelessWidget {
                         plant.commonName ?? 'Unknown Plant',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(
-                          //fontWeight: FontWeight.bold,
-                          color: colorScheme.onSurface,
-                          fontSize: AppSizes.fontMd,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
                         scifiname == true
@@ -99,10 +95,7 @@ class ProductTile extends StatelessWidget {
                             : plant.category ?? 'Unknown Category',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(
-                          fontSize: AppSizes.fontSm,
-                          color: AppColors.mutedText,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       //SizedBox(height: 0.1.h),
                       // Row(
@@ -140,20 +133,12 @@ class ProductTile extends StatelessWidget {
                           //SizedBox(width: 10.w),
                           Text(
                             '₹${plant.prices?.originalPrice}',
-                            style: TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              color: AppColors.mutedText,
-                              fontSize: AppSizes.fontXs,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           SizedBox(width: 10.w),
                           Text(
                             '₹${plant.prices?.offerPrice}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.primary,
-                              fontSize: AppSizes.fontSm,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],
                       ),
@@ -166,11 +151,7 @@ class ProductTile extends StatelessWidget {
                       //     ),
                       Text(
                         '$discount% off',
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          //fontWeight: FontWeight.bold,
-                          fontSize: AppSizes.fontXs,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       //],
                       //),
@@ -180,11 +161,10 @@ class ProductTile extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     remove.toggleWishList(plant);
-                    showCustomSnackbar(
-                      context: context,
-                      message:
-                          '${plant.commonName} has been removed from wishList!',
-                      type: SnackbarType.success,
+                    CustomSnackBar.showSuccess(
+                      context,
+                      '${plant.commonName} has been removed from wishList!',
+                      plantName: plant.commonName,
                       actionLabel: 'Undo',
                       onAction: () {
                         remove.toggleWishList(plant);

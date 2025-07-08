@@ -72,19 +72,11 @@ class _BasicdetailsState extends State<Basicdetails> {
                 RichText(
                   text: TextSpan(
                     text: "Basic ",
-                    style: TextStyle(
-                      fontSize: AppSizes.fontXxl,
-                      color: colorScheme.onSecondary,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                     children: [
                       TextSpan(
                         text: "Detials",
-                        style: TextStyle(
-                          fontSize: AppSizes.fontDisplay,
-                          fontWeight: FontWeight.w500,
-                          color: colorScheme.primary,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
@@ -142,11 +134,7 @@ class _BasicdetailsState extends State<Basicdetails> {
                         SizedBox(height: 5.h),
                         Text(
                           "Select Gender",
-                          style: TextStyle(
-                            color: colorScheme.onSecondary,
-                            fontSize: AppSizes.fontMd,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         ValueListenableBuilder<Gender?>(
                           valueListenable: selectedGender,
@@ -169,9 +157,10 @@ class _BasicdetailsState extends State<Basicdetails> {
                                         ),
                                         Text(
                                           gender.label,
-                                          style: TextStyle(
-                                            fontSize: AppSizes.fontSm,
-                                          ),
+                                          style:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.titleSmall,
                                         ),
                                       ],
                                     );

@@ -19,15 +19,16 @@ class ThemeProvider with ChangeNotifier {
     // If ThemeMode is system, check the actual platform brightness
     if (_themeMode == ThemeMode.system) {
       // ignore: deprecated_member_use
-      return WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
+      return WidgetsBinding.instance.window.platformBrightness ==
+          Brightness.dark;
     }
     return _themeMode == ThemeMode.dark;
   }
 
-
   // New method to explicitly set the theme mode
   void setThemeMode(ThemeMode mode) {
-    if (_themeMode != mode) { // Only update if the mode has changed
+    if (_themeMode != mode) {
+      // Only update if the mode has changed
       _themeMode = mode;
       _saveThemeMode(mode); // Save the new mode
       notifyListeners(); // Notify widgets listening to this provider

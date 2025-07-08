@@ -12,12 +12,12 @@ import 'package:provider/provider.dart';
 class EntryScreen extends StatefulWidget {
   const EntryScreen({super.key});
 
-  static const List<Widget> _screens = [
-    HomeScreen(),
-    StoreTab(),
-    SearchScreen(),
-    ProfileTab(),
-    CartScreen(),
+  static final List<Widget> _screens = [
+    const HomeScreen(),
+    const StoreScreen(),  
+    const SearchScreen(),
+    const ProfileScreen(),
+    const CartScreen(),
   ];
 
   @override
@@ -38,48 +38,126 @@ class _HomeScreenState extends State<EntryScreen> {
       /// Only BottomNavigationBar listens for changes
       bottomNavigationBar: Consumer<BottomNavProvider>(
         builder:
-            (context, provider, _) => BottomNavigationBar(
-              type: BottomNavigationBarType.shifting,
-
-              //showUnselectedLabels: true,
-
-              //showSelectedLabels: true,
-              elevation: 0,
-              enableFeedback: true,
-              iconSize: AppSizes.iconMd,
-              selectedFontSize: AppSizes.fontMd,
-              unselectedFontSize: AppSizes.fontSm,
-              currentIndex: provider.currentIndex,
-              onTap: provider.updateIndex,
-              selectedItemColor: colorScheme.primary,
-              unselectedItemColor: Colors.grey,
-              backgroundColor: colorScheme.surface,
-
-              items: [
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: "Home",
+            (context, provider, _) => Container(
+              margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.shadow.withOpacity(0.10),
+                    blurRadius: 18,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  elevation: 0,
+                  enableFeedback: true,
+                  iconSize: AppSizes.iconMd,
+                  selectedFontSize: AppSizes.fontMd,
+                  unselectedFontSize: AppSizes.fontSm,
+                  currentIndex: provider.currentIndex,
+                  onTap: provider.updateIndex,
+                  selectedItemColor: colorScheme.primary,
+                  unselectedItemColor: Colors.grey,
+                  backgroundColor: Colors.transparent,
+                  showSelectedLabels: true,
+                  showUnselectedLabels: true,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: _NavBarIcon(
+                        icon: Icons.home,
+                        selected: provider.currentIndex == 0,
+                        colorScheme: colorScheme,
+                      ),
+                      label: "Home",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: _NavBarIcon(
+                        icon: Icons.storefront,
+                        selected: provider.currentIndex == 1,
+                        colorScheme: colorScheme,
+                      ),
+                      label: "Store",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: _NavBarIcon(
+                        icon: Icons.search_outlined,
+                        selected: provider.currentIndex == 2,
+                        colorScheme: colorScheme,
+                      ),
+                      label: "Search",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: _NavBarIcon(
+                        icon: Icons.account_circle_outlined,
+                        selected: provider.currentIndex == 3,
+                        colorScheme: colorScheme,
+                      ),
+                      label: "Profile",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: _NavBarIcon(
+                        iconWidget: CartIconWithBadge(iconColor: Colors.grey),
+                        selected: provider.currentIndex == 4,
+                        colorScheme: colorScheme,
+                        activeIconWidget: CartIconWithBadge(
+                          iconColor: colorScheme.primary,
+                        ),
+                      ),
+                      label: "Cart",
+                    ),
+                  ],
                 ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.storefront),
-                  label: "Store",
-                ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.search_outlined),
-                  label: "Search",
-                ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle_outlined),
-                  label: "Profile",
-                ),
-                BottomNavigationBarItem(
-                  icon: const CartIconWithBadge(iconColor: Colors.grey),
-                  activeIcon: CartIconWithBadge(iconColor: colorScheme.primary),
-                  label: "Cart",
-                ),
-              ],
+              ),
             ),
       ),
+    );
+  }
+}
+
+class _NavBarIcon extends StatelessWidget {
+  final IconData? icon;
+  final Widget? iconWidget;
+  final Widget? activeIconWidget;
+  final bool selected;
+  final ColorScheme colorScheme;
+  const _NavBarIcon({
+    this.icon,
+    this.iconWidget,
+    this.activeIconWidget,
+    required this.selected,
+    required this.colorScheme,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final Widget child =
+        iconWidget != null
+            ? (selected && activeIconWidget != null
+                ? activeIconWidget!
+                : iconWidget!)
+            : Icon(
+              icon,
+              size: selected ? 30 : 24,
+              color: selected ? colorScheme.primary : Colors.grey,
+            );
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 220),
+      curve: Curves.easeOutCubic,
+      padding: EdgeInsets.symmetric(horizontal: selected ? 10 : 0, vertical: 2),
+      margin: EdgeInsets.only(bottom: 2),
+      decoration:
+          selected
+              ? BoxDecoration(
+                color: colorScheme.primary.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(16),
+              )
+              : null,
+      child: child,
     );
   }
 }

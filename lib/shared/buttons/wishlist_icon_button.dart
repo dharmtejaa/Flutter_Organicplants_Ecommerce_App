@@ -27,13 +27,12 @@ class WishlistIconButton extends StatelessWidget {
           onTap: () {
             value.toggleWishList(plant);
             final isNowWishlisted = value.isInWishlist(plant.id!);
-            showCustomSnackbar(
-              context: context,
-              message:
-                  isNowWishlisted
-                      ? '${plant.commonName} Added to wishlist!'
-                      : '${plant.commonName} Removed from wishlist.',
-              type: isNowWishlisted ? SnackbarType.success : SnackbarType.info,
+            CustomSnackBar.showSuccess(
+              context,
+              isNowWishlisted
+                  ? '${plant.commonName} Added to wishlist!'
+                  : '${plant.commonName} Removed from wishlist.',
+              plantName: plant.commonName,
               actionLabel: isNowWishlisted ? 'Undo' : null,
               onAction:
                   isNowWishlisted ? () => value.toggleWishList(plant) : null,

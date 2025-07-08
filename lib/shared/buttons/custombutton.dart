@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
@@ -9,6 +10,10 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? ontap;
   final Color backgroundColor;
   final Color? textColor;
+  final bool useGradient;
+  final bool isLoading;
+  final double? width;
+  final double? height;
 
   const CustomButton({
     super.key,
@@ -18,43 +23,73 @@ class CustomButton extends StatelessWidget {
     this.ontap,
     required this.backgroundColor,
     this.textColor,
+    this.useGradient = false,
+    this.isLoading = false,
+    this.width,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colorsScheme = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = colorScheme.brightness == Brightness.dark;
+
     return GestureDetector(
-      onTap: ontap,
+      onTap: isLoading ? null : ontap,
       child: Container(
-        //width: 0.6.sw,
-        height: 0.06.sh,
-        padding: AppSizes.paddingAllSm,
+        width: width ?? double.infinity,
+        height: height ?? 56.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-          color: backgroundColor,
+          borderRadius: BorderRadius.circular(16),
+          gradient: useGradient ? AppColors.primaryGradient : null,
+          color: useGradient ? null : backgroundColor,
           boxShadow: [
             BoxShadow(
-              color:
-                  colorsScheme.brightness == Brightness.dark
-                      ? Colors.black54
-                      : Colors.grey,
-              blurRadius: 3,
-              offset: Offset(0, 1),
+              color: isDark ? AppColors.shadowDark : AppColors.shadowMedium,
+              spreadRadius: 0,
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+            BoxShadow(
+              color: isDark ? AppColors.shadowMedium : AppColors.shadowLight,
+              spreadRadius: 0,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
             ),
           ],
         ),
-        alignment: Alignment.center,
-        child:
-            text != null
-                ? Text(
-                  text!,
-                  style: TextStyle(
-                    fontSize: AppSizes.fontMd,
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                  ),
-                )
-                : null,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: isLoading ? null : ontap,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSizes.paddingMd,
+                vertical: AppSizes.vPaddingSm,
+              ),
+              alignment: Alignment.center,
+              child:
+                  isLoading
+                      ? SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            textColor ?? colorScheme.onPrimary,
+                          ),
+                        ),
+                      )
+                      : text != null
+                      ? Text(
+                        text!,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      )
+                      : null,
+            ),
+          ),
+        ),
       ),
     );
   }

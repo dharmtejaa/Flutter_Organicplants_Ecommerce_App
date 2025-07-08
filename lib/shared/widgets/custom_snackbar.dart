@@ -1,72 +1,233 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 
-enum SnackbarType { success, info, error }
-
-void showCustomSnackbar({
-  required BuildContext context,
-  required String message,
-  SnackbarType type = SnackbarType.success,
-  String? actionLabel,
-  VoidCallback? onAction,
-}) {
-  final colorScheme = Theme.of(context).colorScheme;
-  final Color backgroundColor;
-  final IconData icon;
-
-  switch (type) {
-    case SnackbarType.success:
-      backgroundColor = colorScheme.primary;
-      icon = Icons.check_circle_outline;
-      break;
-    case SnackbarType.info:
-      backgroundColor = colorScheme.secondary;
-      icon = Icons.info_outline;
-      break;
-    case SnackbarType.error:
-      backgroundColor = colorScheme.error;
-      icon = Icons.error_outline;
-      break;
+class CustomSnackBar {
+  static void showSuccess(
+    BuildContext context,
+    String message, {
+    String? plantName,
+    String? actionLabel,
+    VoidCallback? onAction,
+    Duration duration = const Duration(seconds: 3),
+  }) {
+    _showSnackBar(
+      context,
+      message,
+      backgroundColor: AppColors.success,
+      icon: Icons.check_circle_rounded,
+      plantName: plantName,
+      actionLabel: actionLabel,
+      onAction: onAction,
+      duration: duration,
+    );
   }
 
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      behavior: SnackBarBehavior.floating,
-      elevation: 0,
-      margin: AppSizes.marginSymmetricMd,
-      backgroundColor: backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-      ),
-      duration: const Duration(seconds: 1),
-      content: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: AppColors.background),
-          SizedBox(width: 0.04.sw),
-          Flexible(
-            child: Text(
-              message,
-              style: TextStyle(
-                fontSize: AppSizes.fontSm,
-                color: AppColors.background,
-                fontWeight: FontWeight.w500,
+  static void showError(
+    BuildContext context,
+    String message, {
+    String? plantName,
+    String? actionLabel,
+    VoidCallback? onAction,
+    Duration duration = const Duration(seconds: 4),
+  }) {
+    _showSnackBar(
+      context,
+      message,
+      backgroundColor: AppColors.error,
+      icon: Icons.error_rounded,
+      plantName: plantName,
+      actionLabel: actionLabel,
+      onAction: onAction,
+      duration: duration,
+    );
+  }
+
+  static void showInfo(
+    BuildContext context,
+    String message, {
+    String? plantName,
+    String? actionLabel,
+    VoidCallback? onAction,
+    Duration duration = const Duration(seconds: 3),
+  }) {
+    _showSnackBar(
+      context,
+      message,
+      backgroundColor: AppColors.info,
+      icon: Icons.info_rounded,
+      plantName: plantName,
+      actionLabel: actionLabel,
+      onAction: onAction,
+      duration: duration,
+    );
+  }
+
+  static void showWarning(
+    BuildContext context,
+    String message, {
+    String? plantName,
+    String? actionLabel,
+    VoidCallback? onAction,
+    Duration duration = const Duration(seconds: 4),
+  }) {
+    _showSnackBar(
+      context,
+      message,
+      backgroundColor: AppColors.warning,
+      icon: Icons.warning_rounded,
+      plantName: plantName,
+      actionLabel: actionLabel,
+      onAction: onAction,
+      duration: duration,
+    );
+  }
+
+  static void _showSnackBar(
+    BuildContext context,
+    String message, {
+    required Color backgroundColor,
+    required IconData icon,
+    String? plantName,
+    String? actionLabel,
+    VoidCallback? onAction,
+    required Duration duration,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        elevation: AppSizes.elevation,
+        margin: AppSizes.marginSymmetricMd,
+        backgroundColor: backgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+        ),
+        duration: duration,
+        dismissDirection: DismissDirection.horizontal,
+        content: Row(
+          children: [
+            // Enhanced Icon with background
+            Container(
+              padding: AppSizes.paddingAllSm,
+              decoration: BoxDecoration(
+                color: colorScheme.onPrimary.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+              ),
+              child: Icon(
+                icon,
+                color: colorScheme.onPrimary,
+                size: AppSizes.iconSm,
               ),
             ),
-          ),
-        ],
+
+            SizedBox(width: AppSizes.spaceMd),
+
+            // Message with highlighted plant name
+            Expanded(
+              child:
+                  plantName != null && message.contains(plantName)
+                      ? RichText(
+                        text: TextSpan(
+                          children: _buildHighlightedText(
+                            message,
+                            plantName,
+                            colorScheme,
+                            context,
+                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                      : Text(
+                        message,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+            ),
+
+            // Enhanced Action Button (if provided)
+            if (actionLabel != null && onAction != null) ...[
+              SizedBox(width: AppSizes.spaceMd),
+              GestureDetector(
+                onTap: onAction,
+                child: Container(
+                  padding: AppSizes.paddingSymmetricMd,
+                  decoration: BoxDecoration(
+                    color: colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.shadow.withValues(alpha: 0.1),
+                        blurRadius: AppSizes.shadowBlurRadius,
+                        offset: Offset(0, AppSizes.shadowOffset),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        actionLabel,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      SizedBox(width: AppSizes.spaceXs),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: backgroundColor,
+                        size: AppSizes.iconXs,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
-      action:
-          (actionLabel != null && onAction != null)
-              ? SnackBarAction(
-                label: actionLabel,
-                backgroundColor: AppColors.background,
-                textColor: Colors.black87,
-                onPressed: onAction,
-              )
-              : null,
-    ),
-  );
+    );
+  }
+
+  static List<TextSpan> _buildHighlightedText(
+    String message,
+    String plantName,
+    ColorScheme colorScheme,
+    BuildContext context,
+  ) {
+    final List<TextSpan> spans = [];
+    final String lowerMessage = message.toLowerCase();
+    final String lowerPlantName = plantName.toLowerCase();
+    final int startIndex = lowerMessage.indexOf(lowerPlantName);
+
+    if (startIndex == -1) {
+      spans.add(TextSpan(text: message));
+      return spans;
+    }
+
+    // Add text before the plant name
+    if (startIndex > 0) {
+      spans.add(TextSpan(text: message.substring(0, startIndex)));
+    }
+
+    // Add highlighted plant name
+    spans.add(
+      TextSpan(
+        text: message.substring(startIndex, startIndex + plantName.length),
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+
+    // Add text after the plant name
+    if (startIndex + plantName.length < message.length) {
+      spans.add(
+        TextSpan(text: message.substring(startIndex + plantName.length)),
+      );
+    }
+
+    return spans;
+  }
 }

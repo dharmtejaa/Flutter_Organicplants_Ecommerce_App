@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -88,7 +87,7 @@ class CustomTextField extends StatelessWidget {
               hintText: hintText,
               hintStyle: TextStyle(
                 fontSize: AppSizes.fontMd,
-                color: colorScheme.onSecondary,
+                color: colorScheme.onSurfaceVariant,
               ),
               contentPadding: EdgeInsets.all(AppSizes.paddingMd),
               prefixIcon:
@@ -105,55 +104,32 @@ class CustomTextField extends StatelessWidget {
                       )
                       : null,
               filled: true,
-              fillColor:
-                  colorScheme.brightness == Brightness.dark
-                      ? AppTheme.darkBackground
-                      : const Color(0xFFF0F0F0),
+              fillColor: colorScheme.surfaceContainerHighest,
               suffixIconColor: colorScheme.onSurface,
               prefixIconColor: colorScheme.onSurface,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
                 ),
-                borderSide: BorderSide(
-                  color:
-                      colorScheme.brightness == Brightness.dark
-                          ? colorScheme.surface
-                          : AppTheme.lightCard,
-                ),
+                borderSide: BorderSide(color: colorScheme.outline),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
                 ),
-                borderSide: BorderSide(
-                  color:
-                      colorScheme.brightness == Brightness.dark
-                          ? colorScheme.surface
-                          : const Color(0xFFF0F0F0),
-                ),
+                borderSide: BorderSide(color: colorScheme.outline),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
                 ),
-                borderSide: BorderSide(
-                  color:
-                      colorScheme.brightness == Brightness.dark
-                          ? colorScheme.surface
-                          : const Color(0xFFF0F0F0),
-                ),
+                borderSide: BorderSide(color: colorScheme.primary, width: 2),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
                 ),
-                borderSide: BorderSide(
-                  color:
-                      colorScheme.brightness == Brightness.dark
-                          ? colorScheme.surface
-                          : const Color(0xFFF0F0F0),
-                ),
+                borderSide: BorderSide(color: colorScheme.error),
               ),
             ),
           );

@@ -169,4 +169,24 @@ class SearchScreenProvider extends ChangeNotifier {
     notifyListeners();
     return _searchResult;
   }
+
+  List<AllPlantsModel> getSuggestions(String query) {
+    final keywords = query.toLowerCase().trim();
+    if (keywords.isEmpty) return [];
+    return allPlantsGlobal
+        .where((plant) {
+          final name = plant.commonName?.toLowerCase() ?? '';
+          final sci = plant.scientificName?.toLowerCase() ?? '';
+          final tags =
+              plant.tags?.map((t) => t.replaceAll('_', ' ').toLowerCase()) ??
+              [];
+          final category = plant.category?.toLowerCase() ?? '';
+          return name.contains(keywords) ||
+              sci.contains(keywords) ||
+              category.contains(keywords) ||
+              tags.any((t) => t.contains(keywords));
+        })
+        .take(8)
+        .toList();
+  }
 }

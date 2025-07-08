@@ -6,21 +6,28 @@ class ProductFeatureCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final String imagePath;
+  final IconData? icon;
 
   const ProductFeatureCard({
     super.key,
     required this.title,
     required this.subtitle,
     required this.imagePath,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       width: 118.w, // Adjust width as needed for layout
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          if (icon != null) ...[
+            Icon(icon, color: colorScheme.primary, size: 24.w),
+            SizedBox(height: 4.h),
+          ],
           Image.asset(
             imagePath,
             width: 40.w,
@@ -36,6 +43,7 @@ class ProductFeatureCard extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: AppSizes.fontXs,
+              color: colorScheme.onSurface,
             ),
           ),
           SizedBox(height: 2.h),
@@ -46,7 +54,7 @@ class ProductFeatureCard extends StatelessWidget {
             maxLines: 2,
             style: TextStyle(
               fontSize: AppSizes.fontXs,
-              color: Colors.grey[600],
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
@@ -22,7 +20,6 @@ class ProductCardGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = colorScheme.brightness == Brightness.dark;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final wishlistProvider = Provider.of<WishlistProvider>(
       context,
@@ -40,8 +37,7 @@ class ProductCardGrid extends StatelessWidget {
             ? ((originalPrice - offerPrice) / originalPrice) * 100
             : 0;
     final discount = discountPercent.toInt().toString();
-    final cardWidth =
-        160.w; // Card width remains fixed for horizontal scrolling
+    final cardWidth = AppSizes.homeProductCardWidth;
     final imageHeight = cardWidth * 0.85;
 
     return GestureDetector(
@@ -53,16 +49,14 @@ class ProductCardGrid extends StatelessWidget {
         );
       },
       onDoubleTap: () {
-        //final isWishListed = wishlistProvider.isInWishlist(plant.id!);
         wishlistProvider.toggleWishList(plant);
         final isNowWishlisted = wishlistProvider.isInWishlist(plant.id!);
-        showCustomSnackbar(
-          context: context,
-          message:
-              isNowWishlisted
-                  ? '${plant.commonName} Added to wishlist!'
-                  : '${plant.commonName} Removed from wishlist.',
-          type: isNowWishlisted ? SnackbarType.success : SnackbarType.info,
+        CustomSnackBar.showSuccess(
+          context,
+          isNowWishlisted
+              ? '${plant.commonName} Added to wishlist!'
+              : '${plant.commonName} Removed from wishlist.',
+          plantName: plant.commonName,
           actionLabel: isNowWishlisted ? 'Undo' : null,
           onAction:
               isNowWishlisted
@@ -71,137 +65,129 @@ class ProductCardGrid extends StatelessWidget {
         );
       },
       child: Container(
-        // The width and height of this Container will be governed by the GridView's delegate
-        // and its available space. Remove fixed width/height here.
-        margin: EdgeInsets.only(
-          bottom: AppSizes.vMarginSm,
-        ), // Provides spacing between grid items
+        margin: EdgeInsets.only(bottom: AppSizes.vMarginSm),
         decoration: BoxDecoration(
-          color:
-              // ignore: deprecated_member_use
-              isDark ? AppTheme.darkCard : AppTheme.lightCard.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
           boxShadow: [
             BoxShadow(
-              color:
-                  isDark
-                      // ignore: deprecated_member_use
-                      ? Colors.black.withOpacity(0.1)
-                      // ignore: deprecated_member_use
-                      : Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 3),
+              color: colorScheme.shadow.withValues(alpha: 0.1),
+              spreadRadius: AppSizes.borderWidth,
+              blurRadius: AppSizes.shadowBlurRadius,
+              offset: Offset(0, AppSizes.shadowOffset),
             ),
           ],
         ),
-        padding: const EdgeInsets.all(2), // Small internal padding for content
+        padding: AppSizes.paddingAllXs,
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // Make the Column fill the available height of the Container
-              // In a GridView, the item usually defines its own dimensions,
-              // so the Column can expand within those bounds.
               children: [
-                // Product Image section - takes flexible space
+                // Product Image section
                 Stack(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppSizes.radiusSm),
                       child: Image.network(
                         plant.images![0].url!,
-                        width: double.infinity, // Image fills card width
-                        height:
-                            imageHeight, // Image fills available height from Expanded
-                        fit:
-                            BoxFit
-                                .cover, // Ensures the image fills the space, cropping if necessary
+                        width: double.infinity,
+                        height: imageHeight,
+                        fit: BoxFit.cover,
                         errorBuilder:
-                            (_, __, ___) =>
-                                const Center(child: Icon(Icons.broken_image)),
+                            (_, __, ___) => Container(
+                              height: imageHeight,
+                              decoration: BoxDecoration(
+                                color: colorScheme.surfaceContainerLowest,
+                                borderRadius: BorderRadius.circular(
+                                  AppSizes.radiusSm,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.broken_image_rounded,
+                                size: AppSizes.iconLg,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
                       ),
                     ),
                     // Wishlist icon
                     Positioned(
-                      top: 2,
-                      right: 2,
-                      child: WishlistIconButton(plant: plant, isDark: isDark),
+                      top: AppSizes.spaceXs,
+                      right: AppSizes.spaceXs,
+                      child: WishlistIconButton(
+                        plant: plant,
+                        isDark: colorScheme.brightness == Brightness.dark,
+                      ),
                     ),
                   ],
                 ),
 
-                // Text Info section - takes minimum space needed
+                // Text Info section
                 Padding(
-                  padding: EdgeInsets.all(AppSizes.paddingXs),
+                  padding: AppSizes.paddingAllXs,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize:
-                        MainAxisSize
-                            .min, // Essential for text to only take needed space
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        plant.commonName ?? 'Unknown Plant',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.w500,
-                          fontSize: AppSizes.fontMd,
+                      Tooltip(
+                        message: plant.commonName ?? 'Unknown Plant',
+                        child: Text(
+                          plant.commonName ?? 'Unknown Plant',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                      SizedBox(height: 0.001.sh),
+                      SizedBox(height: AppSizes.spaceXs),
                       Row(
                         children: [
-                          Text(
-                            '₹$originalPrice',
-                            style: TextStyle(
-                              fontSize: AppSizes.fontXs,
-                              color: AppColors.mutedText,
-                              decoration: TextDecoration.lineThrough,
+                          Flexible(
+                            child: Text(
+                              '₹$originalPrice',
+                              style: Theme.of(context).textTheme.bodySmall,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          SizedBox(width: 0.02.sw),
-                          Text(
-                            '₹$offerPrice',
-                            style: TextStyle(
-                              fontSize: AppSizes.fontSm,
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.primary,
+                          SizedBox(width: AppSizes.spaceSm),
+                          Flexible(
+                            child: Text(
+                              '₹$offerPrice',
+                              style: Theme.of(context).textTheme.titleMedium,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            '$discount% off',
-                            style: TextStyle(
-                              color: colorScheme.onSurface,
-                              fontSize: AppSizes.fontXs,
-                            ),
-                          ),
-                        ],
+                      SizedBox(height: AppSizes.spaceXs),
+                      Text(
+                        '$discount% off',
+                        style: Theme.of(context).textTheme.bodySmall,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(height: 0.001.sh),
+                      SizedBox(height: AppSizes.spaceXs),
                       // Rating
                       Row(
                         children: [
                           ...List.generate(5, (index) {
                             return Icon(
                               index < plant.rating!.floor()
-                                  ? Icons.star
-                                  : Icons.star_border,
+                                  ? Icons.star_rounded
+                                  : Icons.star_outline_rounded,
                               size: AppSizes.iconXs,
                               color: colorScheme.primary,
                             );
                           }),
-                          SizedBox(width: 0.01.sw),
-                          Text(
-                            plant.rating!.toStringAsFixed(1),
-                            style: TextStyle(
-                              fontSize: AppSizes.fontXs,
-                              color: colorScheme.onSurface,
+                          SizedBox(width: AppSizes.spaceXs),
+                          Flexible(
+                            child: Text(
+                              plant.rating!.toStringAsFixed(1),
+                              style: Theme.of(context).textTheme.bodySmall,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -211,11 +197,10 @@ class ProductCardGrid extends StatelessWidget {
                 ),
               ],
             ),
-            // Add to Cart Button (positioned on top of the Column)
+            // Add to Cart Button
             Positioned(
-              bottom:
-                  -2, // Adjusted slightly to integrate better, feel free to fine-tune
-              right: -2,
+              bottom: -AppSizes.spaceXs,
+              right: -AppSizes.spaceXs,
               child: AddToCartButton(cartProvider: cartProvider, plant: plant),
             ),
           ],

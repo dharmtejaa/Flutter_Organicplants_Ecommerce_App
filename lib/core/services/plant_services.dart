@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:organicplants/models/all_plants_model.dart';
 
-
 // base url for the API
 String baseUrl = 'https://organicplants143.web.app/json_files/';
 
 /// class to get the data from the API
-class Plantservices {
+class PlantServices {
   /// function to get the data of all plants
   /// from the API
 

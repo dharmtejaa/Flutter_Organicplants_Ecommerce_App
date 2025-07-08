@@ -9,6 +9,7 @@ import 'package:organicplants/features/auth/presentation/screens/loginscreen.dar
 import 'package:organicplants/features/auth/presentation/widgets/terms_and_policy_text.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
+import 'package:organicplants/shared/widgets/skip_button.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPscreen extends StatefulWidget {
@@ -68,10 +69,10 @@ class _OTPscreenState extends State<OTPscreen> {
       );
       try {
         await auth.signInWithCredential(credential);
-        showCustomSnackbar(
+        CustomSnackBar.showSuccess(
           // ignore: use_build_context_synchronously
-          context: context,
-          message: 'OTP Verified Successfully! 🎉',
+          context,
+          'OTP Verified Successfully! 🎉',
         );
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
@@ -81,11 +82,10 @@ class _OTPscreenState extends State<OTPscreen> {
           );
         });
       } catch (e) {
-        showCustomSnackbar(
+        CustomSnackBar.showError(
           // ignore: use_build_context_synchronously
-          context: context,
-          message: 'OTP verification failed',
-          type: SnackbarType.error,
+          context,
+          'OTP verification failed',
         );
       }
     } else {
@@ -98,14 +98,12 @@ class _OTPscreenState extends State<OTPscreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     final defaultPinTheme = PinTheme(
       width: 50.w,
       height: 70.h,
-      textStyle: TextStyle(
-        fontSize: AppSizes.fontXxl,
-        color: colorScheme.primary,
-      ),
+      textStyle: textTheme.bodyLarge,
     );
 
     final cursor = Column(
@@ -141,19 +139,12 @@ class _OTPscreenState extends State<OTPscreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
-          GestureDetector(
-            onTap:
+          SkipButton(
+            onPressed:
                 () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const Loginscreen()),
                 ),
-            child: Text(
-              "Skip",
-              style: TextStyle(
-                fontSize: AppSizes.fontLg,
-                color: colorScheme.onSurface,
-              ),
-            ),
           ),
           SizedBox(width: 13.w),
         ],
@@ -187,19 +178,11 @@ class _OTPscreenState extends State<OTPscreen> {
                   RichText(
                     text: TextSpan(
                       text: "OTP ",
-                      style: TextStyle(
-                        fontSize: AppSizes.fontDisplay,
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: textTheme.headlineMedium,
                       children: [
                         TextSpan(
                           text: "Verification",
-                          style: TextStyle(
-                            fontSize: AppSizes.fontXxl,
-                            color: colorScheme.onSurface,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: textTheme.titleLarge,
                         ),
                       ],
                     ),
@@ -209,11 +192,7 @@ class _OTPscreenState extends State<OTPscreen> {
                     text: TextSpan(
                       text:
                           "Please enter the verification code we've sent you on\n\n+91-${widget.text} ",
-                      style: TextStyle(
-                        fontSize: AppSizes.fontSm,
-                        color: colorScheme.onSurface,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: textTheme.bodyMedium,
                       children: [
                         TextSpan(
                           recognizer:
@@ -227,11 +206,7 @@ class _OTPscreenState extends State<OTPscreen> {
                                   );
                                 },
                           text: "Edit",
-                          style: TextStyle(
-                            fontSize: AppSizes.fontMd,
-                            color: colorScheme.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: textTheme.bodyLarge,
                         ),
                       ],
                     ),
@@ -272,16 +247,7 @@ class _OTPscreenState extends State<OTPscreen> {
                               defaultPinTheme: defaultPinTheme,
                               showCursor: true,
                               cursor: cursor,
-                              submittedPinTheme: defaultPinTheme.copyWith(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: colorScheme.primary,
-                                      width: 3,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              submittedPinTheme: defaultPinTheme,
                               preFilledWidget: preFilledWidget,
                               hapticFeedbackType:
                                   HapticFeedbackType.mediumImpact,
@@ -311,14 +277,7 @@ class _OTPscreenState extends State<OTPscreen> {
                                   _isResendEnabled
                                       ? "Resend Code"
                                       : "Resend Code in $value s",
-                                  style: TextStyle(
-                                    color:
-                                        _isResendEnabled
-                                            ? colorScheme.primary
-                                            : colorScheme.onSecondary,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: AppSizes.fontSm,
-                                  ),
+                                  style: textTheme.bodyMedium,
                                 ),
                               );
                             },
@@ -333,7 +292,7 @@ class _OTPscreenState extends State<OTPscreen> {
                           ontap: verifyOTP,
                           backgroundColor: colorScheme.primary,
                           text: 'Verify Code',
-                          textColor: Colors.white,
+                          textColor: colorScheme.onPrimary,
                         ),
                         SizedBox(height: 10.h),
                         Padding(

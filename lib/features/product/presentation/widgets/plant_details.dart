@@ -36,10 +36,7 @@ class PlantDetails extends StatelessWidget {
       shape: Border(),
       title: Text(
         "Product Details",
-        style: TextStyle(
-          fontSize: AppSizes.fontMd,
-          fontWeight: FontWeight.w600,
-        ),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       //tilePadding: EdgeInsets.zero,
       childrenPadding: EdgeInsets.symmetric(
@@ -54,33 +51,35 @@ class PlantDetails extends StatelessWidget {
   }
 
   Widget _buildRow(String label, String value) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 3,
-            child: Text(
-              label,
-              // Remove maxLines: 2 here for now, or consider
-              // removing it if it's not strictly necessary.
-              // If you need it, consider wrapping the Text in Flexible instead of Expanded
-              // or adding an Overflow.ellipsis
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey[700]),
-            ),
+    return Builder(
+      builder: (context) {
+        final colorScheme = Theme.of(context).colorScheme;
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 6.h),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Text(
+                  value,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              value,
-              textAlign: TextAlign.start,
-              // Remove maxLines: 2 here as well.
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

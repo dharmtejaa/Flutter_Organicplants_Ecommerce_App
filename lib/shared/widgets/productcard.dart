@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
@@ -22,7 +19,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = colorScheme.brightness == Brightness.dark;
+
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final wishlistProvider = Provider.of<WishlistProvider>(
       context,
@@ -32,8 +29,7 @@ class ProductCard extends StatelessWidget {
       context,
       listen: false,
     );
-    final cardWidth =
-        160.w; // Card width remains fixed for horizontal scrolling
+    final cardWidth = AppSizes.homeProductCardWidth;
     final imageHeight = cardWidth * 0.75;
     final offerPrice = (plant.prices?.offerPrice ?? 0).toInt();
     final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
@@ -53,16 +49,14 @@ class ProductCard extends StatelessWidget {
       },
 
       onDoubleTap: () {
-        //final isWishListed = wishlistProvider.isInWishlist(plant.id!);
         wishlistProvider.toggleWishList(plant);
         final isNowWishlisted = wishlistProvider.isInWishlist(plant.id!);
-        showCustomSnackbar(
-          context: context,
-          message:
-              isNowWishlisted
-                  ? '${plant.commonName} Added to wishlist!'
-                  : '${plant.commonName} Removed from wishlist.',
-          type: isNowWishlisted ? SnackbarType.success : SnackbarType.info,
+        CustomSnackBar.showSuccess(
+          context,
+          isNowWishlisted
+              ? '${plant.commonName} Added to wishlist!'
+              : '${plant.commonName} Removed from wishlist.',
+          plantName: plant.commonName,
           actionLabel: isNowWishlisted ? 'Undo' : null,
           onAction:
               isNowWishlisted
@@ -72,131 +66,150 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         width: cardWidth,
-
-        // *** KEY CHANGE 1: Remove fixed height or IntrinsicHeight from here. ***
-        // This Container will now take the height provided by its parent (the ListView item extent).
-        // If there was an IntrinsicHeight wrapping the Column, remove it.
-        // The `height: imageHeight` from earlier (cardWidth * 0.7.h) was for the image, not the whole card.
-        // The overall card height will now be determined by the parent.
         margin: EdgeInsets.only(bottom: AppSizes.vMarginSm),
         decoration: BoxDecoration(
-          color:
-              colorScheme.brightness == Brightness.dark
-                  ? AppTheme.darkCard
-                  // ignore: deprecated_member_use
-                  : AppTheme.lightCard.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
           boxShadow: [
             BoxShadow(
-              color:
-                  colorScheme.brightness == Brightness.dark
-                      // ignore: deprecated_member_use
-                      ? Colors.black.withOpacity(0.1)
-                      // ignore: deprecated_member_use
-                      : Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 3),
+              color: colorScheme.shadow.withValues(alpha: 0.1),
+              spreadRadius: AppSizes.borderWidth,
+              blurRadius: AppSizes.shadowBlurRadius,
+              offset: Offset(0, AppSizes.shadowOffset),
             ),
           ],
         ),
-        padding: const EdgeInsets.all(2),
-        // *** KEY CHANGE 2: Use a Column directly and use Expanded for flexible sizing. ***
         child: Stack(
-          // Re-wrap with Stack to keep Positioned widgets
           children: [
             Column(
-              // Main content column
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Image Section with Enhanced Design
                 Stack(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(AppSizes.radiusSm),
-                      child: Image.network(
-                        plant.images![0].url!,
-                        height: imageHeight,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        errorBuilder:
-                            (_, __, ___) =>
-                                const Center(child: Icon(Icons.broken_image)),
+                    Container(
+                      height: imageHeight,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(AppSizes.productCardRadius),
+                          topRight: Radius.circular(AppSizes.productCardRadius),
+                        ),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            colorScheme.surfaceContainerHighest.withValues(
+                              alpha: 0.3,
+                            ),
+                            colorScheme.surfaceContainerHighest.withValues(
+                              alpha: 0.1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(AppSizes.productCardRadius),
+                          topRight: Radius.circular(AppSizes.productCardRadius),
+                        ),
+                        child: Image.network(
+                          plant.images![0].url!,
+                          height: imageHeight,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder:
+                              (_, __, ___) => Container(
+                                height: imageHeight,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: colorScheme.surfaceContainerHighest,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(
+                                      AppSizes.productCardRadius,
+                                    ),
+                                    topRight: Radius.circular(
+                                      AppSizes.productCardRadius,
+                                    ),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.broken_image_rounded,
+                                  color: colorScheme.onSurfaceVariant,
+                                  size: AppSizes.iconLg,
+                                ),
+                              ),
+                        ),
                       ),
                     ),
+
+                    // Wishlist Icon with Enhanced Design
                     Positioned(
-                      // Wishlist icon
-                      top: 2,
-                      right: 2,
-                      child: WishlistIconButton(plant: plant, isDark: isDark),
+                      top: AppSizes.spaceXs,
+                      right: AppSizes.spaceXs,
+                      child: WishlistIconButton(
+                        plant: plant,
+                        isDark: colorScheme.brightness == Brightness.dark,
+                      ),
                     ),
                   ],
                 ),
+
+                // Content Section with Enhanced Spacing
                 Padding(
-                  // Text info
-                  padding: EdgeInsets.all(AppSizes.paddingXs),
+                  padding: AppSizes.paddingAllXs,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Plant Name
                       Text(
                         plant.commonName ?? 'Unknown Plant',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.w500,
-                          fontSize: AppSizes.fontMd,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      SizedBox(height: 0.001.sh),
+
+                      SizedBox(height: AppSizes.spaceXs),
+
+                      // Price Section
                       Row(
                         children: [
-                          Text(
-                            '₹$originalPrice',
-                            style: TextStyle(
-                              fontSize: AppSizes.fontXs,
-                              color: AppColors.mutedText,
-                              decoration: TextDecoration.lineThrough,
+                          if (originalPrice > offerPrice)
+                            Text(
+                              '₹$originalPrice',
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
-                          ),
-                          SizedBox(width: 0.02.sw),
+                          if (originalPrice > offerPrice)
+                            SizedBox(width: AppSizes.spaceSm),
                           Text(
                             '₹$offerPrice',
-                            style: TextStyle(
-                              fontSize: AppSizes.fontSm,
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],
                       ),
+                      SizedBox(height: AppSizes.spaceXs),
                       Text(
                         '$discount% off',
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          fontSize: AppSizes.fontXs,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      SizedBox(height: 0.001.sh),
+                      SizedBox(height: AppSizes.spaceXs),
                       Row(
                         children: [
                           ...List.generate(5, (index) {
                             return Icon(
                               index < plant.rating!.floor()
-                                  ? Icons.star
-                                  : Icons.star_border,
+                                  ? Icons.star_rounded
+                                  : Icons.star_outline_rounded,
                               size: AppSizes.iconXs,
                               color: colorScheme.primary,
                             );
                           }),
-                          SizedBox(width: 0.01.sw),
+                          SizedBox(width: AppSizes.spaceXs),
                           Text(
                             plant.rating!.toStringAsFixed(1),
-                            style: TextStyle(
-                              fontSize: AppSizes.fontXs,
-                              color: colorScheme.onSurface,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -205,11 +218,28 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
-            // Add to Cart Button (remains here as it uses Positioned)
+
+            // Add to Cart Button with Enhanced Design
             Positioned(
-              bottom: -2,
-              right: -2,
-              child: AddToCartButton(cartProvider: cartProvider, plant: plant),
+              bottom: -AppSizes.spaceXs,
+              right: -AppSizes.spaceXs,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppSizes.radiusCircular),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.shadow.withValues(alpha: 0.2),
+                      spreadRadius: AppSizes.borderWidth,
+                      blurRadius: AppSizes.shadowBlurRadius,
+                      offset: Offset(0, AppSizes.shadowOffset),
+                    ),
+                  ],
+                ),
+                child: AddToCartButton(
+                  cartProvider: cartProvider,
+                  plant: plant,
+                ),
+              ),
             ),
           ],
         ),

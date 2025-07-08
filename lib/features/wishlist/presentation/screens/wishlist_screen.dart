@@ -34,11 +34,7 @@ class WishlistScreen extends StatelessWidget {
         ),
         title: Text(
           "My WishList",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: AppSizes.fontXl,
-            //fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         centerTitle: true,
         actions: [
@@ -58,10 +54,10 @@ class WishlistScreen extends StatelessWidget {
         builder: (context, value, child) {
           return wishlistItems.isEmpty
               ? Center(
-                child: NoResultsFound(
+                child: NoResultFound(
                   title: "Your Wishlist is empty",
-                  message: "Add some plants to get started!",
-                  imagePath: "assets/No_Plant_Found.png",
+                  subtitle: "Add some plants to get started!",
+                  icon: Icons.favorite_border_rounded,
                 ),
               )
               : ListView.builder(
