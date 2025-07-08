@@ -48,75 +48,100 @@ class _PlantCategoryState extends State<PlantCategory> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: colorScheme.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      backgroundColor: Colors.transparent,
+      barrierColor: colorScheme.shadow.withOpacity(0.15),
       builder: (context) {
-        return Padding(
+        return AnimatedPadding(
+          duration: Duration(milliseconds: 250),
+          curve: Curves.easeOut,
           padding: MediaQuery.of(context).viewInsets,
-          child: StatefulBuilder(
-            builder: (context, setModalState) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 16.0,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  colorScheme.surface,
+                  colorScheme.surfaceContainerHighest,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+              boxShadow: [
+                BoxShadow(
+                  color: colorScheme.shadow.withOpacity(0.18),
+                  blurRadius: 24,
+                  offset: Offset(0, -8),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 40,
-                        height: 5,
-                        margin: const EdgeInsets.only(bottom: 16),
-                        decoration: BoxDecoration(
-                          color: colorScheme.onSurface.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              child: StatefulBuilder(
+                builder: (context, setModalState) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Filter & Sort',
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Center(
+                          child: Container(
+                            width: 48,
+                            height: 6,
+                            margin: const EdgeInsets.only(bottom: 20),
+                            decoration: BoxDecoration(
+                              color: colorScheme.onSurface.withOpacity(0.18),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
                         ),
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 12),
-                    // Sort Dropdown
-                    Card(
-                      elevation: 0,
-                      color: colorScheme.surfaceContainerHighest,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                        child: Row(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(Icons.sort, color: colorScheme.primary),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Sort by',
-                                    style:
-                                        Theme.of(context).textTheme.labelMedium,
-                                  ),
-                                  DropdownButton<String>(
+                            Text(
+                              'Filter & Sort',
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.close, size: 28),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 18),
+                        // Sort Dropdown
+                        Text(
+                          'Sort by',
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          'Choose how you want to sort the plants.',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurface.withOpacity(0.7),
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Card(
+                          elevation: 0,
+                          color: colorScheme.surfaceContainerHighest,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 8,
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.sort, color: colorScheme.primary),
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: DropdownButton<String>(
                                     value: tempSort,
                                     isExpanded: true,
                                     underline: SizedBox(),
@@ -132,189 +157,231 @@ class _PlantCategoryState extends State<PlantCategory> {
                                           () => tempSort = value!,
                                         ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 14),
-                    // Price Range
-                    Card(
-                      elevation: 0,
-                      color: colorScheme.surfaceContainerHighest,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
+                        SizedBox(height: 22),
+                        // Price Range
+                        Text(
+                          'Price Range',
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        SizedBox(height: 2),
+                        Text(
+                          'Filter plants by your preferred price range.',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurface.withOpacity(0.7),
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Card(
+                          elevation: 0,
+                          color: colorScheme.surfaceContainerHighest,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 12,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.attach_money,
+                                      color: colorScheme.primary,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      '₹${tempPriceRange.start.toInt()} - ₹${tempPriceRange.end.toInt()}',
+                                      style:
+                                          Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium,
+                                    ),
+                                  ],
+                                ),
+                                RangeSlider(
+                                  values: tempPriceRange,
+                                  min: 0,
+                                  max: 1000,
+                                  divisions: 20,
+                                  onChanged:
+                                      (values) => setModalState(
+                                        () => tempPriceRange = values,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 22),
+                        // In Stock & Pet Friendly
+                        Text(
+                          'Other Filters',
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          'Narrow down your search with these options.',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurface.withOpacity(0.7),
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.attach_money,
-                                  color: colorScheme.primary,
+                            Expanded(
+                              child: Card(
+                                elevation: 0,
+                                color: colorScheme.surfaceContainerHighest,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                                SizedBox(width: 10),
-                                Text(
-                                  'Price Range',
-                                  style:
-                                      Theme.of(context).textTheme.labelMedium,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text('₹${tempPriceRange.start.toInt()}'),
-                                Expanded(
-                                  child: RangeSlider(
-                                    values: tempPriceRange,
-                                    min: 0,
-                                    max: 1000,
-                                    divisions: 20,
-                                    onChanged:
-                                        (values) => setModalState(
-                                          () => tempPriceRange = values,
-                                        ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 14,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.inventory_2_rounded,
+                                            color: colorScheme.primary,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text('In Stock'),
+                                        ],
+                                      ),
+                                      Switch(
+                                        value: tempInStock,
+                                        onChanged:
+                                            (v) => setModalState(
+                                              () => tempInStock = v,
+                                            ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Text('₹${tempPriceRange.end.toInt()}'),
-                              ],
+                              ),
+                            ),
+                            SizedBox(width: 14),
+                            Expanded(
+                              child: Card(
+                                elevation: 0,
+                                color: colorScheme.surfaceContainerHighest,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 14,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.pets,
+                                            color: colorScheme.primary,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text('Pet Friendly'),
+                                        ],
+                                      ),
+                                      Switch(
+                                        value: tempPetFriendly,
+                                        onChanged:
+                                            (v) => setModalState(
+                                              () => tempPetFriendly = v,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 14),
-                    // In Stock & Pet Friendly
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Card(
-                            elevation: 0,
-                            color: colorScheme.surfaceContainerHighest,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 10,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.inventory_2_rounded,
-                                        color: colorScheme.primary,
-                                      ),
-                                      SizedBox(width: 8),
-                                      Text('In Stock'),
-                                    ],
+                        SizedBox(height: 32),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
                                   ),
-                                  Switch(
-                                    value: tempInStock,
-                                    onChanged:
-                                        (v) => setModalState(
-                                          () => tempInStock = v,
-                                        ),
-                                  ),
-                                ],
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                ),
+                                onPressed: () {
+                                  setModalState(() {
+                                    tempSort = 'Name A-Z';
+                                    tempPriceRange = RangeValues(0, 1000);
+                                    tempInStock = false;
+                                    tempPetFriendly = false;
+                                  });
+                                },
+                                child: Text('Clear'),
                               ),
                             ),
-                          ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: colorScheme.primary,
+                                  foregroundColor: colorScheme.onPrimary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 18),
+                                  elevation: 2,
+                                ),
+                                onPressed: () {
+                                  _selectedSortOption.value = tempSort;
+                                  _priceRange.value = tempPriceRange;
+                                  _inStock.value = tempInStock;
+                                  _petFriendly.value = tempPetFriendly;
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'Apply',
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium?.copyWith(
+                                    color: colorScheme.onPrimary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Card(
-                            elevation: 0,
-                            color: colorScheme.surfaceContainerHighest,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 10,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.pets,
-                                        color: colorScheme.primary,
-                                      ),
-                                      SizedBox(width: 8),
-                                      Text('Pet Friendly'),
-                                    ],
-                                  ),
-                                  Switch(
-                                    value: tempPetFriendly,
-                                    onChanged:
-                                        (v) => setModalState(
-                                          () => tempPetFriendly = v,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        SizedBox(height: 10),
                       ],
                     ),
-                    SizedBox(height: 22),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () {
-                              setModalState(() {
-                                tempSort = 'Name A-Z';
-                                tempPriceRange = RangeValues(0, 1000);
-                                tempInStock = false;
-                                tempPetFriendly = false;
-                              });
-                            },
-                            child: Text('Clear'),
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              padding: EdgeInsets.symmetric(vertical: 14),
-                            ),
-                            onPressed: () {
-                              _selectedSortOption.value = tempSort;
-                              _priceRange.value = tempPriceRange;
-                              _inStock.value = tempInStock;
-                              _petFriendly.value = tempPetFriendly;
-                              Navigator.pop(context);
-                            },
-                            child: Text('Apply'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
         );
       },
