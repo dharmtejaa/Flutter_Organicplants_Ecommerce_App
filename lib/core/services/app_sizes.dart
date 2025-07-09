@@ -83,6 +83,14 @@ class AppSizes {
   static double spaceXl = 32.w;
   static double spaceXxl = 48.w;
 
+  // Vertical Spacing
+  static double spaceHeightXs = 4.h;
+  static double spaceHeightSm = 8.h;
+  static double spaceHeightMd = 16.h;
+  static double spaceHeightLg = 24.h;
+  static double spaceHeightXl = 32.h;
+  static double spaceHeightXxl = 48.h;
+
   // ============================================================================
   // PADDING - EDGEINSETS CONSTANTS
   // ============================================================================
@@ -158,7 +166,7 @@ class AppSizes {
   // ============================================================================
   static double cardWidth = 160.w;
   static double cardHeight = 240.h;
-  static double cardImageHeight = cardWidth * 0.75;
+  static double cardImageHeight = 120.h;
 
   // ============================================================================
   // BUTTON DIMENSIONS
@@ -252,7 +260,8 @@ class AppSizes {
   // ============================================================================
   // SPLASH SPECIFIC DIMENSIONS
   // ============================================================================
-  static double splashLogoSize = 120.w;
+  static double splashLogoHeight = 300.h;
+  static double splashLogoWidth = 300.w;
   static double splashAnimationSize = 200.w;
   static double splashTitleSize = 32.sp;
 

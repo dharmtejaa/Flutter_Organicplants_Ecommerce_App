@@ -37,7 +37,7 @@ class _SplashscreenState extends State<Splashscreen> {
       airPurifyingPlants = getPlantsByTag('Air_Purifying');
       sunLovingPlants = getPlantsByTag('Sun_Loving');
 
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 3000));
 
       if (!mounted) return;
 
@@ -55,29 +55,39 @@ class _SplashscreenState extends State<Splashscreen> {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: Padding(
-          padding: AppSizes.marginSymmetricSm,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Lottie.asset(
-                'assets/splash screen/earth_animation.json',
-                height: 300.h,
-                width: 300.w,
-                repeat: false,
+      body: Padding(
+        padding: AppSizes.marginSymmetricSm,
+        child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Lottie.asset(
+                    'assets/splash screen/earth_animation.json',
+                    height: AppSizes.splashLogoHeight,
+                    width: AppSizes.splashLogoWidth,
+                    repeat: false,
+                  ),
+                  SizedBox(height: 50.h),
+                  Text(
+                    'O R G A N I C\nP L A N T S',
+                    textAlign: TextAlign.center,
+                    style: textTheme.displaySmall,
+                  ),
+                  SizedBox(height: 120.h),
+                ],
               ),
-              SizedBox(height: 50.h),
-              Text(
-                'O R G A N I C\nP L A N T S',
-                textAlign: TextAlign.center,
-                style: textTheme.displaySmall,
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                "developed by: dharmtejaa",
+                style: textTheme.labelMedium,
               ),
-              SizedBox(height: 80.h),
-              Text("developed by: dharmtejaa", style: textTheme.bodySmall),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

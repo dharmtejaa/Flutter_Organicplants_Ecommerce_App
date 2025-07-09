@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 
 class AppTheme {
   // ——— Enhanced brand colors ———
@@ -298,9 +299,9 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       displaySmall: TextStyle(
-        fontSize: 24,
+        fontSize: AppSizes.fontXxl,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: primaryLightColor,
         fontFamily: 'Poppins',
       ),
       headlineLarge: TextStyle(
