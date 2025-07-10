@@ -15,7 +15,7 @@ class AppTheme {
   static const Color lightSurface = Color(0xFFF5F5F5);
 
   // ——— Enhanced Dark palette ———
-  static final Color darkBackground = Color(0xFF121212);
+  static final Color darkBackground = Color(0xFf131213);
   static const Color darkCard = Color(0xFF1E1E1E);
   static const Color darkSurface = Color(0xFF2C2C2C);
 
@@ -38,14 +38,14 @@ class AppTheme {
 
     // Enhanced ColorScheme
     colorScheme: ColorScheme.light(
-      primary: primaryColor,
+      primary: primaryLightColor,
       primaryContainer: primaryLightColor.withValues(alpha: 0.1),
       secondary: secondaryColor,
       secondaryContainer: secondaryColor.withValues(alpha: 0.1),
       surface: lightSurface,
-      surfaceContainerHighest: lightCard,
+      surfaceContainerHighest: lightBackground,
       onPrimary: Colors.white,
-      onSecondary: Colors.white,
+      onSecondary: Color(0xFF1A1A1A),
       onSurface: Color(0xFF1A1A1A),
       onSurfaceVariant: Color(0xFF666666),
       error: Color(0xFFD32F2F),
@@ -80,15 +80,15 @@ class AppTheme {
     // Enhanced Text Theme
     textTheme: TextTheme(
       displayLarge: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.w700,
-        color: Color(0xFF1A1A1A),
+        fontSize: 38.sp,
+        fontWeight: FontWeight.w600,
+        color: primaryLightColor, // Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
       displayMedium: TextStyle(
-        fontSize: 28,
-        fontWeight: FontWeight.w600,
-        color: Color(0xFF1A1A1A),
+        fontSize: 26.sp,
+        fontWeight: FontWeight.w500,
+        color: Color(0xffA0A0A0),
         fontFamily: 'Poppins',
       ),
       displaySmall: TextStyle(
@@ -98,13 +98,13 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       headlineLarge: TextStyle(
-        fontSize: 22,
+        fontSize: 22.sp,
         fontWeight: FontWeight.w600,
-        color: Color(0xFF1A1A1A),
+        color: primaryLightColor, //Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
       headlineMedium: TextStyle(
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.w600,
         color: Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
@@ -116,7 +116,7 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       titleLarge: TextStyle(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w600,
         color: Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
@@ -134,39 +134,41 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       bodyLarge: TextStyle(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w400,
         color: Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
       bodyMedium: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w400,
         color: Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
       bodySmall: TextStyle(
-        fontSize: 12,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w400,
-        color: Color(0xFF666666),
-        fontFamily: 'Poppins',
-      ),
-      labelLarge: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
         color: Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
+
+      labelLarge: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+        color: Colors.white, //Color(0xFF666666),
+        fontFamily: 'Poppins',
+        letterSpacing: 0.5,
+      ),
       labelMedium: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFF666666),
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
       labelSmall: TextStyle(
-        fontSize: 10,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFF999999),
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
     ),
@@ -174,14 +176,14 @@ class AppTheme {
     // Enhanced Elevated Button Theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor,
+        backgroundColor: primaryLightColor,
         foregroundColor: Colors.white,
-        elevation: 2,
-        shadowColor: primaryColor.withValues(alpha: 0.3),
+        //elevation: 2,
+        //shadowColor: primaryColor.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),
@@ -250,15 +252,15 @@ class AppTheme {
       secondary: secondaryColor,
       secondaryContainer: secondaryColor.withValues(alpha: 0.2),
       surface: darkSurface,
-      surfaceContainerHighest: darkCard,
-      onPrimary: Colors.black,
-      onSecondary: Colors.black,
-      onSurface: Colors.white,
+      surfaceContainerHighest: Color(0xFF1E1E1E),
+      onPrimary: Color(0xFf131213),
+      onSecondary: Colors.white70,
+      onSurface: Colors.white60,
       onSurfaceVariant: Colors.white70,
       error: Color(0xFFEF5350),
       onError: Colors.black,
       outline: Color(0xFF424242),
-      outlineVariant: Color(0xFF616161),
+      outlineVariant: darkSurface,
     ),
 
     // Enhanced AppBar Theme
@@ -287,31 +289,31 @@ class AppTheme {
     // Enhanced Text Theme
     textTheme: TextTheme(
       displayLarge: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.w700,
-        color: Colors.white,
-        fontFamily: 'Poppins',
-      ),
-      displayMedium: TextStyle(
-        fontSize: 28,
-        fontWeight: FontWeight.w600,
-        color: Colors.white,
-        fontFamily: 'Poppins',
-      ),
-      displaySmall: TextStyle(
-        fontSize: AppSizes.fontXxl,
+        fontSize: 32.sp,
         fontWeight: FontWeight.w600,
         color: primaryLightColor,
         fontFamily: 'Poppins',
       ),
+      displayMedium: TextStyle(
+        fontSize: 26.sp,
+        fontWeight: FontWeight.w500,
+        color: Colors.white70,
+        fontFamily: 'Poppins',
+      ),
+      displaySmall: TextStyle(
+        fontSize: AppSizes.fontXxl,
+        fontWeight: FontWeight.w500,
+        color: primaryLightColor,
+        fontFamily: 'Poppins',
+      ),
       headlineLarge: TextStyle(
-        fontSize: 22,
+        fontSize: 22.sp,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: AppTheme.primaryLightColor,
         fontFamily: 'Poppins',
       ),
       headlineMedium: TextStyle(
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.w600,
         color: Colors.white,
         fontFamily: 'Poppins',
@@ -347,7 +349,7 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       bodyMedium: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w400,
         color: Colors.white,
         fontFamily: 'Poppins',
@@ -359,10 +361,11 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       labelLarge: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: Colors.white,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+        color: Colors.white, //Color(0xFF666666),
         fontFamily: 'Poppins',
+        letterSpacing: 0.5,
       ),
       labelMedium: TextStyle(
         fontSize: 12,
@@ -373,7 +376,7 @@ class AppTheme {
       labelSmall: TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.w500,
-        color: Colors.white54,
+        color: Colors.white70,
         fontFamily: 'Poppins',
       ),
     ),
@@ -403,7 +406,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),

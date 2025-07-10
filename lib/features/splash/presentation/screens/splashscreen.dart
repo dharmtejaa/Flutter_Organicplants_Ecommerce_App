@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_services.dart';
+import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/onboarding/presentation/screens/onboarding_screen.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _SplashscreenState extends State<Splashscreen> {
       airPurifyingPlants = getPlantsByTag('Air_Purifying');
       sunLovingPlants = getPlantsByTag('Sun_Loving');
 
-      await Future.delayed(const Duration(seconds: 3000));
+      await Future.delayed(const Duration(seconds: 2000));
 
       if (!mounted) return;
 

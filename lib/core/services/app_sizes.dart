@@ -251,10 +251,12 @@ class AppSizes {
   // ============================================================================
   // ONBOARDING SPECIFIC DIMENSIONS
   // ============================================================================
-  static double onboardingImageHeight = 300.h;
+  static double onboardingImageHeight = 240.h;
+  static double onboardingIamgeWidth = 1.sw;
   static double onboardingTitleSize = 28.sp;
   static double onboardingSubtitleSize = 16.sp;
-  static double onboardingDotSize = 8.w;
+  static double onboardingDotHeight = 8.h;
+  static double onboardingDotwidth = 8.w;
   static double onboardingDotSpacing = 8.w;
 
   // ============================================================================

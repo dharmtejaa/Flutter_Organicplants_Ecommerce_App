@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_theme.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
 
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/home/logic/onboarding_provider.dart';
@@ -24,7 +26,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     // Use Consumer for currentPage here to ensure AppBar reacts to changes
     // Alternatively, make onBoardingProvider in build listen: true
     // But for a single value in AppBar, a separate Consumer is cleaner.
@@ -41,6 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       totalPages -
                           1 // Use totalPages here for clarity
                   ? SkipButton(
+                    textColor: AppTheme.primaryLightColor,
                     onPressed:
                         () => provider.skipToEnd(_controller, totalPages),
                   )
@@ -67,22 +70,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              //onbaording images
                               SizedBox(
-                                height: 250.h,
-                                width: 1.sw,
+                                height: AppSizes.onboardingImageHeight,
+                                width: AppSizes.onboardingIamgeWidth,
                                 child: Lottie.asset(
                                   onboardingData[index]['image']!,
                                   repeat: true,
                                   fit: BoxFit.contain,
                                 ),
                               ),
-                              SizedBox(height: 20.h),
+                              SizedBox(height: AppSizes.spaceHeightMd),
+                              //heading
                               Text(
                                 onboardingData[index]['title']!,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: textTheme.headlineLarge,
                               ),
                               SizedBox(height: 12.h),
+                              //description
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: AppSizes.paddingMd,
@@ -90,7 +96,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 child: Text(
                                   onboardingData[index]['description']!,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  style: textTheme.bodySmall,
                                 ),
                               ),
                             ],
@@ -115,9 +121,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 effect: ExpandingDotsEffect(
                                   dotColor: colorScheme.outline,
                                   activeDotColor: colorScheme.primary,
-                                  dotHeight: 8.h,
-                                  dotWidth: 8.w,
-                                  spacing: 8.w,
+                                  dotHeight: AppSizes.onboardingDotHeight,
+                                  dotWidth: AppSizes.onboardingDotwidth,
+                                  spacing: AppSizes.onboardingDotSpacing,
                                 ),
                               ),
                               Flexible(
@@ -141,14 +147,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
+                                      elevation: 0,
                                       padding: EdgeInsets.symmetric(
-                                        horizontal: AppSizes.paddingMd,
-                                        vertical: AppSizes.paddingSm,
+                                        horizontal: AppSizes.paddingSm,
+                                        vertical: AppSizes.paddingXs,
                                       ),
-                                      backgroundColor: colorScheme.primary,
-                                      foregroundColor:
-                                          colorScheme
-                                              .onPrimary, // Explicitly set
+
+                                      //backgroundColor: colorScheme.primary,
+                                      iconSize: AppSizes.fontMd,
+                                      iconColor: AppColors.background,
                                       shape: StadiumBorder(),
                                     ),
                                     child: Row(
@@ -159,25 +166,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                                     1 // Use totalPages here
                                             ? Text(
                                               'Get Started',
-                                              style:
-                                                  Theme.of(
-                                                    context,
-                                                  ).textTheme.labelLarge,
+                                              style: textTheme.labelLarge,
                                             )
                                             : Text(
                                               'Next',
-                                              style:
-                                                  Theme.of(
-                                                    context,
-                                                  ).textTheme.labelLarge,
+                                              style: textTheme.labelLarge,
                                             ),
-                                        SizedBox(width: 8.w),
+                                        SizedBox(width: 4.w),
                                         Icon(
                                           currentPage == totalPages - 1
                                               ? Icons.login_rounded
                                               : Icons.arrow_forward_ios_rounded,
-                                          color: colorScheme.onPrimary,
-                                          size: AppSizes.fontMd,
                                         ),
                                       ],
                                     ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_theme.dart';
 
 // ignore: camel_case_types
 class RichTextLine extends StatelessWidget {
@@ -7,37 +7,24 @@ class RichTextLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         text: "By continuing, you agree to Organic Plants ",
-        style: TextStyle(
-          fontSize: AppSizes.fontXs,
-          // ignore: deprecated_member_use
-          color: colorScheme.onSurface,
-        ),
+        style: textTheme.labelSmall,
         children: [
           TextSpan(
             text: "Terms of Service ",
-            style: TextStyle(
-              fontSize: AppSizes.fontXs,
-              color: colorScheme.primary,
+            style: textTheme.labelSmall?.copyWith(
+              color: AppTheme.primaryLightColor,
             ),
           ),
-          TextSpan(
-            text: "and ",
-            style: TextStyle(
-              fontSize: AppSizes.fontXs,
-              // ignore: deprecated_member_use
-              color: colorScheme.onSurface,
-            ),
-          ),
+          TextSpan(text: "and ", style: textTheme.labelSmall),
           TextSpan(
             text: "Privacy Policy ",
-            style: TextStyle(
-              fontSize: AppSizes.fontXs,
-              color: colorScheme.primary,
+            style: textTheme.labelSmall?.copyWith(
+              color: AppTheme.primaryLightColor,
             ),
           ),
         ],

@@ -25,6 +25,7 @@ class _LoginscreenState extends State<Loginscreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     void login() {
       if (formKey.currentState!.validate()) {
         auth.verifyPhoneNumber(
@@ -83,16 +84,17 @@ class _LoginscreenState extends State<Loginscreen> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           automaticallyImplyLeading: false,
+
           actions: [
             Padding(
               padding: EdgeInsets.only(right: AppSizes.paddingSm),
               child: SkipButton(
+                textColor: AppTheme.primaryLightColor,
                 onPressed:
                     () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => EntryScreen()),
                     ),
-                text: 'Skip',
               ),
             ),
           ],
@@ -111,11 +113,11 @@ class _LoginscreenState extends State<Loginscreen> {
                   RichText(
                     text: TextSpan(
                       text: "Login \n",
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: textTheme.displayLarge,
                       children: [
                         TextSpan(
                           text: "to get Started",
-                          style: Theme.of(context).textTheme.titleSmall,
+                          style: textTheme.displayMedium,
                         ),
                       ],
                     ),
@@ -136,10 +138,10 @@ class _LoginscreenState extends State<Loginscreen> {
                 padding: AppSizes.paddingSymmetricMd,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(AppSizes.radiusLg),
-                    topRight: Radius.circular(AppSizes.radiusLg),
+                    topLeft: Radius.circular(AppSizes.radiusXxl),
+                    topRight: Radius.circular(AppSizes.radiusXxl),
                   ),
-                  color: colorScheme.surface,
+                  color: colorScheme.surfaceContainerHighest,
                 ),
                 child: Form(
                   key: formKey,
@@ -159,7 +161,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           SizedBox(height: 10.h),
                           Text(
                             " You'll receive an OTP on the number above.",
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: textTheme.labelMedium,
                           ),
                         ],
                       ),
@@ -170,7 +172,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             ontap: login,
                             backgroundColor: colorScheme.primary,
                             text: 'Continue',
-                            textColor: colorScheme.onPrimary,
+                            //textColor: colorScheme.onPrimary,
                           ),
                           SizedBox(height: 10.h),
                           Padding(

@@ -66,6 +66,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final notifier = isObscureNotifier ?? ValueNotifier<bool>(obsecureText);
 
     return SizedBox(
@@ -77,19 +78,15 @@ class CustomTextField extends StatelessWidget {
             controller: controller,
             obscureText: isObscure,
             keyboardType: keyboardType,
-            style: TextStyle(
-              fontSize: AppSizes.fontMd,
-              color: colorScheme.onSurface,
-            ),
+            style: textTheme.bodyLarge,
             validator: _validateInput,
 
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(
-                fontSize: AppSizes.fontMd,
-                color: colorScheme.onSurfaceVariant,
+              hintStyle: textTheme.bodyLarge?.copyWith(
+                color: Color(0xFF666666),
               ),
-              contentPadding: EdgeInsets.all(AppSizes.paddingMd),
+              contentPadding: EdgeInsets.all(AppSizes.paddingSm),
               prefixIcon:
                   prefixIcon != null
                       ? Icon(prefixIcon, size: AppSizes.iconSm)
@@ -104,9 +101,9 @@ class CustomTextField extends StatelessWidget {
                       )
                       : null,
               filled: true,
-              fillColor: colorScheme.surfaceContainerHighest,
-              suffixIconColor: colorScheme.onSurface,
-              prefixIconColor: colorScheme.onSurface,
+              fillColor: colorScheme.onPrimary,
+              suffixIconColor: colorScheme.onSecondary,
+              prefixIconColor: colorScheme.onSecondary,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
@@ -123,7 +120,7 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
                 ),
-                borderSide: BorderSide(color: colorScheme.primary, width: 2),
+                borderSide: BorderSide(color: colorScheme.primary),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
