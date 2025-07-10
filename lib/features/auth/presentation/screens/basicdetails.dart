@@ -42,6 +42,7 @@ class _BasicdetailsState extends State<Basicdetails> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -72,16 +73,13 @@ class _BasicdetailsState extends State<Basicdetails> {
                 RichText(
                   text: TextSpan(
                     text: "Basic ",
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: textTheme.displayLarge,
                     children: [
-                      TextSpan(
-                        text: "Detials",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
+                      TextSpan(text: "Detials", style: textTheme.displayMedium),
                     ],
                   ),
                 ),
-                //Image.asset('assets/ltree.png', width: 0.3.sw, height: 0.2.sh),
+                //Image.asset('assets/stree.png', width: 0.4.sw, height: 0.2.sh),
               ],
             ),
           ),
@@ -90,15 +88,11 @@ class _BasicdetailsState extends State<Basicdetails> {
           Expanded(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.only(
-                left: AppSizes.paddingMd,
-                right: AppSizes.paddingMd,
-                bottom: AppSizes.paddingSm,
-              ),
+              padding: AppSizes.paddingSymmetricMd,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(AppSizes.radiusLg),
-                  topRight: Radius.circular(AppSizes.radiusLg),
+                  topLeft: Radius.circular(AppSizes.radiusXxl),
+                  topRight: Radius.circular(AppSizes.radiusXxl),
                 ),
                 color: colorScheme.surface,
               ),
@@ -110,7 +104,7 @@ class _BasicdetailsState extends State<Basicdetails> {
                     //text form field
                     Column(
                       children: [
-                        SizedBox(height: 13.h),
+                        SizedBox(height: 10.h),
                         CustomTextField(
                           hintText: "Name",
                           controller: userName,
@@ -131,11 +125,8 @@ class _BasicdetailsState extends State<Basicdetails> {
                           keyboardType: TextInputType.datetime,
                           prefixIcon: Icons.calendar_month,
                         ),
-                        SizedBox(height: 5.h),
-                        Text(
-                          "Select Gender",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                        SizedBox(height: 10.h),
+                        Text("Select Gender", style: textTheme.titleLarge),
                         ValueListenableBuilder<Gender?>(
                           valueListenable: selectedGender,
                           builder: (context, value, _) {
@@ -160,7 +151,7 @@ class _BasicdetailsState extends State<Basicdetails> {
                                           style:
                                               Theme.of(
                                                 context,
-                                              ).textTheme.titleSmall,
+                                              ).textTheme.titleLarge,
                                         ),
                                       ],
                                     );
@@ -184,7 +175,7 @@ class _BasicdetailsState extends State<Basicdetails> {
                           },
                           backgroundColor: colorScheme.primary,
                           text: 'Continue',
-                          textColor: AppTheme.lightBackground,
+                          textColor: colorScheme.onPrimary,
                         ),
                         SizedBox(height: 10.h),
                         Padding(

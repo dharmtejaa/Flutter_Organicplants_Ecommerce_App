@@ -4,8 +4,9 @@ import 'package:organicplants/core/services/app_sizes.dart';
 
 class AppTheme {
   // ——— Enhanced brand colors ———
-  static final Color primaryColor = Color(0xFF2E7D32); // Deeper green
-  static final Color primaryLightColor = Color(0xFF4CAF50); // Lighter green
+  //static final Color primaryColor = Color(0xFF2E7D32); // Deeper green
+  static final Color primaryColor = Color(0xFF4CAF50);
+  static final Color onPrimary = Color(0xffffffff); // Lighter green
   static const Color secondaryColor = Color(0xFFFF6F00);
   static const Color accentColor = Color(0xFF66BB6A);
 
@@ -15,9 +16,11 @@ class AppTheme {
   static const Color lightSurface = Color(0xFFF5F5F5);
 
   // ——— Enhanced Dark palette ———
-  static final Color darkBackground = Color(0xFf131213);
+  static final Color darkBackground = Color(0xF0000000);
+  static final Color onDarkBackground = Color(0xFFF5F5F5);
   static const Color darkCard = Color(0xFF1E1E1E);
-  static const Color darkSurface = Color(0xFF2C2C2C);
+  static const Color surface = Color(0xFF1c1c1c);
+  static const Color onSurface = Color(0xFFe0e0e0);
 
   // ——— Accents ———
   static final Color offerColor = Color(0xFFE53935);
@@ -38,8 +41,8 @@ class AppTheme {
 
     // Enhanced ColorScheme
     colorScheme: ColorScheme.light(
-      primary: primaryLightColor,
-      primaryContainer: primaryLightColor.withValues(alpha: 0.1),
+      primary: primaryColor,
+      primaryContainer: primaryColor.withValues(alpha: 0.1),
       secondary: secondaryColor,
       secondaryContainer: secondaryColor.withValues(alpha: 0.1),
       surface: lightSurface,
@@ -82,7 +85,7 @@ class AppTheme {
       displayLarge: TextStyle(
         fontSize: 38.sp,
         fontWeight: FontWeight.w600,
-        color: primaryLightColor, // Color(0xFF1A1A1A),
+        color: primaryColor, // Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
       displayMedium: TextStyle(
@@ -100,7 +103,7 @@ class AppTheme {
       headlineLarge: TextStyle(
         fontSize: 22.sp,
         fontWeight: FontWeight.w600,
-        color: primaryLightColor, //Color(0xFF1A1A1A),
+        color: primaryColor, //Color(0xFF1A1A1A),
         fontFamily: 'Poppins',
       ),
       headlineMedium: TextStyle(
@@ -176,7 +179,7 @@ class AppTheme {
     // Enhanced Elevated Button Theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryLightColor,
+        backgroundColor: primaryColor,
         foregroundColor: Colors.white,
         //elevation: 2,
         //shadowColor: primaryColor.withValues(alpha: 0.3),
@@ -247,20 +250,20 @@ class AppTheme {
 
     // Enhanced ColorScheme
     colorScheme: ColorScheme.dark(
-      primary: primaryLightColor,
-      primaryContainer: primaryLightColor.withValues(alpha: 0.2),
+      primary: primaryColor,
+      onPrimary: onPrimary,
+      primaryContainer: primaryColor.withValues(alpha: 0.2),
       secondary: secondaryColor,
       secondaryContainer: secondaryColor.withValues(alpha: 0.2),
-      surface: darkSurface,
+      surface: surface,
+      onSurface: onSurface,
       surfaceContainerHighest: Color(0xFF1E1E1E),
-      onPrimary: Color(0xFf131213),
       onSecondary: Colors.white70,
-      onSurface: Colors.white60,
       onSurfaceVariant: Colors.white70,
       error: Color(0xFFEF5350),
       onError: Colors.black,
-      outline: Color(0xFF424242),
-      outlineVariant: darkSurface,
+      outline: Color(0xff6a6a6a),
+      outlineVariant: surface,
     ),
 
     // Enhanced AppBar Theme
@@ -272,7 +275,7 @@ class AppTheme {
       titleTextStyle: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w700,
-        color: primaryLightColor,
+        color: primaryColor,
         fontFamily: 'Poppins',
       ),
       iconTheme: IconThemeData(color: Colors.white, size: 24),
@@ -291,25 +294,25 @@ class AppTheme {
       displayLarge: TextStyle(
         fontSize: 32.sp,
         fontWeight: FontWeight.w600,
-        color: primaryLightColor,
+        color: primaryColor,
         fontFamily: 'Poppins',
       ),
       displayMedium: TextStyle(
-        fontSize: 26.sp,
+        fontSize: 25.sp,
         fontWeight: FontWeight.w500,
-        color: Colors.white70,
+        color: AppTheme.onSurface,
         fontFamily: 'Poppins',
       ),
       displaySmall: TextStyle(
         fontSize: AppSizes.fontXxl,
-        fontWeight: FontWeight.w500,
-        color: primaryLightColor,
+        fontWeight: FontWeight.w600,
+        color: primaryColor,
         fontFamily: 'Poppins',
       ),
       headlineLarge: TextStyle(
         fontSize: 22.sp,
         fontWeight: FontWeight.w600,
-        color: AppTheme.primaryLightColor,
+        color: AppTheme.primaryColor,
         fontFamily: 'Poppins',
       ),
       headlineMedium: TextStyle(
@@ -325,58 +328,61 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       titleLarge: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        color: Colors.white,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
       titleMedium: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: Colors.white,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
       titleSmall: TextStyle(
-        fontSize: 12,
+        fontSize: 12.sp,
         fontWeight: FontWeight.w500,
-        color: Colors.white70,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
+      //used in search feild
       bodyLarge: TextStyle(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w400,
-        color: Colors.white,
+        color: onDarkBackground,
         fontFamily: 'Poppins',
       ),
       bodyMedium: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.w400,
-        color: Colors.white,
+        color: onDarkBackground, //Colors.white,
         fontFamily: 'Poppins',
       ),
       bodySmall: TextStyle(
-        fontSize: 12,
+        fontSize: 12.sp,
         fontWeight: FontWeight.w400,
-        color: Colors.white70,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
+      //onPrimary content for pirmary content
       labelLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: Colors.white, //Color(0xFF666666),
+        color: onPrimary,
         fontFamily: 'Poppins',
         letterSpacing: 0.5,
       ),
       labelMedium: TextStyle(
-        fontSize: 12,
+        fontSize: 12.sp,
         fontWeight: FontWeight.w500,
-        color: Colors.white70,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
+      //used for very small labels like term and policy
       labelSmall: TextStyle(
-        fontSize: 10,
+        fontSize: 10.sp,
         fontWeight: FontWeight.w500,
-        color: Colors.white70,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
     ),
@@ -384,10 +390,10 @@ class AppTheme {
     // Enhanced Elevated Button Theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryLightColor,
+        backgroundColor: primaryColor,
         foregroundColor: Colors.black,
         elevation: 4,
-        shadowColor: primaryLightColor.withValues(alpha: 0.4),
+        shadowColor: primaryColor.withValues(alpha: 0.4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
@@ -401,8 +407,8 @@ class AppTheme {
     // Enhanced Outlined Button Theme
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: primaryLightColor,
-        side: BorderSide(color: primaryLightColor, width: 1.5),
+        foregroundColor: primaryColor,
+        side: BorderSide(color: primaryColor, width: 1.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
@@ -427,7 +433,7 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: primaryLightColor, width: 2),
+        borderSide: BorderSide(color: primaryColor, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),

@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/auth/presentation/screens/basicdetails.dart';
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/auth/presentation/widgets/terms_and_policy_text.dart';
@@ -103,7 +104,7 @@ class _OTPscreenState extends State<OTPscreen> {
     final defaultPinTheme = PinTheme(
       width: 50.w,
       height: 70.h,
-      textStyle: textTheme.bodyLarge,
+      textStyle: textTheme.headlineLarge,
     );
 
     final cursor = Column(
@@ -127,7 +128,7 @@ class _OTPscreenState extends State<OTPscreen> {
           width: 60.w,
           height: 4.h,
           decoration: BoxDecoration(
-            color: colorScheme.onSecondary,
+            color: colorScheme.onSurface,
             borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           ),
         ),
@@ -146,7 +147,7 @@ class _OTPscreenState extends State<OTPscreen> {
                   MaterialPageRoute(builder: (context) => const Loginscreen()),
                 ),
           ),
-          SizedBox(width: 13.w),
+          //SizedBox(width: 10.w),
         ],
         // leading: Padding(
         //   padding: const EdgeInsets.only(left: 10.0),
@@ -170,7 +171,7 @@ class _OTPscreenState extends State<OTPscreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingMd),
+              padding: AppSizes.paddingSymmetricMd,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -178,11 +179,11 @@ class _OTPscreenState extends State<OTPscreen> {
                   RichText(
                     text: TextSpan(
                       text: "OTP ",
-                      style: textTheme.headlineMedium,
+                      style: textTheme.displayLarge,
                       children: [
                         TextSpan(
                           text: "Verification",
-                          style: textTheme.titleLarge,
+                          style: textTheme.displayMedium,
                         ),
                       ],
                     ),
@@ -191,7 +192,7 @@ class _OTPscreenState extends State<OTPscreen> {
                   RichText(
                     text: TextSpan(
                       text:
-                          "Please enter the verification code we've sent you on\n\n+91-${widget.text} ",
+                          "Please enter the verification code we've sent you on\n+91-${widget.text} ",
                       style: textTheme.bodyMedium,
                       children: [
                         TextSpan(
@@ -206,7 +207,9 @@ class _OTPscreenState extends State<OTPscreen> {
                                   );
                                 },
                           text: "Edit",
-                          style: textTheme.bodyLarge,
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: colorScheme.primary,
+                          ),
                         ),
                       ],
                     ),
@@ -221,8 +224,8 @@ class _OTPscreenState extends State<OTPscreen> {
                 decoration: BoxDecoration(
                   color: colorScheme.surface,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(AppSizes.radiusLg),
-                    topRight: Radius.circular(AppSizes.radiusLg),
+                    topLeft: Radius.circular(AppSizes.radiusXxl),
+                    topRight: Radius.circular(AppSizes.radiusXxl),
                   ),
                 ),
                 child: Column(
@@ -247,7 +250,16 @@ class _OTPscreenState extends State<OTPscreen> {
                               defaultPinTheme: defaultPinTheme,
                               showCursor: true,
                               cursor: cursor,
-                              submittedPinTheme: defaultPinTheme,
+                              submittedPinTheme: defaultPinTheme.copyWith(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: colorScheme.primary,
+                                      width: 3,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               preFilledWidget: preFilledWidget,
                               hapticFeedbackType:
                                   HapticFeedbackType.mediumImpact,
@@ -277,7 +289,12 @@ class _OTPscreenState extends State<OTPscreen> {
                                   _isResendEnabled
                                       ? "Resend Code"
                                       : "Resend Code in $value s",
-                                  style: textTheme.bodyMedium,
+                                  style:
+                                      _isResendEnabled
+                                          ? textTheme.bodyMedium?.copyWith(
+                                            color: colorScheme.primary,
+                                          )
+                                          : textTheme.bodyMedium,
                                 ),
                               );
                             },

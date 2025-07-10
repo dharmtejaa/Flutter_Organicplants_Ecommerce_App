@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_theme.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -84,9 +85,9 @@ class CustomTextField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: textTheme.bodyLarge?.copyWith(
-                color: Color(0xFF666666),
+                color: colorScheme.onSurface,
               ),
-              contentPadding: EdgeInsets.all(AppSizes.paddingSm),
+              contentPadding: EdgeInsets.all(AppSizes.paddingMd),
               prefixIcon:
                   prefixIcon != null
                       ? Icon(prefixIcon, size: AppSizes.iconSm)
@@ -101,20 +102,20 @@ class CustomTextField extends StatelessWidget {
                       )
                       : null,
               filled: true,
-              fillColor: colorScheme.onPrimary,
-              suffixIconColor: colorScheme.onSecondary,
-              prefixIconColor: colorScheme.onSecondary,
+              fillColor: AppTheme.darkBackground,
+              suffixIconColor: colorScheme.onSurface,
+              prefixIconColor: colorScheme.onSurface,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
                 ),
-                borderSide: BorderSide(color: colorScheme.outline),
+                borderSide: BorderSide(color: colorScheme.surface),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(AppSizes.radiusLg),
                 ),
-                borderSide: BorderSide(color: colorScheme.outline),
+                borderSide: BorderSide(color: colorScheme.surface),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(

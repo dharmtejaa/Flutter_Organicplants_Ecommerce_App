@@ -12,19 +12,19 @@ class RichTextLine extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: "By continuing, you agree to Organic Plants ",
-        style: textTheme.labelSmall,
+        style: textTheme.labelMedium,
         children: [
           TextSpan(
             text: "Terms of Service ",
-            style: textTheme.labelSmall?.copyWith(
-              color: AppTheme.primaryLightColor,
+            style: textTheme.labelMedium?.copyWith(
+              color: AppTheme.primaryColor,
             ),
           ),
-          TextSpan(text: "and ", style: textTheme.labelSmall),
+          TextSpan(text: "and ", style: textTheme.labelMedium),
           TextSpan(
             text: "Privacy Policy ",
-            style: textTheme.labelSmall?.copyWith(
-              color: AppTheme.primaryLightColor,
+            style: textTheme.labelMedium?.copyWith(
+              color: AppTheme.primaryColor,
             ),
           ),
         ],

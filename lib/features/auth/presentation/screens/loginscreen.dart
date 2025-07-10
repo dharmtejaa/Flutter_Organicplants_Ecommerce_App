@@ -89,7 +89,7 @@ class _LoginscreenState extends State<Loginscreen> {
             Padding(
               padding: EdgeInsets.only(right: AppSizes.paddingSm),
               child: SkipButton(
-                textColor: AppTheme.primaryLightColor,
+                textColor: AppTheme.primaryColor,
                 onPressed:
                     () => Navigator.push(
                       context,
@@ -141,7 +141,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     topLeft: Radius.circular(AppSizes.radiusXxl),
                     topRight: Radius.circular(AppSizes.radiusXxl),
                   ),
-                  color: colorScheme.surfaceContainerHighest,
+                  color: colorScheme.surface,
                 ),
                 child: Form(
                   key: formKey,
@@ -151,7 +151,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 10.h),
                           CustomTextField(
                             hintText: 'Number',
                             controller: number,
@@ -160,7 +160,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           ),
                           SizedBox(height: 10.h),
                           Text(
-                            " You'll receive an OTP on the number above.",
+                            "  You'll receive an OTP on the number above.",
                             style: textTheme.labelMedium,
                           ),
                         ],

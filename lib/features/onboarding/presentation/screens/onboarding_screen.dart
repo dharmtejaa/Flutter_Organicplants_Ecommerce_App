@@ -43,7 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       totalPages -
                           1 // Use totalPages here for clarity
                   ? SkipButton(
-                    textColor: AppTheme.primaryLightColor,
+                    textColor: AppTheme.primaryColor,
                     onPressed:
                         () => provider.skipToEnd(_controller, totalPages),
                   )

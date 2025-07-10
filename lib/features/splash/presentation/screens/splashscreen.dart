@@ -5,8 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_services.dart';
-import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
-import 'package:organicplants/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -38,13 +37,13 @@ class _SplashscreenState extends State<Splashscreen> {
       airPurifyingPlants = getPlantsByTag('Air_Purifying');
       sunLovingPlants = getPlantsByTag('Sun_Loving');
 
-      await Future.delayed(const Duration(seconds: 2000));
+      await Future.delayed(const Duration(seconds: 2));
 
       if (!mounted) return;
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+        MaterialPageRoute(builder: (_) => const EntryScreen()),
       );
     } catch (e) {
       debugPrint('Error loading data in Splashscreen: $e');
@@ -71,13 +70,13 @@ class _SplashscreenState extends State<Splashscreen> {
                     width: AppSizes.splashLogoWidth,
                     repeat: false,
                   ),
-                  SizedBox(height: 50.h),
+                  SizedBox(height: 20.h),
                   Text(
-                    'O R G A N I C\nP L A N T S',
+                    'ORGANIC\nPLANTS',
                     textAlign: TextAlign.center,
-                    style: textTheme.displaySmall,
+                    style: textTheme.displaySmall?.copyWith(letterSpacing: 5),
                   ),
-                  SizedBox(height: 120.h),
+                  SizedBox(height: 150.h),
                 ],
               ),
             ),
