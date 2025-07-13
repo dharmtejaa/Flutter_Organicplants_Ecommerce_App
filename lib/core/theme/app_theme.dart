@@ -7,6 +7,11 @@ class AppTheme {
   //static final Color primaryColor = Color(0xFF2E7D32); // Deeper green
   static final Color primaryColor = Color(0xFF4CAF50);
   static final Color onPrimary = Color(0xffffffff); // Lighter green
+
+  // ignore: deprecated_member_use
+  static final Color primaryContainer = primaryColor.withOpacity(0.1);
+  static final Color onPrimaryContianer = Color(0xFFDCDCDC);
+
   static const Color secondaryColor = Color(0xFFFF6F00);
   static const Color accentColor = Color(0xFF66BB6A);
 
@@ -17,10 +22,15 @@ class AppTheme {
 
   // ——— Enhanced Dark palette ———
   static final Color darkBackground = Color(0xF0000000);
-  static final Color onDarkBackground = Color(0xFFF5F5F5);
+  static final Color onDarkBackground = Color(0xFFDCDCDC);
+
   static const Color darkCard = Color(0xFF1E1E1E);
-  static const Color surface = Color(0xFF1c1c1c);
-  static const Color onSurface = Color(0xFFe0e0e0);
+
+  static const Color surface = Color(0xFF1a1a1a);
+  static const Color onSurface = Color(0xFFDCDCDC);
+
+  static const Color inverseSurface = Color(0xff1e1e1e);
+  static const Color onInverseSurface = Color(0xffDCDCDC);
 
   // ——— Accents ———
   static final Color offerColor = Color(0xFFE53935);
@@ -252,12 +262,15 @@ class AppTheme {
     colorScheme: ColorScheme.dark(
       primary: primaryColor,
       onPrimary: onPrimary,
-      primaryContainer: primaryColor.withValues(alpha: 0.2),
+      primaryContainer: primaryContainer,
       secondary: secondaryColor,
       secondaryContainer: secondaryColor.withValues(alpha: 0.2),
       surface: surface,
       onSurface: onSurface,
-      surfaceContainerHighest: Color(0xFF1E1E1E),
+      inverseSurface: inverseSurface,
+      onInverseSurface: onSurface,
+
+      //onSurfaceContainer: Color(0xFF1E1E1E),
       onSecondary: Colors.white70,
       onSurfaceVariant: Colors.white70,
       error: Color(0xFFEF5350),
@@ -298,38 +311,38 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
       displayMedium: TextStyle(
-        fontSize: 25.sp,
+        fontSize: 26.sp,
         fontWeight: FontWeight.w500,
-        color: AppTheme.onSurface,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
       displaySmall: TextStyle(
-        fontSize: AppSizes.fontXxl,
-        fontWeight: FontWeight.w600,
-        color: primaryColor,
+        fontSize: 24.sp,
+        fontWeight: FontWeight.w400,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
       headlineLarge: TextStyle(
         fontSize: 22.sp,
         fontWeight: FontWeight.w600,
-        color: AppTheme.primaryColor,
+        color: primaryColor,
         fontFamily: 'Poppins',
       ),
       headlineMedium: TextStyle(
         fontSize: 20.sp,
-        fontWeight: FontWeight.w600,
-        color: Colors.white,
+        fontWeight: FontWeight.w500,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
       headlineSmall: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Colors.white,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w400,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
       titleLarge: TextStyle(
         fontSize: 16.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: onSurface,
         fontFamily: 'Poppins',
       ),
@@ -341,20 +354,20 @@ class AppTheme {
       ),
       titleSmall: TextStyle(
         fontSize: 12.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
         color: onSurface,
         fontFamily: 'Poppins',
       ),
       //used in search feild
       bodyLarge: TextStyle(
         fontSize: 16.sp,
-        fontWeight: FontWeight.w400,
-        color: onDarkBackground,
+        fontWeight: FontWeight.w600,
+        color: onSurface,
         fontFamily: 'Poppins',
       ),
       bodyMedium: TextStyle(
         fontSize: 14.sp,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: onDarkBackground, //Colors.white,
         fontFamily: 'Poppins',
       ),
@@ -370,6 +383,7 @@ class AppTheme {
         fontWeight: FontWeight.w600,
         color: onPrimary,
         fontFamily: 'Poppins',
+        overflow: TextOverflow.ellipsis,
         letterSpacing: 0.5,
       ),
       labelMedium: TextStyle(
@@ -381,7 +395,7 @@ class AppTheme {
       //used for very small labels like term and policy
       labelSmall: TextStyle(
         fontSize: 10.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
         color: onSurface,
         fontFamily: 'Poppins',
       ),

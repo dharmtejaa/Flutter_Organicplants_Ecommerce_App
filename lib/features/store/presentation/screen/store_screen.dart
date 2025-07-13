@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
+import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
-import 'package:organicplants/shared/widgets/plantcategory.dart';
-import 'package:organicplants/features/search/presentation/screens/search_screen.dart';
-import 'dart:ui'; // Added for ImageFilter
+import 'package:organicplants/shared/widgets/plant_card_grid.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -18,7 +16,8 @@ class StoreScreen extends StatefulWidget {
   State<StoreScreen> createState() => _StoreScreenState();
 }
 
-class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin {
+class _StoreScreenState extends State<StoreScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -60,9 +59,10 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      // backgroundColor: colorScheme.surface,
       body: NestedScrollView(
         headerSliverBuilder:
             (context, innerBoxIsScrolled) => [
@@ -73,6 +73,7 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
                   TabBar(
                     controller: _tabController,
                     isScrollable: true,
+
                     indicator: UnderlineTabIndicator(
                       borderSide: BorderSide(
                         width: 3.5,
@@ -81,15 +82,9 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
                       insets: EdgeInsets.symmetric(horizontal: 16.w),
                     ),
                     labelColor: colorScheme.primary,
-                    unselectedLabelColor: colorScheme.onSurfaceVariant,
-                    labelStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
-                    ),
-                    unselectedLabelStyle: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15.sp,
-                    ),
+                    unselectedLabelColor: colorScheme.onSurface,
+                    labelStyle: textTheme.titleLarge,
+                    unselectedLabelStyle: textTheme.titleMedium,
                     splashFactory: InkRipple.splashFactory,
                     tabs:
                         categories.map((category) {
@@ -123,9 +118,8 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
   }
 
   PreferredSizeWidget _buildAppBar(ColorScheme colorScheme) {
+    final textTheme = Theme.of(context).textTheme;
     return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
         onPressed: () {
@@ -135,27 +129,12 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
           );
         },
       ),
-      title: Text(
-        "Plant Store",
-        style: TextStyle(
-          color: colorScheme.onSurface,
-          fontSize: 24.sp,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
+      title: Text("Plant Store", style: textTheme.headlineMedium),
       centerTitle: true,
       actions: [
-        IconButton(
-          icon: Icon(Icons.search, color: colorScheme.onSurface),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SearchScreen()),
-            );
-          },
-        ),
+        SearchButton(),
         WishlistIconWithBadge(),
-        SizedBox(width: 8.w),
+        SizedBox(width: 10.w),
         CartIconWithBadge(
           iconColor: colorScheme.onSurface,
           onPressed: () {
@@ -165,7 +144,7 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
             );
           },
         ),
-        SizedBox(width: 16.w),
+        SizedBox(width: 10.w),
       ],
     );
   }
@@ -219,7 +198,7 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
               child: Row(
                 children: [
                   _buildStatItem(
-                    'Price',
+                    'Price Range',
                     '₹${_getMinPrice(plants)} - ₹${_getMaxPrice(plants)}',
                     Icons.attach_money,
                     colorScheme,
@@ -227,7 +206,7 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
                   SizedBox(width: 14.w),
                   _buildStatItem(
                     'Avg Rating',
-                    '${_getAverageRating(plants).toStringAsFixed(1)} ⭐',
+                    '${_getAverageRating(plants).toStringAsFixed(1)} ',
                     Icons.star,
                     colorScheme,
                   ),
@@ -296,9 +275,9 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    crossAxisSpacing: 14.w,
-                                    mainAxisSpacing: 18.h,
-                                    childAspectRatio: 0.75,
+                                    crossAxisSpacing: 7,
+                                    mainAxisSpacing: 7,
+                                    childAspectRatio: 0.71,
                                   ),
                               delegate: SliverChildBuilderDelegate((
                                 context,
@@ -317,15 +296,12 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
                                             scale: scale,
                                             child: child,
                                           ),
-                                  child: _buildPlantCard(
-                                    plants[index],
-                                    colorScheme,
-                                  ),
+                                  child: ProductCardGrid(plant: plants[index]),
                                 );
                               }, childCount: plants.length),
                             ),
                           ),
-                          SliverToBoxAdapter(child: SizedBox(height: 20.h)),
+                          //SliverToBoxAdapter(child: SizedBox(height: 20.h)),
                         ],
                       ),
                     ),
@@ -345,180 +321,23 @@ class _StoreScreenState extends State<StoreScreen> with TickerProviderStateMixin
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Row(
           children: [
-            Icon(icon, size: 16.r, color: colorScheme.primary),
+            Icon(icon, size: AppSizes.iconSm, color: colorScheme.primary),
             SizedBox(width: 6.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
+                  Text(label, style: TextTheme.of(context).labelMedium),
+                  Text(value, style: TextTheme.of(context).labelMedium),
                 ],
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPlantCard(dynamic plant, ColorScheme colorScheme) {
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16.r),
-          onTap: () {
-            HapticFeedback.lightImpact();
-          },
-          child: Padding(
-            padding: EdgeInsets.all(12.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Plant Image with Rating
-                Expanded(
-                  flex: 3,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: colorScheme.surfaceContainerHighest,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12.r),
-                          child:
-                              plant.images != null && plant.images!.isNotEmpty
-                                  ? Image.network(
-                                    plant.images!.first.url ?? '',
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Image.asset(
-                                        'assets/No_Plant_Found.png',
-                                        fit: BoxFit.cover,
-                                      );
-                                    },
-                                  )
-                                  : Image.asset(
-                                    'assets/No_Plant_Found.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                        ),
-                      ),
-                      // Rating Badge
-                      Positioned(
-                        top: 4.h,
-                        right: 4.w,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 6.w,
-                            vertical: 2.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.7),
-                            borderRadius: BorderRadius.circular(8.r),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.star, size: 12.r, color: Colors.amber),
-                              SizedBox(width: 2.w),
-                              Text(
-                                '${plant.rating?.toStringAsFixed(1) ?? '0.0'}',
-                                style: TextStyle(
-                                  fontSize: 10.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 8.h),
-
-                // Plant Name
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    plant.commonName ?? 'Plant Name',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-
-                SizedBox(height: 4.h),
-
-                // Plant Price with Original Price
-                Row(
-                  children: [
-                    Text(
-                      '₹${plant.prices?.offerPrice ?? plant.prices?.originalPrice ?? '0'}',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700,
-                        color: colorScheme.primary,
-                      ),
-                    ),
-                    if (plant.prices?.originalPrice != null &&
-                        plant.prices?.offerPrice != null &&
-                        plant.prices!.originalPrice! >
-                            plant.prices!.offerPrice!) ...[
-                      SizedBox(width: 4.w),
-                      Text(
-                        '₹${plant.prices!.originalPrice}',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: colorScheme.onSurfaceVariant,
-                          decoration: TextDecoration.lineThrough,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
@@ -612,16 +431,16 @@ class _StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(18.r),
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         boxShadow: [
           BoxShadow(
             color: colorScheme.shadow.withOpacity(0.06),
-            blurRadius: 8,
-            offset: Offset(0, 2),
+            blurRadius: 3,
+            offset: Offset(0, 3),
           ),
         ],
       ),
-      margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+      margin: EdgeInsets.symmetric(horizontal: 14.w),
       child: _tabBar,
     );
   }

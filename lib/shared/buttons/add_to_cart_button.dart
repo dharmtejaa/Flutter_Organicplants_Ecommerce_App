@@ -19,12 +19,7 @@ class AddToCartButton extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = colorScheme.brightness == Brightness.dark;
 
-    return InkWell(
-      focusColor: Colors.transparent,
-      hoverColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
-
+    return GestureDetector(
       onTap: () {
         final alreadyInCart = cartProvider.items.containsKey(plant.id);
         if (!alreadyInCart) {
@@ -49,10 +44,10 @@ class AddToCartButton extends StatelessWidget {
       },
       //borderRadius: BorderRadius.circular(30),
       child: Container(
-        padding: AppSizes.paddingAllSm,
+        padding: AppSizes.paddingAllXs,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(AppSizes.radiusLg),
+            topLeft: Radius.circular(AppSizes.radiusXl),
             bottomRight: Radius.circular(AppSizes.radiusLg),
           ),
           //shape: BoxShape.circle,
@@ -61,7 +56,7 @@ class AddToCartButton extends StatelessWidget {
                   // ignore: deprecated_member_use
                   ? Colors.grey.withOpacity(0.2)
                   // ignore: deprecated_member_use
-                  : colorScheme.primary.withOpacity(0.1),
+                  : colorScheme.primaryContainer,
         ),
         child: Icon(
           Icons.shopping_cart_outlined,

@@ -10,7 +10,6 @@ import 'package:organicplants/features/entry/presentation/screen/entry_screen.da
 import 'package:organicplants/features/cart/presentation/screens/checkout_screen.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
-import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/no_result_found.dart';
 import 'package:provider/provider.dart';
 
@@ -51,10 +50,10 @@ class CartScreen extends StatelessWidget {
         builder: (context, value, child) {
           return cartItems.isEmpty
               ? Center(
-                child: NoResultFound(
+                child: NoResultsFound(
+                  imagePath: "assets/No_Plant_Found.png",
                   title: "Your cart is empty",
-                  subtitle: "Add some plants to get started!",
-                  icon: Icons.shopping_cart_outlined,
+                  message: "Add some plants to get started!",
                 ),
               )
               : Padding(

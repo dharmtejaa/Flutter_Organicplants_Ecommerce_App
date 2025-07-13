@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
 
 class SkipButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -17,19 +16,17 @@ class SkipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return TextButton(
       onPressed: onPressed,
       child: Text(
         text,
-        style: TextStyle(
+        style: textTheme.bodyLarge?.copyWith(
           color:
               colorScheme.brightness == Brightness.dark
                   ? textColor
                   : colorScheme.onSurface,
-          fontSize: AppSizes.fontLg,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.3,
         ),
       ),
     );

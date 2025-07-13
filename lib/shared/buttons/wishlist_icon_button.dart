@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/models/all_plants_model.dart';
@@ -45,13 +46,13 @@ class WishlistIconButton extends StatelessWidget {
                     ScaleTransition(scale: animation, child: child),
             child: CircleAvatar(
               key: ValueKey<bool>(isWishListed),
-              radius: 15,
+              radius: 15.r,
               backgroundColor:
                   isDark
                       // ignore: deprecated_member_use
                       ? Colors.grey.withOpacity(0.2)
                       // ignore: deprecated_member_use
-                      : colorScheme.primary.withOpacity(0.1),
+                      : colorScheme.primaryContainer,
               child: Icon(
                 isWishListed ? Icons.favorite : Icons.favorite_border,
                 size: AppSizes.iconMd,

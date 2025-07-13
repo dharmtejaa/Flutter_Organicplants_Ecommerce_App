@@ -85,7 +85,7 @@ class CustomTextField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: textTheme.bodyLarge?.copyWith(
-                color: colorScheme.onSurface,
+                color: colorScheme.onSurface.withOpacity(0.6),
               ),
               contentPadding: EdgeInsets.all(AppSizes.paddingMd),
               prefixIcon:
@@ -102,7 +102,10 @@ class CustomTextField extends StatelessWidget {
                       )
                       : null,
               filled: true,
-              fillColor: AppTheme.darkBackground,
+              fillColor:
+                  colorScheme.brightness == Brightness.dark
+                      ? AppTheme.darkBackground
+                      : AppTheme.lightCard,
               suffixIconColor: colorScheme.onSurface,
               prefixIconColor: colorScheme.onSurface,
               border: OutlineInputBorder(

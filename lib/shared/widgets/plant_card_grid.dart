@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
@@ -20,7 +22,9 @@ class ProductCardGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final isDark = colorScheme.brightness == Brightness.dark;
     final wishlistProvider = Provider.of<WishlistProvider>(
       context,
       listen: false,
@@ -65,142 +69,151 @@ class ProductCardGrid extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: AppSizes.vMarginSm),
+        //margin: EdgeInsets.only(bottom: AppSizes.vMarginXs),
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
+          color: colorScheme.inverseSurface,
           borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
           boxShadow: [
             BoxShadow(
-              color: colorScheme.shadow.withValues(alpha: 0.1),
-              spreadRadius: AppSizes.borderWidth,
-              blurRadius: AppSizes.shadowBlurRadius,
-              offset: Offset(0, AppSizes.shadowOffset),
+              color:
+                  colorScheme.brightness == Brightness.dark
+                      // ignore: deprecated_member_use
+                      ? Colors.black.withOpacity(0.1)
+                      // ignore: deprecated_member_use
+                      : Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
-        padding: AppSizes.paddingAllXs,
+        //padding: EdgeInsets.all(5),
         child: Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Product Image section
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(AppSizes.radiusSm),
-                      child: Image.network(
-                        plant.images![0].url!,
-                        width: double.infinity,
-                        height: imageHeight,
-                        fit: BoxFit.cover,
-                        errorBuilder:
-                            (_, __, ___) => Container(
-                              height: imageHeight,
-                              decoration: BoxDecoration(
-                                color: colorScheme.surfaceContainerLowest,
-                                borderRadius: BorderRadius.circular(
-                                  AppSizes.radiusSm,
+            Padding(
+              padding: EdgeInsets.all(AppSizes.paddingXs),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Product Image section
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+                        child: Image.network(
+                          plant.images![0].url!,
+                          width: double.infinity,
+                          height: imageHeight,
+                          fit: BoxFit.cover,
+                          errorBuilder:
+                              (_, __, ___) => Container(
+                                height: imageHeight,
+                                decoration: BoxDecoration(
+                                  color: colorScheme.surfaceContainerLowest,
+                                  borderRadius: BorderRadius.circular(
+                                    AppSizes.radiusSm,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.broken_image_rounded,
+                                  size: AppSizes.iconLg,
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
-                              child: Icon(
-                                Icons.broken_image_rounded,
-                                size: AppSizes.iconLg,
-                                color: colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                      ),
-                    ),
-                    // Wishlist icon
-                    Positioned(
-                      top: AppSizes.spaceXs,
-                      right: AppSizes.spaceXs,
-                      child: WishlistIconButton(
-                        plant: plant,
-                        isDark: colorScheme.brightness == Brightness.dark,
-                      ),
-                    ),
-                  ],
-                ),
-
-                // Text Info section
-                Padding(
-                  padding: AppSizes.paddingAllXs,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Tooltip(
-                        message: plant.commonName ?? 'Unknown Plant',
-                        child: Text(
-                          plant.commonName ?? 'Unknown Plant',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                      SizedBox(height: AppSizes.spaceXs),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              '₹$originalPrice',
-                              style: Theme.of(context).textTheme.bodySmall,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                      Positioned(
+                        top: 4.h,
+                        left: 4.w,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 2.h,
                           ),
-                          SizedBox(width: AppSizes.spaceSm),
-                          Flexible(
-                            child: Text(
-                              '₹$offerPrice',
-                              style: Theme.of(context).textTheme.titleMedium,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.6),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
-                        ],
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.star,
+                                size: 12.r,
+                                color: colorScheme.primary,
+                              ),
+                              SizedBox(width: 2.w),
+                              Text(
+                                plant.rating?.toStringAsFixed(1) ?? '0.0',
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(height: AppSizes.spaceXs),
-                      Text(
-                        '$discount% off',
-                        style: Theme.of(context).textTheme.bodySmall,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: AppSizes.spaceXs),
-                      // Rating
-                      Row(
-                        children: [
-                          ...List.generate(5, (index) {
-                            return Icon(
-                              index < plant.rating!.floor()
-                                  ? Icons.star_rounded
-                                  : Icons.star_outline_rounded,
-                              size: AppSizes.iconXs,
-                              color: colorScheme.primary,
-                            );
-                          }),
-                          SizedBox(width: AppSizes.spaceXs),
-                          Flexible(
-                            child: Text(
-                              plant.rating!.toStringAsFixed(1),
-                              style: Theme.of(context).textTheme.bodySmall,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
+                      // Wishlist icon
+                      Positioned(
+                        top: 4,
+                        right: 4,
+                        child: WishlistIconButton(plant: plant, isDark: isDark),
                       ),
                     ],
                   ),
-                ),
-              ],
+
+                  // Text Info section
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(left: 5.w, top: 10.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          plant.commonName ?? 'Unknown Plant',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: textTheme.titleLarge,
+                        ),
+                        SizedBox(height: AppSizes.spaceXs),
+                        Row(
+                          children: [
+                            if (originalPrice > offerPrice)
+                              Text(
+                                '₹$originalPrice',
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: AppColors.mutedText,
+                                ),
+                              ),
+                            if (originalPrice > offerPrice)
+                              SizedBox(width: 0.02.sw),
+                            Text(
+                              '₹$offerPrice',
+                              style: textTheme.bodyLarge?.copyWith(
+                                color: colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 0.002.sh),
+                        Text('$discount% off', style: textTheme.bodySmall),
+                        SizedBox(height: 0.004.sh),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             // Add to Cart Button
             Positioned(
-              bottom: -AppSizes.spaceXs,
-              right: -AppSizes.spaceXs,
+              bottom: 2, //-AppSizes.spaceXs,
+              right: 2, //-AppSizes.spaceXs,
               child: AddToCartButton(cartProvider: cartProvider, plant: plant),
             ),
           ],

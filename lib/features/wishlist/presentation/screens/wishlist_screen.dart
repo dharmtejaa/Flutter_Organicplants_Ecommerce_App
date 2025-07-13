@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/features/wishlist/presentation/widgets/product_tile.dart';
@@ -54,10 +53,10 @@ class WishlistScreen extends StatelessWidget {
         builder: (context, value, child) {
           return wishlistItems.isEmpty
               ? Center(
-                child: NoResultFound(
+                child: NoResultsFound(
                   title: "Your Wishlist is empty",
-                  subtitle: "Add some plants to get started!",
-                  icon: Icons.favorite_border_rounded,
+                  message: "Add some plants to get started!",
+                  imagePath: "assets/No_Plant_Found.png",
                 ),
               )
               : ListView.builder(

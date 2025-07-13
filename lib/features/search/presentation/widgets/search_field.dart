@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/search/logic/hint_text_provider.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -73,6 +72,7 @@ class _SearchFieldState extends State<SearchField> {
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final searchProvider = Provider.of<SearchScreenProvider>(
       context,
       listen: false,
@@ -84,6 +84,7 @@ class _SearchFieldState extends State<SearchField> {
             left: offset.dx,
             top: offset.dy + size.height + 4,
             width: size.width,
+            //height: size.height + 300.h,
             child: Material(
               color: Colors.transparent,
               child:
@@ -91,8 +92,10 @@ class _SearchFieldState extends State<SearchField> {
                       ? const SizedBox.shrink()
                       : Container(
                         decoration: BoxDecoration(
-                          color: colorScheme.surfaceContainerHighest,
-                          borderRadius: BorderRadius.circular(16.r),
+                          color: colorScheme.surface,
+                          borderRadius: BorderRadius.circular(
+                            AppSizes.radiusLg,
+                          ),
                           boxShadow: [
                             BoxShadow(
                               color: colorScheme.shadow.withOpacity(0.08),
@@ -101,7 +104,7 @@ class _SearchFieldState extends State<SearchField> {
                             ),
                           ],
                         ),
-                        constraints: BoxConstraints(maxHeight: 260.h),
+                        constraints: BoxConstraints(maxHeight: 350.h),
                         child: ListView.separated(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -114,17 +117,20 @@ class _SearchFieldState extends State<SearchField> {
                           itemBuilder: (context, idx) {
                             final plant = results[idx];
                             return InkWell(
-                              borderRadius: BorderRadius.circular(16.r),
+                              borderRadius: BorderRadius.circular(
+                                AppSizes.radiusLg,
+                              ),
                               onTap: () {
                                 HapticFeedback.lightImpact();
                                 _removeOverlay();
                                 FocusScope.of(context).unfocus();
                                 widget.searchController.text =
                                     plant.commonName ?? '';
-                                Provider.of<SearchScreenProvider>(
-                                  context,
-                                  listen: false,
-                                ).updateSearchText(plant.commonName ?? '');
+                                searchProvider.addRecentSearchHistory(
+                                  plant.commonName ?? '',
+                                );
+                                searchProvider.addRecentlyViewedPlant(plant);
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -173,10 +179,7 @@ class _SearchFieldState extends State<SearchField> {
                                     Expanded(
                                       child: Text(
                                         plant.commonName ?? '',
-                                        style:
-                                            Theme.of(
-                                              context,
-                                            ).textTheme.bodyLarge,
+                                        style: textTheme.bodyLarge,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -184,7 +187,7 @@ class _SearchFieldState extends State<SearchField> {
                                     Icon(
                                       Icons.arrow_forward_ios_rounded,
                                       color: colorScheme.primary,
-                                      size: 18.r,
+                                      size: AppSizes.iconSm,
                                     ),
                                   ],
                                 ),
@@ -205,6 +208,7 @@ class _SearchFieldState extends State<SearchField> {
 
     return Consumer<SearchScreenProvider>(
       builder: (context, searchProvider, child) {
+        final textTheme = Theme.of(context).textTheme;
         return SizedBox(
           height: 50.h,
           width: 0.9.sw,
@@ -215,7 +219,7 @@ class _SearchFieldState extends State<SearchField> {
               TextFormField(
                 controller: widget.searchController,
                 focusNode: _focusNode,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: textTheme.bodyLarge,
                 cursorColor: colorScheme.onSurface,
                 onChanged: searchProvider.updateSearchText,
                 onFieldSubmitted: (query) async {
@@ -250,7 +254,9 @@ class _SearchFieldState extends State<SearchField> {
                   }
                 },
                 decoration: InputDecoration(
-                  hintStyle: Theme.of(context).textTheme.bodyLarge,
+                  // hintStyle: textTheme.bodyLarge?.copyWith(
+                  //   color: colorScheme.onSurface.withOpacity(0.4),
+                  // ),
                   contentPadding: AppSizes.paddingAllSm,
                   prefixIcon: Icon(
                     Icons.search,
@@ -272,36 +278,24 @@ class _SearchFieldState extends State<SearchField> {
                             },
                           ),
                   filled: true,
-                  fillColor:
-                      colorScheme.brightness == Brightness.dark
-                          ? AppTheme.darkCard
-                          : AppTheme.lightCard,
+                  fillColor: colorScheme.surface,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppSizes.radiusLg * 70),
-                    borderSide: BorderSide(
-                      color:
-                          colorScheme.brightness == Brightness.dark
-                              ? colorScheme.surface
-                              : const Color(0xFFF0F0F0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(AppSizes.radiusXxl),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppSizes.radiusLg * 70),
-                    borderSide: BorderSide(
-                      color:
-                          colorScheme.brightness == Brightness.dark
-                              ? colorScheme.surface
-                              : const Color(0xFFF0F0F0),
-                    ),
+                    borderSide: BorderSide(color: colorScheme.surface),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppSizes.radiusLg * 70),
-                    borderSide: BorderSide(
-                      color:
-                          colorScheme.brightness == Brightness.dark
-                              ? colorScheme.surface
-                              : const Color(0xFFF0F0F0),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(AppSizes.radiusXxl),
                     ),
+                    borderSide: BorderSide(color: colorScheme.surface),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(AppSizes.radiusXxl),
+                    ),
+                    borderSide: BorderSide(color: colorScheme.surface),
                   ),
                 ),
               ),
@@ -310,10 +304,10 @@ class _SearchFieldState extends State<SearchField> {
               if (widget.searchController.text.isEmpty)
                 Positioned(
                   left: 52.w,
-                  top: 16.h,
+                  top: 14.h,
                   child: IgnorePointer(
                     child: SizedBox(
-                      height: 25.h,
+                      height: 24.h,
                       width: 0.65.sw,
                       child: AnimatedTextKit(
                         animatedTexts:
@@ -321,8 +315,11 @@ class _SearchFieldState extends State<SearchField> {
                                 .map(
                                   (hint) => TyperAnimatedText(
                                     hint,
-                                    textStyle:
-                                        Theme.of(context).textTheme.bodyLarge,
+                                    textStyle: textTheme.bodyLarge?.copyWith(
+                                      color: colorScheme.onSurface.withOpacity(
+                                        0.7,
+                                      ),
+                                    ),
                                     speed: const Duration(milliseconds: 100),
                                   ),
                                 )

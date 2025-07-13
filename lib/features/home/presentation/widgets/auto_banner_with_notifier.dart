@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -30,6 +28,7 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     //final height = MediaQuery.of(context).size.height;
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -38,7 +37,7 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
           carouselController: _carouselController,
           itemCount: banners.length,
           options: CarouselOptions(
-            height: 0.21.sh,
+            height: AppSizes.homeBannerHeight,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 4),
             autoPlayAnimationDuration: const Duration(seconds: 1),
@@ -80,78 +79,138 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                           colors: [
                             // ignore: deprecated_member_use
                             Colors.black.withOpacity(0.3),
-                            Colors.transparent,
+                            Colors.black.withOpacity(0.3),
                           ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.bottomRight,
                         ),
                       ),
                     ),
-                    //banner text
                     Positioned(
-                      left: 15,
                       bottom: 20,
-                      right: 15,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                      left: 10,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Text content on the left
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // Title with enhanced styling
-                                Text(
-                                  banner['title']!,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                SizedBox(height: 2.h),
-
-                                // Subtitle with compact design
-                                Text(
-                                  banner['subtitle']!,
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                              ],
-                            ),
+                          // Title with enhanced styling
+                          Text(
+                            banner['title']!,
+                            style: textTheme.labelLarge,
+                            maxLines: 1,
                           ),
+                          SizedBox(height: 2.h),
 
-                          SizedBox(width: 12.w),
+                          // Subtitle with compact design
+                          Text(
+                            banner['subtitle']!,
+                            style: textTheme.labelMedium?.copyWith(
+                              color: colorScheme.onPrimary,
 
-                          // Compact Explore Button on the right
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 6.h,
+                              fontWeight: FontWeight.w600,
                             ),
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary,
-                              borderRadius: BorderRadius.circular(
-                                AppSizes.radiusLg,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Explore',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                SizedBox(width: 4.w),
-                                Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: AppColors.background,
-                                  size: 10.sp,
-                                ),
-                              ],
-                            ),
+                           
                           ),
                         ],
                       ),
                     ),
+                    // Positioned(
+                    //   bottom: 10,
+                    //   right: 10,
+                    //   child: Container(
+                    //     padding: EdgeInsets.symmetric(
+                    //       horizontal: 10.w,
+                    //       vertical: 5.h,
+                    //     ),
+                    //     decoration: BoxDecoration(
+                    //       color: colorScheme.primary,
+                    //       borderRadius: BorderRadius.circular(
+                    //         AppSizes.radiusMd,
+                    //       ),
+                    //     ),
+                    //     child: Row(
+                    //       mainAxisSize: MainAxisSize.min,
+                    //       children: [
+                    //         Text(
+                    //           'Explore',
+                    //           style: textTheme.labelMedium?.copyWith(
+                    //             color: colorScheme.onPrimary,
+                    //           ),
+                    //         ),
+                    //         SizedBox(width: 2.w),
+                    //         Icon(
+                    //           Icons.arrow_forward_ios_rounded,
+                    //           color: colorScheme.onPrimary,
+                    //           size: AppSizes.iconsUxs,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    //banner text
+                    // Positioned(
+                    //   left: 14,
+                    //   bottom: 14,
+                    //   right: 14,
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       // Text content on the left
+                    //       Expanded(
+                    //         child: Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           mainAxisSize: MainAxisSize.min,
+                    //           children: [
+                    //             // Title with enhanced styling
+                    //             Text(
+                    //               banner['title']!,
+                    //               style: textTheme.labelLarge,
+                    //               maxLines: 1,
+                    //             ),
+                    //             SizedBox(height: 2.h),
+
+                    //             // Subtitle with compact design
+                    //             Text(
+                    //               banner['subtitle']!,
+                    //               style: textTheme.labelMedium?.copyWith(
+                    //                 color: colorScheme.onPrimary,
+                    //                 fontWeight: FontWeight.w600,
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+
+                    //       SizedBox(width: 14.w),
+
+                    //       // Compact Explore Button on the right
+                    //       Container(
+                    //         padding: EdgeInsets.symmetric(
+                    //           horizontal: 8.w,
+                    //           vertical: 4.h,
+                    //         ),
+                    //         decoration: BoxDecoration(
+                    //           color: colorScheme.primary,
+                    //           borderRadius: BorderRadius.circular(
+                    //             AppSizes.radiusLg,
+                    //           ),
+                    //         ),
+                    //         child: Row(
+                    //           mainAxisSize: MainAxisSize.min,
+                    //           children: [
+                    //             Text('Explore', style: textTheme.labelLarge),
+                    //             SizedBox(width: 2.w),
+                    //             Icon(
+                    //               Icons.arrow_forward_ios_rounded,
+                    //               color: colorScheme.onPrimary,
+                    //               size: AppSizes.iconsUxs,
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -159,7 +218,7 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
           },
         ),
         Positioned(
-          bottom: 6,
+          bottom: 5,
           child: ValueListenableBuilder<int>(
             valueListenable: _currentIndex,
             builder:
@@ -168,14 +227,14 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                   activeIndex: _currentIndex.value,
                   count: banners.length,
                   effect: ExpandingDotsEffect(
-                    dotHeight: AppSizes.fontUxs,
-                    dotWidth: AppSizes.fontUxs,
+                    dotHeight: 8.sp,
+                    dotWidth: 8.sp,
                     expansionFactor: 3,
                     // ignore: deprecated_member_use
-                    dotColor: AppColors.cardBackground.withOpacity(0.7),
+                    dotColor: colorScheme.onSurface,
                     // ignore: deprecated_member_use
-                    activeDotColor: const Color(0xFFF0F0F0),
-                    spacing: 12,
+                    activeDotColor: colorScheme.onPrimary,
+                    spacing: 10,
                   ),
                   onDotClicked: (index) {
                     _carouselController.animateToPage(index);

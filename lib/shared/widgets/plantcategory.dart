@@ -7,9 +7,6 @@ import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 import 'package:organicplants/shared/widgets/plant_card_grid.dart';
-import 'dart:ui';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PlantCategory extends StatefulWidget {
   final List<AllPlantsModel> plant;
@@ -41,6 +38,7 @@ class _PlantCategoryState extends State<PlantCategory> {
 
   void _showFilterBottomSheet() {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     RangeValues tempPriceRange = _priceRange.value;
     bool tempInStock = _inStock.value;
     bool tempPetFriendly = _petFriendly.value;
@@ -48,7 +46,7 @@ class _PlantCategoryState extends State<PlantCategory> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: colorScheme.surface,
       barrierColor: colorScheme.shadow.withOpacity(0.15),
       builder: (context) {
         return AnimatedPadding(
@@ -57,15 +55,15 @@ class _PlantCategoryState extends State<PlantCategory> {
           padding: MediaQuery.of(context).viewInsets,
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  colorScheme.surface,
-                  colorScheme.surfaceContainerHighest,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+              // gradient: LinearGradient(
+              //   colors: [
+              //     colorScheme.surface,
+              //     colorScheme.surfaceContainerHighest,
+              //   ],
+              //   begin: Alignment.topCenter,
+              //   end: Alignment.bottomCenter,
+              // ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
               boxShadow: [
                 BoxShadow(
                   color: colorScheme.shadow.withOpacity(0.18),
@@ -75,7 +73,7 @@ class _PlantCategoryState extends State<PlantCategory> {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              padding: AppSizes.paddingSymmetricMd,
               child: StatefulBuilder(
                 builder: (context, setModalState) {
                   return SingleChildScrollView(
@@ -97,39 +95,30 @@ class _PlantCategoryState extends State<PlantCategory> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Filter & Sort',
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
+                            Text('Filter & Sort', style: textTheme.titleLarge),
                             IconButton(
-                              icon: Icon(Icons.close, size: 28),
+                              icon: Icon(Icons.close, size: AppSizes.iconMd),
                               onPressed: () => Navigator.pop(context),
                             ),
                           ],
                         ),
-                        SizedBox(height: 18),
+                        SizedBox(height: 16.h),
                         // Sort Dropdown
-                        Text(
-                          'Sort by',
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: 2),
+                        Text('Sort by', style: textTheme.labelLarge),
+                        SizedBox(height: 2.h),
                         Text(
                           'Choose how you want to sort the plants.',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurface.withOpacity(0.7),
-                          ),
+                          style: textTheme.labelMedium,
                         ),
                         SizedBox(height: 8),
                         Card(
                           elevation: 0,
-                          color: colorScheme.surfaceContainerHighest,
+
+                          color: colorScheme.inverseSurface,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(
+                              AppSizes.radiusLg,
+                            ),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -139,7 +128,7 @@ class _PlantCategoryState extends State<PlantCategory> {
                             child: Row(
                               children: [
                                 Icon(Icons.sort, color: colorScheme.primary),
-                                SizedBox(width: 12),
+                                SizedBox(width: 12.w),
                                 Expanded(
                                   child: DropdownButton<String>(
                                     value: tempSort,
@@ -162,33 +151,26 @@ class _PlantCategoryState extends State<PlantCategory> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 22),
-                        // Price Range
-                        Text(
-                          'Price Range',
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w600),
-                        ),
+                        SizedBox(height: 16.h),
+                        Text('Price Range', style: textTheme.labelLarge),
                         SizedBox(height: 2),
                         Text(
                           'Filter plants by your preferred price range.',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurface.withOpacity(0.7),
-                          ),
+                          style: textTheme.labelMedium,
                         ),
                         SizedBox(height: 8),
                         Card(
                           elevation: 0,
-                          color: colorScheme.surfaceContainerHighest,
+                          color: colorScheme.inverseSurface,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(
+                              AppSizes.radiusLg,
+                            ),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 12,
+                              horizontal: 12,
+                              vertical: 8,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,16 +178,14 @@ class _PlantCategoryState extends State<PlantCategory> {
                                 Row(
                                   children: [
                                     Icon(
-                                      Icons.attach_money,
+                                      Icons.currency_rupee,
                                       color: colorScheme.primary,
+                                      size: AppSizes.iconMd,
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 10.w),
                                     Text(
                                       '₹${tempPriceRange.start.toInt()} - ₹${tempPriceRange.end.toInt()}',
-                                      style:
-                                          Theme.of(
-                                            context,
-                                          ).textTheme.bodyMedium,
+                                      style: textTheme.bodyMedium,
                                     ),
                                   ],
                                 ),
@@ -223,114 +203,85 @@ class _PlantCategoryState extends State<PlantCategory> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 22),
+                        SizedBox(height: 16.h),
                         // In Stock & Pet Friendly
-                        Text(
-                          'Other Filters',
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w600),
-                        ),
+                        Text('Other Filters', style: textTheme.labelLarge),
                         SizedBox(height: 2),
                         Text(
                           'Narrow down your search with these options.',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurface.withOpacity(0.7),
-                          ),
+                          style: textTheme.labelMedium,
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 8.h),
                         Row(
                           children: [
-                            Expanded(
-                              child: Card(
-                                elevation: 0,
-                                color: colorScheme.surfaceContainerHighest,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.inventory_2_rounded,
+                                      color: colorScheme.primary,
+                                      size: AppSizes.iconMd,
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Text('In Stock'),
+                                  ],
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 14,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.inventory_2_rounded,
-                                            color: colorScheme.primary,
-                                          ),
-                                          SizedBox(width: 8),
-                                          Text('In Stock'),
-                                        ],
-                                      ),
-                                      Switch(
-                                        value: tempInStock,
-                                        onChanged:
-                                            (v) => setModalState(
-                                              () => tempInStock = v,
-                                            ),
-                                      ),
-                                    ],
+                                Transform.scale(
+                                  scale: 0.7,
+                                  child: Switch(
+                                    value: tempInStock,
+                                    onChanged:
+                                        (v) => setModalState(
+                                          () => tempInStock = v,
+                                        ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                            SizedBox(width: 14),
-                            Expanded(
-                              child: Card(
-                                elevation: 0,
-                                color: colorScheme.surfaceContainerHighest,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
+                            SizedBox(width: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.pets,
+                                      color: colorScheme.primary,
+                                      size: AppSizes.iconMd,
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Text('Pet Friendly'),
+                                  ],
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 14,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.pets,
-                                            color: colorScheme.primary,
-                                          ),
-                                          SizedBox(width: 8),
-                                          Text('Pet Friendly'),
-                                        ],
-                                      ),
-                                      Switch(
-                                        value: tempPetFriendly,
-                                        onChanged:
-                                            (v) => setModalState(
-                                              () => tempPetFriendly = v,
-                                            ),
-                                      ),
-                                    ],
+                                Transform.scale(
+                                  scale: 0.7,
+                                  child: Switch(
+                                    value: tempPetFriendly,
+                                    onChanged:
+                                        (v) => setModalState(
+                                          () => tempPetFriendly = v,
+                                        ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
-                        SizedBox(height: 32),
+                        SizedBox(height: 28.h),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Expanded(
                               child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
+                                    borderRadius: BorderRadius.circular(
+                                      AppSizes.radiusMd,
+                                    ),
                                   ),
-                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  padding: EdgeInsets.symmetric(vertical: 12.h),
                                 ),
                                 onPressed: () {
                                   setModalState(() {
@@ -343,17 +294,19 @@ class _PlantCategoryState extends State<PlantCategory> {
                                 child: Text('Clear'),
                               ),
                             ),
-                            SizedBox(width: 16),
+                            SizedBox(width: 16.w),
                             Expanded(
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: colorScheme.primary,
-                                  foregroundColor: colorScheme.onPrimary,
+                                  //backgroundColor: colorScheme.primary,
+                                  //foregroundColor: colorScheme.onPrimary,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
+                                    borderRadius: BorderRadius.circular(
+                                      AppSizes.radiusMd,
+                                    ),
                                   ),
-                                  padding: EdgeInsets.symmetric(vertical: 18),
-                                  elevation: 2,
+                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                  elevation: 0,
                                 ),
                                 onPressed: () {
                                   _selectedSortOption.value = tempSort;
@@ -364,12 +317,7 @@ class _PlantCategoryState extends State<PlantCategory> {
                                 },
                                 child: Text(
                                   'Apply',
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.titleMedium?.copyWith(
-                                    color: colorScheme.onPrimary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: textTheme.labelLarge,
                                 ),
                               ),
                             ),
@@ -453,6 +401,7 @@ class _PlantCategoryState extends State<PlantCategory> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     var totalPlantsCount = _filteredPlants.length;
     final List<String> mainCategories = [
       'Indoor Plants',
@@ -466,8 +415,6 @@ class _PlantCategoryState extends State<PlantCategory> {
     final bool isMainCategory = mainCategories.contains(widget.category);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           iconSize: AppSizes.iconMd,
@@ -476,11 +423,9 @@ class _PlantCategoryState extends State<PlantCategory> {
           },
           color: colorScheme.onSurface,
         ),
-        title: Text(
-          widget.category,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        title: Text(widget.category, style: textTheme.headlineSmall),
         centerTitle: true,
+
         actions: [
           SearchButton(),
           WishlistIconWithBadge(),
@@ -515,8 +460,8 @@ class _PlantCategoryState extends State<PlantCategory> {
                         vertical: 10.h,
                       ),
                       decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(16.r),
+                        color: colorScheme.surface,
+                        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                         boxShadow: [
                           BoxShadow(
                             color: colorScheme.shadow.withOpacity(0.04),
@@ -536,7 +481,7 @@ class _PlantCategoryState extends State<PlantCategory> {
                           SizedBox(width: 8.w),
                           Text(
                             '$totalPlantsCount plants found',
-                            style: Theme.of(context).textTheme.titleSmall,
+                            style: textTheme.titleMedium,
                           ),
                         ],
                       ),
@@ -544,7 +489,8 @@ class _PlantCategoryState extends State<PlantCategory> {
                   ),
                   SizedBox(width: 10.w),
                   Material(
-                    color: colorScheme.primary.withOpacity(0.10),
+                    color: colorScheme.surface,
+
                     shape: CircleBorder(),
                     elevation: 2,
                     child: IconButton(
@@ -574,24 +520,25 @@ class _PlantCategoryState extends State<PlantCategory> {
                               SizedBox(height: 18.h),
                               Text(
                                 'No plants found',
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: textTheme.bodyMedium,
                               ),
                               SizedBox(height: 8.h),
                               Text(
                                 'Try adjusting your filters or search.',
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: textTheme.bodySmall,
                               ),
                             ],
                           ),
                         )
                         : GridView.builder(
                           itemCount: _filteredPlants.length,
+                          //physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                                childAspectRatio: 0.72,
+                                crossAxisSpacing: 7,
+                                mainAxisSpacing: 7,
+                                childAspectRatio: 0.735,
                               ),
                           itemBuilder: (context, index) {
                             return ProductCardGrid(

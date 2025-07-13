@@ -70,6 +70,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     } else if (widget.cartItems != null) {
       cartItems =
           widget.cartItems!
+              // ignore: unnecessary_null_comparison
               .where((item) => item != null)
               .map(
                 (item) => {
@@ -153,6 +154,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         itemCount: cartItems.length,
         separatorBuilder:
             (_, __) =>
+                // ignore: deprecated_member_use
                 Divider(height: 1, color: colorScheme.outline.withOpacity(0.2)),
         itemBuilder: (context, index) {
           final item = cartItems[index];

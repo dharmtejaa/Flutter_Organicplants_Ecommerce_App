@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 
 class EmptyMessage extends StatelessWidget {
   final String message;
@@ -9,11 +7,7 @@ class EmptyMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      message,
-      style: Theme.of(context).textTheme.bodySmall,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-    );
+    final textTheme = Theme.of(context).textTheme;
+    return Text(message, style: textTheme.bodyMedium);
   }
 }

@@ -14,7 +14,7 @@ class EntryScreen extends StatefulWidget {
 
   static final List<Widget> _screens = [
     const HomeScreen(),
-    const StoreScreen(),  
+    const StoreScreen(),
     const SearchScreen(),
     const ProfileScreen(),
     const CartScreen(),
@@ -28,6 +28,7 @@ class _HomeScreenState extends State<EntryScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    //final textTheme = Theme.of(context).textTheme;
     final currentIndex = context.select<BottomNavProvider, int>(
       (p) => p.currentIndex,
     );
@@ -39,34 +40,34 @@ class _HomeScreenState extends State<EntryScreen> {
       bottomNavigationBar: Consumer<BottomNavProvider>(
         builder:
             (context, provider, _) => Container(
-              margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
+              //margin: EdgeInsets.only(left: 0, right: 12, bottom: 0),
               decoration: BoxDecoration(
                 color: colorScheme.surface,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.shadow.withOpacity(0.10),
-                    blurRadius: 18,
-                    offset: Offset(0, 4),
-                  ),
-                ],
+                //borderRadius: BorderRadius.circular(24),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: colorScheme.shadow.withOpacity(0.10),
+                //     blurRadius: 18,
+                //     offset: Offset(0, 4),
+                //   ),
+                // ],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(AppSizes.radiusXxl),
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   elevation: 0,
                   enableFeedback: true,
-                  iconSize: AppSizes.iconMd,
-                  selectedFontSize: AppSizes.fontMd,
-                  unselectedFontSize: AppSizes.fontSm,
                   currentIndex: provider.currentIndex,
-                  onTap: provider.updateIndex,
+                  iconSize: AppSizes.iconSm,
+                  selectedFontSize: AppSizes.fontSm,
+                  unselectedFontSize: AppSizes.fontSm,
                   selectedItemColor: colorScheme.primary,
-                  unselectedItemColor: Colors.grey,
+                  unselectedItemColor: colorScheme.onSurface,
                   backgroundColor: Colors.transparent,
                   showSelectedLabels: true,
                   showUnselectedLabels: true,
+                  onTap: provider.updateIndex,
                   items: [
                     BottomNavigationBarItem(
                       icon: _NavBarIcon(
@@ -102,7 +103,9 @@ class _HomeScreenState extends State<EntryScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: _NavBarIcon(
-                        iconWidget: CartIconWithBadge(iconColor: Colors.grey),
+                        iconWidget: CartIconWithBadge(
+                          iconColor: colorScheme.onSurface,
+                        ),
                         selected: provider.currentIndex == 4,
                         colorScheme: colorScheme,
                         activeIconWidget: CartIconWithBadge(
@@ -143,7 +146,7 @@ class _NavBarIcon extends StatelessWidget {
             : Icon(
               icon,
               size: selected ? 30 : 24,
-              color: selected ? colorScheme.primary : Colors.grey,
+              color: selected ? colorScheme.primary : colorScheme.onSurface,
             );
     return AnimatedContainer(
       duration: Duration(milliseconds: 220),
@@ -154,7 +157,7 @@ class _NavBarIcon extends StatelessWidget {
           selected
               ? BoxDecoration(
                 color: colorScheme.primary.withOpacity(0.12),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
               )
               : null,
       child: child,

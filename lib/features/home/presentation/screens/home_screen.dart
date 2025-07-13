@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/home/presentation/widgets/auto_banner_with_notifier.dart';
 import 'package:organicplants/features/home/presentation/widgets/search_by_category.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
-import 'package:organicplants/shared/widgets/plant_section_widget.dart';
+import 'package:organicplants/features/home/presentation/widgets/plant_section_widget.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
@@ -40,6 +39,7 @@ class _HomeTabState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     // double height = MediaQuery.of(context).size.height;
     //double width = MediaQuery.of(context).size.width;
 
@@ -51,22 +51,11 @@ class _HomeTabState extends State<HomeScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Organic Plants',
-                  style: TextStyle(
-                    fontSize: AppSizes.fontXxl,
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.primary,
-                  ),
-                ),
+                Text('Organic Plants', style: textTheme.displaySmall),
                 SizedBox(height: 2.h),
                 Text(
                   '${getGreeting()}, ${profileProvider.userName}! 🌱',
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w500,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: textTheme.bodySmall,
                 ),
               ],
             );
@@ -92,10 +81,11 @@ class _HomeTabState extends State<HomeScreen> {
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(height: 5.h),
+          SizedBox(height: 10.h),
           AutoBannerWithNotifier(),
           SizedBox(height: 5.h),
           SearchByCategory(),
+          //SizedBox(height: 5.h),
           PlantSectionWidget(
             title: "Air Purifying",
             onSeeAll: () {

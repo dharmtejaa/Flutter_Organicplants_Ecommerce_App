@@ -18,6 +18,7 @@ class AppSizes {
   // ============================================================================
   // ICON SIZES
   // ============================================================================
+  static double iconsUxs = 14.sp;
   static double iconXs = 16.sp;
   static double iconSm = 20.sp;
   static double iconMd = 24.sp;
@@ -71,6 +72,7 @@ class AppSizes {
   static double radiusLg = 16.r;
   static double radiusXl = 20.r;
   static double radiusXxl = 24.r;
+  static double radiusXxxl = 28.r;
   static double radiusCircular = 50.r;
 
   // ============================================================================
@@ -227,7 +229,7 @@ class AppSizes {
   // ============================================================================
   // PRODUCT SPECIFIC DIMENSIONS
   // ============================================================================
-  static double productImageHeight = 200.h;
+  static double productImageHeight = 120.h;
   static double productCardRadius = 16.r;
   static double productPriceSize = 18.sp;
   static double productTitleSize = 16.sp;
@@ -278,7 +280,7 @@ class AppSizes {
   // ============================================================================
   // HOME SPECIFIC DIMENSIONS
   // ============================================================================
-  static double homeBannerHeight = 180.h;
+  static double homeBannerHeight = 170.h;
   static double homeCategorySize = 80.w;
   static double homeProductCardWidth = 160.w;
   static double homeProductCardHeight = 240.h;

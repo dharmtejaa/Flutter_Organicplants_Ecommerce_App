@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/search/presentation/widgets/empty_message.dart';
 import 'package:organicplants/features/search/presentation/widgets/search_field.dart';
-import 'package:organicplants/features/search/presentation/widgets/section_header.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 import 'package:organicplants/shared/widgets/no_result_found.dart';
@@ -43,9 +41,8 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: colorScheme.surface,
         elevation: 0,
-        title: _ModernSearchBar(searchController: searchController),
+        title: Form(child: SearchField(searchController: searchController)),
         actions: [
           WishlistIconWithBadge(),
           SizedBox(width: 10.w),
@@ -67,20 +64,20 @@ class _SearchScreenState extends State<SearchScreen> {
           final hasViewed = provider.recentViewedPlants.isNotEmpty;
 
           return ListView(
-            padding: EdgeInsets.all(18.sp),
+            padding: AppSizes.paddingSymmetricMd,
             children: [
               if (provider.noResultsFound)
-                NoResultFound(
+                NoResultsFound(
+                  imagePath: "assets/No_Plant_Found.png",
                   title: 'No Plants Found',
-                  subtitle:
+                  message:
                       "Try searching by name, type, or benefit — like 'Peace Lily', 'Indoor', or 'Pet Friendly'.",
-                  icon: Icons.search_off_rounded,
                 )
               else
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 10.h),
                     _ModernSectionHeader(
                       title: "Recent Searches",
                       showClear: hasSearches,
@@ -91,7 +88,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ? _buildRecentSearches(context, provider)
                         : EmptyMessage("No recent searches."),
 
-                    SizedBox(height: 28.h),
+                    SizedBox(height: 30.h),
 
                     _ModernSectionHeader(
                       title: "Recently Viewed Plants",
@@ -116,99 +113,45 @@ class _SearchScreenState extends State<SearchScreen> {
     SearchScreenProvider provider,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
-    return SizedBox(
-      height: 44.h,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: provider.recentSearchHistory.length,
-        separatorBuilder: (_, __) => SizedBox(width: 8.w),
-        itemBuilder: (context, idx) {
-          final query = provider.recentSearchHistory[idx];
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.h),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(22.r),
-                onTap: () {
-                  provider.updateSearchText(query);
-                  provider.search(query);
-                  provider.addRecentSearchHistory(query);
-                  if (provider.searchResult.isNotEmpty) {
-                    provider.setNoResultsFound(false);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (_) => PlantCategory(
-                              plant: provider.searchResult,
-                              category: query,
-                            ),
-                      ),
-                    );
-                  } else {
-                    provider.setNoResultsFound(true);
-                    provider.removeSearchHistory(query);
-                  }
-                },
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 18.w,
-                    vertical: 10.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(22.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.primary.withOpacity(0.10),
-                        blurRadius: 8,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                    border: Border.all(
-                      color: colorScheme.primary.withOpacity(0.18),
-                      width: 1.2,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.history,
-                        color: colorScheme.primary,
-                        size: 18.r,
-                      ),
-                      SizedBox(width: 7.w),
-                      Text(
-                        query,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(width: 7.w),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(16.r),
-                        onTap: () => provider.removeSearchHistory(query),
-                        child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Icon(
-                            Icons.close,
-                            color: colorScheme.error,
-                            size: 16.r,
+    final textTheme = Theme.of(context).textTheme;
+    return Wrap(
+      spacing: 8,
+      children:
+          provider.recentSearchHistory.map((query) {
+            return GestureDetector(
+              onTap: () {
+                // Perform search on chip tap
+                provider.updateSearchText(query);
+                provider.search(query);
+                provider.addRecentSearchHistory(query);
+
+                if (provider.searchResult.isNotEmpty) {
+                  provider.setNoResultsFound(false);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (_) => PlantCategory(
+                            plant: provider.searchResult,
+                            category: query,
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                } else {
+                  provider.setNoResultsFound(true);
+                  provider.removeSearchHistory(query);
+                }
+              },
+              child: Chip(
+                label: Text(query, style: textTheme.bodyMedium),
+                deleteIcon: const Icon(Icons.close),
+                backgroundColor: colorScheme.surface,
+                shape: const StadiumBorder(),
+                //side: BorderSide(color: colorScheme.surface),
+                onDeleted: () => provider.removeSearchHistory(query),
               ),
-            ),
-          );
-        },
-      ),
+            );
+          }).toList(),
     );
   }
 
@@ -218,59 +161,14 @@ class _SearchScreenState extends State<SearchScreen> {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 14.w,
-        mainAxisSpacing: 18.h,
-        childAspectRatio: 0.72,
+        crossAxisSpacing: 7,
+        mainAxisSpacing: 7,
+        childAspectRatio: 0.71,
       ),
       itemCount: provider.recentViewedPlants.length,
       itemBuilder: (context, index) {
-        return Stack(
-          children: [
-            ProductCardGrid(plant: provider.recentViewedPlants[index]),
-            Positioned(
-              top: 8,
-              right: 8,
-              child: CircleAvatar(
-                radius: 16.r,
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.favorite_border,
-                  color: Colors.redAccent,
-                  size: 18.r,
-                ),
-              ),
-            ),
-          ],
-        );
+        return ProductCardGrid(plant: provider.recentViewedPlants[index]);
       },
-    );
-  }
-}
-
-class _ModernSearchBar extends StatelessWidget {
-  final TextEditingController searchController;
-  const _ModernSearchBar({required this.searchController});
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.primary.withOpacity(0.06),
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(child: SearchField(searchController: searchController)),
-          // Removed filter icon button for cleaner UI
-        ],
-      ),
     );
   }
 }
@@ -287,10 +185,11 @@ class _ModernSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: Theme.of(context).textTheme.titleLarge),
+        Text(title, style: textTheme.headlineSmall),
         if (showClear && onClear != null)
           GestureDetector(
             onTap: onClear,
@@ -300,10 +199,7 @@ class _ModernSectionHeader extends StatelessWidget {
                 color: colorScheme.errorContainer,
                 borderRadius: BorderRadius.circular(8.r),
               ),
-              child: Text(
-                'Clear',
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
+              child: Text('Clear', style: textTheme.labelMedium),
             ),
           ),
       ],

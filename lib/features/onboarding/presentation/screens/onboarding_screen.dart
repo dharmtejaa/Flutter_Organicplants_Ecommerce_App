@@ -96,7 +96,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 child: Text(
                                   onboardingData[index]['description']!,
                                   textAlign: TextAlign.center,
-                                  style: textTheme.bodySmall,
+                                  style: textTheme.bodyMedium,
                                 ),
                               ),
                             ],

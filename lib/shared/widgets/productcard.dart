@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
@@ -19,7 +21,8 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
+    final isDark = colorScheme.brightness == Brightness.dark;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final wishlistProvider = Provider.of<WishlistProvider>(
       context,
@@ -29,8 +32,8 @@ class ProductCard extends StatelessWidget {
       context,
       listen: false,
     );
-    final cardWidth = AppSizes.homeProductCardWidth;
-    final imageHeight = cardWidth * 0.75;
+    final cardWidth = 160.w; //AppSizes.homeProductCardWidth;
+    final imageHeight = cardWidth * 0.837; //AppSizes.productImageHeight;
     final offerPrice = (plant.prices?.offerPrice ?? 0).toInt();
     final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
     final discountPercent =
@@ -66,54 +69,39 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         width: cardWidth,
-        margin: EdgeInsets.only(bottom: AppSizes.vMarginSm),
+        margin: EdgeInsets.only(bottom: AppSizes.vMarginMd),
+
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerHighest,
+          color: colorScheme.inverseSurface,
           borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
           boxShadow: [
             BoxShadow(
-              color: colorScheme.shadow.withValues(alpha: 0.1),
-              spreadRadius: AppSizes.borderWidth,
-              blurRadius: AppSizes.shadowBlurRadius,
-              offset: Offset(0, AppSizes.shadowOffset),
+              color:
+                  colorScheme.brightness == Brightness.dark
+                      // ignore: deprecated_member_use
+                      ? Colors.black.withOpacity(0.1)
+                      // ignore: deprecated_member_use
+                      : Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
+        //padding: EdgeInsets.all(2),
         child: Stack(
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Image Section with Enhanced Design
-                Stack(
-                  children: [
-                    Container(
-                      height: imageHeight,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(AppSizes.productCardRadius),
-                          topRight: Radius.circular(AppSizes.productCardRadius),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            colorScheme.surfaceContainerHighest.withValues(
-                              alpha: 0.3,
-                            ),
-                            colorScheme.surfaceContainerHighest.withValues(
-                              alpha: 0.1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(AppSizes.productCardRadius),
-                          topRight: Radius.circular(AppSizes.productCardRadius),
-                        ),
+            Padding(
+              padding: EdgeInsets.all(AppSizes.paddingXs),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image Section with Enhanced Design
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                         child: Image.network(
                           plant.images![0].url!,
                           height: imageHeight,
@@ -124,7 +112,7 @@ class ProductCard extends StatelessWidget {
                                 height: imageHeight,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: colorScheme.surfaceContainerHighest,
+                                  color: colorScheme.surface,
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(
                                       AppSizes.productCardRadius,
@@ -142,104 +130,98 @@ class ProductCard extends StatelessWidget {
                               ),
                         ),
                       ),
-                    ),
-
-                    // Wishlist Icon with Enhanced Design
-                    Positioned(
-                      top: AppSizes.spaceXs,
-                      right: AppSizes.spaceXs,
-                      child: WishlistIconButton(
-                        plant: plant,
-                        isDark: colorScheme.brightness == Brightness.dark,
-                      ),
-                    ),
-                  ],
-                ),
-
-                // Content Section with Enhanced Spacing
-                Padding(
-                  padding: AppSizes.paddingAllXs,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Plant Name
-                      Text(
-                        plant.commonName ?? 'Unknown Plant',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-
-                      SizedBox(height: AppSizes.spaceXs),
-
-                      // Price Section
-                      Row(
-                        children: [
-                          if (originalPrice > offerPrice)
-                            Text(
-                              '₹$originalPrice',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          if (originalPrice > offerPrice)
-                            SizedBox(width: AppSizes.spaceSm),
-                          Text(
-                            '₹$offerPrice',
-                            style: Theme.of(context).textTheme.titleMedium,
+                      Positioned(
+                        top: 4.h,
+                        left: 4.w,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 2.h,
                           ),
-                        ],
-                      ),
-                      SizedBox(height: AppSizes.spaceXs),
-                      Text(
-                        '$discount% off',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      SizedBox(height: AppSizes.spaceXs),
-                      Row(
-                        children: [
-                          ...List.generate(5, (index) {
-                            return Icon(
-                              index < plant.rating!.floor()
-                                  ? Icons.star_rounded
-                                  : Icons.star_outline_rounded,
-                              size: AppSizes.iconXs,
-                              color: colorScheme.primary,
-                            );
-                          }),
-                          SizedBox(width: AppSizes.spaceXs),
-                          Text(
-                            plant.rating!.toStringAsFixed(1),
-                            style: Theme.of(context).textTheme.bodySmall,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.6),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
-                        ],
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.star,
+                                size: 12.r,
+                                color: colorScheme.primary,
+                              ),
+                              SizedBox(width: 2.w),
+                              Text(
+                                plant.rating?.toStringAsFixed(1) ?? '0.0',
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 4,
+                        right: 4,
+                        child: WishlistIconButton(plant: plant, isDark: isDark),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  // Content Section with Enhanced Spacing
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(left: 5.w, top: 10.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Plant Name
+                        Text(
+                          plant.commonName ?? 'Unknown Plant',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: textTheme.titleLarge,
+                        ),
+                        SizedBox(height: 2.h),
+                        // Price Section
+                        Row(
+                          children: [
+                            if (originalPrice > offerPrice)
+                              Text(
+                                '₹$originalPrice',
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: AppColors.mutedText,
+                                ),
+                              ),
+                            if (originalPrice > offerPrice)
+                              SizedBox(width: 0.02.sw),
+                            Text(
+                              '₹$offerPrice',
+                              style: textTheme.bodyLarge?.copyWith(
+                                color: colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 2.h),
+                        Text('$discount% off', style: textTheme.bodySmall),
+                        SizedBox(height: 2.h),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-
             // Add to Cart Button with Enhanced Design
             Positioned(
-              bottom: -AppSizes.spaceXs,
-              right: -AppSizes.spaceXs,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppSizes.radiusCircular),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow.withValues(alpha: 0.2),
-                      spreadRadius: AppSizes.borderWidth,
-                      blurRadius: AppSizes.shadowBlurRadius,
-                      offset: Offset(0, AppSizes.shadowOffset),
-                    ),
-                  ],
-                ),
-                child: AddToCartButton(
-                  cartProvider: cartProvider,
-                  plant: plant,
-                ),
-              ),
+              bottom: -1, //-AppSizes.spaceXs,
+              right: -1, //-AppSizes.spaceXs,
+              child: AddToCartButton(cartProvider: cartProvider, plant: plant),
             ),
           ],
         ),

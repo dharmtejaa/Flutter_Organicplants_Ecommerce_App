@@ -53,6 +53,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -74,7 +75,11 @@ class _SplashscreenState extends State<Splashscreen> {
                   Text(
                     'ORGANIC\nPLANTS',
                     textAlign: TextAlign.center,
-                    style: textTheme.displaySmall?.copyWith(letterSpacing: 5),
+                    style: textTheme.displaySmall?.copyWith(
+                      letterSpacing: 5,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.primary,
+                    ),
                   ),
                   SizedBox(height: 150.h),
                 ],
