@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
 class ReturnsRefundsScreen extends StatefulWidget {
   const ReturnsRefundsScreen({super.key});
@@ -458,59 +459,19 @@ class _ReturnsRefundsScreenState extends State<ReturnsRefundsScreen> {
   }
 
   void _cancelReturn(Map<String, dynamic> returnItem) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    showDialog(
+    CustomDialog.showDeleteConfirmation(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(
-              'Cancel Return',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.error,
-              ),
-            ),
-            content: Text(
-              'Are you sure you want to cancel this return request?',
-              style: TextStyle(fontSize: 16.sp, color: colorScheme.onSurface),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                style: TextButton.styleFrom(
-                  foregroundColor: colorScheme.primary, // Explicitly set
-                ),
-                child: Text(
-                  'No',
-                  style: TextStyle(
-                    color: colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  setState(() {
-                    returnItem['status'] = 'Cancelled';
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Return cancelled successfully!')),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorScheme.error, // Explicitly set
-                  foregroundColor: colorScheme.onError, // Explicitly set
-                ),
-                child: Text(
-                  'Cancel Return',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-              ),
-            ],
-          ),
+      title: 'Cancel Return',
+      content:
+          'Are you sure you want to cancel this return request? This action cannot be undone.',
+      onDelete: () {
+        setState(() {
+          returnItem['status'] = 'Cancelled';
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Return cancelled successfully!')),
+        );
+      },
     );
   }
 }

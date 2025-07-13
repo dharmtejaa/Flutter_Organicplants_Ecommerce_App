@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
   final String? networkImage;
   final VoidCallback? ontap;
   final Color backgroundColor;
+  final IconData? icon;
   final Color? textColor;
   //final bool useGradient;
   final bool isLoading;
@@ -21,6 +22,7 @@ class CustomButton extends StatelessWidget {
     this.imagePath,
     this.networkImage,
     this.ontap,
+    this.icon,
     required this.backgroundColor,
     this.textColor,
     //this.useGradient = false,
@@ -59,22 +61,55 @@ class CustomButton extends StatelessWidget {
           //   // ),
           // ],
         ),
-        child: Center(
-          child:
-              isLoading
-                  ? SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        textColor ?? colorScheme.onPrimary,
-                      ),
-                    ),
-                  )
-                  : text != null
-                  ? Text(text!, style: textTheme.labelLarge,)
-                  : null,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (icon != null)
+              Icon(icon, size: AppSizes.iconMd, color: colorScheme.onPrimary),
+            if (imagePath != null)
+              Padding(
+                padding: EdgeInsets.only(right: 8.w),
+                child: Image.asset(
+                  imagePath!,
+                  width: 24.w,
+                  height: 24.h,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            if (networkImage != null)
+              Padding(
+                padding: EdgeInsets.only(right: 8.w),
+                child: Image.network(
+                  networkImage!,
+                  width: 24.w,
+                  height: 24.h,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            if (text != null && !isLoading)
+              Padding(
+                padding: EdgeInsets.only(left: 8.w),
+                child: Text(text!, style: textTheme.labelLarge),
+              ),
+            // Center(
+            //   child:
+            //       isLoading
+            //           ? SizedBox(
+            //             width: 20,
+            //             height: 20,
+            //             child: CircularProgressIndicator(
+            //               strokeWidth: 2,
+            //               valueColor: AlwaysStoppedAnimation<Color>(
+            //                 textColor ?? colorScheme.onPrimary,
+            //               ),
+            //             ),
+            //           )
+            //           : text != null
+            //           ? Text(text!, style: textTheme.labelLarge)
+            //           : null,
+            // ),
+          ],
         ),
       ),
     );

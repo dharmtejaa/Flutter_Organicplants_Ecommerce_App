@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/presentation/screens/add_edit_address_screen.dart';
 
 class AddressesScreen extends StatefulWidget {
@@ -29,38 +30,34 @@ class _AddressesScreenState extends State<AddressesScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Addresses'),
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
-        iconTheme: IconThemeData(color: colorScheme.onSurface),
+        centerTitle: true,
+        title: Text('My Addresses', style: textTheme.headlineSmall),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(AppSizes.paddingMd),
         child:
             addresses.isEmpty
                 ? Center(
                   child: Text(
                     'No addresses found. Add a new address!',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: textTheme.bodyLarge,
                   ),
                 )
                 : ListView.separated(
                   itemCount: addresses.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 14.h),
+                  separatorBuilder: (context, index) => SizedBox(height: 10.h),
                   itemBuilder: (context, index) {
                     final addr = addresses[index];
                     return Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
+                        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                       ),
                       elevation: 2,
                       child: Padding(
-                        padding: EdgeInsets.all(16.w),
+                        padding: EdgeInsets.all(AppSizes.paddingMd),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -76,26 +73,17 @@ class _AddressesScreenState extends State<AddressesScreen> {
                                 children: [
                                   Text(
                                     addr['name'] ?? '',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16.sp,
-                                    ),
+                                    style: textTheme.titleLarge,
                                   ),
                                   SizedBox(height: 4.h),
                                   Text(
                                     addr['address'] ?? '',
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: colorScheme.onSurfaceVariant,
-                                    ),
+                                    style: textTheme.bodyMedium,
                                   ),
                                   SizedBox(height: 4.h),
                                   Text(
                                     addr['phone'] ?? '',
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      color: colorScheme.onSurfaceVariant,
-                                    ),
+                                    style: textTheme.bodyMedium,
                                   ),
                                   SizedBox(height: 6.h),
                                   Container(
@@ -111,10 +99,8 @@ class _AddressesScreenState extends State<AddressesScreen> {
                                     ),
                                     child: Text(
                                       addr['type'] ?? '',
-                                      style: TextStyle(
+                                      style: textTheme.labelMedium?.copyWith(
                                         color: colorScheme.primary,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12.sp,
                                       ),
                                     ),
                                   ),
@@ -129,7 +115,15 @@ class _AddressesScreenState extends State<AddressesScreen> {
                                     color: colorScheme.primary,
                                   ),
                                   onPressed: () {
-                                    // TODO: Edit address
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => AddEditAddressScreen(
+                                              initialData: addr,
+                                            ),
+                                      ),
+                                    );
                                   },
                                   tooltip: 'Edit',
                                 ),

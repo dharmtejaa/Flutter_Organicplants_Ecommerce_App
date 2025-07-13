@@ -10,6 +10,7 @@ import 'package:organicplants/features/entry/presentation/screen/entry_screen.da
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/skip_button.dart';
+import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
@@ -61,24 +62,16 @@ class _LoginscreenState extends State<Loginscreen> {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        return await showDialog(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: const Text("Are you sure?"),
-                content: const Text("Do you want to exit the app?"),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text("No"),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(true),
-                    child: const Text("Yes"),
-                  ),
-                ],
-              ),
-        );
+        return await CustomDialog.showConfirmation(
+              context: context,
+              title: "Are you sure?",
+              content: "Do you want to exit the app?",
+              confirmText: "Yes, Exit",
+              cancelText: "No, Stay",
+              icon: Icons.exit_to_app_outlined,
+              iconColor: Theme.of(context).colorScheme.error,
+            ) ??
+            false;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,

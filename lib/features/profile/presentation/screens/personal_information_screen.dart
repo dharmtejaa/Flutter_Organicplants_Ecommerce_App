@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_theme.dart';
+import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/shared/widgets/custom_dialog.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
   const PersonalInformationScreen({super.key});
@@ -20,10 +25,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   void initState() {
     super.initState();
     // Initialize with current user data
-    _nameController.text = "John Doe";
-    _emailController.text = "john.doe@example.com";
-    _phoneController.text = "+91 98765 43210";
-    _dateOfBirthController.text = "15/03/1990";
   }
 
   @override
@@ -38,23 +39,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "Personal Information",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text("Personal Information", style: textTheme.headlineMedium),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
@@ -62,7 +57,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             onPressed: _saveChanges,
             child: Text(
               "Save",
-              style: TextStyle(
+              style: textTheme.titleMedium?.copyWith(
                 color: colorScheme.primary,
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
@@ -72,11 +67,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllMd,
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Profile Picture Section
               Center(
@@ -106,75 +101,45 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   ],
                 ),
               ),
-
               SizedBox(height: 32.h),
-
               // Form Fields
-              _buildTextField(
+              CustomTextField(
                 controller: _nameController,
-                label: "Full Name",
-                icon: Icons.person_outline,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
+                hintText: "Full Name",
+                prefixIcon: Icons.person_outline,
+                keyboardType: TextInputType.name,
+                fillColor: colorScheme.surface,
               ),
-
               SizedBox(height: 16.h),
-
-              _buildTextField(
+              // Email Field
+              CustomTextField(
+                hintText: "Email Address",
                 controller: _emailController,
-                label: "Email Address",
-                icon: Icons.email_outlined,
+                prefixIcon: Icons.email_outlined,
                 keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!RegExp(
-                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                  ).hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
+                fillColor: colorScheme.surface,
               ),
-
               SizedBox(height: 16.h),
-
-              _buildTextField(
+              // Phone Number Field
+              CustomTextField(
+                hintText: "Phone Number",
                 controller: _phoneController,
-                label: "Phone Number",
-                icon: Icons.phone_outlined,
+                prefixIcon: Icons.phone_outlined,
                 keyboardType: TextInputType.phone,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  return null;
-                },
+                fillColor: colorScheme.surface,
+                maxLength: 10,
               ),
-
               SizedBox(height: 16.h),
-
-              _buildTextField(
+              // Date of Birth Field
+              CustomTextField(
+                hintText: "01/01/1999",
                 controller: _dateOfBirthController,
-                label: "Date of Birth",
-                icon: Icons.calendar_today_outlined,
+                prefixIcon: Icons.calendar_today_outlined,
+                keyboardType: TextInputType.datetime,
+                fillColor: colorScheme.surface,
                 readOnly: true,
-                onTap: _selectDate,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select your date of birth';
-                  }
-                  return null;
-                },
               ),
-
               SizedBox(height: 32.h),
-
               // Additional Information
               Text(
                 "Additional Information",
@@ -184,36 +149,34 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   color: colorScheme.onSurface,
                 ),
               ),
-
               SizedBox(height: 16.h),
-
+              //gender
               _buildDropdownField(
                 label: "Gender",
                 value: "Male",
+                fillColor: colorScheme.surface,
                 items: ["Male", "Female", "Other", "Prefer not to say"],
                 onChanged: (value) {
                   // Handle gender change
                 },
               ),
-
               SizedBox(height: 16.h),
-
+              // Preferred Contact Method
               _buildDropdownField(
                 label: "Preferred Contact Method",
                 value: "Email",
+                fillColor: colorScheme.surface,
                 items: ["Email", "Phone", "SMS"],
                 onChanged: (value) {
                   // Handle contact method change
                 },
               ),
-
               SizedBox(height: 32.h),
-
               // Delete Account Section
               Container(
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
-                  color: colorScheme.errorContainer,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Column(
@@ -221,28 +184,26 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   children: [
                     Text(
                       "Danger Zone",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
+                      style: textTheme.titleLarge?.copyWith(
                         color: colorScheme.error,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 8.h),
                     Text(
                       "Once you delete your account, there is no going back. Please be certain.",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: colorScheme.onErrorContainer,
-                      ),
+                      style: textTheme.bodyMedium,
                     ),
                     SizedBox(height: 16.h),
                     ElevatedButton(
                       onPressed: _showDeleteAccountDialog,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colorScheme.error,
-                        foregroundColor: colorScheme.onError,
                       ),
-                      child: Text("Delete Account"),
+                      child: Text(
+                        "Delete Account",
+                        style: textTheme.labelLarge,
+                      ),
                     ),
                   ],
                 ),
@@ -254,59 +215,33 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    TextInputType? keyboardType,
-    bool readOnly = false,
-    VoidCallback? onTap,
-    String? Function(String?)? validator,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      readOnly: readOnly,
-      onTap: onTap,
-      validator: validator,
-      decoration: InputDecoration(
-        labelText: label,
-        prefixIcon: Icon(icon, color: colorScheme.primary),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: colorScheme.outline),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
-        ),
-      ),
-    );
-  }
-
   Widget _buildDropdownField({
     required String label,
     required String value,
     required List<String> items,
+    Color? fillColor,
     required Function(String?) onChanged,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     return DropdownButtonFormField<String>(
       value: value,
+      style: textTheme.bodyMedium,
       decoration: InputDecoration(
+        fillColor:
+            (fillColor ??
+                (colorScheme.brightness == Brightness.dark
+                    ? AppTheme.darkBackground
+                    : AppTheme.lightCard)),
         labelText: label,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: colorScheme.outline),
+
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppSizes.radiusLg)),
+          borderSide: BorderSide(color: colorScheme.surface),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(AppSizes.radiusLg)),
+          borderSide: BorderSide(color: colorScheme.primary),
         ),
       ),
       items:
@@ -319,87 +254,39 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   void _changeProfilePicture() {
     // TODO: Implement profile picture change
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Profile picture change feature coming soon!')),
+    CustomSnackBar.showInfo(
+      context,
+      "Profile picture change feature coming soon!",
+      duration: Duration(seconds: 2),
     );
-  }
-
-  void _selectDate() async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(1990, 3, 15),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null) {
-      setState(() {
-        _dateOfBirthController.text =
-            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
-      });
-    }
   }
 
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
       // TODO: Save changes to backend
-      ScaffoldMessenger.of(
+      CustomSnackBar.showSuccess(
         context,
-      ).showSnackBar(SnackBar(content: Text('Changes saved successfully!')));
+        "Changes saved successfully!",
+        duration: Duration(seconds: 2),
+      );
       Navigator.pop(context);
     }
   }
 
   void _showDeleteAccountDialog() {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    showDialog(
+    CustomDialog.showDeleteConfirmation(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(
-              'Delete Account',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.error,
-              ),
-            ),
-            content: Text(
-              'Are you sure you want to delete your account? This action cannot be undone.',
-              style: TextStyle(fontSize: 16.sp, color: colorScheme.onSurface),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                    color: colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  // TODO: Implement account deletion
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Account deletion feature coming soon!'),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorScheme.error,
-                  foregroundColor: colorScheme.onError,
-                ),
-                child: Text(
-                  'Delete',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-              ),
-            ],
-          ),
+      title: 'Delete Account',
+      content:
+          'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.',
+      onDelete: () {
+        // TODO: Implement account deletion
+        CustomSnackBar.showInfo(
+          context,
+          "Account deletion feature coming soon!",
+          duration: Duration(seconds: 2),
+        );
+      },
     );
   }
 }

@@ -9,8 +9,14 @@ class CustomTextField extends StatelessWidget {
   final bool obsecureText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final bool? readOnly;
   final TextEditingController controller;
   final TextEditingController? confirmPasswordController;
+  final VoidCallback? onTap;
+  final Color? fillColor;
+  final int? maxLines;
+  final int? maxLength;
+
   final ValueNotifier<bool>? isObscureNotifier; // 🔁 ValueNotifier
 
   const CustomTextField({
@@ -20,6 +26,12 @@ class CustomTextField extends StatelessWidget {
     this.obsecureText = false,
     this.prefixIcon,
     this.suffixIcon,
+    this.readOnly = false,
+    this.onTap,
+    this.maxLength,
+    this.maxLines,
+
+    this.fillColor,
     required this.controller,
     this.confirmPasswordController,
     this.isObscureNotifier, // 👈 pass this for obscure toggle
@@ -81,9 +93,13 @@ class CustomTextField extends StatelessWidget {
             keyboardType: keyboardType,
             style: textTheme.bodyLarge,
             validator: _validateInput,
+            //readOnly: readOnly ?? false,
+            maxLength: maxLength ?? 50,
+            maxLines: maxLines ?? 1,
 
             decoration: InputDecoration(
               hintText: hintText,
+              counterText: '',
               hintStyle: textTheme.bodyLarge?.copyWith(
                 color: colorScheme.onSurface.withOpacity(0.6),
               ),
@@ -103,9 +119,11 @@ class CustomTextField extends StatelessWidget {
                       : null,
               filled: true,
               fillColor:
-                  colorScheme.brightness == Brightness.dark
-                      ? AppTheme.darkBackground
-                      : AppTheme.lightCard,
+                  (fillColor ??
+                      (colorScheme.brightness == Brightness.dark
+                          ? AppTheme.darkBackground
+                          : AppTheme.lightCard)),
+
               suffixIconColor: colorScheme.onSurface,
               prefixIconColor: colorScheme.onSurface,
               border: OutlineInputBorder(

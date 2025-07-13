@@ -7,6 +7,7 @@ import 'order_details_screen.dart';
 
 import 'package:collection/collection.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
+import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
@@ -315,27 +316,15 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () async {
-                        final confirm = await showDialog<bool>(
+                        final confirm = await CustomDialog.showConfirmation(
                           context: context,
-                          builder:
-                              (context) => AlertDialog(
-                                title: Text('Cancel Order'),
-                                content: Text(
-                                  'Are you sure you want to cancel this order?',
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed:
-                                        () => Navigator.of(context).pop(false),
-                                    child: Text('No'),
-                                  ),
-                                  TextButton(
-                                    onPressed:
-                                        () => Navigator.of(context).pop(true),
-                                    child: Text('Yes'),
-                                  ),
-                                ],
-                              ),
+                          title: 'Cancel Order',
+                          content:
+                              'Are you sure you want to cancel this order? This action cannot be undone.',
+                          confirmText: 'Yes, Cancel',
+                          cancelText: 'No, Keep Order',
+                          icon: Icons.cancel_outlined,
+                          iconColor: Colors.red,
                         );
                         if (confirm == true) {
                           Provider.of<ProfileProvider>(

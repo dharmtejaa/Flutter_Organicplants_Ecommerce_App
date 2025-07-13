@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
 class AddEditAddressScreen extends StatefulWidget {
   final Map<String, String>? initialData;
@@ -45,14 +47,14 @@ class _AddEditAddressScreenState extends State<AddEditAddressScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         title: Text(
           widget.initialData == null ? 'Add Address' : 'Edit Address',
+          style: textTheme.headlineSmall,
         ),
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
-        iconTheme: IconThemeData(color: colorScheme.onSurface),
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(20.w),
@@ -60,47 +62,33 @@ class _AddEditAddressScreenState extends State<AddEditAddressScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
+              // Custom text field for name
+              CustomTextField(
+                hintText: "Name",
                 controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(),
-                ),
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Please enter a name'
-                            : null,
+                keyboardType: TextInputType.name,
+                fillColor: colorScheme.surface,
               ),
-              SizedBox(height: 16.h),
-              TextFormField(
+              SizedBox(height: 12.h),
+              // Custom text field for address
+              CustomTextField(
+                hintText: "Address",
                 controller: _addressController,
-                decoration: InputDecoration(
-                  labelText: 'Address',
-                  border: OutlineInputBorder(),
-                ),
                 maxLines: 2,
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Please enter an address'
-                            : null,
+                keyboardType: TextInputType.streetAddress,
+                fillColor: colorScheme.surface,
               ),
-              SizedBox(height: 16.h),
-              TextFormField(
+              SizedBox(height: 12.h),
+              // Custom text field for phone number
+              CustomTextField(
+                hintText: "Phone",
                 controller: _phoneController,
-                decoration: InputDecoration(
-                  labelText: 'Phone',
-                  border: OutlineInputBorder(),
-                ),
                 keyboardType: TextInputType.phone,
-                validator:
-                    (value) =>
-                        value == null || value.length < 10
-                            ? 'Enter a valid phone number'
-                            : null,
+                fillColor: colorScheme.surface,
+                maxLength: 10,
               ),
-              SizedBox(height: 16.h),
+
+              SizedBox(height: 12.h),
               ValueListenableBuilder<String>(
                 valueListenable: _typeNotifier,
                 builder: (context, value, child) {
@@ -108,6 +96,8 @@ class _AddEditAddressScreenState extends State<AddEditAddressScreen> {
                     value: value,
                     decoration: InputDecoration(
                       labelText: 'Type',
+                      fillColor: colorScheme.surface,
+
                       border: OutlineInputBorder(),
                     ),
                     items:
@@ -125,7 +115,7 @@ class _AddEditAddressScreenState extends State<AddEditAddressScreen> {
                   );
                 },
               ),
-              SizedBox(height: 28.h),
+              SizedBox(height: 30.h),
               Row(
                 children: [
                   Expanded(
@@ -139,8 +129,9 @@ class _AddEditAddressScreenState extends State<AddEditAddressScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Address saved!')),
+                          CustomSnackBar.showSuccess(
+                            context,
+                            'Address saved successfully!',
                           );
                           Navigator.pop(context, {
                             'name': _nameController.text,
@@ -153,11 +144,8 @@ class _AddEditAddressScreenState extends State<AddEditAddressScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colorScheme.primary,
                         foregroundColor: colorScheme.onPrimary,
-                        padding: EdgeInsets.symmetric(vertical: 14.h),
-                        textStyle: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        textStyle: textTheme.labelLarge,
                       ),
                       child: Text('Save'),
                     ),

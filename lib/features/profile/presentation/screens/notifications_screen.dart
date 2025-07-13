@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:organicplants/shared/logic/theme_provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
+import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -554,53 +555,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   void _clearAllNotifications() {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    showDialog(
+    CustomDialog.showConfirmation(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(
-              'Clear All Notifications',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.onSurface,
-              ),
-            ),
-            content: Text(
-              'Are you sure you want to clear all notifications?',
-              style: TextStyle(fontSize: 16.sp, color: colorScheme.onSurface),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                    color: colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('All notifications cleared!')),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorScheme.primary,
-                  foregroundColor: colorScheme.onPrimary,
-                ),
-                child: Text(
-                  'Clear',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-              ),
-            ],
-          ),
+      title: 'Clear All Notifications',
+      content: 'Are you sure you want to clear all notifications? This action cannot be undone.',
+      confirmText: 'Clear All',
+      cancelText: 'Cancel',
+      icon: Icons.clear_all_outlined,
+      iconColor: Theme.of(context).colorScheme.primary,
+      onConfirm: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('All notifications cleared!')),
+        );
+      },
     );
   }
 

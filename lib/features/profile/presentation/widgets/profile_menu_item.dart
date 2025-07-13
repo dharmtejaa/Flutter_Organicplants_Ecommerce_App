@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
+import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 
 class ProfileMenuItem extends StatelessWidget {
   final String title;
@@ -30,6 +32,7 @@ class ProfileMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       children: [
@@ -56,21 +59,8 @@ class ProfileMenuItem extends StatelessWidget {
                 child: Row(
                   children: [
                     // Icon Container
-                    Container(
-                      width: AppSizes.profileMenuIconSize,
-                      height: AppSizes.profileMenuIconSize,
-                      decoration: BoxDecoration(
-                        color: (iconColor ?? colorScheme.primary).withValues(
-                          alpha: 0.1,
-                        ),
-                        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                      ),
-                      child: Icon(
-                        icon,
-                        color: iconColor ?? colorScheme.primary,
-                        size: AppSizes.iconMd,
-                      ),
-                    ),
+                    ProfileCustomIcon(icon: icon, iconColor: iconColor),
+
                     SizedBox(width: AppSizes.spaceMd),
 
                     // Content
@@ -78,15 +68,14 @@ class ProfileMenuItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            title,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
+                          Text(title, style: textTheme.titleMedium),
                           if (subtitle != null) ...[
                             SizedBox(height: AppSizes.spaceXs),
                             Text(
                               subtitle!,
-                              style: Theme.of(context).textTheme.bodySmall,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: AppColors.mutedText,
+                              ),
                             ),
                           ],
                         ],
@@ -140,6 +129,7 @@ class ProfileMenuSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +137,7 @@ class ProfileMenuSection extends StatelessWidget {
         if (title != null) ...[
           Padding(
             padding: padding ?? EdgeInsets.fromLTRB(4.w, 16.h, 4.w, 8.h),
-            child: Text(title!, style: Theme.of(context).textTheme.titleLarge),
+            child: Text(title!, style: textTheme.titleLarge),
           ),
         ],
         ...items,
