@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/entry/logic/bottom_nav_provider.dart';
@@ -40,30 +41,36 @@ class _HomeScreenState extends State<EntryScreen> {
       bottomNavigationBar: Consumer<BottomNavProvider>(
         builder:
             (context, provider, _) => Container(
-              //margin: EdgeInsets.only(left: 0, right: 12, bottom: 0),
+              height: AppSizes.bottomNavHeight,
               decoration: BoxDecoration(
                 color: colorScheme.surface,
-                //borderRadius: BorderRadius.circular(24),
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: colorScheme.shadow.withOpacity(0.10),
-                //     blurRadius: 18,
-                //     offset: Offset(0, 4),
-                //   ),
-                // ],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppSizes.bottomNavRadius),
+                  topRight: Radius.circular(AppSizes.bottomNavRadius),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.shadow.withOpacity(0.08),
+                    blurRadius: 8,
+                    offset: Offset(0, -2),
+                  ),
+                ],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppSizes.radiusXxl),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppSizes.bottomNavRadius),
+                  topRight: Radius.circular(AppSizes.bottomNavRadius),
+                ),
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   elevation: 0,
                   enableFeedback: true,
                   currentIndex: provider.currentIndex,
-                  iconSize: AppSizes.iconSm,
-                  selectedFontSize: AppSizes.fontSm,
-                  unselectedFontSize: AppSizes.fontSm,
+                  iconSize: 20.sp,
+                  selectedFontSize: 11.sp,
+                  unselectedFontSize: 11.sp,
                   selectedItemColor: colorScheme.primary,
-                  unselectedItemColor: colorScheme.onSurface,
+                  unselectedItemColor: colorScheme.onSurfaceVariant,
                   backgroundColor: Colors.transparent,
                   showSelectedLabels: true,
                   showUnselectedLabels: true,
@@ -71,7 +78,7 @@ class _HomeScreenState extends State<EntryScreen> {
                   items: [
                     BottomNavigationBarItem(
                       icon: _NavBarIcon(
-                        icon: Icons.home,
+                        icon: Icons.home_rounded,
                         selected: provider.currentIndex == 0,
                         colorScheme: colorScheme,
                       ),
@@ -79,7 +86,7 @@ class _HomeScreenState extends State<EntryScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: _NavBarIcon(
-                        icon: Icons.storefront,
+                        icon: Icons.storefront_rounded,
                         selected: provider.currentIndex == 1,
                         colorScheme: colorScheme,
                       ),
@@ -87,7 +94,7 @@ class _HomeScreenState extends State<EntryScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: _NavBarIcon(
-                        icon: Icons.search_outlined,
+                        icon: Icons.search_rounded,
                         selected: provider.currentIndex == 2,
                         colorScheme: colorScheme,
                       ),
@@ -95,7 +102,7 @@ class _HomeScreenState extends State<EntryScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: _NavBarIcon(
-                        icon: Icons.account_circle_outlined,
+                        icon: Icons.person_rounded,
                         selected: provider.currentIndex == 3,
                         colorScheme: colorScheme,
                       ),
@@ -104,7 +111,7 @@ class _HomeScreenState extends State<EntryScreen> {
                     BottomNavigationBarItem(
                       icon: _NavBarIcon(
                         iconWidget: CartIconWithBadge(
-                          iconColor: colorScheme.onSurface,
+                          iconColor: colorScheme.onSurfaceVariant,
                         ),
                         selected: provider.currentIndex == 4,
                         colorScheme: colorScheme,
@@ -145,19 +152,23 @@ class _NavBarIcon extends StatelessWidget {
                 : iconWidget!)
             : Icon(
               icon,
-              size: selected ? 30 : 24,
-              color: selected ? colorScheme.primary : colorScheme.onSurface,
+              size: selected ? 24.sp : 20.sp,
+              color:
+                  selected ? colorScheme.primary : colorScheme.onSurfaceVariant,
             );
     return AnimatedContainer(
-      duration: Duration(milliseconds: 220),
+      duration: Duration(milliseconds: 200),
       curve: Curves.easeOutCubic,
-      padding: EdgeInsets.symmetric(horizontal: selected ? 10 : 0, vertical: 2),
-      margin: EdgeInsets.only(bottom: 2),
+      padding: EdgeInsets.symmetric(
+        horizontal: selected ? 8.w : 0,
+        vertical: 4.h,
+      ),
+      margin: EdgeInsets.only(bottom: 2.h),
       decoration:
           selected
               ? BoxDecoration(
-                color: colorScheme.primary.withOpacity(0.12),
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                color: colorScheme.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12.r),
               )
               : null,
       child: child,

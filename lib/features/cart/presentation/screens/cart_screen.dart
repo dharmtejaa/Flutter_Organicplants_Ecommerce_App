@@ -37,7 +37,10 @@ class CartScreen extends StatelessWidget {
             size: AppSizes.iconMd,
           ),
         ),
-        title: Text("My cart", style: Theme.of(context).textTheme.titleLarge),
+        title: Text(
+          "My cart",
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
         centerTitle: true,
         actions: [
           SearchButton(),

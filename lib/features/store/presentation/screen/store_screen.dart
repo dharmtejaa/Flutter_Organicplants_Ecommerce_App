@@ -62,57 +62,72 @@ class _StoreScreenState extends State<StoreScreen>
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      // backgroundColor: colorScheme.surface,
-      body: NestedScrollView(
-        headerSliverBuilder:
-            (context, innerBoxIsScrolled) => [
-              SliverToBoxAdapter(child: _buildAppBar(colorScheme)),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _StickyTabBarDelegate(
-                  TabBar(
-                    controller: _tabController,
-                    isScrollable: true,
-
-                    indicator: UnderlineTabIndicator(
-                      borderSide: BorderSide(
-                        width: 3.5,
-                        color: colorScheme.primary,
-                      ),
-                      insets: EdgeInsets.symmetric(horizontal: 16.w),
-                    ),
-                    labelColor: colorScheme.primary,
-                    unselectedLabelColor: colorScheme.onSurface,
-                    labelStyle: textTheme.titleLarge,
-                    unselectedLabelStyle: textTheme.titleMedium,
-                    splashFactory: InkRipple.splashFactory,
-                    tabs:
-                        categories.map((category) {
-                          return Tab(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 16.w,
-                                vertical: 6.h,
-                              ),
-                              child: Text(category['title']!),
-                            ),
-                          );
-                        }).toList(),
-                  ),
+      appBar: _buildAppBar(colorScheme),
+      body: Column(
+        children: [
+          // Sticky Tab Bar
+          Container(
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+              boxShadow: [
+                BoxShadow(
+                  color: colorScheme.shadow.withOpacity(0.04),
+                  blurRadius: 2,
+                  offset: Offset(0, 2),
                 ),
+              ],
+            ),
+            margin: EdgeInsets.symmetric(
+              horizontal: AppSizes.marginMd,
+              vertical: AppSizes.vMarginXs,
+            ),
+            child: TabBar(
+              controller: _tabController,
+              isScrollable: true,
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(width: 2.5, color: colorScheme.primary),
+                insets: EdgeInsets.symmetric(horizontal: AppSizes.paddingSm),
               ),
-            ],
-        body: AnimatedSwitcher(
-          duration: Duration(milliseconds: 400),
-          child: TabBarView(
-            key: ValueKey(_tabController.index),
-            controller: _tabController,
-            children:
-                categories.map((category) {
-                  return _buildCategoryContent(category, colorScheme);
-                }).toList(),
+              labelColor: colorScheme.primary,
+              unselectedLabelColor: colorScheme.onSurfaceVariant,
+              labelStyle: textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+              splashFactory: InkRipple.splashFactory,
+              tabAlignment: TabAlignment.start,
+              tabs:
+                  categories.map((category) {
+                    return Tab(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppSizes.paddingSm,
+                          vertical: 4.h,
+                        ),
+                        child: Text(category['title']!),
+                      ),
+                    );
+                  }).toList(),
+            ),
           ),
-        ),
+          // Tab Content
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 400),
+              child: TabBarView(
+                key: ValueKey(_tabController.index),
+                controller: _tabController,
+                children:
+                    categories.map((category) {
+                      return _buildCategoryContent(category, colorScheme);
+                    }).toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -134,7 +149,7 @@ class _StoreScreenState extends State<StoreScreen>
       actions: [
         SearchButton(),
         WishlistIconWithBadge(),
-        SizedBox(width: 10.w),
+        SizedBox(width: 8.w),
         CartIconWithBadge(
           iconColor: colorScheme.onSurface,
           onPressed: () {
@@ -144,7 +159,7 @@ class _StoreScreenState extends State<StoreScreen>
             );
           },
         ),
-        SizedBox(width: 10.w),
+        SizedBox(width: 8.w),
       ],
     );
   }
@@ -189,12 +204,7 @@ class _StoreScreenState extends State<StoreScreen>
           // Modern concise header with quick stats
           if (plants.isNotEmpty)
             Padding(
-              padding: EdgeInsets.only(
-                top: 10.h,
-                left: 18.w,
-                right: 18.w,
-                bottom: 6.h,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: Row(
                 children: [
                   _buildStatItem(
@@ -203,7 +213,7 @@ class _StoreScreenState extends State<StoreScreen>
                     Icons.attach_money,
                     colorScheme,
                   ),
-                  SizedBox(width: 14.w),
+                  SizedBox(width: 12.w),
                   _buildStatItem(
                     'Avg Rating',
                     '${_getAverageRating(plants).toStringAsFixed(1)} ',
@@ -228,7 +238,7 @@ class _StoreScreenState extends State<StoreScreen>
                             height: 120.w,
                             fit: BoxFit.contain,
                           ),
-                          SizedBox(height: 18.h),
+                          SizedBox(height: 16.h),
                           Text(
                             'No plants found',
                             style: TextStyle(
@@ -237,7 +247,7 @@ class _StoreScreenState extends State<StoreScreen>
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
-                          SizedBox(height: 6.h),
+                          SizedBox(height: 4.h),
                           Text(
                             'Try adjusting your filters or search.',
                             style: TextStyle(
@@ -301,7 +311,7 @@ class _StoreScreenState extends State<StoreScreen>
                               }, childCount: plants.length),
                             ),
                           ),
-                          //SliverToBoxAdapter(child: SizedBox(height: 20.h)),
+                          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
                         ],
                       ),
                     ),
@@ -319,20 +329,21 @@ class _StoreScreenState extends State<StoreScreen>
   ) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
         decoration: BoxDecoration(
           color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(10.r),
         ),
         child: Row(
           children: [
             Icon(icon, size: AppSizes.iconSm, color: colorScheme.primary),
-            SizedBox(width: 6.w),
+            SizedBox(width: 8.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(label, style: TextTheme.of(context).labelMedium),
+                  SizedBox(height: 2.h),
                   Text(value, style: TextTheme.of(context).labelMedium),
                 ],
               ),
@@ -409,44 +420,5 @@ class _StoreScreenState extends State<StoreScreen>
       (sum, plant) => sum + (plant.rating ?? 0.0),
     );
     return totalRating / plants.length;
-  }
-}
-
-class _StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
-  final TabBar _tabBar;
-  _StickyTabBarDelegate(this._tabBar);
-
-  @override
-  double get minExtent => _tabBar.preferredSize.height;
-  @override
-  double get maxExtent => _tabBar.preferredSize.height;
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.06),
-            blurRadius: 3,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 14.w),
-      child: _tabBar,
-    );
-  }
-
-  @override
-  bool shouldRebuild(_StickyTabBarDelegate oldDelegate) {
-    return false;
   }
 }

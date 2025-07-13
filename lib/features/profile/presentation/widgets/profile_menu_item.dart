@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
 
@@ -22,7 +23,7 @@ class ProfileMenuItem extends StatelessWidget {
     this.backgroundColor,
     this.onTap,
     this.trailing,
-    this.showDivider = true,
+    this.showDivider = false,
     this.isDestructive = false,
   });
 
@@ -33,7 +34,7 @@ class ProfileMenuItem extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: AppSizes.marginSymmetricSm,
+          margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
             color: backgroundColor ?? colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(AppSizes.radiusLg),
@@ -145,18 +146,12 @@ class ProfileMenuSection extends StatelessWidget {
       children: [
         if (title != null) ...[
           Padding(
-            padding:
-                padding ??
-                EdgeInsets.fromLTRB(
-                  AppSizes.paddingLg,
-                  AppSizes.vPaddingMd,
-                  AppSizes.paddingLg,
-                  AppSizes.vPaddingSm,
-                ),
+            padding: padding ?? EdgeInsets.fromLTRB(4.w, 16.h, 4.w, 8.h),
             child: Text(title!, style: Theme.of(context).textTheme.titleLarge),
           ),
         ],
         ...items,
+        SizedBox(height: 8.h),
       ],
     );
   }

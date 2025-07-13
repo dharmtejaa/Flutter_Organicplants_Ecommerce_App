@@ -186,8 +186,8 @@ class AppSizes {
   // ============================================================================
   // BOTTOM NAVIGATION DIMENSIONS
   // ============================================================================
-  static double bottomNavHeight = 80.h;
-  static double bottomNavRadius = 20.r;
+  static double bottomNavHeight = 65.h;
+  static double bottomNavRadius = 16.r;
 
   // ============================================================================
   // SEARCH BAR DIMENSIONS

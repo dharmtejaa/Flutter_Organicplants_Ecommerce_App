@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
@@ -34,21 +33,13 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final profileProvider = Provider.of<ProfileProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "Profile",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text("Profile", style: textTheme.headlineMedium),
         centerTitle: true,
         actions: [
           WishlistIconWithBadge(),
@@ -62,20 +53,19 @@ class ProfileScreen extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 16.w),
+          SizedBox(width: 10.w),
         ],
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         child: Column(
           children: [
             // Profile Header Card
             const ProfileHeaderCard(),
-
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
 
             // Quick Actions Grid
             const QuickActionsGrid(),
-
             SizedBox(height: 16.h),
 
             // Account & Settings Section
@@ -441,7 +431,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
 
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
           ],
         ),
       ),
