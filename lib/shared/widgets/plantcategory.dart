@@ -125,16 +125,16 @@ class _PlantCategoryState extends State<PlantCategory> {
 
         actions: [
           SearchButton(),
-          IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(
+          SizedBox(width: 10.w),
+          GestureDetector(
+            onTap: _showFilterBottomSheet,
+            child: Icon(
               Icons.filter_list,
               color: colorScheme.onSurface,
               size: AppSizes.iconMd,
             ),
-            onPressed: _showFilterBottomSheet,
-            tooltip: 'Filter & Sort',
           ),
+          SizedBox(width: 10.w),
           WishlistIconWithBadge(),
           SizedBox(width: 10.w),
           CartIconWithBadge(
@@ -146,8 +146,6 @@ class _PlantCategoryState extends State<PlantCategory> {
               );
             },
           ),
-          SizedBox(width: 10.w),
-
           SizedBox(width: 10.w),
         ],
       ),

@@ -13,23 +13,18 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:organicplants/features/cart/presentation/screens/checkout_screen.dart';
 
-class ProductScreen extends StatefulWidget {
+class ProductScreen extends StatelessWidget {
   final AllPlantsModel plants;
-  const ProductScreen({super.key, required this.plants});
+  ProductScreen({super.key, required this.plants});
 
-  @override
-  State<ProductScreen> createState() => _ProductScreenState();
-}
-
-class _ProductScreenState extends State<ProductScreen> {
   final searchController = TextEditingController();
-  int activeIndex = 0;
+
   final ValueNotifier<bool> showFullDescription = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
-    final offerPrice = (widget.plants.prices?.offerPrice ?? 0).toInt();
-    final originalPrice = (widget.plants.prices?.originalPrice ?? 0).toInt();
+    final offerPrice = (plants.prices?.offerPrice ?? 0).toInt();
+    final originalPrice = (plants.prices?.originalPrice ?? 0).toInt();
     final discountPercent =
         originalPrice > 0
             ? ((originalPrice - offerPrice) / originalPrice) * 100
@@ -37,54 +32,28 @@ class _ProductScreenState extends State<ProductScreen> {
     final discount = discountPercent.toInt().toString();
     final carouselProvider = Provider.of<CarouselProvider>(context);
     final colorScheme = Theme.of(context).colorScheme;
-    final inStock = widget.plants.inStock ?? false;
+    final inStock = plants.inStock ?? false;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Semantics(
-              label: 'Plant icon',
-              child: Icon(
-                Icons.local_florist,
-                color: colorScheme.primary,
-                size: 24.sp,
-              ),
-            ),
-            SizedBox(width: 8.w),
-            Semantics(
-              label: 'Product name: ${widget.plants.commonName ?? "empty"}',
-              child: Text(
-                widget.plants.commonName ?? "empty",
-                style: TextStyle(
-                  color: colorScheme.onSurface,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24.sp, // Larger font
-                  letterSpacing: 0.2,
-                ),
-              ),
+            Text(
+              plants.commonName ?? "empty",
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.share, color: colorScheme.primary),
-            onPressed: () {
-              HapticFeedback.lightImpact();
-            },
-            tooltip: 'Share',
+            onPressed: () {},
           ),
           IconButton(
             icon: Icon(Icons.favorite_border, color: colorScheme.primary),
-            onPressed: () {
-              HapticFeedback.lightImpact();
-            },
-            tooltip: 'Wishlist',
+            onPressed: () {},
           ),
         ],
       ),
@@ -96,163 +65,152 @@ class _ProductScreenState extends State<ProductScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Image Gallery
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 12.h,
-                  ),
-                  child: Material(
-                    elevation: 2,
-                    borderRadius: BorderRadius.circular(18.r),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(18.r),
-                      child: Container(
-                        color: colorScheme.surfaceContainerHighest,
-                        child: Column(
-                          children: [
-                            CarouselSlider.builder(
-                              itemCount: widget.plants.images?.length ?? 0,
-                              itemBuilder: (context, index, realIndex) {
-                                final imageUrl =
-                                    widget.plants.images?[index].url ?? '';
-                                return GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder:
-                                          (_) => Dialog(
-                                            backgroundColor: Colors.transparent,
-                                            child: InteractiveViewer(
-                                              child: Image.network(
-                                                imageUrl,
-                                                fit: BoxFit.contain,
-                                                loadingBuilder: (
-                                                  context,
-                                                  child,
-                                                  loadingProgress,
-                                                ) {
-                                                  if (loadingProgress == null)
-                                                    return child;
-                                                  return Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  );
-                                                },
-                                                errorBuilder:
-                                                    (
-                                                      context,
-                                                      error,
-                                                      stackTrace,
-                                                    ) => Image.asset(
-                                                      'assets/No_Plant_Found.png',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                              ),
+                Material(
+                  elevation: 2,
+                  //borderRadius: BorderRadius.circular(18.r),
+                  child: ClipRRect(
+                    //borderRadius: BorderRadius.circular(18.r),
+                    child: Container(
+                      color: colorScheme.surfaceContainerHighest,
+                      child: Column(
+                        children: [
+                          CarouselSlider.builder(
+                            itemCount: plants.images?.length ?? 0,
+                            itemBuilder: (context, index, realIndex) {
+                              final imageUrl = plants.images?[index].url ?? '';
+                              return GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder:
+                                        (_) => Dialog(
+                                          backgroundColor: Colors.transparent,
+                                          child: InteractiveViewer(
+                                            child: Image.network(
+                                              imageUrl,
+                                              fit: BoxFit.contain,
+                                              loadingBuilder: (
+                                                context,
+                                                child,
+                                                loadingProgress,
+                                              ) {
+                                                if (loadingProgress == null)
+                                                  return child;
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              },
+                                              errorBuilder:
+                                                  (
+                                                    context,
+                                                    error,
+                                                    stackTrace,
+                                                  ) => Image.asset(
+                                                    'assets/No_Plant_Found.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
                                             ),
                                           ),
+                                        ),
+                                  );
+                                },
+                                child: Image.network(
+                                  imageUrl,
+                                  height: 260.h,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (
+                                    context,
+                                    child,
+                                    loadingProgress,
+                                  ) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(),
                                     );
                                   },
-                                  child: Image.network(
-                                    imageUrl,
-                                    height: 260.h,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    loadingBuilder: (
-                                      context,
-                                      child,
-                                      loadingProgress,
-                                    ) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    },
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            Image.asset(
-                                              'assets/No_Plant_Found.png',
-                                              fit: BoxFit.cover,
-                                            ),
-                                  ),
-                                );
+                                  errorBuilder:
+                                      (context, error, stackTrace) =>
+                                          Image.asset(
+                                            'assets/No_Plant_Found.png',
+                                            fit: BoxFit.cover,
+                                          ),
+                                ),
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: 260.h,
+                              viewportFraction: 1,
+                              onPageChanged: (index, reason) {
+                                carouselProvider.setIndex(index);
                               },
-                              options: CarouselOptions(
-                                height: 260.h,
-                                viewportFraction: 1,
-                                onPageChanged: (index, reason) {
-                                  carouselProvider.setIndex(index);
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          // Thumbnails
+                          if ((plants.images?.length ?? 0) > 1)
+                            SizedBox(
+                              height: 54.h,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: plants.images!.length,
+                                separatorBuilder:
+                                    (_, __) => SizedBox(width: 8.w),
+                                itemBuilder: (context, index) {
+                                  final thumbUrl =
+                                      plants.images![index].url ?? '';
+                                  return GestureDetector(
+                                    onTap:
+                                        () => carouselProvider.setIndex(index),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color:
+                                              carouselProvider.activeIndex ==
+                                                      index
+                                                  ? colorScheme.primary
+                                                  : Colors.transparent,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          8.r,
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          8.r,
+                                        ),
+                                        child: Image.network(
+                                          thumbUrl,
+                                          width: 54.w,
+                                          height: 54.h,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  Image.asset(
+                                                    'assets/No_Plant_Found.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             ),
-                            SizedBox(height: 8.h),
-                            // Thumbnails
-                            if ((widget.plants.images?.length ?? 0) > 1)
-                              SizedBox(
-                                height: 54.h,
-                                child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: widget.plants.images!.length,
-                                  separatorBuilder:
-                                      (_, __) => SizedBox(width: 8.w),
-                                  itemBuilder: (context, index) {
-                                    final thumbUrl =
-                                        widget.plants.images![index].url ?? '';
-                                    return GestureDetector(
-                                      onTap:
-                                          () =>
-                                              carouselProvider.setIndex(index),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color:
-                                                carouselProvider.activeIndex ==
-                                                        index
-                                                    ? colorScheme.primary
-                                                    : Colors.transparent,
-                                            width: 2,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            8.r,
-                                          ),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            8.r,
-                                          ),
-                                          child: Image.network(
-                                            thumbUrl,
-                                            width: 54.w,
-                                            height: 54.h,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (
-                                                  context,
-                                                  error,
-                                                  stackTrace,
-                                                ) => Image.asset(
-                                                  'assets/No_Plant_Found.png',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            SizedBox(height: 8.h),
-                            AnimatedSmoothIndicator(
-                              activeIndex: carouselProvider.activeIndex,
-                              count: widget.plants.images?.length ?? 0,
-                              effect: ExpandingDotsEffect(
-                                activeDotColor: colorScheme.primary,
-                                dotHeight: 8.h,
-                                dotWidth: 8.w,
-                              ),
+                          SizedBox(height: 8.h),
+                          AnimatedSmoothIndicator(
+                            activeIndex: carouselProvider.activeIndex,
+                            count: plants.images?.length ?? 0,
+                            effect: ExpandingDotsEffect(
+                              activeDotColor: colorScheme.primary,
+                              dotHeight: 8.h,
+                              dotWidth: 8.w,
                             ),
-                            SizedBox(height: 8.h),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 8.h),
+                        ],
                       ),
                     ),
                   ),
@@ -275,9 +233,9 @@ class _ProductScreenState extends State<ProductScreen> {
                               children: [
                                 Semantics(
                                   label:
-                                      'Product name: ${widget.plants.commonName ?? ''}',
+                                      'Product name: ${plants.commonName ?? ''}',
                                   child: Text(
-                                    widget.plants.commonName ?? '',
+                                    plants.commonName ?? '',
                                     style: TextStyle(
                                       fontSize: 28.sp, // Larger font
                                       fontWeight: FontWeight.bold,
@@ -288,46 +246,44 @@ class _ProductScreenState extends State<ProductScreen> {
                                 SizedBox(height: 8.h), // More spacing
                                 Row(
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 12.w,
-                                        vertical: 6.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: colorScheme.primary.withOpacity(
-                                          0.10,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                          18.r,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.category,
-                                            color: colorScheme.primary,
-                                            size: 16.sp,
-                                          ),
-                                          SizedBox(width: 4.w),
-                                          Text(
-                                            widget.plants.category ?? '',
-                                            style: TextStyle(
-                                              color: colorScheme.primary,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   padding: EdgeInsets.symmetric(
+                                    //     horizontal: 12.w,
+                                    //     vertical: 6.h,
+                                    //   ),
+                                    //   decoration: BoxDecoration(
+                                    //     color: colorScheme.primary.withOpacity(
+                                    //       0.10,
+                                    //     ),
+                                    //     borderRadius: BorderRadius.circular(
+                                    //       18.r,
+                                    //     ),
+                                    //   ),
+                                    //   child: Row(
+                                    //     children: [
+                                    //       Icon(
+                                    //         Icons.category,
+                                    //         color: colorScheme.primary,
+                                    //         size: 16.sp,
+                                    //       ),
+                                    //       SizedBox(width: 4.w),
+                                    //       Text(
+                                    //         plants.category ?? '',
+                                    //         style: TextStyle(
+                                    //           color: colorScheme.primary,
+                                    //           fontWeight: FontWeight.w600,
+                                    //           fontSize: 14.sp,
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     SizedBox(width: 12.w),
                                     Row(
                                       children: [
                                         ...List.generate(5, (index) {
                                           return Icon(
-                                            index <
-                                                    widget.plants.rating!
-                                                        .floor()
+                                            index < plants.rating!.floor()
                                                 ? Icons.star_rounded
                                                 : Icons.star_border_rounded,
                                             size: 20.sp,
@@ -336,9 +292,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                         }),
                                         SizedBox(width: 6.w),
                                         Text(
-                                          widget.plants.rating!.toStringAsFixed(
-                                            1,
-                                          ),
+                                          plants.rating!.toStringAsFixed(1),
                                           style: TextStyle(
                                             fontSize: 15.sp,
                                             color: colorScheme.onSurface,
@@ -353,78 +307,16 @@ class _ProductScreenState extends State<ProductScreen> {
                             ),
                           ),
                           SizedBox(width: 12.w),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 6.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color:
-                                  inStock
-                                      ? Colors.green.withOpacity(0.12)
-                                      : Colors.red.withOpacity(0.12),
-                              borderRadius: BorderRadius.circular(18.r),
-                              border: Border.all(
-                                color: inStock ? Colors.green : Colors.red,
-                                width: 1.5,
-                              ),
-                            ),
-                            child: Semantics(
-                              label: inStock ? 'In Stock' : 'Out of Stock',
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    inStock ? Icons.check_circle : Icons.cancel,
-                                    color: inStock ? Colors.green : Colors.red,
-                                    size: 18.r,
-                                  ),
-                                  SizedBox(width: 6.w),
-                                  Text(
-                                    inStock ? 'In Stock' : 'Out of Stock',
-                                    style: TextStyle(
-                                      color:
-                                          inStock ? Colors.green : Colors.red,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
                         ],
                       ),
-                      if (inStock)
-                        Padding(
-                          padding: EdgeInsets.only(top: 6.h, left: 2.w),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.access_time,
-                                color: colorScheme.primary,
-                                size: 16.sp,
-                              ),
-                              SizedBox(width: 4.w),
-                              Text(
-                                'Delivery by June 10', // Ideally, this would be dynamic
-                                style: TextStyle(
-                                  color: colorScheme.primary,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      SizedBox(height: 20.h), // More spacing
                       // Price & Discount
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
                             '₹$offerPrice',
-                            style: TextStyle(
-                              fontSize: 30.sp, // Larger font
+                            style: TextStyle( 
+                              fontSize: 30.sp,
                               fontWeight: FontWeight.bold,
                               color: colorScheme.primary,
                             ),
@@ -646,8 +538,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       Stack(
                                         children: [
                                           Text(
-                                            widget.plants.description?.intro ??
-                                                '',
+                                            plants.description?.intro ?? '',
                                             maxLines: expanded ? null : 3,
                                             overflow:
                                                 expanded
@@ -713,7 +604,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         ),
                       ),
                       SizedBox(height: 4.h),
-                      QuickGuideCard(plants: widget.plants),
+                      QuickGuideCard(plants: plants),
                       SizedBox(height: 16.h),
                       Divider(),
                       // Care Guide
@@ -727,7 +618,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             color: colorScheme.onSurface,
                           ),
                         ),
-                        children: [CareGuideSection(plant: widget.plants)],
+                        children: [CareGuideSection(plant: plants)],
                       ),
                       SizedBox(height: 16.h),
                       Divider(),
@@ -745,7 +636,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             color: colorScheme.onSurface,
                           ),
                         ),
-                        children: [PlantDetails(plant: widget.plants)],
+                        children: [PlantDetails(plant: plants)],
                       ),
                       SizedBox(height: 16.h),
                       Divider(),
@@ -763,7 +654,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             color: colorScheme.onSurface,
                           ),
                         ),
-                        children: [FAQSection(plant: widget.plants)],
+                        children: [FAQSection(plant: plants)],
                       ),
                     ],
                   ),
@@ -850,7 +741,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                     MaterialPageRoute(
                                       builder:
                                           (context) => CheckoutScreen(
-                                            buyNowPlant: widget.plants,
+                                            buyNowPlant: plants,
                                           ),
                                     ),
                                   );

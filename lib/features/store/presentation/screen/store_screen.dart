@@ -152,7 +152,8 @@ class _StoreScreenState extends State<StoreScreen>
     final textTheme = Theme.of(context).textTheme;
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+        icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
+        iconSize: AppSizes.iconMd,
         onPressed: () {
           Navigator.pushReplacement(
             context,
@@ -161,14 +162,20 @@ class _StoreScreenState extends State<StoreScreen>
         },
       ),
       title: Text("Plant Store", style: textTheme.headlineMedium),
+
       centerTitle: true,
       actions: [
-        // SearchButton(),
+        SearchButton(),
+        SizedBox(width: 10.w),
         Stack(
           children: [
-            IconButton(
-              icon: Icon(Icons.filter_list, color: colorScheme.onSurface),
-              onPressed: _showFilterBottomSheet,
+            GestureDetector(
+              onTap: _showFilterBottomSheet,
+              child: Icon(
+                Icons.filter_list,
+                color: colorScheme.onSurface,
+                size: AppSizes.iconMd,
+              ),
             ),
             if (_hasActiveFilters())
               Positioned(
@@ -185,10 +192,9 @@ class _StoreScreenState extends State<StoreScreen>
               ),
           ],
         ),
+        SizedBox(width: 10.w),
         WishlistIconWithBadge(),
-        SizedBox(width: 8.w),
-
-        SizedBox(width: 8.w),
+        SizedBox(width: 10.w),
         CartIconWithBadge(
           iconColor: colorScheme.onSurface,
           onPressed: () {
@@ -198,7 +204,7 @@ class _StoreScreenState extends State<StoreScreen>
             );
           },
         ),
-        SizedBox(width: 8.w),
+        SizedBox(width: 10.w),
       ],
     );
   }

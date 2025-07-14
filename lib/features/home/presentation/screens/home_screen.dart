@@ -63,6 +63,7 @@ class _HomeTabState extends State<HomeScreen> {
         ),
         actions: [
           SearchButton(),
+          SizedBox(width: 10.w),
           WishlistIconWithBadge(),
           SizedBox(width: 10.w),
           CartIconWithBadge(

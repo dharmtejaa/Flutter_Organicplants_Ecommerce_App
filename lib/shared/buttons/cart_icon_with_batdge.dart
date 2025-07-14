@@ -18,7 +18,8 @@ class CartIconWithBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Consumer<CartProvider>(
       builder: (context, cartProvider, child) {
@@ -31,7 +32,7 @@ class CartIconWithBadge extends StatelessWidget {
             Icon(
               Icons.shopping_cart_outlined,
               size: AppSizes.iconMd,
-              color: iconColor ?? theme.iconTheme.color,
+              color: iconColor ?? colorScheme.onSurface,
             ),
             if (cartCount > 0)
               Positioned(
@@ -45,10 +46,10 @@ class CartIconWithBadge extends StatelessWidget {
                   child: CircleAvatar(
                     key: ValueKey<int>(cartCount),
                     radius: 8.r,
-                    backgroundColor: badgeColor ?? theme.colorScheme.primary,
+                    backgroundColor: badgeColor ?? colorScheme.primary,
                     child: Text(
                       '$cartCount',
-                      style: theme.textTheme.labelSmall,
+                      style: textTheme.labelSmall,
                     ),
                   ),
                 ),

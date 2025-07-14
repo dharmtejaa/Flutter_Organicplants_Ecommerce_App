@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/features/wishlist/presentation/widgets/product_tile.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
+import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/widgets/no_result_found.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,7 @@ class WishlistScreen extends StatelessWidget {
             Icons.arrow_back,
             //size: AppSizes.iconLg,
             color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -37,6 +40,8 @@ class WishlistScreen extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
+          SearchButton(),
+          SizedBox(width: 10.w),
           CartIconWithBadge(
             iconColor: colorScheme.onSurface,
             onPressed: () {

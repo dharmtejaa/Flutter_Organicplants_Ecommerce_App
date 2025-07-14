@@ -8,11 +8,13 @@ class SearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return IconButton(
-      icon: Icon(Icons.search),
-      color: colorScheme.onSurface,
-      iconSize: AppSizes.iconMd,
-      onPressed: () {
+    return GestureDetector(
+      child: Icon(
+        Icons.search,
+        color: colorScheme.onSurface,
+        size: AppSizes.iconMd,
+      ),
+      onTap: () {
         // Implement search functionality
         Navigator.push(
           context,

@@ -21,6 +21,7 @@ class CartScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final cartProvider = Provider.of<CartProvider>(context);
     final cartItems = cartProvider.itemList;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -37,13 +38,11 @@ class CartScreen extends StatelessWidget {
             size: AppSizes.iconMd,
           ),
         ),
-        title: Text(
-          "My cart",
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
+        title: Text("My cart", style: textTheme.headlineMedium),
         centerTitle: true,
         actions: [
           SearchButton(),
+          SizedBox(width: 10.w),
           WishlistIconWithBadge(),
           SizedBox(width: 10.w),
         ],
