@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/plant_filter_service.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
+import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
+import 'package:organicplants/shared/widgets/active_filters_widget.dart';
+import 'package:organicplants/shared/widgets/filter_bottom_sheet.dart';
 import 'package:organicplants/shared/widgets/plant_card_grid.dart';
-import 'package:organicplants/features/store/presentation/widget/filter_bottom_sheet.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -29,17 +32,17 @@ class _StoreScreenState extends State<StoreScreen>
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  // Filter state
-  Map<String, dynamic> _currentFilters = {
-    'minPrice': 0,
-    'maxPrice': 5000,
-    'minRating': 0.0,
-    'maxRating': 5.0,
-    'sortBy': 'Name A-Z',
-    'careLevels': <String>[],
-    'attributes': <String>[],
-    'inStockOnly': false,
-  };
+  // Filter state using global filter system
+  final Map<FilterType, dynamic> _currentFilters = {};
+  final List<FilterType> _enabledFilters = [
+    FilterType.sort,
+    FilterType.price,
+    //FilterType.rating,
+    FilterType.size,
+    //FilterType.careLevel,
+    FilterType.attributes,
+    //FilterType.stock,
+  ];
 
   // Remove filter state fields, filter options, and filter logic
   // Remove filter icon and filter bottom sheet from the tab bar
@@ -199,38 +202,39 @@ class _StoreScreenState extends State<StoreScreen>
     );
   }
 
-  // Improved filter bottom sheet with real filter options
-
-  // Filter methods
+  // Filter methods using global filter system
   void _showFilterBottomSheet() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: colorScheme.surface,
+      barrierColor: colorScheme.shadow.withValues(alpha: 0.15),
       builder:
           (context) => FilterBottomSheet(
+            plants: _getAllPlants(),
             currentFilters: _currentFilters,
+            enabledFilters: _enabledFilters,
             onApplyFilters: _applyFilters,
           ),
     );
   }
 
-  void _applyFilters(Map<String, dynamic> filters) {
+  void _applyFilters(Map<FilterType, dynamic> filters) {
     setState(() {
-      _currentFilters = filters;
-      _selectedSortOption = filters['sortBy'] ?? 'Name A-Z';
+      _currentFilters.clear();
+      _currentFilters.addAll(filters);
+      _selectedSortOption = filters[FilterType.sort] as String? ?? 'Name A-Z';
     });
   }
 
   bool _hasActiveFilters() {
-    return _currentFilters['minPrice'] != 0 ||
-        _currentFilters['maxPrice'] != 5000 ||
-        _currentFilters['minRating'] != 0.0 ||
-        _currentFilters['maxRating'] != 5.0 ||
-        _currentFilters['sortBy'] != 'Name A-Z' ||
-        _currentFilters['careLevels'].isNotEmpty ||
-        _currentFilters['attributes'].isNotEmpty ||
-        _currentFilters['inStockOnly'] == true;
+    return _currentFilters.isNotEmpty;
+  }
+
+  List<AllPlantsModel> _getAllPlants() {
+    return allPlantsGlobal;
   }
 
   // New: Category content with filter icon at top right
@@ -239,7 +243,7 @@ class _StoreScreenState extends State<StoreScreen>
     ColorScheme colorScheme,
   ) {
     final textTheme = Theme.of(context).textTheme;
-    List<dynamic> plants = getPlantsByCategory(
+    List<AllPlantsModel> plants = getPlantsByCategory(
       category['filterTag']!.toLowerCase().trim(),
     );
 
@@ -269,34 +273,22 @@ class _StoreScreenState extends State<StoreScreen>
       opacity: _fadeAnimation,
       child: Column(
         children: [
-          // Modern concise header with quick stats and filter summary
-          if (plants.isNotEmpty)
+          // Filter summary - only show when there are active filters and plants found
+          if (_hasActiveFilters() && plants.isNotEmpty)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      _buildStatItem(
-                        'Price Range',
-                        '₹${_getMinPrice(plants)} - ₹${_getMaxPrice(plants)}',
-                        Icons.attach_money,
-                        colorScheme,
-                      ),
-                      SizedBox(width: 12.w),
-                      _buildStatItem(
-                        'Avg Rating',
-                        '${_getAverageRating(plants).toStringAsFixed(1)} ',
-                        Icons.star,
-                        colorScheme,
-                      ),
-                    ],
-                  ),
-                  if (_hasActiveFilters()) ...[
-                    SizedBox(height: 8.h),
-                    _buildFilterSummary(colorScheme, textTheme),
-                  ],
-                ],
+              child: ActiveFiltersWidget(
+                currentFilters: _currentFilters,
+                plantCount: plants.length,
+                onClearAll: () {
+                  setState(() {
+                    _currentFilters.clear();
+                  });
+                },
+                showPlantCount: true,
+                originalPriceRange: PlantFilterService.calculatePriceRange(
+                  _getAllPlants(),
+                ),
               ),
             ),
           // Modern grid or empty state
@@ -397,215 +389,10 @@ class _StoreScreenState extends State<StoreScreen>
     );
   }
 
-  Widget _buildFilterSummary(ColorScheme colorScheme, TextTheme textTheme) {
-    final activeFilters = <String>[];
-
-    if (_currentFilters['minPrice'] != 0 ||
-        _currentFilters['maxPrice'] != 5000) {
-      activeFilters.add(
-        'Price: ₹${_currentFilters['minPrice']} - ₹${_currentFilters['maxPrice']}',
-      );
-    }
-    if (_currentFilters['minRating'] != 0.0 ||
-        _currentFilters['maxRating'] != 5.0) {
-      activeFilters.add(
-        'Rating: ${_currentFilters['minRating']} - ${_currentFilters['maxRating']}★',
-      );
-    }
-    if (_currentFilters['careLevels'].isNotEmpty) {
-      activeFilters.add('Care: ${_currentFilters['careLevels'].join(', ')}');
-    }
-    if (_currentFilters['attributes'].isNotEmpty) {
-      activeFilters.add(
-        'Attributes: ${_currentFilters['attributes'].join(', ')}',
-      );
-    }
-    if (_currentFilters['inStockOnly']) {
-      activeFilters.add('In Stock Only');
-    }
-
-    if (activeFilters.isEmpty) return SizedBox.shrink();
-
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-        border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.filter_alt, size: 16.sp, color: colorScheme.primary),
-          SizedBox(width: 8.w),
-          Expanded(
-            child: Text(
-              'Active Filters: ${activeFilters.take(2).join(', ')}${activeFilters.length > 2 ? '...' : ''}',
-              style: textTheme.bodySmall?.copyWith(
-                color: colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
+  List<AllPlantsModel> _applyAllFilters(List<AllPlantsModel> plants) {
+    return PlantFilterService.getFilteredPlants(
+      plants: plants,
+      filters: _currentFilters,
     );
-  }
-
-  Widget _buildStatItem(
-    String label,
-    String value,
-    IconData icon,
-    ColorScheme colorScheme,
-  ) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, size: AppSizes.iconSm, color: colorScheme.primary),
-            SizedBox(width: 8.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(label, style: TextTheme.of(context).labelMedium),
-                  SizedBox(height: 2.h),
-                  Text(value, style: TextTheme.of(context).labelMedium),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<dynamic> _applyAllFilters(List<dynamic> plants) {
-    // Apply price filter
-    plants =
-        plants.where((plant) {
-          final price =
-              plant.prices?.offerPrice ?? plant.prices?.originalPrice ?? 0;
-          return price >= _currentFilters['minPrice'] &&
-              price <= _currentFilters['maxPrice'];
-        }).toList();
-
-    // Apply rating filter
-    plants =
-        plants.where((plant) {
-          final rating = plant.rating ?? 0.0;
-          return rating >= _currentFilters['minRating'] &&
-              rating <= _currentFilters['maxRating'];
-        }).toList();
-
-    // Apply care level filter
-    if (_currentFilters['careLevels'].isNotEmpty) {
-      plants =
-          plants.where((plant) {
-            // This is a simplified implementation - you might want to add care level to your plant model
-            return true; // For now, show all plants
-          }).toList();
-    }
-
-    // Apply attributes filter
-    if (_currentFilters['attributes'].isNotEmpty) {
-      plants =
-          plants.where((plant) {
-            if (plant.tags == null) return false;
-            return _currentFilters['attributes'].any((attribute) {
-              return plant.tags!.any(
-                (tag) => tag.toLowerCase().contains(
-                  attribute.toLowerCase().replaceAll(' ', ''),
-                ),
-              );
-            });
-          }).toList();
-    }
-
-    // Apply stock filter
-    if (_currentFilters['inStockOnly']) {
-      plants =
-          plants.where((plant) {
-            // This is a simplified implementation - you might want to add stock status to your plant model
-            return true; // For now, show all plants
-          }).toList();
-    }
-
-    // Apply sorting
-    return _sortPlants(plants);
-  }
-
-  List<dynamic> _sortPlants(List<dynamic> plants) {
-    switch (_selectedSortOption) {
-      case 'Name A-Z':
-        plants.sort(
-          (a, b) => (a.commonName ?? '').compareTo(b.commonName ?? ''),
-        );
-        break;
-      case 'Name Z-A':
-        plants.sort(
-          (a, b) => (b.commonName ?? '').compareTo(a.commonName ?? ''),
-        );
-        break;
-      case 'Price Low to High':
-        plants.sort(
-          (a, b) => (a.prices?.offerPrice ?? a.prices?.originalPrice ?? 0)
-              .compareTo(b.prices?.offerPrice ?? b.prices?.originalPrice ?? 0),
-        );
-        break;
-      case 'Price High to Low':
-        plants.sort(
-          (a, b) => (b.prices?.offerPrice ?? b.prices?.originalPrice ?? 0)
-              .compareTo(a.prices?.offerPrice ?? a.prices?.originalPrice ?? 0),
-        );
-        break;
-      case 'Rating High to Low':
-        plants.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
-        break;
-      case 'Most Popular':
-        // Sort by rating as a proxy for popularity
-        plants.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
-        break;
-      case 'Newest First':
-        // Sort by ID as a proxy for newest (you can add a date field)
-        plants.sort((a, b) => (b.id ?? '').compareTo(a.id ?? ''));
-        break;
-    }
-    return plants;
-  }
-
-  int _getMinPrice(List<dynamic> plants) {
-    if (plants.isEmpty) return 0;
-    return plants
-        .map(
-          (plant) =>
-              plant.prices?.offerPrice ?? plant.prices?.originalPrice ?? 0,
-        )
-        .reduce((a, b) => a < b ? a : b);
-  }
-
-  int _getMaxPrice(List<dynamic> plants) {
-    if (plants.isEmpty) return 0;
-    return plants
-        .map(
-          (plant) =>
-              plant.prices?.offerPrice ?? plant.prices?.originalPrice ?? 0,
-        )
-        .reduce((a, b) => a > b ? a : b);
-  }
-
-  double _getAverageRating(List<dynamic> plants) {
-    if (plants.isEmpty) return 0.0;
-    double totalRating = plants.fold(
-      0.0,
-      (sum, plant) => sum + (plant.rating ?? 0.0),
-    );
-    return totalRating / plants.length;
   }
 }
