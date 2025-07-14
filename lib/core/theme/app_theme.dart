@@ -405,13 +405,14 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,
-        foregroundColor: Colors.black,
-        elevation: 4,
+        foregroundColor: onPrimary,
+        elevation: 2,
         shadowColor: primaryColor.withValues(alpha: 0.4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
           fontSize: 16,
+          color: onPrimary,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),

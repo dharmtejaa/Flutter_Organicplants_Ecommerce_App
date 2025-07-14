@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 
 class LoyaltyPointsScreen extends StatelessWidget {
   const LoyaltyPointsScreen({super.key});
@@ -7,6 +8,7 @@ class LoyaltyPointsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     // Mock data
     final int points = 320;
     final int nextReward = 500;
@@ -19,12 +21,19 @@ class LoyaltyPointsScreen extends StatelessWidget {
     double progress = points / nextReward;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Loyalty Points'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: Text('Loyalty Points', style: textTheme.headlineMedium),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.w),
+        padding: AppSizes.paddingAllSm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -32,27 +41,14 @@ class LoyaltyPointsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Icon(
-                    Icons.card_giftcard_rounded,
+                    Icons.card_giftcard,
                     size: 64.r,
                     color: colorScheme.primary,
                   ),
                   SizedBox(height: 12.h),
-                  Text(
-                    '$points pts',
-                    style: TextStyle(
-                      fontSize: 32.sp,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.primary,
-                    ),
-                  ),
+                  Text('$points pts', style: textTheme.headlineMedium),
                   SizedBox(height: 4.h),
-                  Text(
-                    'Total Loyalty Points',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
+                  Text('Total Loyalty Points', style: textTheme.bodyMedium),
                   SizedBox(height: 16.h),
                   LinearProgressIndicator(
                     value: progress > 1 ? 1 : progress,
@@ -63,19 +59,13 @@ class LoyaltyPointsScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   Text(
                     'Next reward at $nextReward pts',
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                    style: textTheme.bodyMedium,
                   ),
                 ],
               ),
             ),
             SizedBox(height: 32.h),
-            Text(
-              'Recent Activity',
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
-            ),
+            Text('Recent Activity', style: textTheme.titleLarge),
             SizedBox(height: 12.h),
             Expanded(
               child:
@@ -83,10 +73,7 @@ class LoyaltyPointsScreen extends StatelessWidget {
                       ? Center(
                         child: Text(
                           'No loyalty activity yet.',
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                          style: textTheme.bodyMedium,
                         ),
                       )
                       : ListView.separated(
@@ -95,10 +82,12 @@ class LoyaltyPointsScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final tx = transactions[index];
                           return Container(
-                            padding: EdgeInsets.all(14.w),
+                            padding: AppSizes.paddingAllMd,
                             decoration: BoxDecoration(
                               color: colorScheme.surfaceContainerHighest,
-                              borderRadius: BorderRadius.circular(10.r),
+                              borderRadius: BorderRadius.circular(
+                                AppSizes.radiusLg,
+                              ),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,27 +97,19 @@ class LoyaltyPointsScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       tx['title'] as String,
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                      style: textTheme.bodyMedium,
                                     ),
                                     SizedBox(height: 4.h),
                                     Text(
                                       tx['date'] as String,
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        color: colorScheme.onSurfaceVariant,
-                                      ),
+                                      style: textTheme.bodySmall,
                                     ),
                                   ],
                                 ),
                                 Text(
                                   '+${tx['points']} pts',
-                                  style: TextStyle(
-                                    fontSize: 15.sp,
+                                  style: textTheme.bodyMedium?.copyWith(
                                     color: colorScheme.primary,
-                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ],

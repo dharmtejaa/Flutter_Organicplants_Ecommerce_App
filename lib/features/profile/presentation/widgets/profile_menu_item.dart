@@ -68,7 +68,7 @@ class ProfileMenuItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(title, style: textTheme.titleMedium),
+                          Text(title, style: textTheme.titleMedium),  
                           if (subtitle != null) ...[
                             SizedBox(height: AppSizes.spaceXs),
                             Text(

@@ -193,13 +193,9 @@ class _ModernSectionHeader extends StatelessWidget {
         if (showClear && onClear != null)
           GestureDetector(
             onTap: onClear,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-              decoration: BoxDecoration(
-                color: colorScheme.errorContainer,
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: Text('Clear', style: textTheme.labelMedium),
+            child: Text(
+              'Clear',
+              style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
             ),
           ),
       ],

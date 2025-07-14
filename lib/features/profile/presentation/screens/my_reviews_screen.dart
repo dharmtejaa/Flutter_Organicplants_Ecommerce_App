@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 
 class MyReviewsScreen extends StatelessWidget {
   const MyReviewsScreen({super.key});
@@ -7,6 +8,7 @@ class MyReviewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     // Mock reviews data
     final reviews = [
       {
@@ -24,9 +26,16 @@ class MyReviewsScreen extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Reviews'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: Text('My Reviews', style: textTheme.headlineMedium),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body:
           reviews.isEmpty
@@ -40,35 +49,26 @@ class MyReviewsScreen extends StatelessWidget {
                       color: colorScheme.primary,
                     ),
                     SizedBox(height: 16.h),
-                    Text(
-                      'No reviews yet',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    Text('No reviews yet', style: textTheme.headlineMedium),
                     SizedBox(height: 8.h),
                     Text(
                       'You haven\'t reviewed any products yet.',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: textTheme.bodyMedium,
                     ),
                   ],
                 ),
               )
               : ListView.separated(
-                padding: EdgeInsets.all(16.w),
+                padding: AppSizes.paddingAllSm,
                 itemCount: reviews.length,
-                separatorBuilder: (_, __) => SizedBox(height: 16.h),
+                separatorBuilder: (_, __) => SizedBox(height: 10.h),
                 itemBuilder: (context, index) {
                   final review = reviews[index];
                   return Container(
-                    padding: EdgeInsets.all(16.w),
+                    padding: AppSizes.paddingAllMd,
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(12.r),
+                      borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                       boxShadow: [
                         BoxShadow(
                           color: colorScheme.shadow.withOpacity(0.06),
@@ -85,10 +85,7 @@ class MyReviewsScreen extends StatelessWidget {
                           children: [
                             Text(
                               review['product'] as String,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style: textTheme.titleLarge,
                             ),
                             Row(
                               children: List.generate(
@@ -98,7 +95,7 @@ class MyReviewsScreen extends StatelessWidget {
                                       ? Icons.star
                                       : Icons.star_border,
                                   color: Colors.amber,
-                                  size: 18.r,
+                                  size: AppSizes.iconSm,
                                 ),
                               ),
                             ),
@@ -107,18 +104,12 @@ class MyReviewsScreen extends StatelessWidget {
                         SizedBox(height: 8.h),
                         Text(
                           review['review'] as String,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: colorScheme.onSurface,
-                          ),
+                          style: textTheme.bodyMedium,
                         ),
                         SizedBox(height: 8.h),
                         Text(
                           review['date'] as String,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                          style: textTheme.bodySmall,
                         ),
                       ],
                     ),

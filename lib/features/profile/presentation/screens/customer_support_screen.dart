@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
 class CustomerSupportScreen extends StatefulWidget {
   const CustomerSupportScreen({super.key});
@@ -72,77 +75,60 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "Customer Support",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text("Customer Support", style: textTheme.headlineMedium),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllSm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header Section
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(24.w),
+              padding: AppSizes.paddingAllSm,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    colorScheme.primaryContainer,
-                    colorScheme.secondaryContainer,
-                  ],
+                  colors: [colorScheme.primaryContainer, colorScheme.surface],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(20.r),
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
               ),
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16.w),
+                    padding: AppSizes.paddingAllSm,
                     decoration: BoxDecoration(
-                      color: colorScheme.onPrimaryContainer.withOpacity(0.2),
+                      color: colorScheme.onPrimaryContainer.withValues(
+                        alpha: 0.2,
+                      ),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.support_agent_rounded,
-                      size: 32.r,
-                      color: colorScheme.onPrimaryContainer,
+                      size: AppSizes.iconLg,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  Text(
-                    "How can we help you?",
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: colorScheme.onPrimaryContainer,
-                    ),
-                  ),
+                  Text("How can we help you?", style: textTheme.headlineMedium),
                   SizedBox(height: 8.h),
                   Text(
                     "Our support team is here to assist you 24/7",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: colorScheme.onPrimaryContainer,
-                    ),
-                    textAlign: TextAlign.center,
+                    style: textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -151,14 +137,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
             SizedBox(height: 24.h),
 
             // Contact Options
-            Text(
-              "Contact Options",
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.onSurface,
-              ),
-            ),
+            Text("Contact Options", style: textTheme.titleLarge),
             SizedBox(height: 16.h),
 
             GridView.builder(
@@ -166,9 +145,9 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 12.w,
-                mainAxisSpacing: 12.h,
-                childAspectRatio: 1.1,
+                //crossAxisSpacing: 12.w,
+                //mainAxisSpacing: 12.h,
+                childAspectRatio: 0.8,
               ),
               itemCount: _supportOptions.length,
               itemBuilder: (context, index) {
@@ -179,14 +158,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
             SizedBox(height: 32.h),
 
             // Common Issues
-            Text(
-              "Common Issues",
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.onSurface,
-              ),
-            ),
+            Text("Common Issues", style: textTheme.titleLarge),
             SizedBox(height: 16.h),
 
             GridView.builder(
@@ -194,9 +166,9 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 12.w,
-                mainAxisSpacing: 12.h,
-                childAspectRatio: 1.2,
+                //crossAxisSpacing: 5.w,
+                //mainAxisSpacing: 5.h,
+                childAspectRatio: 1.1,
               ),
               itemCount: _commonIssues.length,
               itemBuilder: (context, index) {
@@ -209,10 +181,10 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
             // Support Hours
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(20.w),
+              padding: AppSizes.paddingAllSm,
               decoration: BoxDecoration(
                 color: colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(16.r),
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,17 +194,10 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                       Icon(
                         Icons.access_time_outlined,
                         color: colorScheme.primary,
-                        size: 24.r,
+                        size: AppSizes.iconMd,
                       ),
                       SizedBox(width: 12.w),
-                      Text(
-                        "Support Hours",
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.onSurface,
-                        ),
-                      ),
+                      Text("Support Hours", style: textTheme.titleLarge),
                     ],
                   ),
                   SizedBox(height: 16.h),
@@ -241,26 +206,23 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                   _buildSupportHourRow("Sunday", "10:00 AM - 4:00 PM"),
                   SizedBox(height: 16.h),
                   Container(
-                    padding: EdgeInsets.all(12.w),
+                    padding: AppSizes.paddingAllSm,
                     decoration: BoxDecoration(
                       color: colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(8.r),
+                      borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                     ),
                     child: Row(
                       children: [
                         Icon(
                           Icons.info_outline,
                           color: colorScheme.onPrimaryContainer,
-                          size: 20.r,
+                          size: AppSizes.iconSm,
                         ),
                         SizedBox(width: 8.w),
                         Expanded(
                           child: Text(
                             "Emergency support available 24/7 for urgent plant care issues",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: colorScheme.onPrimaryContainer,
-                            ),
+                            style: textTheme.bodySmall,
                           ),
                         ),
                       ],
@@ -279,44 +241,31 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
 
   Widget _buildContactOptionCard(Map<String, dynamic> option) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     return Card(
       elevation: 3,
-      shadowColor: colorScheme.shadow.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+      shadowColor: colorScheme.shadow.withValues(alpha: 0.1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+      ),
       child: InkWell(
         onTap: () => _handleContactOption(option),
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         child: Padding(
-          padding: EdgeInsets.all(16.w),
+          padding: AppSizes.paddingAllSm,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.all(12.w),
-                decoration: BoxDecoration(
-                  color: option['color'].withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Icon(option['icon'], color: option['color'], size: 28.r),
+              ProfileCustomIcon(
+                icon: option['icon'],
+                iconColor: option['color'],
               ),
               SizedBox(height: 12.h),
-              Text(
-                option['title'],
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              Text(option['title'], style: textTheme.titleLarge),
               SizedBox(height: 4.h),
               Text(
                 option['subtitle'],
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: textTheme.bodySmall,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 12.h),
@@ -324,14 +273,12 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color: option['color'],
-                  borderRadius: BorderRadius.circular(20.r),
+                  borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                 ),
                 child: Text(
                   option['action'],
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                  style: textTheme.labelMedium?.copyWith(
+                    color: colorScheme.onPrimary,
                   ),
                 ),
               ),
@@ -344,35 +291,26 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
 
   Widget _buildIssueCard(Map<String, dynamic> issue) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     return Card(
       elevation: 2,
-      shadowColor: colorScheme.shadow.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shadowColor: colorScheme.shadow.withValues(alpha: 0.1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+      ),
       child: InkWell(
         onTap: () => _handleIssueTap(issue),
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         child: Padding(
-          padding: EdgeInsets.all(16.w),
+          padding: AppSizes.paddingAllSm,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.all(10.w),
-                decoration: BoxDecoration(
-                  color: issue['color'].withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Icon(issue['icon'], color: issue['color'], size: 24.r),
-              ),
+              ProfileCustomIcon(icon: issue['icon'], iconColor: issue['color']),
               SizedBox(height: 12.h),
               Text(
                 issue['title'],
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
+                style: textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
             ],
@@ -383,25 +321,15 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
   }
 
   Widget _buildSupportHourRow(String day, String hours) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            day,
-            style: TextStyle(fontSize: 14.sp, color: colorScheme.onSurface),
-          ),
-          Text(
-            hours,
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: colorScheme.onSurface,
-            ),
-          ),
+          Text(day, style: textTheme.bodyMedium),
+          Text(hours, style: textTheme.bodyMedium),
         ],
       ),
     );
@@ -425,33 +353,22 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
   }
 
   void _handleIssueTap(Map<String, dynamic> issue) {
-    // TODO: Navigate to specific issue resolution
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Opening ${issue['title']} help...')),
-    );
+    CustomSnackBar.showInfo(context, 'Opening ${issue['title']} help...');
   }
 
   void _startLiveChat() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Starting live chat...')));
+    CustomSnackBar.showInfo(context, 'Starting live chat...');
   }
 
   void _sendEmail() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Opening email app...')));
+    CustomSnackBar.showInfo(context, 'Opening email app...');
   }
 
   void _makeCall() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Making call...')));
+    CustomSnackBar.showInfo(context, 'Making call...');
   }
 
   void _openWhatsApp() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Opening WhatsApp...')));
+    CustomSnackBar.showInfo(context, 'Opening WhatsApp...');
   }
 }

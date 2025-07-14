@@ -163,9 +163,7 @@ class _StoreScreenState extends State<StoreScreen>
       title: Text("Plant Store", style: textTheme.headlineMedium),
       centerTitle: true,
       actions: [
-        SearchButton(),
-        WishlistIconWithBadge(),
-        SizedBox(width: 8.w),
+        // SearchButton(),
         Stack(
           children: [
             IconButton(
@@ -187,6 +185,9 @@ class _StoreScreenState extends State<StoreScreen>
               ),
           ],
         ),
+        WishlistIconWithBadge(),
+        SizedBox(width: 8.w),
+
         SizedBox(width: 8.w),
         CartIconWithBadge(
           iconColor: colorScheme.onSurface,

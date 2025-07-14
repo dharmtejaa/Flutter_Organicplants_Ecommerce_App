@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
+import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
+import 'package:organicplants/shared/widgets/skip_button.dart';
 import 'package:provider/provider.dart';
-
-import 'package:organicplants/shared/logic/theme_provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
@@ -14,9 +17,9 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  final bool _pushNotifications = true;
-  final bool _emailNotifications = true;
-  final bool _smsNotifications = false;
+  // final bool _pushNotifications = true;
+  // final bool _emailNotifications = true;
+  // final bool _smsNotifications = false;
   bool _orderUpdates = true;
   bool _promotionalOffers = false;
   bool _newProducts = true;
@@ -28,41 +31,30 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "Notifications",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text("Notifications", style: textTheme.headlineMedium),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          TextButton(
+          SkipButton(
             onPressed: _savePreferences,
-            child: Text(
-              "Save",
-              style: TextStyle(
-                color: colorScheme.primary,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            text: "Save",
+            textColor: colorScheme.primary,
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllSm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,7 +68,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "General Notifications",
                         Icons.notifications_outlined,
                       ),
-                      SizedBox(height: 16.h),
+                      SizedBox(height: 12.h),
                       _buildNotificationTile(
                         "Push Notifications",
                         "Receive notifications on your device",
@@ -98,12 +90,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         provider.smsNotifications,
                         provider.toggleSmsNotifications,
                       ),
-                      SizedBox(height: 32.h),
+                      SizedBox(height: 24.h),
                       _buildSectionHeader(
                         "Order & Shopping",
                         Icons.shopping_bag_outlined,
                       ),
-                      SizedBox(height: 16.h),
+                      SizedBox(height: 12.h),
                       _buildNotificationTile(
                         "Order Updates",
                         "Get notified about order status changes",
@@ -125,12 +117,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         provider.priceDrops ?? false,
                         provider.togglePriceDrops ?? (v) {},
                       ),
-                      SizedBox(height: 32.h),
+                      SizedBox(height: 24.h),
                       _buildSectionHeader(
                         "Content & Updates",
                         Icons.content_copy_outlined,
                       ),
-                      SizedBox(height: 16.h),
+                      SizedBox(height: 12.h),
                       _buildNotificationTile(
                         "New Products",
                         "Be the first to know about new plant arrivals",
@@ -152,12 +144,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         provider.appUpdates ?? false,
                         provider.toggleAppUpdates ?? (v) {},
                       ),
-                      SizedBox(height: 32.h),
+                      SizedBox(height: 24.h),
                       _buildSectionHeader(
                         "Promotional",
                         Icons.local_offer_outlined,
                       ),
-                      SizedBox(height: 16.h),
+                      SizedBox(height: 12.h),
                       _buildNotificationTile(
                         "Promotional Offers",
                         "Special discounts and promotional offers",
@@ -169,14 +161,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   ),
             ),
 
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
 
             // Order & Shopping
             _buildSectionHeader(
               "Order & Shopping",
               Icons.shopping_bag_outlined,
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
 
             _buildNotificationTile(
               "Order Updates",
@@ -202,14 +194,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               (value) => setState(() => _priceDrops = value),
             ),
 
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
 
             // Content & Updates
             _buildSectionHeader(
               "Content & Updates",
               Icons.content_copy_outlined,
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
 
             _buildNotificationTile(
               "New Products",
@@ -235,11 +227,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               (value) => setState(() => _appUpdates = value),
             ),
 
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
 
             // Promotional
             _buildSectionHeader("Promotional", Icons.local_offer_outlined),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
 
             _buildNotificationTile(
               "Promotional Offers",
@@ -249,22 +241,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               (value) => setState(() => _promotionalOffers = value),
             ),
 
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
 
             // Notification Schedule
             _buildSectionHeader(
               "Notification Schedule",
               Icons.schedule_outlined,
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
 
             _buildScheduleCard(),
 
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
 
             // Quick Actions
             _buildSectionHeader("Quick Actions", Icons.flash_on_outlined),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
 
             _buildQuickActionButton(
               "Test Notifications",
@@ -285,18 +277,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   Widget _buildSectionHeader(String title, IconData icon) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Row(
       children: [
-        Icon(icon, color: colorScheme.primary, size: 24.r),
+        Icon(icon, color: colorScheme.primary, size: AppSizes.iconSm),
         SizedBox(width: 12.w),
         Text(
           title,
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
-            color: colorScheme.onSurface,
-          ),
+          style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w600),
         ),
       ],
     );
@@ -310,55 +299,54 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     ValueChanged<bool> onChanged,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
+      margin: EdgeInsets.only(bottom: 8.h),
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+      ),
       child: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllSm,
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(8.w),
+              padding: EdgeInsets.all(6.w),
               decoration: BoxDecoration(
                 color: colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(6.r),
               ),
               child: Icon(
                 icon,
-                color: colorScheme.onPrimaryContainer,
-                size: 20.r,
+                color: colorScheme.onSurface,
+                size: AppSizes.iconMd,
               ),
             ),
-            SizedBox(width: 16.w),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: colorScheme.onSurface,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
+                  Text(title, style: textTheme.bodyMedium),
+                  SizedBox(height: 2.h),
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: colorScheme.onSurfaceVariant,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: AppColors.mutedText,
                     ),
                   ),
                 ],
               ),
             ),
-            Switch(
-              value: value,
-              onChanged: onChanged,
-              activeColor: colorScheme.primary,
+            //switch widget
+            Transform.scale(
+              scale: 0.8,
+              child: Switch(
+                value: value,
+                onChanged: onChanged,
+                activeColor: colorScheme.primary,
+              ),
             ),
           ],
         ),
@@ -368,36 +356,23 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   Widget _buildScheduleCard() {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+      ),
       child: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllMd,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Icon(Icons.access_time, color: colorScheme.primary, size: 20.r),
-                SizedBox(width: 8.w),
-                Text(
-                  "Quiet Hours",
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
-              ],
-            ),
+            Text("Quiet Hours", style: textTheme.titleLarge),
             SizedBox(height: 12.h),
             Text(
               "Notifications will be silenced during quiet hours (10:00 PM - 8:00 AM)",
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: colorScheme.onSurfaceVariant,
-              ),
+              style: textTheme.bodyMedium,
             ),
             SizedBox(height: 16.h),
             Row(
@@ -427,18 +402,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   Widget _buildTimePicker(String label, String time, VoidCallback onTap) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-            color: colorScheme.onSurfaceVariant,
-          ),
-        ),
+        Text(label, style: textTheme.bodySmall),
         SizedBox(height: 8.h),
         InkWell(
           onTap: onTap,
@@ -452,17 +420,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  time,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
+                Text(time, style: textTheme.bodyMedium),
                 Icon(
                   Icons.access_time,
-                  size: 16.r,
+                  size: AppSizes.iconSm,
                   color: colorScheme.onSurfaceVariant,
                 ),
               ],
@@ -479,36 +440,28 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     VoidCallback onTap,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
+      margin: EdgeInsets.only(bottom: 10.h),
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+
+      color: colorScheme.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+      ),
+
       child: ListTile(
-        leading: Container(
-          padding: EdgeInsets.all(8.w),
-          decoration: BoxDecoration(
-            color: colorScheme.secondaryContainer,
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-          child: Icon(
-            icon,
-            color: colorScheme.onSecondaryContainer,
-            size: 20.r,
-          ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        leading: ProfileCustomIcon(
+          icon: icon,
+          iconColor: colorScheme.onSurface,
         ),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w500,
-            color: colorScheme.onSurface,
-          ),
-        ),
+        title: Text(title, style: textTheme.titleMedium),
         trailing: Icon(
           Icons.arrow_forward_ios,
-          size: 16.r,
-          color: colorScheme.onSurfaceVariant,
+          size: AppSizes.iconXs,
+          color: colorScheme.onSurface,
         ),
         onTap: onTap,
       ),
@@ -521,11 +474,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       initialTime: TimeOfDay(hour: 22, minute: 0),
     );
     if (picked != null) {
-      // TODO: Update start time
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Start time updated to ${picked.format(context)}'),
-        ),
+      CustomSnackBar.showInfo(
+        context,
+        "Start time updated to ${picked.format(context)}",
       );
     }
   }
@@ -536,11 +487,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       initialTime: TimeOfDay(hour: 8, minute: 0),
     );
     if (picked != null) {
-      // TODO: Update end time
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('End time updated to ${picked.format(context)}'),
-        ),
+      CustomSnackBar.showInfo(
+        context,
+        "End time updated to ${picked.format(context)}",
       );
     }
   }
@@ -558,23 +507,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     CustomDialog.showConfirmation(
       context: context,
       title: 'Clear All Notifications',
-      content: 'Are you sure you want to clear all notifications? This action cannot be undone.',
+      content:
+          'Are you sure you want to clear all notifications? This action cannot be undone.',
       confirmText: 'Clear All',
       cancelText: 'Cancel',
       icon: Icons.clear_all_outlined,
       iconColor: Theme.of(context).colorScheme.primary,
       onConfirm: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('All notifications cleared!')),
-        );
+        CustomSnackBar.showSuccess(context, "All notifications cleared!");
       },
     );
   }
 
   void _savePreferences() {
-    // TODO: Save notification preferences to backend
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Notification preferences saved successfully!')),
+    CustomSnackBar.showSuccess(
+      context,
+      "Notification preferences saved successfully!",
     );
     Navigator.pop(context);
   }

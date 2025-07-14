@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
 
 class RateAppScreen extends StatefulWidget {
   const RateAppScreen({super.key});
@@ -24,14 +26,22 @@ class _RateAppScreenState extends State<RateAppScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rate Our App'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: Text('Rate Our App', style: textTheme.headlineMedium),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(24.w),
+        padding: AppSizes.paddingAllSm,
         child: ValueListenableBuilder<bool>(
           valueListenable: _submitted,
           builder: (context, submitted, _) {
@@ -41,17 +51,14 @@ class _RateAppScreenState extends State<RateAppScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.check_circle,
+                        Icons.check_circle_outline_rounded,
                         color: colorScheme.primary,
                         size: 64.r,
                       ),
                       SizedBox(height: 16.h),
                       Text(
                         'Thank you for your feedback!',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.headlineMedium,
                       ),
                     ],
                   ),
@@ -61,10 +68,7 @@ class _RateAppScreenState extends State<RateAppScreen> {
                   children: [
                     Text(
                       'How would you rate our app?',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: textTheme.headlineMedium,
                     ),
                     SizedBox(height: 16.h),
                     ValueListenableBuilder<double>(
@@ -86,14 +90,13 @@ class _RateAppScreenState extends State<RateAppScreen> {
                       },
                     ),
                     SizedBox(height: 24.h),
-                    TextField(
+                    CustomTextField(
+                      hintText: 'Additional feedback (optional)',
                       controller: _controller,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        labelText: 'Additional feedback (optional)',
-                        border: OutlineInputBorder(),
-                      ),
+                      fillColor: colorScheme.surface,
+                      maxLines: 5,
                     ),
+
                     SizedBox(height: 24.h),
                     SizedBox(
                       width: double.infinity,

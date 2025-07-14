@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/shared/buttons/custombutton.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({super.key});
@@ -25,92 +29,79 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact Us'),
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
-        iconTheme: IconThemeData(color: colorScheme.onSurface),
+        title: Text('Contact Us', style: textTheme.headlineMedium),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(20.w),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'We would love to hear from you!',
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 24.h),
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: AppSizes.paddingAllSm,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'We would love to hear from you!',
+                  style: textTheme.headlineMedium,
                 ),
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Please enter your name'
-                            : null,
-              ),
-              SizedBox(height: 16.h),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
+                SizedBox(height: 24.h),
+                CustomTextField(
+                  width: double.infinity,
+                  controller: _nameController,
+                  hintText: 'Name',
+                  fillColor: colorScheme.surface,
+                  prefixIcon: Icons.person,
+                  keyboardType: TextInputType.name,
                 ),
-                keyboardType: TextInputType.emailAddress,
-                validator:
-                    (value) =>
-                        value == null || !value.contains('@')
-                            ? 'Enter a valid email'
-                            : null,
-              ),
-              SizedBox(height: 16.h),
-              TextFormField(
-                controller: _messageController,
-                decoration: InputDecoration(
-                  labelText: 'Message',
-                  border: OutlineInputBorder(),
+                SizedBox(height: 16.h),
+                CustomTextField(
+                  width: double.infinity,
+                  controller: _emailController,
+                  hintText: 'Email',
+                  fillColor: colorScheme.surface,
+                  prefixIcon: Icons.email,
+                  keyboardType: TextInputType.emailAddress,
                 ),
-                maxLines: 5,
-                validator:
-                    (value) =>
-                        value == null || value.isEmpty
-                            ? 'Please enter your message'
-                            : null,
-              ),
-              SizedBox(height: 24.h),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
+                SizedBox(height: 16.h),
+                CustomTextField(
+                  width: double.infinity,
+                  controller: _messageController,
+                  hintText: 'Message',
+                  fillColor: colorScheme.surface,
+                  //prefixIcon: Icons.message,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                ),
+                SizedBox(height: 24.h),
+                CustomButton(
+                  backgroundColor: colorScheme.primary,
+                  ontap: () {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Thank you for contacting us!')),
+                      CustomSnackBar.showSuccess(
+                        context,
+                        'Thank you for contacting us!',
                       );
                       _nameController.clear();
                       _emailController.clear();
                       _messageController.clear();
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
-                    padding: EdgeInsets.symmetric(vertical: 14.h),
-                    textStyle: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  child: Text('Submit'),
+                  text: 'Submit',
                 ),
-              ),
-            ],
+                SizedBox(height: 24.h),
+              ],
+            ),
           ),
         ),
       ),

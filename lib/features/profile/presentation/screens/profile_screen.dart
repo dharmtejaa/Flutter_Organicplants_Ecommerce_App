@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
@@ -41,20 +43,6 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Profile", style: textTheme.headlineMedium),
         centerTitle: true,
-        actions: [
-          WishlistIconWithBadge(),
-          SizedBox(width: 8.w),
-          CartIconWithBadge(
-            iconColor: colorScheme.onSurface,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CartScreen()),
-              );
-            },
-          ),
-          SizedBox(width: 10.w),
-        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -230,15 +218,13 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                            AppSizes.radiusXl,
+                          ),
                         ),
                         child: Text(
                           _getThemeModeText(themeProvider.themeMode),
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
+                          style: textTheme.labelMedium,
                         ),
                       );
                     },
@@ -262,15 +248,13 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                            AppSizes.radiusXl,
+                          ),
                         ),
                         child: Text(
                           provider.language,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
+                          style: textTheme.labelMedium,
                         ),
                       );
                     },
@@ -294,15 +278,13 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                            AppSizes.radiusXl,
+                          ),
                         ),
                         child: Text(
                           provider.currency,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
+                          style: textTheme.labelMedium,
                         ),
                       );
                     },
@@ -520,6 +502,7 @@ class ProfileScreen extends StatelessWidget {
   ) {
     final colorScheme = Theme.of(context).colorScheme;
     final isSelected = themeProvider.themeMode == mode;
+    final textTheme = Theme.of(context).textTheme;
 
     return ListTile(
       leading: Icon(
@@ -528,7 +511,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: TextStyle(
+        style: textTheme.bodyMedium?.copyWith(
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           color: isSelected ? colorScheme.primary : colorScheme.onSurface,
         ),
@@ -576,18 +559,19 @@ class ProfileScreen extends StatelessWidget {
   ) {
     final colorScheme = Theme.of(context).colorScheme;
     final isSelected = profileProvider.language == title;
+    final textTheme = Theme.of(context).textTheme;
 
     return ListTile(
       title: Text(
         title,
-        style: TextStyle(
+        style: textTheme.bodyMedium?.copyWith(
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           color: isSelected ? colorScheme.primary : colorScheme.onSurface,
         ),
       ),
       subtitle: Text(
         nativeName,
-        style: TextStyle(color: colorScheme.onSurfaceVariant),
+        style: textTheme.bodySmall?.copyWith(color: AppColors.mutedText),
       ),
       trailing:
           isSelected
@@ -642,18 +626,18 @@ class ProfileScreen extends StatelessWidget {
   ) {
     final colorScheme = Theme.of(context).colorScheme;
     final isSelected = profileProvider.currency == title;
-
+    final textTheme = Theme.of(context).textTheme;
     return ListTile(
       title: Text(
         title,
-        style: TextStyle(
+        style: textTheme.bodyMedium?.copyWith(
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           color: isSelected ? colorScheme.primary : colorScheme.onSurface,
         ),
       ),
       subtitle: Text(
         fullName,
-        style: TextStyle(color: colorScheme.onSurfaceVariant),
+        style: textTheme.bodySmall?.copyWith(color: AppColors.mutedText),
       ),
       trailing:
           isSelected

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_filter_service.dart';
 
 class ActiveFiltersWidget extends StatelessWidget {
@@ -38,8 +39,9 @@ class ActiveFiltersWidget extends StatelessWidget {
     if (currentFilters.containsKey(FilterType.price)) {
       final priceRange = currentFilters[FilterType.price] as RangeValues;
       // Only show price filter if it's different from the original range
-      final isModified = originalPriceRange == null || 
-          priceRange.start != originalPriceRange!.start || 
+      final isModified =
+          originalPriceRange == null ||
+          priceRange.start != originalPriceRange!.start ||
           priceRange.end != originalPriceRange!.end;
       if (isModified) {
         activeFilters.add({
@@ -88,18 +90,18 @@ class ActiveFiltersWidget extends StatelessWidget {
     if (activeFilters.isEmpty) return SizedBox.shrink();
 
     return Container(
-      padding: EdgeInsets.all(8.w),
+      padding: AppSizes.paddingAllSm,
       decoration: BoxDecoration(
         color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         border: Border.all(
           color: colorScheme.primary.withValues(alpha: 0.15),
-          width: 1,
+          width: 1.w,
         ),
         boxShadow: [
           BoxShadow(
             color: colorScheme.shadow.withValues(alpha: 0.06),
-            blurRadius: 8,
+            blurRadius: 8.r,
             offset: Offset(0, 2),
           ),
         ],

@@ -16,7 +16,7 @@ class CustomTextField extends StatelessWidget {
   final Color? fillColor;
   final int? maxLines;
   final int? maxLength;
-
+  final double? width;
   final ValueNotifier<bool>? isObscureNotifier; // 🔁 ValueNotifier
 
   const CustomTextField({
@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
     this.onTap,
     this.maxLength,
     this.maxLines,
-
+    this.width,
     this.fillColor,
     required this.controller,
     this.confirmPasswordController,
@@ -83,7 +83,7 @@ class CustomTextField extends StatelessWidget {
     final notifier = isObscureNotifier ?? ValueNotifier<bool>(obsecureText);
 
     return SizedBox(
-      width: 0.87.sw,
+      width: width ?? 0.87.sw,
       child: ValueListenableBuilder<bool>(
         valueListenable: notifier,
         builder: (_, isObscure, __) {

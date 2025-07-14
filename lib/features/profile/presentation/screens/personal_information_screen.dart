@@ -5,6 +5,7 @@ import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
+import 'package:organicplants/shared/widgets/skip_button.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
   const PersonalInformationScreen({super.key});
@@ -53,16 +54,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          TextButton(
+          SkipButton(
             onPressed: _saveChanges,
-            child: Text(
-              "Save",
-              style: textTheme.titleMedium?.copyWith(
-                color: colorScheme.primary,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            text: "Save",
+            textColor: colorScheme.primary,
           ),
         ],
       ),

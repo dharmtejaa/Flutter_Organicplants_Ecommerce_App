@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 
 class FAQScreen extends StatefulWidget {
   const FAQScreen({super.key});
@@ -87,23 +89,18 @@ class _FAQScreenState extends State<FAQScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "FAQ",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text("FAQ", style: textTheme.headlineMedium),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -111,7 +108,7 @@ class _FAQScreenState extends State<FAQScreen> {
         children: [
           // Search and Filter Section
           Container(
-            padding: EdgeInsets.all(16.w),
+            padding: AppSizes.paddingAllSm,
             child: Column(
               children: [
                 // Search Bar
@@ -119,28 +116,46 @@ class _FAQScreenState extends State<FAQScreen> {
                   controller: _searchController,
                   onChanged: _filterFaqs,
                   decoration: InputDecoration(
+                    contentPadding: AppSizes.paddingAllSm,
                     hintText: 'Search FAQs...',
                     prefixIcon: Icon(
                       Icons.search,
-                      color: colorScheme.onSurfaceVariant,
+                      color: colorScheme.onSurface,
+                      size: AppSizes.iconMd,
                     ),
+                    suffixIcon:
+                        _searchController.text.isEmpty
+                            ? null
+                            : IconButton(
+                              icon: Icon(
+                                Icons.clear,
+                                color: colorScheme.onSurface,
+                              ),
+                              iconSize: AppSizes.iconMd,
+                              onPressed: () {
+                                _searchController.clear();
+                              },
+                            ),
+                    filled: true,
+                    fillColor: colorScheme.surface,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide(color: colorScheme.outline),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(AppSizes.radiusXxl),
+                      ),
+                      borderSide: BorderSide(color: colorScheme.surface),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide(color: colorScheme.outline),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(AppSizes.radiusXxl),
+                      ),
+                      borderSide: BorderSide(color: colorScheme.surface),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide(
-                        color: colorScheme.primary,
-                        width: 2,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(AppSizes.radiusXxl),
                       ),
+                      borderSide: BorderSide(color: colorScheme.surface),
                     ),
-                    filled: true,
-                    fillColor: colorScheme.surfaceContainerHighest,
                   ),
                 ),
 
@@ -192,15 +207,10 @@ class _FAQScreenState extends State<FAQScreen> {
   Widget _buildCategoryChip(String category) {
     final colorScheme = Theme.of(context).colorScheme;
     final isSelected = _selectedCategory == category;
+    final textTheme = Theme.of(context).textTheme;
 
     return FilterChip(
-      label: Text(
-        category,
-        style: TextStyle(
-          color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
+      label: Text(category, style: textTheme.bodyLarge),
       selected: isSelected,
       onSelected: (selected) {
         setState(() {
@@ -211,45 +221,37 @@ class _FAQScreenState extends State<FAQScreen> {
       backgroundColor: colorScheme.surface,
       selectedColor: colorScheme.primary,
       checkmarkColor: colorScheme.onPrimary,
-      side: BorderSide(color: colorScheme.outline),
+
+      side: BorderSide(color: colorScheme.surface),
     );
   }
 
   Widget _buildEmptyState() {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(24.w),
+            padding: AppSizes.paddingAllSm,
             decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
+              color: colorScheme.surface,
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.search_off_outlined,
-              size: 64.r,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-          SizedBox(height: 24.h),
-          Text(
-            "No FAQs Found",
-            style: TextStyle(
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w600,
+              size: AppSizes.iconXl,
               color: colorScheme.onSurface,
             ),
           ),
+          SizedBox(height: 24.h),
+          Text("No FAQs Found", style: textTheme.headlineLarge),
           SizedBox(height: 8.h),
           Text(
             "Try adjusting your search or filter",
-            style: TextStyle(
-              fontSize: 16.sp,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: textTheme.headlineSmall,
             textAlign: TextAlign.center,
           ),
         ],
@@ -259,46 +261,34 @@ class _FAQScreenState extends State<FAQScreen> {
 
   Widget _buildFAQCard(Map<String, dynamic> faq) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
-      margin: EdgeInsets.only(bottom: 16.h),
-      elevation: 2,
-      shadowColor: colorScheme.shadow.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+      margin: EdgeInsets.only(bottom: 8.h),
+
+      //  elevation: 1,
+      shadowColor: colorScheme.shadow.withValues(alpha: 0.1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+      ),
+
       child: ExpansionTile(
-        leading: Container(
-          padding: EdgeInsets.all(8.w),
-          decoration: BoxDecoration(
-            color: _getCategoryColor(faq['category']).withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-          child: Icon(
-            faq['icon'],
-            color: _getCategoryColor(faq['category']),
-            size: 20.r,
-          ),
+        leading: ProfileCustomIcon(
+          icon: faq['icon'],
+          iconColor: _getCategoryColor(faq['category']),
         ),
-        title: Text(
-          faq['question'],
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: colorScheme.onSurface,
-          ),
-        ),
+        title: Text(faq['question'], style: textTheme.titleMedium),
         subtitle: Padding(
           padding: EdgeInsets.only(top: 4.h),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: _getCategoryColor(faq['category']).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12.r),
+              color: _getCategoryColor(faq['category']).withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
             ),
             child: Text(
               faq['category'],
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
+              style: textTheme.bodySmall?.copyWith(
                 color: _getCategoryColor(faq['category']),
               ),
             ),
@@ -307,14 +297,7 @@ class _FAQScreenState extends State<FAQScreen> {
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.w),
-            child: Text(
-              faq['answer'],
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: colorScheme.onSurfaceVariant,
-                height: 1.5,
-              ),
-            ),
+            child: Text(faq['answer'], style: textTheme.bodyMedium),
           ),
         ],
       ),

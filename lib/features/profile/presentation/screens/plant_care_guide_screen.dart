@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/features/profile/presentation/screens/customer_support_screen.dart';
+import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
+import 'package:organicplants/shared/buttons/custombutton.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
 class PlantCareGuideScreen extends StatefulWidget {
   const PlantCareGuideScreen({super.key});
@@ -87,25 +92,21 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "Plant Care Guide",
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text('Plant Care Guide', style: textTheme.headlineMedium),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+          icon: Icon(
+            Icons.arrow_back,
+            color: colorScheme.onSurface,
+            size: AppSizes.iconMd,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
+
         actions: [
           IconButton(
             icon: Icon(Icons.search, color: colorScheme.onSurface),
@@ -114,23 +115,21 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllSm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Welcome Section
             Container(
-              padding: EdgeInsets.all(20.w),
+              width: double.infinity,
+              padding: AppSizes.paddingAllSm,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    colorScheme.primaryContainer,
-                    colorScheme.secondaryContainer,
-                  ],
+                  colors: [colorScheme.primaryContainer, colorScheme.surface],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(16.r),
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,18 +138,14 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                     children: [
                       Icon(
                         Icons.eco_rounded,
-                        size: 32.r,
-                        color: colorScheme.onPrimaryContainer,
+                        size: AppSizes.iconLg,
+                        color: colorScheme.onSurface,
                       ),
                       SizedBox(width: 12.w),
                       Expanded(
                         child: Text(
                           "Welcome to Plant Care",
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w700,
-                            color: colorScheme.onPrimaryContainer,
-                          ),
+                          style: textTheme.headlineMedium,
                         ),
                       ),
                     ],
@@ -158,10 +153,7 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                   SizedBox(height: 8.h),
                   Text(
                     "Learn essential tips and tricks to keep your plants healthy and thriving. Whether you're a beginner or experienced gardener, we have everything you need to know.",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: colorScheme.onPrimaryContainer,
-                    ),
+                    style: textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -170,14 +162,7 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
             SizedBox(height: 24.h),
 
             // Care Guides Grid
-            Text(
-              "Care Topics",
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.onSurface,
-              ),
-            ),
+            Text("Care Topics", style: textTheme.titleLarge),
             SizedBox(height: 16.h),
 
             GridView.builder(
@@ -185,9 +170,9 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 12.w,
-                mainAxisSpacing: 12.h,
-                childAspectRatio: 0.85,
+                //crossAxisSpacing: 12.w,
+                //mainAxisSpacing: 12.h,
+                childAspectRatio: 0.9,
               ),
               itemCount: _careGuides.length,
               itemBuilder: (context, index) {
@@ -212,43 +197,29 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
 
   Widget _buildCareGuideCard(Map<String, dynamic> guide) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+      ),
       child: InkWell(
         onTap: () => _showCareGuideDetails(guide),
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         child: Padding(
-          padding: EdgeInsets.all(16.w),
+          padding: AppSizes.paddingAllSm,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.all(12.w),
-                decoration: BoxDecoration(
-                  color: guide['color'].withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Icon(guide['icon'], color: guide['color'], size: 24.r),
-              ),
+              ProfileCustomIcon(icon: guide['icon'], iconColor: guide['color']),
               SizedBox(height: 12.h),
-              Text(
-                guide['title'],
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
-              ),
+              Text(guide['title'], style: textTheme.titleLarge),
               SizedBox(height: 4.h),
               Text(
                 guide['description'],
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: colorScheme.onSurfaceVariant,
-                ),
-                maxLines: 2,
+                style: textTheme.labelMedium,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               Spacer(),
@@ -256,16 +227,14 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                 children: [
                   Text(
                     "Learn More",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
+                    style: textTheme.labelMedium?.copyWith(
                       color: guide['color'],
                     ),
                   ),
                   Spacer(),
                   Icon(
                     Icons.arrow_forward_ios,
-                    size: 12.r,
+                    size: AppSizes.iconsUxs,
                     color: guide['color'],
                   ),
                 ],
@@ -279,27 +248,27 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
 
   Widget _buildQuickTipsSection() {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+      ),
       child: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllSm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(Icons.lightbulb_outline, color: Colors.amber, size: 24.r),
-                SizedBox(width: 8.w),
-                Text(
-                  "Quick Tips",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
+                Icon(
+                  Icons.lightbulb_outline,
+                  color: Colors.amber,
+                  size: AppSizes.iconMd,
                 ),
+                SizedBox(width: 8.w),
+                Text("Quick Tips", style: textTheme.titleLarge),
               ],
             ),
             SizedBox(height: 16.h),
@@ -317,48 +286,46 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
 
   Widget _buildQuickTip(String tip) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.h),
+      padding: AppSizes.paddingAllSm,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.check_circle_outline, size: 16.r, color: Colors.green),
-          SizedBox(width: 8.w),
-          Expanded(
-            child: Text(
-              tip,
-              style: TextStyle(fontSize: 14.sp, color: colorScheme.onSurface),
-            ),
+          Icon(
+            Icons.check_circle_outline,
+            size: AppSizes.iconXs,
+            color: colorScheme.primary,
           ),
+          SizedBox(width: 8.w),
+          Expanded(child: Text(tip, style: textTheme.bodyMedium)),
         ],
       ),
     );
   }
 
   Widget _buildEmergencyCareSection() {
+    final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+      ),
       child: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllSm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(Icons.emergency_outlined, color: Colors.red, size: 24.r),
-                SizedBox(width: 8.w),
-                Text(
-                  "Emergency Care",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
+                Icon(
+                  Icons.emergency_outlined,
+                  color: Colors.red,
+                  size: AppSizes.iconSm,
                 ),
+                SizedBox(width: 8.w),
+                Text("Emergency Care", style: textTheme.titleLarge),
               ],
             ),
             SizedBox(height: 16.h),
@@ -378,14 +345,11 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
               Icons.bug_report_outlined,
             ),
             SizedBox(height: 16.h),
-            ElevatedButton(
-              onPressed: _contactSupport,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-                minimumSize: Size(double.infinity, 48.h),
-              ),
-              child: Text("Contact Plant Expert"),
+            CustomButton(
+              backgroundColor: colorScheme.primary,
+              text: "Contact Plant Expert",
+              textColor: colorScheme.onPrimary,
+              ontap: _contactSupport,
             ),
           ],
         ),
@@ -395,34 +359,22 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
 
   Widget _buildEmergencyTip(String title, String solution, IconData icon) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Padding(
       padding: EdgeInsets.only(bottom: 12.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20.r, color: Colors.red),
+          Icon(icon, size: AppSizes.iconSm, color: Colors.red),
           SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
+                Text(title, style: textTheme.bodyMedium),
                 SizedBox(height: 2.h),
-                Text(
-                  solution,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
+                Text(solution, style: textTheme.labelMedium),
               ],
             ),
           ),
@@ -433,7 +385,7 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
 
   void _showCareGuideDetails(Map<String, dynamic> guide) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -443,7 +395,9 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
             height: MediaQuery.of(context).size.height * 0.8,
             decoration: BoxDecoration(
               color: colorScheme.surface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(AppSizes.radiusLg),
+              ),
             ),
             child: Column(
               children: [
@@ -460,20 +414,12 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
 
                 // Header
                 Padding(
-                  padding: EdgeInsets.all(20.w),
+                  padding: AppSizes.paddingAllSm,
                   child: Row(
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(12.w),
-                        decoration: BoxDecoration(
-                          color: guide['color'].withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Icon(
-                          guide['icon'],
-                          color: guide['color'],
-                          size: 24.r,
-                        ),
+                      ProfileCustomIcon(
+                        icon: guide['icon'],
+                        iconColor: guide['color'],
                       ),
                       SizedBox(width: 16.w),
                       Expanded(
@@ -482,18 +428,12 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                           children: [
                             Text(
                               guide['title'],
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w700,
-                                color: colorScheme.onSurface,
-                              ),
+                              style: textTheme.headlineMedium,
                             ),
+                            SizedBox(height: 4.h),
                             Text(
                               guide['description'],
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: colorScheme.onSurfaceVariant,
-                              ),
+                              style: textTheme.bodyMedium,
                             ),
                           ],
                         ),
@@ -505,11 +445,11 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                 // Content
                 Expanded(
                   child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    padding: AppSizes.paddingAllSm,
                     itemCount: guide['content'].length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: EdgeInsets.only(bottom: 12.h),
+                        padding: AppSizes.paddingAllSm,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -526,10 +466,7 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                             Expanded(
                               child: Text(
                                 guide['content'][index],
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  color: colorScheme.onSurface,
-                                ),
+                                style: textTheme.bodyMedium,
                               ),
                             ),
                           ],
@@ -545,16 +482,13 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
   }
 
   void _searchCareGuides() {
-    // TODO: Implement search functionality
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Search feature coming soon!')));
+    CustomSnackBar.showInfo(context, "Search feature coming soon!");
   }
 
   void _contactSupport() {
-    // TODO: Navigate to support screen
-    ScaffoldMessenger.of(
+    Navigator.push(
       context,
-    ).showSnackBar(SnackBar(content: Text('Contacting plant expert...')));
+      MaterialPageRoute(builder: (context) => CustomerSupportScreen()),
+    );
   }
 }
