@@ -16,6 +16,7 @@ class NoResultsFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     // ignore: non_constant_identifier_names
     final colorScheme = Theme.of(context).colorScheme;
     // double height = MediaQuery.of(context).size.height;
@@ -34,24 +35,19 @@ class NoResultsFound extends StatelessWidget {
                 color: colorScheme.error,
               ),
         ),
-        SizedBox(height: 0.01.h),
+        SizedBox(height: 10.h),
         Text(
           title,
-          style: TextStyle(
-            fontSize: AppSizes.fontXl,
-            //fontWeight: FontWeight.bold,
-            color: colorScheme.onSurface,
-          ),
+          style: textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 0.01.h),
+        SizedBox(height: 10.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Text(
             message,
-            style: TextStyle(
-              fontSize: AppSizes.fontMd,
-              color: Colors.grey.shade600,
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurface.withOpacity(0.6),
             ),
             textAlign: TextAlign.center,
           ),

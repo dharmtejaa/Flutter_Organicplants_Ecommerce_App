@@ -73,6 +73,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   message:
                       "Try searching by name, type, or benefit — like 'Peace Lily', 'Indoor', or 'Pet Friendly'.",
                 )
+              else if (!hasSearches && !hasViewed)
+                NoResultsFound(
+                  imagePath: "assets/No_Plant_Found.png",
+                  title: "Search a plant",
+                  message:
+                      "Try searching by name, type, or benefit — like 'Peace Lily', 'Indoor', or 'Pet Friendly'.",
+                )
               else
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
+import 'package:organicplants/features/profile/presentation/screens/terms_of_service_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/privacy_policy_screen.dart';
+import 'package:flutter/gestures.dart';
 
 // ignore: camel_case_types
 class RichTextLine extends StatelessWidget {
@@ -19,6 +22,16 @@ class RichTextLine extends StatelessWidget {
             style: textTheme.labelMedium?.copyWith(
               color: AppTheme.primaryColor,
             ),
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TermsOfServiceScreen(),
+                      ),
+                    );
+                  },
           ),
           TextSpan(text: "and ", style: textTheme.labelMedium),
           TextSpan(
@@ -26,6 +39,16 @@ class RichTextLine extends StatelessWidget {
             style: textTheme.labelMedium?.copyWith(
               color: AppTheme.primaryColor,
             ),
+            recognizer:
+                TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PrivacyPolicyScreen(),
+                      ),
+                    );
+                  },
           ),
         ],
       ),
