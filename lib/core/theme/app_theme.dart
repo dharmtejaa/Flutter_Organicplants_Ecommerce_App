@@ -16,9 +16,18 @@ class AppTheme {
   static const Color accentColor = Color(0xFF66BB6A);
 
   // ——— Enhanced Light palette ———
-  static final Color lightBackground = Color(0xFFFAFAFA);
-  static const Color lightCard = Colors.white;
+  static final Color lightBackground = Color(0xFFF0F0F0);
+  static const Color lightCard = Color(0xFFFFFFFF);
   static const Color lightSurface = Color(0xFFF5F5F5);
+  static const Color onLightSurface = Color(0xFF1A1A1A);
+  static const Color lightInverseSurface = Color(0xFFF5F5F5);
+  static const Color onLightInverseSurface = Color(0xFF1A1A1A);
+  static const Color lightOnSurface = Color(0xFF1A1A1A);
+  static const Color lightOnSurfaceVariant = Color(0xFF666666);
+  static const Color lightOnBackground = Color(0xFF1A1A1A);
+  static const Color lightOnCard = Color(0xFF1A1A1A);
+  static const Color lightOnError = Color(0xFFD32F2F);
+  static const Color lightError = Color(0xFFFFCDD2);
 
   // ——— Enhanced Dark palette ———
   static final Color darkBackground = Color(0xF0000000);
@@ -26,11 +35,11 @@ class AppTheme {
 
   static const Color darkCard = Color(0xFF1E1E1E);
 
-  static const Color surface = Color(0xFF1a1a1a);
-  static const Color onSurface = Color(0xFFDCDCDC);
+  static const Color darksurface = Color(0xFF1a1a1a);
+  static const Color onDarkSurface = Color(0xFFDCDCDC);
 
-  static const Color inverseSurface = Color(0xff1e1e1e);
-  static const Color onInverseSurface = Color(0xffDCDCDC);
+  static const Color darkinverseSurface = Color(0xff1e1e1e);
+  static const Color onDarkInverseSurface = Color(0xffDCDCDC);
 
   // ——— Accents ———
   static final Color offerColor = Color(0xFFE53935);
@@ -57,9 +66,11 @@ class AppTheme {
       secondaryContainer: secondaryColor.withValues(alpha: 0.1),
       surface: lightSurface,
       surfaceContainerHighest: lightBackground,
-      onPrimary: Colors.white,
-      onSecondary: Color(0xFF1A1A1A),
-      onSurface: Color(0xFF1A1A1A),
+      inverseSurface: lightInverseSurface,
+      onInverseSurface: onLightInverseSurface,
+      onPrimary: onPrimary,
+      onSecondary: onLightSurface,
+      onSurface: onLightSurface,
       onSurfaceVariant: Color(0xFF666666),
       error: Color(0xFFD32F2F),
       onError: Colors.white,
@@ -190,7 +201,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: onPrimary,
         //elevation: 2,
         //shadowColor: primaryColor.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -245,6 +256,26 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
     ),
+
+    // Enhanced ExpansionTile Theme
+    expansionTileTheme: ExpansionTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide.none,
+      ),
+      collapsedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide.none,
+      ),
+      backgroundColor: Colors.transparent,
+      collapsedBackgroundColor: Colors.transparent,
+      iconColor: primaryColor,
+      collapsedIconColor: primaryColor,
+      textColor: Color(0xFF1A1A1A),
+      collapsedTextColor: Color(0xFF1A1A1A),
+    ),
+
+    dividerColor: Colors.transparent,
   );
 
   // ---------------------------------------------------------------------------
@@ -265,10 +296,10 @@ class AppTheme {
       primaryContainer: primaryContainer,
       secondary: secondaryColor,
       secondaryContainer: secondaryColor.withValues(alpha: 0.2),
-      surface: surface,
-      onSurface: onSurface,
-      inverseSurface: inverseSurface,
-      onInverseSurface: onSurface,
+      surface: darksurface,
+      onSurface: onDarkSurface,
+      inverseSurface: darkinverseSurface,
+      onInverseSurface: onDarkInverseSurface,
 
       //onSurfaceContainer: Color(0xFF1E1E1E),
       onSecondary: Colors.white70,
@@ -276,22 +307,22 @@ class AppTheme {
       error: Color(0xFFEF5350),
       onError: Colors.black,
       outline: Color(0xff6a6a6a),
-      outlineVariant: surface,
+      outlineVariant: darksurface,
     ),
 
     // Enhanced AppBar Theme
     appBarTheme: AppBarTheme(
       backgroundColor: darkBackground,
-      foregroundColor: Colors.white,
+      foregroundColor: onPrimary,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       titleTextStyle: TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.w700,
-        color: primaryColor,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w500,
+        color: onPrimary,
         fontFamily: 'Poppins',
       ),
-      iconTheme: IconThemeData(color: Colors.white, size: 24),
+      iconTheme: IconThemeData(color: onPrimary, size: AppSizes.iconMd),
     ),
 
     // Enhanced Card Theme
@@ -313,13 +344,13 @@ class AppTheme {
       displayMedium: TextStyle(
         fontSize: 26.sp,
         fontWeight: FontWeight.w500,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       displaySmall: TextStyle(
         fontSize: 24.sp,
         fontWeight: FontWeight.w400,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       headlineLarge: TextStyle(
@@ -331,38 +362,38 @@ class AppTheme {
       headlineMedium: TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w500,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       headlineSmall: TextStyle(
         fontSize: 18.sp,
         fontWeight: FontWeight.w400,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       titleLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       titleMedium: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       titleSmall: TextStyle(
         fontSize: 12.sp,
         fontWeight: FontWeight.w400,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       //used in search feild
       bodyLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: onSurface,
+        color: onDarkBackground, //Colors.white,
         fontFamily: 'Poppins',
       ),
       bodyMedium: TextStyle(
@@ -374,7 +405,7 @@ class AppTheme {
       bodySmall: TextStyle(
         fontSize: 12.sp,
         fontWeight: FontWeight.w400,
-        color: onSurface,
+        color: onDarkBackground, //Colors.white,
         fontFamily: 'Poppins',
       ),
       //onPrimary content for pirmary content
@@ -389,14 +420,14 @@ class AppTheme {
       labelMedium: TextStyle(
         fontSize: 12.sp,
         fontWeight: FontWeight.w500,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
       //used for very small labels like term and policy
       labelSmall: TextStyle(
         fontSize: 10.sp,
         fontWeight: FontWeight.w400,
-        color: onSurface,
+        color: onDarkSurface,
         fontFamily: 'Poppins',
       ),
     ),
@@ -461,5 +492,25 @@ class AppTheme {
         fontFamily: 'Poppins',
       ),
     ),
+
+    // Enhanced ExpansionTile Theme
+    expansionTileTheme: ExpansionTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        side: BorderSide.none,
+      ),
+      collapsedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        side: BorderSide.none,
+      ),
+      backgroundColor: Colors.transparent,
+      collapsedBackgroundColor: Colors.transparent,
+      iconColor: primaryColor,
+      collapsedIconColor: primaryColor,
+      textColor: onDarkSurface,
+      collapsedTextColor: onDarkSurface,
+    ),
+
+    //dividerColor: Colors.transparent,
   );
 }

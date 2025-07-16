@@ -21,7 +21,7 @@ class PlantCategory extends StatefulWidget {
 }
 
 class _PlantCategoryState extends State<PlantCategory> {
-  final Map<FilterType, dynamic> _filters = {};
+  late final ValueNotifier<Map<FilterType, dynamic>> _filtersNotifier;
   final List<FilterType> _enabledFilters = [
     FilterType.sort,
     FilterType.price,
@@ -33,16 +33,19 @@ class _PlantCategoryState extends State<PlantCategory> {
   @override
   void initState() {
     super.initState();
+    _filtersNotifier = ValueNotifier<Map<FilterType, dynamic>>({});
     _initializeFilters();
   }
 
   void _initializeFilters() {
     // Set default filters
-    _filters[FilterType.sort] = 'Name A-Z';
+    final filters = <FilterType, dynamic>{};
+    filters[FilterType.sort] = 'Name A-Z';
     _originalPriceRange = PlantFilterService.calculatePriceRange(widget.plant);
-    _filters[FilterType.price] = _originalPriceRange;
-    _filters[FilterType.size] = 'All Sizes';
-    _filters[FilterType.careLevel] = 'All Levels';
+    filters[FilterType.price] = _originalPriceRange;
+    filters[FilterType.size] = 'All Sizes';
+    filters[FilterType.careLevel] = 'All Levels';
+    _filtersNotifier.value = filters;
   }
 
   void _showFilterBottomSheet() {
@@ -56,13 +59,10 @@ class _PlantCategoryState extends State<PlantCategory> {
       builder: (context) {
         return FilterBottomSheet(
           plants: widget.plant,
-          currentFilters: _filters,
+          currentFilters: _filtersNotifier.value,
           enabledFilters: _enabledFilters,
           onApplyFilters: (filters) {
-            setState(() {
-              _filters.clear();
-              _filters.addAll(filters);
-            });
+            _filtersNotifier.value = Map<FilterType, dynamic>.from(filters);
           },
         );
       },
@@ -72,12 +72,12 @@ class _PlantCategoryState extends State<PlantCategory> {
   List<AllPlantsModel> getFilteredPlants() {
     return PlantFilterService.getFilteredPlants(
       plants: widget.plant,
-      filters: _filters,
+      filters: _filtersNotifier.value,
     );
   }
 
   bool _hasActiveFilters() {
-    return _filters.entries.any((entry) {
+    return _filtersNotifier.value.entries.any((entry) {
       final key = entry.key;
       final value = entry.value;
       if (key == FilterType.sort) {
@@ -156,9 +156,9 @@ class _PlantCategoryState extends State<PlantCategory> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Active filters widget
-              SizedBox(height: 10.h),
+              //SizedBox(height: 10.h),
               ValueListenableBuilder<Map<FilterType, dynamic>>(
-                valueListenable: ValueNotifier(_filters),
+                valueListenable: _filtersNotifier,
                 builder: (context, filters, child) {
                   final filteredPlants = getFilteredPlants();
                   final hasActiveFilters = _hasActiveFilters();
@@ -168,12 +168,13 @@ class _PlantCategoryState extends State<PlantCategory> {
                       // Active filters widget
                       if (hasActiveFilters && filteredPlants.isNotEmpty)
                         ActiveFiltersWidget(
-                          currentFilters: _filters,
+                          currentFilters: _filtersNotifier.value,
                           plantCount: filteredPlants.length,
                           onClearAll: () {
-                            setState(() {
-                              _filters.clear();
-                            });
+                            _filtersNotifier
+                                .value = Map<FilterType, dynamic>.from(
+                              _filtersNotifier.value,
+                            )..clear();
                           },
                           showPlantCount: true,
                           originalPriceRange: _originalPriceRange,
@@ -185,7 +186,7 @@ class _PlantCategoryState extends State<PlantCategory> {
               SizedBox(height: 10.h),
               Expanded(
                 child: ValueListenableBuilder<Map<FilterType, dynamic>>(
-                  valueListenable: ValueNotifier(_filters),
+                  valueListenable: _filtersNotifier,
                   builder: (context, filters, child) {
                     final filteredPlants = getFilteredPlants();
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
@@ -65,8 +64,8 @@ class CustomButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (icon != null)
-              Icon(icon, size: AppSizes.iconMd, color: colorScheme.onPrimary),
+            // if (icon != null)
+            //   Icon(icon, size: AppSizes.iconMd, color: colorScheme.onPrimary),
             if (imagePath != null)
               Padding(
                 padding: EdgeInsets.only(right: 8.w),
@@ -88,9 +87,16 @@ class CustomButton extends StatelessWidget {
                 ),
               ),
             if (text != null && !isLoading)
-              Padding(
-                padding: EdgeInsets.only(left: 8.w),
-                child: Text(text!, style: textTheme.labelLarge),
+              Row(
+                children: [
+                  if (icon != null)
+                    Icon(
+                      icon,
+                      size: AppSizes.iconMd,
+                      color: colorScheme.onPrimary,
+                    ),
+                  Text(text!, style: textTheme.labelLarge),
+                ],
               ),
             // Center(
             //   child:

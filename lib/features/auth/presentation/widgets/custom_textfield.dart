@@ -8,7 +8,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool obsecureText;
   final IconData? prefixIcon;
-  final IconData? suffixIcon;
+  final dynamic suffixIcon; // IconData or Widget
   final bool? readOnly;
   final TextEditingController controller;
   final TextEditingController? confirmPasswordController;
@@ -116,7 +116,11 @@ class CustomTextField extends StatelessWidget {
                           isObscure ? Icons.visibility : Icons.visibility_off,
                         ),
                       )
-                      : null,
+                      : (suffixIcon != null
+                          ? (suffixIcon is Widget
+                              ? suffixIcon
+                              : Icon(suffixIcon, size: AppSizes.iconSm))
+                          : null),
               filled: true,
               fillColor:
                   (fillColor ??

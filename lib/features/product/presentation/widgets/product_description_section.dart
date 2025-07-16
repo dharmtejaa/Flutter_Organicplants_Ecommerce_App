@@ -3,6 +3,39 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 
+class ProductDescriptionSection extends StatelessWidget {
+  final AllPlantsModel plants;
+
+  const ProductDescriptionSection({super.key, required this.plants});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Padding(
+      padding: AppSizes.paddingAllSm,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Description', style: textTheme.titleLarge),
+          Padding(
+            padding: AppSizes.paddingAllSm,
+            child: Text(
+              plants.description?.intro ?? '',
+              style: textTheme.bodyMedium,
+              maxLines: 5,
+            ),
+          ),
+          SizedBox(height: 12.h),
+          Text('Product Details', style: textTheme.titleLarge),
+          PlantDetails(plant: plants),
+        ],
+      ),
+    );
+  }
+}
+
 class PlantDetails extends StatelessWidget {
   final AllPlantsModel plant;
 
@@ -10,7 +43,7 @@ class PlantDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final colorScheme = Theme.of(context).colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final Map<String, String> detailsMap = {
       "Plant Name": plant.commonName ?? '',
       "Scientific Name": plant.scientificName ?? '',
@@ -28,32 +61,23 @@ class PlantDetails extends StatelessWidget {
       "Benefits": _listToString(plant.benefits),
       "How to plant": plant.howToPlant ?? '',
     };
-
-    return ExpansionTile(
-      tilePadding: EdgeInsets.only(),
-      expandedAlignment: Alignment.centerLeft,
-      expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      shape: Border(),
-      title: Text(
-        "Product Details",
-        style: Theme.of(context).textTheme.titleMedium,
+    return Padding(
+      padding: AppSizes.paddingAllSm,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...detailsMap.entries.map(
+            (entry) => _buildRow(entry.key, entry.value),
+          ),
+        ],
       ),
-      //tilePadding: EdgeInsets.zero,
-      childrenPadding: EdgeInsets.symmetric(
-        vertical: 8.h,
-        horizontal: AppSizes.paddingSm,
-      ),
-      children:
-          detailsMap.entries
-              .map((entry) => _buildRow(entry.key, entry.value))
-              .toList(),
     );
   }
 
   Widget _buildRow(String label, String value) {
     return Builder(
       builder: (context) {
-        final colorScheme = Theme.of(context).colorScheme;
+        final textTheme = Theme.of(context).textTheme;
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 6.h),
           child: Row(
@@ -61,18 +85,15 @@ class PlantDetails extends StatelessWidget {
             children: [
               Expanded(
                 flex: 3,
-                child: Text(
-                  label,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+                child: Text(label, style: textTheme.bodyMedium),
               ),
               Expanded(
                 flex: 3,
                 child: Text(
                   value,
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  maxLines: 1,
+                  style: textTheme.bodyMedium,
+                  maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
