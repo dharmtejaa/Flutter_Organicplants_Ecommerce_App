@@ -6,12 +6,9 @@ import 'package:organicplants/features/profile/presentation/screens/my_reviews_s
 import 'package:organicplants/features/profile/presentation/screens/order_history_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/personal_information_screen.dart';
 import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
-import 'package:organicplants/shared/widgets/skip_button.dart';
-
 import 'package:provider/provider.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
-import 'dart:ui';
 import 'package:organicplants/core/theme/app_shadows.dart';
 
 class ProfileHeaderCard extends StatelessWidget {

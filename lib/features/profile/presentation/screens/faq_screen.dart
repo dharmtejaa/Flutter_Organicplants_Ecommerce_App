@@ -70,14 +70,17 @@ class _FAQScreenState extends State<FAQScreen> {
     },
   ];
 
-  String _selectedCategory = 'All';
+  // Refactor to use ValueNotifier
+  final ValueNotifier<String> _selectedCategory = ValueNotifier('All');
   final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> _filteredFaqs = [];
+  final ValueNotifier<List<Map<String, dynamic>>> _filteredFaqs = ValueNotifier(
+    [],
+  );
 
   @override
   void initState() {
     super.initState();
-    _filteredFaqs = _faqs;
+    _filterFaqs(_searchController.text);
   }
 
   @override
@@ -188,16 +191,20 @@ class _FAQScreenState extends State<FAQScreen> {
 
           // FAQ List
           Expanded(
-            child:
-                _filteredFaqs.isEmpty
+            child: ValueListenableBuilder<List<Map<String, dynamic>>>(
+              valueListenable: _filteredFaqs,
+              builder: (context, filteredFaqs, _) {
+                return filteredFaqs.isEmpty
                     ? _buildEmptyState()
                     : ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      itemCount: _filteredFaqs.length,
+                      itemCount: filteredFaqs.length,
                       itemBuilder: (context, index) {
-                        return _buildFAQCard(_filteredFaqs[index]);
+                        return _buildFAQCard(filteredFaqs[index]);
                       },
-                    ),
+                    );
+              },
+            ),
           ),
         ],
       ),
@@ -206,23 +213,24 @@ class _FAQScreenState extends State<FAQScreen> {
 
   Widget _buildCategoryChip(String category) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isSelected = _selectedCategory == category;
     final textTheme = Theme.of(context).textTheme;
-
-    return FilterChip(
-      label: Text(category, style: textTheme.bodyLarge),
-      selected: isSelected,
-      onSelected: (selected) {
-        setState(() {
-          _selectedCategory = category;
-          _filterFaqs(_searchController.text);
-        });
+    return ValueListenableBuilder<String>(
+      valueListenable: _selectedCategory,
+      builder: (context, selectedCategory, _) {
+        final isSelected = selectedCategory == category;
+        return FilterChip(
+          label: Text(category, style: textTheme.bodyLarge),
+          selected: isSelected,
+          onSelected: (selected) {
+            _selectedCategory.value = category;
+            _filterFaqs(_searchController.text);
+          },
+          backgroundColor: colorScheme.surface,
+          selectedColor: colorScheme.primary,
+          checkmarkColor: colorScheme.onPrimary,
+          side: BorderSide(color: colorScheme.surface),
+        );
       },
-      backgroundColor: colorScheme.surface,
-      selectedColor: colorScheme.primary,
-      checkmarkColor: colorScheme.onPrimary,
-
-      side: BorderSide(color: colorScheme.surface),
     );
   }
 
@@ -324,17 +332,15 @@ class _FAQScreenState extends State<FAQScreen> {
   }
 
   void _filterFaqs(String query) {
-    setState(() {
-      _filteredFaqs =
-          _faqs.where((faq) {
-            final matchesSearch =
-                faq['question'].toLowerCase().contains(query.toLowerCase()) ||
-                faq['answer'].toLowerCase().contains(query.toLowerCase());
-            final matchesCategory =
-                _selectedCategory == 'All' ||
-                faq['category'] == _selectedCategory;
-            return matchesSearch && matchesCategory;
-          }).toList();
-    });
+    _filteredFaqs.value =
+        _faqs.where((faq) {
+          final matchesSearch =
+              faq['question'].toLowerCase().contains(query.toLowerCase()) ||
+              faq['answer'].toLowerCase().contains(query.toLowerCase());
+          final matchesCategory =
+              _selectedCategory.value == 'All' ||
+              faq['category'] == _selectedCategory.value;
+          return matchesSearch && matchesCategory;
+        }).toList();
   }
 }

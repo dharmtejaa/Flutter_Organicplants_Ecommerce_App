@@ -11,8 +11,8 @@ class AddressesScreen extends StatefulWidget {
 }
 
 class _AddressesScreenState extends State<AddressesScreen> {
-  // Placeholder address data
-  List<Map<String, String>> addresses = [
+  // Refactor addresses to ValueNotifier
+  final ValueNotifier<List<Map<String, String>>> addresses = ValueNotifier([
     {
       'name': 'John Doe',
       'address': '123 Green Street, Garden Colony, Mumbai, 400001',
@@ -25,7 +25,7 @@ class _AddressesScreenState extends State<AddressesScreen> {
       'phone': '+91 91234 56789',
       'type': 'Work',
     },
-  ];
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,10 @@ class _AddressesScreenState extends State<AddressesScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(AppSizes.paddingMd),
-        child:
-            addresses.isEmpty
+        child: ValueListenableBuilder<List<Map<String, String>>>(
+          valueListenable: addresses,
+          builder: (context, addressList, _) {
+            return addressList.isEmpty
                 ? Center(
                   child: Text(
                     'No addresses found. Add a new address!',
@@ -47,10 +49,10 @@ class _AddressesScreenState extends State<AddressesScreen> {
                   ),
                 )
                 : ListView.separated(
-                  itemCount: addresses.length,
+                  itemCount: addressList.length,
                   separatorBuilder: (context, index) => SizedBox(height: 10.h),
                   itemBuilder: (context, index) {
-                    final addr = addresses[index];
+                    final addr = addressList[index];
                     return Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
@@ -133,9 +135,12 @@ class _AddressesScreenState extends State<AddressesScreen> {
                                     color: colorScheme.error,
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      addresses.removeAt(index);
-                                    });
+                                    final updated =
+                                        List<Map<String, String>>.from(
+                                          addressList,
+                                        );
+                                    updated.removeAt(index);
+                                    addresses.value = updated;
                                   },
                                   tooltip: 'Delete',
                                 ),
@@ -146,7 +151,9 @@ class _AddressesScreenState extends State<AddressesScreen> {
                       ),
                     );
                   },
-                ),
+                );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
@@ -155,9 +162,9 @@ class _AddressesScreenState extends State<AddressesScreen> {
             MaterialPageRoute(builder: (context) => AddEditAddressScreen()),
           );
           if (newAddress != null && newAddress is Map<String, String>) {
-            setState(() {
-              addresses.add(newAddress);
-            });
+            final updated = List<Map<String, String>>.from(addresses.value);
+            updated.add(newAddress);
+            addresses.value = updated;
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text('Address added!')));

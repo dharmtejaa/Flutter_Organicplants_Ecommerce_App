@@ -162,8 +162,8 @@ class _NavBarIcon extends StatelessWidget {
       decoration:
           selected
               ? BoxDecoration(
-                color: colorScheme.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12.r),
+                color: colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(AppSizes.radiusSm),
               )
               : null,
       child: child,

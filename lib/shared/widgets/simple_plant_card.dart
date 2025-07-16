@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
-import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
@@ -67,7 +66,19 @@ class SimplePlantCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surface,
           borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
-          boxShadow: AppShadows.productCardShadow(context),
+          boxShadow: [
+            BoxShadow(
+              color:
+                  colorScheme.brightness == Brightness.dark
+                      // ignore: deprecated_member_use
+                      ? Colors.black.withOpacity(0.1)
+                      // ignore: deprecated_member_use
+                      : Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
 
         child: Stack(
@@ -140,8 +151,9 @@ class SimplePlantCard extends StatelessWidget {
                                 ),
                                 SizedBox(width: 2.w),
                                 Text(
-                                  plant.rating?.toStringAsFixed(1) ?? '0.0',
-                                  style: textTheme.labelSmall?.copyWith(
+                                  '${plant.rating?.toStringAsFixed(1) ?? '0.0'}',
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -180,7 +192,7 @@ class SimplePlantCard extends StatelessWidget {
                             context,
                           ).textTheme.bodySmall?.copyWith(
                             decoration: TextDecoration.lineThrough,
-                            color: colorScheme.onSurfaceVariant,
+                            color: AppColors.mutedText,
                           ),
                         ),
                       if (originalPrice > offerPrice) SizedBox(width: 0.02.sw),
@@ -192,9 +204,8 @@ class SimplePlantCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 2.h),
-                  if (originalPrice > offerPrice)
-                    Text('$discount% off', style: textTheme.bodySmall),
+                  SizedBox(height: 0.002.sh),
+                  Text('$discount% off', style: textTheme.bodySmall),
                 ],
               ),
             ),

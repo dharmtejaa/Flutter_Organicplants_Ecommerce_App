@@ -24,14 +24,21 @@ class FilterBottomSheet extends StatefulWidget {
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
-  late Map<FilterType, dynamic> _filters;
-  late RangeValues _priceRange;
-  late RangeValues _ratingRange;
-  late String _selectedSort;
-  late String _selectedSize;
-  late String _selectedCareLevel;
-  late List<String> _selectedAttributes;
-  late bool _inStockOnly;
+  // Replace all local state variables with ValueNotifier
+  final ValueNotifier<String> _selectedSort = ValueNotifier('Name A-Z');
+  final ValueNotifier<String> _selectedSize = ValueNotifier('All Sizes');
+  final ValueNotifier<String> _selectedCareLevel = ValueNotifier('All Levels');
+  final ValueNotifier<Set<String>> _selectedAttributes = ValueNotifier(
+    <String>{},
+  );
+  final ValueNotifier<bool> _inStockOnly = ValueNotifier(false);
+  final ValueNotifier<RangeValues> _priceRange = ValueNotifier(
+    RangeValues(0, 2000),
+  );
+  final ValueNotifier<RangeValues> _ratingRange = ValueNotifier(
+    RangeValues(0.0, 5.0),
+  );
+
   late double _minPrice;
   late double _maxPrice;
 
@@ -80,24 +87,23 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   }
 
   void _initializeFilters() {
-    _filters = Map.from(widget.currentFilters);
-
-    // Initialize with defaults or current values
-    _selectedSort = _filters[FilterType.sort] ?? 'Name A-Z';
-    _selectedSize = _filters[FilterType.size] ?? 'All Sizes';
-    _selectedCareLevel = _filters[FilterType.careLevel] ?? 'All Levels';
-    _selectedAttributes = List<String>.from(
-      _filters[FilterType.attributes] ?? [],
+    _selectedSort.value = widget.currentFilters[FilterType.sort] ?? 'Name A-Z';
+    _selectedSize.value = widget.currentFilters[FilterType.size] ?? 'All Sizes';
+    _selectedCareLevel.value =
+        widget.currentFilters[FilterType.careLevel] ?? 'All Levels';
+    _selectedAttributes.value = Set<String>.from(
+      widget.currentFilters[FilterType.attributes] ?? [],
     );
-    _inStockOnly = _filters[FilterType.stock] ?? false;
+    _inStockOnly.value = widget.currentFilters[FilterType.stock] ?? false;
 
     // Price range
-    final priceRange = _filters[FilterType.price] as RangeValues?;
-    _priceRange = priceRange ?? RangeValues(0, 2000);
+    final priceRange = widget.currentFilters[FilterType.price] as RangeValues?;
+    _priceRange.value = priceRange ?? RangeValues(0, 2000);
 
     // Rating range
-    final ratingRange = _filters[FilterType.rating] as RangeValues?;
-    _ratingRange = ratingRange ?? RangeValues(0.0, 5.0);
+    final ratingRange =
+        widget.currentFilters[FilterType.rating] as RangeValues?;
+    _ratingRange.value = ratingRange ?? RangeValues(0.0, 5.0);
   }
 
   void _calculatePriceRange() {
@@ -123,49 +129,47 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     }
 
     // Ensure current price range is within bounds
-    if (_priceRange.start < _minPrice ||
-        _priceRange.start > _maxPrice ||
-        _priceRange.end < _minPrice ||
-        _priceRange.end > _maxPrice) {
-      _priceRange = RangeValues(_minPrice, _maxPrice);
+    if (_priceRange.value.start < _minPrice ||
+        _priceRange.value.start > _maxPrice ||
+        _priceRange.value.end < _minPrice ||
+        _priceRange.value.end > _maxPrice) {
+      _priceRange.value = RangeValues(_minPrice, _maxPrice);
     }
   }
 
   void _clearAllFilters() {
-    setState(() {
-      _selectedSort = 'Name A-Z';
-      _selectedSize = 'All Sizes';
-      _selectedCareLevel = 'All Levels';
-      _selectedAttributes.clear();
-      _inStockOnly = false;
-      _priceRange = RangeValues(_minPrice, _maxPrice);
-      _ratingRange = RangeValues(0.0, 5.0);
-    });
+    _selectedSort.value = 'Name A-Z';
+    _selectedSize.value = 'All Sizes';
+    _selectedCareLevel.value = 'All Levels';
+    _selectedAttributes.value = <String>{};
+    _inStockOnly.value = false;
+    _priceRange.value = RangeValues(_minPrice, _maxPrice);
+    _ratingRange.value = RangeValues(0.0, 5.0);
   }
 
   void _applyFilters() {
     final filters = <FilterType, dynamic>{};
 
     if (widget.enabledFilters.contains(FilterType.sort)) {
-      filters[FilterType.sort] = _selectedSort;
+      filters[FilterType.sort] = _selectedSort.value;
     }
     if (widget.enabledFilters.contains(FilterType.price)) {
-      filters[FilterType.price] = _priceRange;
+      filters[FilterType.price] = _priceRange.value;
     }
     if (widget.enabledFilters.contains(FilterType.rating)) {
-      filters[FilterType.rating] = _ratingRange;
+      filters[FilterType.rating] = _ratingRange.value;
     }
     if (widget.enabledFilters.contains(FilterType.size)) {
-      filters[FilterType.size] = _selectedSize;
+      filters[FilterType.size] = _selectedSize.value;
     }
     if (widget.enabledFilters.contains(FilterType.careLevel)) {
-      filters[FilterType.careLevel] = _selectedCareLevel;
+      filters[FilterType.careLevel] = _selectedCareLevel.value;
     }
     if (widget.enabledFilters.contains(FilterType.attributes)) {
-      filters[FilterType.attributes] = _selectedAttributes;
+      filters[FilterType.attributes] = _selectedAttributes.value.toList();
     }
     if (widget.enabledFilters.contains(FilterType.stock)) {
-      filters[FilterType.stock] = _inStockOnly;
+      filters[FilterType.stock] = _inStockOnly.value;
     }
 
     widget.onApplyFilters(filters);
@@ -197,7 +201,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               height: 4,
               margin: EdgeInsets.only(top: 12.h, bottom: 8.h),
               decoration: BoxDecoration(
-                color: colorScheme.onSurface.withValues(alpha: 0.2),
+                color: colorScheme.onSurfaceVariant,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -227,7 +231,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.close, size: 20),
+                        icon: Icon(
+                          Icons.close,
+                          size: AppSizes.iconMd,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                         onPressed: () => Navigator.pop(context),
                         padding: EdgeInsets.zero,
                         constraints: BoxConstraints(
@@ -252,10 +260,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     if (widget.enabledFilters.contains(FilterType.sort)) ...[
                       _buildSectionHeader('Sort by', Icons.sort),
                       SizedBox(height: 6.h),
-                      _buildCompactChips(
-                        _sortOptions,
-                        _selectedSort,
-                        (value) => setState(() => _selectedSort = value),
+                      ValueListenableBuilder<String>(
+                        valueListenable: _selectedSort,
+                        builder:
+                            (context, selectedSort, _) => _buildCompactChips(
+                              _sortOptions,
+                              selectedSort,
+                              (value) => _selectedSort.value = value,
+                            ),
                       ),
                       SizedBox(height: 16.h),
                     ],
@@ -280,10 +292,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     if (widget.enabledFilters.contains(FilterType.size)) ...[
                       _buildSectionHeader('Plant Size', Icons.height),
                       SizedBox(height: 6.h),
-                      _buildCompactChips(
-                        _sizeOptions,
-                        _selectedSize,
-                        (value) => setState(() => _selectedSize = value),
+                      ValueListenableBuilder<String>(
+                        valueListenable: _selectedSize,
+                        builder:
+                            (context, selectedSize, _) => _buildCompactChips(
+                              _sizeOptions,
+                              selectedSize,
+                              (value) => _selectedSize.value = value,
+                            ),
                       ),
                       SizedBox(height: 16.h),
                     ],
@@ -297,10 +313,15 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         Icons.lightbulb_outline,
                       ),
                       SizedBox(height: 6.h),
-                      _buildCompactChips(
-                        _careLevelOptions,
-                        _selectedCareLevel,
-                        (value) => setState(() => _selectedCareLevel = value),
+                      ValueListenableBuilder<String>(
+                        valueListenable: _selectedCareLevel,
+                        builder:
+                            (context, selectedCareLevel, _) =>
+                                _buildCompactChips(
+                                  _careLevelOptions,
+                                  selectedCareLevel,
+                                  (value) => _selectedCareLevel.value = value,
+                                ),
                       ),
                       SizedBox(height: 16.h),
                     ],
@@ -314,7 +335,12 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         Icons.local_florist,
                       ),
                       SizedBox(height: 6.h),
-                      _buildAttributeChips(),
+                      ValueListenableBuilder<Set<String>>(
+                        valueListenable: _selectedAttributes,
+                        builder:
+                            (context, selectedAttributes, _) =>
+                                _buildAttributeChips(),
+                      ),
                       SizedBox(height: 16.h),
                     ],
 
@@ -354,7 +380,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                           ),
                         ),
                       ),
-                      child: Text('Cancel', style: textTheme.bodyMedium),
+                      child: Text('Cancel', style: textTheme.labelLarge),
                     ),
                   ),
                   SizedBox(width: 12.w),
@@ -380,7 +406,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
     return Row(
       children: [
-        Icon(icon, size: 16, color: colorScheme.primary),
+        Icon(icon, size: AppSizes.iconMd, color: colorScheme.primary),
         SizedBox(width: 6.w),
         Text(
           title,
@@ -464,7 +490,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '₹${_priceRange.start.toInt()}',
+                '₹${_priceRange.value.start.toInt()}',
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -477,7 +503,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 ),
               ),
               Text(
-                '₹${_priceRange.end.toInt()}',
+                '₹${_priceRange.value.end.toInt()}',
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -487,13 +513,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           SizedBox(height: 8.h),
           RangeSlider(
-            values: _priceRange,
+            values: _priceRange.value,
             activeColor: colorScheme.primary,
             inactiveColor: colorScheme.primary.withValues(alpha: 0.2),
             min: _minPrice,
             max: _maxPrice,
             divisions: 40,
-            onChanged: (values) => setState(() => _priceRange = values),
+            onChanged: (values) => _priceRange.value = values,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -538,7 +564,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${_ratingRange.start.toStringAsFixed(1)}★',
+                '${_ratingRange.value.start.toStringAsFixed(1)}★',
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -551,7 +577,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 ),
               ),
               Text(
-                '${_ratingRange.end.toStringAsFixed(1)}★',
+                '${_ratingRange.value.end.toStringAsFixed(1)}★',
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -561,13 +587,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           SizedBox(height: 8.h),
           RangeSlider(
-            values: _ratingRange,
+            values: _ratingRange.value,
             activeColor: colorScheme.primary,
             inactiveColor: colorScheme.primary.withValues(alpha: 0.2),
             min: 0.0,
             max: 5.0,
             divisions: 10,
-            onChanged: (values) => setState(() => _ratingRange = values),
+            onChanged: (values) => _ratingRange.value = values,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -600,7 +626,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       runSpacing: 6.h,
       children:
           _attributeOptions.map((attribute) {
-            final isSelected = _selectedAttributes.contains(attribute);
+            final isSelected = _selectedAttributes.value.contains(attribute);
             return FilterChip(
               label: Text(
                 attribute,
@@ -613,13 +639,15 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               selected: isSelected,
               onSelected: (selected) {
-                setState(() {
-                  if (selected) {
-                    _selectedAttributes.add(attribute);
-                  } else {
-                    _selectedAttributes.remove(attribute);
-                  }
-                });
+                if (selected) {
+                  _selectedAttributes.value = Set<String>.from(
+                    _selectedAttributes.value,
+                  )..add(attribute);
+                } else {
+                  _selectedAttributes.value = Set<String>.from(
+                    _selectedAttributes.value,
+                  )..remove(attribute);
+                }
               },
               backgroundColor: colorScheme.surfaceContainerHighest,
               selectedColor: colorScheme.primary,
@@ -675,8 +703,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             ),
           ),
           Switch(
-            value: _inStockOnly,
-            onChanged: (value) => setState(() => _inStockOnly = value),
+            value: _inStockOnly.value,
+            onChanged: (value) => _inStockOnly.value = value,
             activeColor: colorScheme.primary,
           ),
         ],

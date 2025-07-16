@@ -15,33 +15,42 @@ class PaymentMethodsScreen extends StatefulWidget {
 }
 
 class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
-  final List<Map<String, dynamic>> _paymentMethods = [
-    {
-      'id': '1',
-      'type': 'Credit Card',
-      'name': 'Visa ending in 1234',
-      'icon': Icons.credit_card,
-      'color': Colors.blue,
-      'isDefault': true,
-      'expiry': '12/25',
-    },
-    {
-      'id': '2',
-      'type': 'UPI',
-      'name': 'john.doe@upi',
-      'icon': Icons.account_balance_wallet,
-      'color': Colors.purple,
-      'isDefault': false,
-    },
-    {
-      'id': '3',
-      'type': 'Net Banking',
-      'name': 'HDFC Bank',
-      'icon': Icons.account_balance,
-      'color': Colors.green,
-      'isDefault': false,
-    },
-  ];
+  // Refactor _paymentMethods to ValueNotifier
+  final ValueNotifier<List<Map<String, dynamic>>> _paymentMethods =
+      ValueNotifier([]);
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize _paymentMethods with your data
+    _paymentMethods.value = [
+      {
+        'id': '1',
+        'type': 'Credit Card',
+        'name': 'Visa ending in 1234',
+        'icon': Icons.credit_card,
+        'color': Colors.blue,
+        'isDefault': true,
+        'expiry': '12/25',
+      },
+      {
+        'id': '2',
+        'type': 'UPI',
+        'name': 'john.doe@upi',
+        'icon': Icons.account_balance_wallet,
+        'color': Colors.purple,
+        'isDefault': false,
+      },
+      {
+        'id': '3',
+        'type': 'Net Banking',
+        'name': 'HDFC Bank',
+        'icon': Icons.account_balance,
+        'color': Colors.green,
+        'isDefault': false,
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,29 +66,36 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child:
-                _paymentMethods.isEmpty
-                    ? _buildEmptyState()
-                    : ListView.builder(
-                      padding: EdgeInsets.all(AppSizes.paddingSm),
-                      itemCount: _paymentMethods.length,
-                      itemBuilder: (context, index) {
-                        return _buildPaymentMethodCard(_paymentMethods[index]);
-                      },
-                    ),
-          ),
-          CustomButton(
-            width: 350.w,
-            backgroundColor: colorScheme.primary,
-            text: "Add Payment Method",
-            ontap: _showAddPaymentMethodDialog,
-            icon: Icons.add,
-          ),
-          SizedBox(height: AppSizes.paddingMd),
-        ],
+      body: ValueListenableBuilder<List<Map<String, dynamic>>>(
+        valueListenable: _paymentMethods,
+        builder: (context, paymentMethods, _) {
+          return Column(
+            children: [
+              Expanded(
+                child:
+                    paymentMethods.isEmpty
+                        ? _buildEmptyState()
+                        : ListView.builder(
+                          padding: EdgeInsets.all(AppSizes.paddingSm),
+                          itemCount: paymentMethods.length,
+                          itemBuilder: (context, index) {
+                            return _buildPaymentMethodCard(
+                              paymentMethods[index],
+                            );
+                          },
+                        ),
+              ),
+              CustomButton(
+                width: 350.w,
+                backgroundColor: colorScheme.primary,
+                text: "Add Payment Method",
+                ontap: _showAddPaymentMethodDialog,
+                icon: Icons.add,
+              ),
+              SizedBox(height: AppSizes.paddingMd),
+            ],
+          );
+        },
       ),
     );
   }
@@ -243,11 +259,13 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
           content:
               'Are you sure you want to delete ${paymentMethod['name']}? This action cannot be undone.',
           onDelete: () {
-            setState(() {
-              _paymentMethods.removeWhere(
-                (method) => method['id'] == paymentMethod['id'],
-              );
-            });
+            final updated = List<Map<String, dynamic>>.from(
+              _paymentMethods.value,
+            );
+            updated.removeWhere(
+              (method) => method['id'] == paymentMethod['id'],
+            );
+            _paymentMethods.value = updated;
             CustomSnackBar.showSuccess(
               context,
               'Payment method deleted successfully!',
@@ -336,11 +354,11 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   }
 
   void setDefaultPaymentMethod(Map<String, dynamic> paymentMethod) {
-    setState(() {
-      for (var method in _paymentMethods) {
-        method['isDefault'] = method['id'] == paymentMethod['id'];
-      }
-    });
+    final updated = List<Map<String, dynamic>>.from(_paymentMethods.value);
+    for (var method in updated) {
+      method['isDefault'] = method['id'] == paymentMethod['id'];
+    }
+    _paymentMethods.value = updated;
     CustomSnackBar.showInfo(context, 'Payment method set as default!');
   }
 
@@ -348,57 +366,4 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     // TODO: Navigate to edit payment method screen
     CustomSnackBar.showInfo(context, 'Edit payment method form coming soon!');
   }
-
-  //   void deletePaymentMethod(Map<String, dynamic> paymentMethod) {
-  //     final colorScheme = Theme.of(context).colorScheme;
-  //     final textTheme = Theme.of(context).textTheme;
-
-  //     showDialog(
-  //       context: context,
-  //       builder:
-  //           (context) => AlertDialog(
-  //             title: Text(
-  //               'Delete Payment Method',
-  //               style: textTheme.headlineSmall?.copyWith(
-  //                 color: colorScheme.error,
-  //               ),
-  //             ),
-  //             content: Text(
-  //               'Are you sure you want to delete this payment method?',
-  //               style: textTheme.bodyMedium,
-  //             ),
-  //             actions: [
-  //               TextButton(
-  //                 onPressed: () => Navigator.pop(context),
-  //                 child: Text(
-  //                   'Cancel',
-  //                   style: textTheme.labelLarge?.copyWith(
-  //                     color: colorScheme.primary,
-  //                   ),
-  //                 ),
-  //               ),
-  //               ElevatedButton(
-  //                 onPressed: () {
-  //                   setState(() {
-  //                     _paymentMethods.removeWhere(
-  //                       (method) => method['id'] == paymentMethod['id'],
-  //                     );
-  //                   });
-  //                   Navigator.pop(context);
-  //                   CustomSnackBar.showInfo(
-  //                     context,
-  //                     'Payment method deleted successfully!',
-  //                   );
-  //                 },
-  //                 style: ElevatedButton.styleFrom(
-  //                   backgroundColor: colorScheme.error,
-  //                   foregroundColor: colorScheme.onError,
-  //                 ),
-  //                 child: Text('Delete', style: textTheme.labelLarge),
-  //               ),
-  //             ],
-  //           ),
-  //     );
-  //   }
-  // }
 }

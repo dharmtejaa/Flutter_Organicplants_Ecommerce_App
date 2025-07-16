@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/product/logic/carousel_provider.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:provider/provider.dart';

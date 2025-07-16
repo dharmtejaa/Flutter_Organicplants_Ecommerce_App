@@ -357,7 +357,7 @@ class AppTheme {
       ),
       displayMedium: TextStyle(
         fontSize: 26.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),

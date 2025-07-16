@@ -17,7 +17,7 @@ class AddToCartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = colorScheme.brightness == Brightness.dark;
+    // final isDark = colorScheme.brightness == Brightness.dark;
 
     return GestureDetector(
       onTap: () {
@@ -51,12 +51,7 @@ class AddToCartButton extends StatelessWidget {
             bottomRight: Radius.circular(AppSizes.radiusLg),
           ),
           //shape: BoxShape.circle,
-          color:
-              isDark
-                  // ignore: deprecated_member_use
-                  ? Colors.grey.withOpacity(0.2)
-                  // ignore: deprecated_member_use
-                  : colorScheme.primaryContainer,
+          color: colorScheme.primaryContainer,
         ),
         child: Icon(
           Icons.shopping_cart_outlined,

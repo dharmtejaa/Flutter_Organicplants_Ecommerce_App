@@ -103,7 +103,7 @@ class CustomSnackBar {
         margin: AppSizes.marginSymmetricMd,
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         ),
         duration: duration,
         dismissDirection: DismissDirection.horizontal,
@@ -119,7 +119,7 @@ class CustomSnackBar {
               child: Icon(
                 icon,
                 color: colorScheme.onPrimary,
-                size: AppSizes.iconMd,
+                size: AppSizes.iconSm,
               ),
             ),
 
@@ -138,14 +138,14 @@ class CustomSnackBar {
                             colorScheme,
                             context,
                           ),
-                          style: textTheme.bodySmall,
+                          style: textTheme.bodyMedium,
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       )
                       : Text(
                         message,
-                        style: textTheme.bodySmall,
+                        style: textTheme.bodyMedium,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -157,28 +157,17 @@ class CustomSnackBar {
               GestureDetector(
                 onTap: onAction,
                 child: Container(
-                  padding: AppSizes.paddingSymmetricMd,
+                  padding: AppSizes.paddingSymmetricSm,
                   decoration: BoxDecoration(
                     color: colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                     boxShadow: AppShadows.elevatedShadow(context),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        actionLabel,
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: backgroundColor,
-                        ),
-                      ),
-                      SizedBox(width: AppSizes.spaceXs),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: backgroundColor,
-                        size: AppSizes.iconXs,
-                      ),
-                    ],
+                  child: Text(
+                    actionLabel,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: backgroundColor,
+                    ),
                   ),
                 ),
               ),
@@ -202,7 +191,7 @@ class CustomSnackBar {
     final int startIndex = lowerMessage.indexOf(lowerPlantName);
 
     if (startIndex == -1) {
-      spans.add(TextSpan(text: message, style: textTheme.bodySmall));
+      spans.add(TextSpan(text: message, style: textTheme.bodyMedium));
       return spans;
     }
     // Add text before the plant name
@@ -210,7 +199,7 @@ class CustomSnackBar {
       spans.add(
         TextSpan(
           text: message.substring(0, startIndex),
-          style: textTheme.bodySmall,
+          style: textTheme.bodyMedium,
         ),
       );
     }
@@ -218,7 +207,7 @@ class CustomSnackBar {
     spans.add(
       TextSpan(
         text: message.substring(startIndex, startIndex + plantName.length),
-        style: textTheme.bodySmall,
+        style: textTheme.bodyMedium,
       ),
     );
 
@@ -227,7 +216,7 @@ class CustomSnackBar {
       spans.add(
         TextSpan(
           text: message.substring(startIndex + plantName.length),
-          style: textTheme.bodySmall,
+          style: textTheme.bodyMedium,
         ),
       );
     }

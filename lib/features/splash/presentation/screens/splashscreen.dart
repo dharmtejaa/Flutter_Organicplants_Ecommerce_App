@@ -5,7 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_services.dart';
-import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 
 class Splashscreen extends StatefulWidget {

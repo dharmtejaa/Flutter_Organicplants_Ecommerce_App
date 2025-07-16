@@ -34,7 +34,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     'phone': '+91 98765 43210',
   };
 
-  String selectedPayment = 'Cash on Delivery';
+  // Refactor selectedPayment to ValueNotifier
+  final ValueNotifier<String> selectedPayment = ValueNotifier('');
   final List<String> paymentMethods = [
     'Cash on Delivery',
     'UPI',
@@ -154,8 +155,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         itemCount: cartItems.length,
         separatorBuilder:
             (_, __) =>
-                // ignore: deprecated_member_use
-                Divider(height: 1, color: colorScheme.outline.withOpacity(0.2)),
+            // ignore: deprecated_member_use
+            Divider(height: 1, color: colorScheme.outline.withOpacity(0.2)),
         itemBuilder: (context, index) {
           final item = cartItems[index];
           return ListTile(
@@ -256,21 +257,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Widget _buildPaymentMethods(ColorScheme colorScheme) {
-    return Column(
-      children:
-          paymentMethods.map((method) {
-            return RadioListTile<String>(
-              value: method,
-              groupValue: selectedPayment,
-              onChanged: (value) {
-                setState(() {
-                  selectedPayment = value!;
-                });
-              },
-              title: Text(method),
-              activeColor: colorScheme.primary,
-            );
-          }).toList(),
+    return ValueListenableBuilder<String>(
+      valueListenable: selectedPayment,
+      builder: (context, payment, _) {
+        return Column(
+          children:
+              paymentMethods.map((method) {
+                return RadioListTile<String>(
+                  value: method,
+                  groupValue: payment,
+                  onChanged: (value) {
+                    if (value != null) selectedPayment.value = value;
+                  },
+                  title: Text(method),
+                  activeColor: colorScheme.primary,
+                );
+              }).toList(),
+        );
+      },
     );
   }
 

@@ -141,7 +141,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                 SizedBox(width: 6.w),
                 Icon(
                   Icons.arrow_forward_rounded,
-                  size: AppSizes.radiusLg,
+                  size: AppSizes.iconXs,
                   color: colorScheme.onSurface,
                 ),
               ],

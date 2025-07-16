@@ -10,32 +10,42 @@ class ReturnsRefundsScreen extends StatefulWidget {
 }
 
 class _ReturnsRefundsScreenState extends State<ReturnsRefundsScreen> {
-  final List<Map<String, dynamic>> _returns = [
-    {
-      'id': 'RET001',
-      'orderId': 'ORD003',
-      'date': '2024-01-10',
-      'status': 'Refunded',
-      'reason': 'Damaged during delivery',
-      'items': [
-        {'name': 'Peace Lily', 'quantity': 1, 'price': '₹899'},
-      ],
-      'refundAmount': '₹899',
-      'refundMethod': 'Original Payment Method',
-    },
-    {
-      'id': 'RET002',
-      'orderId': 'ORD002',
-      'date': '2024-01-05',
-      'status': 'Processing',
-      'reason': 'Wrong item received',
-      'items': [
-        {'name': 'Snake Plant', 'quantity': 1, 'price': '₹1,099'},
-      ],
-      'refundAmount': '₹1,099',
-      'refundMethod': 'Store Credit',
-    },
-  ];
+  // Refactor return items to ValueNotifier
+  final ValueNotifier<List<Map<String, dynamic>>> _returnItems = ValueNotifier(
+    [],
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize _returnItems with your data
+    _returnItems.value = [
+      {
+        'id': 'RET001',
+        'orderId': 'ORD003',
+        'date': '2024-01-10',
+        'status': 'Refunded',
+        'reason': 'Damaged during delivery',
+        'items': [
+          {'name': 'Peace Lily', 'quantity': 1, 'price': '₹899'},
+        ],
+        'refundAmount': '₹899',
+        'refundMethod': 'Original Payment Method',
+      },
+      {
+        'id': 'RET002',
+        'orderId': 'ORD002',
+        'date': '2024-01-05',
+        'status': 'Processing',
+        'reason': 'Wrong item received',
+        'items': [
+          {'name': 'Snake Plant', 'quantity': 1, 'price': '₹1,099'},
+        ],
+        'refundAmount': '₹1,099',
+        'refundMethod': 'Store Credit',
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,79 +76,84 @@ class _ReturnsRefundsScreenState extends State<ReturnsRefundsScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Header Section
-          Container(
-            margin: EdgeInsets.all(16.w),
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  colorScheme.primaryContainer,
-                  colorScheme.secondaryContainer,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(12.w),
-                  decoration: BoxDecoration(
-                    color: colorScheme.onPrimaryContainer.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Icon(
-                    Icons.assignment_return_outlined,
-                    color: colorScheme.onPrimaryContainer,
-                    size: 24.r,
-                  ),
-                ),
-                SizedBox(width: 16.w),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Return Policy",
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                      SizedBox(height: 4.h),
-                      Text(
-                        "30-day return window for all plants",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: colorScheme.onPrimaryContainer,
-                        ),
-                      ),
+      body: ValueListenableBuilder<List<Map<String, dynamic>>>(
+        valueListenable: _returnItems,
+        builder: (context, returnItems, _) {
+          return Column(
+            children: [
+              // Header Section
+              Container(
+                margin: EdgeInsets.all(16.w),
+                padding: EdgeInsets.all(20.w),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      colorScheme.primaryContainer,
+                      colorScheme.secondaryContainer,
                     ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
-              ],
-            ),
-          ),
-
-          // Returns List
-          Expanded(
-            child:
-                _returns.isEmpty
-                    ? _buildEmptyState()
-                    : ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      itemCount: _returns.length,
-                      itemBuilder: (context, index) {
-                        return _buildReturnCard(_returns[index]);
-                      },
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(12.w),
+                      decoration: BoxDecoration(
+                        color: colorScheme.onPrimaryContainer.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Icon(
+                        Icons.assignment_return_outlined,
+                        color: colorScheme.onPrimaryContainer,
+                        size: 24.r,
+                      ),
                     ),
-          ),
-        ],
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Return Policy",
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.onPrimaryContainer,
+                            ),
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            "30-day return window for all plants",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: colorScheme.onPrimaryContainer,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Returns List
+              Expanded(
+                child:
+                    returnItems.isEmpty
+                        ? _buildEmptyState()
+                        : ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          itemCount: returnItems.length,
+                          itemBuilder: (context, index) {
+                            return _buildReturnCard(returnItems[index]);
+                          },
+                        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -465,9 +480,13 @@ class _ReturnsRefundsScreenState extends State<ReturnsRefundsScreen> {
       content:
           'Are you sure you want to cancel this return request? This action cannot be undone.',
       onDelete: () {
-        setState(() {
-          returnItem['status'] = 'Cancelled';
-        });
+        final updated = List<Map<String, dynamic>>.from(_returnItems.value);
+        final idx = updated.indexOf(returnItem);
+        if (idx != -1) {
+          updated[idx] = Map<String, dynamic>.from(updated[idx]);
+          updated[idx]['status'] = 'Cancelled';
+          _returnItems.value = updated;
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Return cancelled successfully!')),
         );

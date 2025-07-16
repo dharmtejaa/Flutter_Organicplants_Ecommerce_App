@@ -126,7 +126,7 @@ class QuickActionsGrid extends StatelessWidget {
             padding: EdgeInsets.all(10.w),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // Icon
                 ProfileCustomIcon(

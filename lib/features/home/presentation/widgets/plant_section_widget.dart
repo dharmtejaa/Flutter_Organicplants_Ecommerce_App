@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/widgets/productcard.dart';
 
@@ -30,8 +31,9 @@ class PlantSectionWidget extends StatelessWidget {
       padding: AppSizes.paddingSymmetricXs,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
           color: colorScheme.surface,
+          boxShadow: AppShadows.productCardShadow(context),
         ),
         padding: EdgeInsets.only(left: 10.w, right: 5.w),
         child: Column(

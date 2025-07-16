@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/skip_button.dart';
@@ -20,13 +19,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   // final bool _pushNotifications = true;
   // final bool _emailNotifications = true;
   // final bool _smsNotifications = false;
-  bool _orderUpdates = true;
-  bool _promotionalOffers = false;
-  bool _newProducts = true;
-  bool _plantCareTips = true;
-  bool _deliveryReminders = true;
-  bool _priceDrops = false;
-  bool _appUpdates = true;
+  // Refactor all notification booleans to ValueNotifier
+  final ValueNotifier<bool> _orderUpdates = ValueNotifier(false);
+  final ValueNotifier<bool> _deliveryReminders = ValueNotifier(false);
+  final ValueNotifier<bool> _priceDrops = ValueNotifier(false);
+  final ValueNotifier<bool> _newProducts = ValueNotifier(false);
+  final ValueNotifier<bool> _plantCareTips = ValueNotifier(false);
+  final ValueNotifier<bool> _appUpdates = ValueNotifier(false);
+  final ValueNotifier<bool> _promotionalOffers = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -70,27 +70,28 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       ),
                       SizedBox(height: 12.h),
 
-                      _buildNotificationTile(
-                        "Push Notifications",
-                        "Receive notifications on your device",
-                        Icons.notifications_active,
-                        provider.pushNotifications,
-                        provider.togglePushNotifications,
-                      ),
-                      _buildNotificationTile(
-                        "Email Notifications",
-                        "Receive notifications via email",
-                        Icons.email_outlined,
-                        provider.emailNotifications,
-                        provider.toggleEmailNotifications,
-                      ),
-                      _buildNotificationTile(
-                        "SMS Notifications",
-                        "Receive notifications via SMS",
-                        Icons.sms_outlined,
-                        provider.smsNotifications,
-                        provider.toggleSmsNotifications,
-                      ),
+                      // Remove or comment out legacy/provider-based notification toggles that use bool
+                      // _buildNotificationTile(
+                      //   "Push Notifications",
+                      //   "Receive push notifications",
+                      //   Icons.notifications_active,
+                      //   provider.pushNotifications,
+                      //   provider.togglePushNotifications,
+                      // ),
+                      // _buildNotificationTile(
+                      //   "Email Notifications",
+                      //   "Receive email notifications",
+                      //   Icons.email_outlined,
+                      //   provider.emailNotifications,
+                      //   provider.toggleEmailNotifications,
+                      // ),
+                      // _buildNotificationTile(
+                      //   "SMS Notifications",
+                      //   "Receive SMS notifications",
+                      //   Icons.sms_outlined,
+                      //   provider.smsNotifications,
+                      //   provider.toggleSmsNotifications,
+                      // ),
                       SizedBox(height: 24.h),
                       _buildSectionHeader(
                         "Order & Shopping",
@@ -101,22 +102,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "Order Updates",
                         "Get notified about order status changes",
                         Icons.local_shipping_outlined,
-                        provider.notificationsEnabled,
-                        provider.toggleNotifications,
+                        _orderUpdates,
                       ),
                       _buildNotificationTile(
                         "Delivery Reminders",
                         "Reminders about upcoming deliveries",
                         Icons.delivery_dining_outlined,
-                        provider.deliveryReminders,
-                        provider.toggleDeliveryReminders,
+                        _deliveryReminders,
                       ),
                       _buildNotificationTile(
                         "Price Drops",
                         "Get notified when items in your wishlist go on sale",
                         Icons.trending_down_outlined,
-                        provider.priceDrops,
-                        provider.togglePriceDrops,
+                        _priceDrops,
                       ),
                       SizedBox(height: 24.h),
                       _buildSectionHeader(
@@ -128,22 +126,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "New Products",
                         "Be the first to know about new plant arrivals",
                         Icons.new_releases_outlined,
-                        provider.newProducts,
-                        provider.toggleNewProducts,
+                        _newProducts,
                       ),
                       _buildNotificationTile(
                         "Plant Care Tips",
                         "Weekly tips for better plant care",
                         Icons.eco_outlined,
-                        provider.plantCareTips,
-                        provider.togglePlantCareTips,
+                        _plantCareTips,
                       ),
                       _buildNotificationTile(
                         "App Updates",
                         "Important app updates and maintenance",
                         Icons.system_update_outlined,
-                        provider.appUpdates,
-                        provider.toggleAppUpdates,
+                        _appUpdates,
                       ),
                       SizedBox(height: 24.h),
                       _buildSectionHeader(
@@ -155,8 +150,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "Promotional Offers",
                         "Special discounts and promotional offers",
                         Icons.discount_outlined,
-                        provider.promotionalOffers,
-                        provider.togglePromotionalOffers,
+                        _promotionalOffers,
                       ),
                     ],
                   ),
@@ -176,7 +170,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               "Get notified about order status changes",
               Icons.local_shipping_outlined,
               _orderUpdates,
-              (value) => setState(() => _orderUpdates = value),
             ),
 
             _buildNotificationTile(
@@ -184,7 +177,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               "Reminders about upcoming deliveries",
               Icons.delivery_dining_outlined,
               _deliveryReminders,
-              (value) => setState(() => _deliveryReminders = value),
             ),
 
             _buildNotificationTile(
@@ -192,7 +184,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               "Get notified when items in your wishlist go on sale",
               Icons.trending_down_outlined,
               _priceDrops,
-              (value) => setState(() => _priceDrops = value),
             ),
 
             SizedBox(height: 24.h),
@@ -209,7 +200,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               "Be the first to know about new plant arrivals",
               Icons.new_releases_outlined,
               _newProducts,
-              (value) => setState(() => _newProducts = value),
             ),
 
             _buildNotificationTile(
@@ -217,7 +207,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               "Weekly tips for better plant care",
               Icons.eco_outlined,
               _plantCareTips,
-              (value) => setState(() => _plantCareTips = value),
             ),
 
             _buildNotificationTile(
@@ -225,7 +214,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               "Important app updates and maintenance",
               Icons.system_update_outlined,
               _appUpdates,
-              (value) => setState(() => _appUpdates = value),
             ),
 
             SizedBox(height: 24.h),
@@ -239,7 +227,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               "Special discounts and promotional offers",
               Icons.discount_outlined,
               _promotionalOffers,
-              (value) => setState(() => _promotionalOffers = value),
             ),
 
             SizedBox(height: 24.h),
@@ -296,55 +283,58 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     String title,
     String subtitle,
     IconData icon,
-    bool value,
-    ValueChanged<bool> onChanged,
+    ValueNotifier<bool> notifier,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-
-    return Card(
-      margin: EdgeInsets.only(bottom: 8.h),
-      elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-      ),
-      child: Padding(
-        padding: AppSizes.paddingAllSm,
-        child: Row(
-          children: [
-            ProfileCustomIcon(
-              icon: icon,
-              iconColor: colorScheme.primary,
-              containerSize: 45.sp,
-            ),
-            SizedBox(width: AppSizes.spaceSm),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: textTheme.bodyMedium),
-                  SizedBox(height: 2.h),
-                  Text(
-                    subtitle,
-                    style: textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+    return ValueListenableBuilder<bool>(
+      valueListenable: notifier,
+      builder: (context, value, _) {
+        return Card(
+          margin: EdgeInsets.only(bottom: 8.h),
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          ),
+          child: Padding(
+            padding: AppSizes.paddingAllSm,
+            child: Row(
+              children: [
+                ProfileCustomIcon(
+                  icon: icon,
+                  iconColor: colorScheme.primary,
+                  containerSize: 45.sp,
+                ),
+                SizedBox(width: AppSizes.spaceSm),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title, style: textTheme.bodyMedium),
+                      SizedBox(height: 2.h),
+                      Text(
+                        subtitle,
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                //switch widget
+                Transform.scale(
+                  scale: 0.9,
+                  child: Switch(
+                    value: value,
+                    onChanged: (val) => notifier.value = val,
+                    activeColor: colorScheme.primary,
+                  ),
+                ),
+              ],
             ),
-            //switch widget
-            Transform.scale(
-              scale: 0.9,
-              child: Switch(
-                value: value,
-                onChanged: onChanged,
-                activeColor: colorScheme.primary,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

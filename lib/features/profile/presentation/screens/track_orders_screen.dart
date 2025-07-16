@@ -10,43 +10,51 @@ class TrackOrdersScreen extends StatefulWidget {
 }
 
 class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
-  final List<Map<String, dynamic>> _activeOrders = [
-    {
-      'id': 'ORD004',
-      'date': '2024-01-20',
-      'status': 'In Transit',
-      'total': '₹1,599',
-      'items': [
-        {'name': 'Monstera Deliciosa', 'quantity': 1, 'price': '₹899'},
-        {'name': 'Plant Pot', 'quantity': 1, 'price': '₹400'},
-        {'name': 'Fertilizer Pack', 'quantity': 1, 'price': '₹300'},
-      ],
-      'deliveryAddress': '123 Green Street, Garden Colony, Mumbai - 400001',
-      'trackingNumber': 'TRK123456789',
-      'estimatedDelivery': '2024-01-25',
-      'currentLocation': 'Mumbai Hub',
-      'progress': 0.7,
-    },
-    {
-      'id': 'ORD005',
-      'date': '2024-01-18',
-      'status': 'Processing',
-      'total': '₹2,199',
-      'items': [
-        {'name': 'Snake Plant', 'quantity': 2, 'price': '₹1,099'},
-      ],
-      'deliveryAddress': '456 Business Park, Tech Hub, Mumbai - 400002',
-      'trackingNumber': 'TRK987654321',
-      'estimatedDelivery': '2024-01-28',
-      'currentLocation': 'Processing Center',
-      'progress': 0.3,
-    },
-  ];
+  // Refactor orders to ValueNotifier
+  final ValueNotifier<List<Map<String, dynamic>>> _orders = ValueNotifier([]);
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize _orders with your data
+    _orders.value = [
+      {
+        'id': 'ORD004',
+        'date': '2024-01-20',
+        'status': 'In Transit',
+        'total': '₹1,599',
+        'items': [
+          {'name': 'Monstera Deliciosa', 'quantity': 1, 'price': '₹899'},
+          {'name': 'Plant Pot', 'quantity': 1, 'price': '₹400'},
+          {'name': 'Fertilizer Pack', 'quantity': 1, 'price': '₹300'},
+        ],
+        'deliveryAddress': '123 Green Street, Garden Colony, Mumbai - 400001',
+        'trackingNumber': 'TRK123456789',
+        'estimatedDelivery': '2024-01-25',
+        'currentLocation': 'Mumbai Hub',
+        'progress': 0.7,
+      },
+      {
+        'id': 'ORD005',
+        'date': '2024-01-18',
+        'status': 'Processing',
+        'total': '₹2,199',
+        'items': [
+          {'name': 'Snake Plant', 'quantity': 2, 'price': '₹1,099'},
+        ],
+        'deliveryAddress': '456 Business Park, Tech Hub, Mumbai - 400002',
+        'trackingNumber': 'TRK987654321',
+        'estimatedDelivery': '2024-01-28',
+        'currentLocation': 'Processing Center',
+        'progress': 0.3,
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final ordersToShow = widget.order != null ? [widget.order!] : _activeOrders;
+    final ordersToShow = widget.order != null ? [widget.order!] : _orders.value;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -73,8 +81,10 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
           ),
         ],
       ),
-      body:
-          ordersToShow.isEmpty
+      body: ValueListenableBuilder<List<Map<String, dynamic>>>(
+        valueListenable: _orders,
+        builder: (context, orders, _) {
+          return ordersToShow.isEmpty
               ? _buildEmptyState()
               : ListView.builder(
                 padding: EdgeInsets.all(16.w),
@@ -82,7 +92,9 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
                 itemBuilder: (context, index) {
                   return _buildOrderTrackingCard(ordersToShow[index]);
                 },
-              ),
+              );
+        },
+      ),
     );
   }
 
@@ -399,9 +411,9 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
   }
 
   void _refreshOrders() {
-    setState(() {
-      // TODO: Refresh orders from API
-    });
+    // Simulate refresh
+    // TODO: Replace with actual API call if needed
+    _orders.value = List<Map<String, dynamic>>.from(_orders.value);
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('Orders refreshed!')));

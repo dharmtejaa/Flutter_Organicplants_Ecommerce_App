@@ -34,7 +34,9 @@ class _StoreScreenState extends State<StoreScreen>
   final FocusNode _searchFocusNode = FocusNode();
 
   // Filter state using global filter system
-  final Map<FilterType, dynamic> _currentFilters = {};
+  final ValueNotifier<Map<FilterType, dynamic>> _currentFilters = ValueNotifier(
+    {},
+  );
   final List<FilterType> _enabledFilters = [
     FilterType.sort,
     FilterType.price,
@@ -216,7 +218,7 @@ class _StoreScreenState extends State<StoreScreen>
       builder:
           (context) => FilterBottomSheet(
             plants: _getAllPlants(),
-            currentFilters: _currentFilters,
+            currentFilters: _currentFilters.value,
             enabledFilters: _enabledFilters,
             onApplyFilters: _applyFilters,
           ),
@@ -224,15 +226,13 @@ class _StoreScreenState extends State<StoreScreen>
   }
 
   void _applyFilters(Map<FilterType, dynamic> filters) {
-    setState(() {
-      _currentFilters.clear();
-      _currentFilters.addAll(filters);
-      _selectedSortOption = filters[FilterType.sort] as String? ?? 'Name A-Z';
-    });
+    _currentFilters.value.clear();
+    _currentFilters.value.addAll(filters);
+    _selectedSortOption = filters[FilterType.sort] as String? ?? 'Name A-Z';
   }
 
   bool _hasActiveFilters() {
-    return _currentFilters.isNotEmpty;
+    return _currentFilters.value.isNotEmpty;
   }
 
   List<AllPlantsModel> _getAllPlants() {
@@ -276,23 +276,32 @@ class _StoreScreenState extends State<StoreScreen>
       child: Column(
         children: [
           // Filter summary - only show when there are active filters and plants found
-          if (_hasActiveFilters() && plants.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              child: ActiveFiltersWidget(
-                currentFilters: _currentFilters,
-                plantCount: plants.length,
-                onClearAll: () {
-                  setState(() {
-                    _currentFilters.clear();
-                  });
-                },
-                showPlantCount: true,
-                originalPriceRange: PlantFilterService.calculatePriceRange(
-                  _getAllPlants(),
-                ),
-              ),
-            ),
+          ValueListenableBuilder<Map<FilterType, dynamic>>(
+            valueListenable: _currentFilters,
+            builder: (context, currentFilters, _) {
+              if (currentFilters.isNotEmpty && plants.isNotEmpty) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
+                  ),
+                  child: ActiveFiltersWidget(
+                    currentFilters: currentFilters,
+                    plantCount: plants.length,
+                    onClearAll: () {
+                      _currentFilters.value.clear();
+                    },
+                    showPlantCount: true,
+                    originalPriceRange: PlantFilterService.calculatePriceRange(
+                      _getAllPlants(),
+                    ),
+                  ),
+                );
+              } else {
+                return SizedBox.shrink();
+              }
+            },
+          ),
           // Modern grid or empty state
           Expanded(
             child:
@@ -327,7 +336,7 @@ class _StoreScreenState extends State<StoreScreen>
                           ),
                           SizedBox(height: 16.h),
                           ElevatedButton.icon(
-                            onPressed: () => setState(() {}),
+                            onPressed: () => _currentFilters.notifyListeners(),
                             icon: Icon(Icons.refresh),
                             label: Text('Refresh'),
                             style: ElevatedButton.styleFrom(
@@ -394,7 +403,7 @@ class _StoreScreenState extends State<StoreScreen>
   List<AllPlantsModel> _applyAllFilters(List<AllPlantsModel> plants) {
     return PlantFilterService.getFilteredPlants(
       plants: plants,
-      filters: _currentFilters,
+      filters: _currentFilters.value,
     );
   }
 }
