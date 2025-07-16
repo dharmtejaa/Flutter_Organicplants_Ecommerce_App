@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/auth/presentation/screens/otpscreen.dart';
-import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/features/auth/presentation/widgets/terms_and_policy_text.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';

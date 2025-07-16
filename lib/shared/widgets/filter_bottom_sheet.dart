@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_filter_service.dart';
 import 'package:organicplants/models/all_plants_model.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   final List<AllPlantsModel> plants;
@@ -180,18 +182,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       curve: Curves.easeOut,
       padding: MediaQuery.of(context).viewInsets,
       child: Container(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.85,
-        ),
+        constraints: BoxConstraints(maxHeight: 0.85.sh),
         decoration: BoxDecoration(
+          color: colorScheme.surface,
           borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.shadow.withValues(alpha: 0.18),
-              blurRadius: 24,
-              offset: Offset(0, -8),
-            ),
-          ],
+          boxShadow: AppShadows.elevatedShadow(context),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -354,7 +349,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                       style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 12.h),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
+                          borderRadius: BorderRadius.circular(
+                            AppSizes.radiusMd,
+                          ),
                         ),
                       ),
                       child: Text('Cancel', style: textTheme.bodyMedium),
@@ -364,21 +361,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: _applyFilters,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: colorScheme.primary,
-                        foregroundColor: colorScheme.onPrimary,
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        'Apply',
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+
+                      child: Text('Apply', style: textTheme.labelLarge),
                     ),
                   ),
                 ],
@@ -466,7 +450,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
           color: colorScheme.outline.withValues(alpha: 0.2),

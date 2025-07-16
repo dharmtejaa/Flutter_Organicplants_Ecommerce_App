@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
@@ -73,25 +74,13 @@ class ProductCardGrid extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.inverseSurface,
           borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
-          boxShadow: [
-            BoxShadow(
-              color:
-                  colorScheme.brightness == Brightness.dark
-                      // ignore: deprecated_member_use
-                      ? Colors.black.withOpacity(0.1)
-                      // ignore: deprecated_member_use
-                      : Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 3),
-            ),
-          ],
+          boxShadow: AppShadows.productCardShadow(context),
         ),
         //padding: EdgeInsets.all(5),
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsets.all(AppSizes.paddingXs),
+              padding: EdgeInsets.all(6.w),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +89,7 @@ class ProductCardGrid extends StatelessWidget {
                   Stack(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+                        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                         child: Image.network(
                           plant.images![0].url!,
                           width: double.infinity,

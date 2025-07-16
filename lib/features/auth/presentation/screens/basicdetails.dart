@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
-import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/features/auth/presentation/widgets/terms_and_policy_text.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';

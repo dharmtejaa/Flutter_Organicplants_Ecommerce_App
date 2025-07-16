@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
 class AddEditAddressScreen extends StatefulWidget {

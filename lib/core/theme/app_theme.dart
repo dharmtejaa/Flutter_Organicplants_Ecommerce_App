@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/dark_theme_colors.dart';
+import 'package:organicplants/core/theme/light_theme_colors.dart';
 
 class AppTheme {
   // ——— Enhanced brand colors ———
@@ -14,32 +16,6 @@ class AppTheme {
 
   static const Color secondaryColor = Color(0xFFFF6F00);
   static const Color accentColor = Color(0xFF66BB6A);
-
-  // ——— Enhanced Light palette ———
-  static final Color lightBackground = Color(0xFFF0F0F0);
-  static const Color lightCard = Color(0xFFFFFFFF);
-  static const Color lightSurface = Color(0xFFF5F5F5);
-  static const Color onLightSurface = Color(0xFF1A1A1A);
-  static const Color lightInverseSurface = Color(0xFFF5F5F5);
-  static const Color onLightInverseSurface = Color(0xFF1A1A1A);
-  static const Color lightOnSurface = Color(0xFF1A1A1A);
-  static const Color lightOnSurfaceVariant = Color(0xFF666666);
-  static const Color lightOnBackground = Color(0xFF1A1A1A);
-  static const Color lightOnCard = Color(0xFF1A1A1A);
-  static const Color lightOnError = Color(0xFFD32F2F);
-  static const Color lightError = Color(0xFFFFCDD2);
-
-  // ——— Enhanced Dark palette ———
-  static final Color darkBackground = Color(0xF0000000);
-  static final Color onDarkBackground = Color(0xFFDCDCDC);
-
-  static const Color darkCard = Color(0xFF1E1E1E);
-
-  static const Color darksurface = Color(0xFF1a1a1a);
-  static const Color onDarkSurface = Color(0xFFDCDCDC);
-
-  static const Color darkinverseSurface = Color(0xff1e1e1e);
-  static const Color onDarkInverseSurface = Color(0xffDCDCDC);
 
   // ——— Accents ———
   static final Color offerColor = Color(0xFFE53935);
@@ -56,143 +32,148 @@ class AppTheme {
     brightness: Brightness.light,
 
     // Enhanced Scaffold
-    scaffoldBackgroundColor: lightBackground,
+    scaffoldBackgroundColor: LightThemeColors.mediumGray,
 
     // Enhanced ColorScheme
     colorScheme: ColorScheme.light(
-      primary: primaryColor,
-      primaryContainer: primaryColor.withValues(alpha: 0.1),
-      secondary: secondaryColor,
-      secondaryContainer: secondaryColor.withValues(alpha: 0.1),
-      surface: lightSurface,
-      surfaceContainerHighest: lightBackground,
-      inverseSurface: lightInverseSurface,
-      onInverseSurface: onLightInverseSurface,
-      onPrimary: onPrimary,
-      onSecondary: onLightSurface,
-      onSurface: onLightSurface,
-      onSurfaceVariant: Color(0xFF666666),
-      error: Color(0xFFD32F2F),
+      primary: LightThemeColors.primaryGreen,
+      onPrimary: Colors.white,
+      primaryContainer: LightThemeColors.primaryGreen.withOpacity(0.1),
+      secondary: LightThemeColors.secondaryOrange,
+      secondaryContainer: LightThemeColors.secondaryOrange.withOpacity(0.1),
+      surface: LightThemeColors.softWhite,
+      surfaceContainerHighest: LightThemeColors.mediumGray,
+      surfaceContainerHigh: LightThemeColors.lightGray,
+      surfaceContainer: LightThemeColors.mediumGray,
+      inverseSurface: LightThemeColors.softWhite,
+      onInverseSurface: LightThemeColors.deepBlack,
+      onSecondary: LightThemeColors.deepBlack,
+      onSurface: LightThemeColors.deepBlack,
+      onSurfaceVariant: LightThemeColors.darkGray,
+      error: LightThemeColors.errorRed,
       onError: Colors.white,
-      outline: Color(0xFFE0E0E0),
-      outlineVariant: Color(0xFFF0F0F0),
+      outline: LightThemeColors.primaryBorder,
+      outlineVariant: LightThemeColors.secondaryBorder,
     ),
 
     // Enhanced AppBar Theme
     appBarTheme: AppBarTheme(
-      backgroundColor: lightBackground,
-      foregroundColor: Color(0xFF1A1A1A),
+      backgroundColor: LightThemeColors.mediumGray,
+      foregroundColor: LightThemeColors.deepBlack,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       titleTextStyle: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w700,
-        color: primaryColor,
+        color: LightThemeColors.primaryGreen,
         fontFamily: 'Poppins',
       ),
-      iconTheme: IconThemeData(color: Color(0xFF1A1A1A), size: 24),
+      iconTheme: IconThemeData(color: LightThemeColors.deepBlack, size: 24),
     ),
 
     // Enhanced Card Theme
     cardTheme: CardThemeData(
-      color: lightCard,
+      color: LightThemeColors.pureWhite,
       elevation: 2,
-      shadowColor: Colors.black.withValues(alpha: 0.08),
+      shadowColor: LightThemeColors.shadowLight,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
 
     // Enhanced Text Theme
     textTheme: TextTheme(
       displayLarge: TextStyle(
-        fontSize: 38.sp,
+        fontSize: 32.sp,
         fontWeight: FontWeight.w600,
-        color: primaryColor, // Color(0xFF1A1A1A),
+        color: LightThemeColors.primaryGreen,
         fontFamily: 'Poppins',
       ),
       displayMedium: TextStyle(
         fontSize: 26.sp,
         fontWeight: FontWeight.w500,
-        color: Color(0xffA0A0A0),
+        color: LightThemeColors.mutedText,
         fontFamily: 'Poppins',
       ),
       displaySmall: TextStyle(
         fontSize: 24.sp,
-        fontWeight: FontWeight.w600,
-        color: Color(0xFF1A1A1A),
+        fontWeight: FontWeight.w400,
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
       headlineLarge: TextStyle(
         fontSize: 22.sp,
         fontWeight: FontWeight.w600,
-        color: primaryColor, //Color(0xFF1A1A1A),
+        color: LightThemeColors.primaryGreen,
         fontFamily: 'Poppins',
       ),
       headlineMedium: TextStyle(
         fontSize: 20.sp,
-        fontWeight: FontWeight.w600,
-        color: Color(0xFF1A1A1A),
+        fontWeight: FontWeight.w500,
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
       headlineSmall: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFF1A1A1A),
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w400,
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
       titleLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: Color(0xFF1A1A1A),
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
       titleMedium: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: Color(0xFF1A1A1A),
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
       titleSmall: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFF666666),
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        color: LightThemeColors.darkGray,
         fontFamily: 'Poppins',
       ),
+      //used in search field
       bodyLarge: TextStyle(
         fontSize: 16.sp,
-        fontWeight: FontWeight.w400,
-        color: Color(0xFF1A1A1A),
+        fontWeight: FontWeight.w600,
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
       bodyMedium: TextStyle(
         fontSize: 14.sp,
-        fontWeight: FontWeight.w400,
-        color: Color(0xFF1A1A1A),
+        fontWeight: FontWeight.w500,
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
       bodySmall: TextStyle(
-        fontSize: 14.sp,
+        fontSize: 12.sp,
         fontWeight: FontWeight.w400,
-        color: Color(0xFF1A1A1A),
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
-
+      //onPrimary content for primary content
       labelLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: Colors.white, //Color(0xFF666666),
+        color: Colors.white,
         fontFamily: 'Poppins',
+        overflow: TextOverflow.ellipsis,
         letterSpacing: 0.5,
       ),
       labelMedium: TextStyle(
-        fontSize: 13.sp,
-        fontWeight: FontWeight.w400,
-        color: Color(0xFF1A1A1A),
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w500,
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
+      //used for very small labels like term and policy
       labelSmall: TextStyle(
-        fontSize: 12.sp,
+        fontSize: 10.sp,
         fontWeight: FontWeight.w400,
-        color: Color(0xFF1A1A1A),
+        color: LightThemeColors.deepBlack,
         fontFamily: 'Poppins',
       ),
     ),
@@ -200,8 +181,8 @@ class AppTheme {
     // Enhanced Elevated Button Theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor,
-        foregroundColor: onPrimary,
+        backgroundColor: LightThemeColors.primaryGreen,
+        foregroundColor: LightThemeColors.pureWhite,
         //elevation: 2,
         //shadowColor: primaryColor.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -217,8 +198,8 @@ class AppTheme {
     // Enhanced Outlined Button Theme
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: primaryColor,
-        side: BorderSide(color: primaryColor, width: 1.5),
+        foregroundColor: LightThemeColors.primaryGreen,
+        side: BorderSide(color: LightThemeColors.primaryGreen, width: 1.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
@@ -232,26 +213,26 @@ class AppTheme {
     // Enhanced Input Decoration Theme
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: lightCard,
+      fillColor: LightThemeColors.pureWhite,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFFE0E0E0)),
+        borderSide: BorderSide(color: LightThemeColors.primaryBorder),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFFE0E0E0)),
+        borderSide: BorderSide(color: LightThemeColors.primaryBorder),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+        borderSide: BorderSide(color: LightThemeColors.primaryGreen, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFFD32F2F)),
+        borderSide: BorderSide(color: LightThemeColors.errorRed),
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       hintStyle: TextStyle(
-        color: Color(0xFF999999),
+        color: LightThemeColors.mutedText,
         fontSize: 14,
         fontFamily: 'Poppins',
       ),
@@ -269,10 +250,10 @@ class AppTheme {
       ),
       backgroundColor: Colors.transparent,
       collapsedBackgroundColor: Colors.transparent,
-      iconColor: primaryColor,
-      collapsedIconColor: primaryColor,
-      textColor: Color(0xFF1A1A1A),
-      collapsedTextColor: Color(0xFF1A1A1A),
+      iconColor: LightThemeColors.primaryGreen,
+      collapsedIconColor: LightThemeColors.primaryGreen,
+      textColor: LightThemeColors.deepBlack,
+      collapsedTextColor: LightThemeColors.deepBlack,
     ),
 
     dividerColor: Colors.transparent,
@@ -287,49 +268,55 @@ class AppTheme {
     brightness: Brightness.dark,
 
     // Enhanced Scaffold
-    scaffoldBackgroundColor: darkBackground,
+    scaffoldBackgroundColor: DarkThemeColors.richBlack,
 
     // Enhanced ColorScheme
     colorScheme: ColorScheme.dark(
-      primary: primaryColor,
-      onPrimary: onPrimary,
-      primaryContainer: primaryContainer,
-      secondary: secondaryColor,
-      secondaryContainer: secondaryColor.withValues(alpha: 0.2),
-      surface: darksurface,
-      onSurface: onDarkSurface,
-      inverseSurface: darkinverseSurface,
-      onInverseSurface: onDarkInverseSurface,
-
-      //onSurfaceContainer: Color(0xFF1E1E1E),
-      onSecondary: Colors.white70,
-      onSurfaceVariant: Colors.white70,
-      error: Color(0xFFEF5350),
-      onError: Colors.black,
-      outline: Color(0xff6a6a6a),
-      outlineVariant: darksurface,
+      primary: DarkThemeColors.primaryGreen,
+      onPrimary: DarkThemeColors.pureWhite,
+      primaryContainer: DarkThemeColors.primaryGreen.withValues(alpha: 0.1),
+      secondary: DarkThemeColors.secondaryOrange,
+      secondaryContainer: DarkThemeColors.secondaryOrange.withValues(
+        alpha: 0.2,
+      ),
+      surface: DarkThemeColors.mediumCharcoal,
+      surfaceContainerHighest: DarkThemeColors.lightCharcoal,
+      surfaceContainerHigh: DarkThemeColors.softCharcoal,
+      surfaceContainer: DarkThemeColors.lightCharcoal,
+      onSurface: DarkThemeColors.lightGray,
+      onSurfaceVariant: DarkThemeColors.mutedGray,
+      inverseSurface: DarkThemeColors.mediumCharcoal,
+      onInverseSurface: DarkThemeColors.lightGray,
+      onSecondary: DarkThemeColors.pureWhite,
+      error: DarkThemeColors.errorRed,
+      onError: DarkThemeColors.pureWhite,
+      outline: DarkThemeColors.darkBorder,
+      outlineVariant: DarkThemeColors.lightBorder,
     ),
 
     // Enhanced AppBar Theme
     appBarTheme: AppBarTheme(
-      backgroundColor: darkBackground,
-      foregroundColor: onPrimary,
+      backgroundColor: DarkThemeColors.richBlack,
+      foregroundColor: DarkThemeColors.pureWhite,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       titleTextStyle: TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w500,
-        color: onPrimary,
+        color: DarkThemeColors.pureWhite,
         fontFamily: 'Poppins',
       ),
-      iconTheme: IconThemeData(color: onPrimary, size: AppSizes.iconMd),
+      iconTheme: IconThemeData(
+        color: DarkThemeColors.pureWhite,
+        size: AppSizes.iconMd,
+      ),
     ),
 
     // Enhanced Card Theme
     cardTheme: CardThemeData(
-      color: darkCard,
-      elevation: 4,
-      shadowColor: Colors.black.withValues(alpha: 0.3),
+      color: DarkThemeColors.darkCharcoal,
+      elevation: 6,
+      shadowColor: DarkThemeColors.shadowHeavy,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
 
@@ -338,81 +325,81 @@ class AppTheme {
       displayLarge: TextStyle(
         fontSize: 32.sp,
         fontWeight: FontWeight.w600,
-        color: primaryColor,
+        color: DarkThemeColors.primaryGreen,
         fontFamily: 'Poppins',
       ),
       displayMedium: TextStyle(
         fontSize: 26.sp,
         fontWeight: FontWeight.w500,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       displaySmall: TextStyle(
         fontSize: 24.sp,
         fontWeight: FontWeight.w400,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       headlineLarge: TextStyle(
         fontSize: 22.sp,
         fontWeight: FontWeight.w600,
-        color: primaryColor,
+        color: DarkThemeColors.primaryGreen,
         fontFamily: 'Poppins',
       ),
       headlineMedium: TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w500,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       headlineSmall: TextStyle(
         fontSize: 18.sp,
         fontWeight: FontWeight.w400,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       titleLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       titleMedium: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       titleSmall: TextStyle(
         fontSize: 12.sp,
         fontWeight: FontWeight.w400,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
-      //used in search feild
+      //used in search field
       bodyLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: onDarkBackground, //Colors.white,
+        color: DarkThemeColors.pureWhite,
         fontFamily: 'Poppins',
       ),
       bodyMedium: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: onDarkBackground, //Colors.white,
+        color: DarkThemeColors.pureWhite,
         fontFamily: 'Poppins',
       ),
       bodySmall: TextStyle(
         fontSize: 12.sp,
         fontWeight: FontWeight.w400,
-        color: onDarkBackground, //Colors.white,
+        color: DarkThemeColors.pureWhite,
         fontFamily: 'Poppins',
       ),
-      //onPrimary content for pirmary content
+      //onPrimary content for primary content
       labelLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: onPrimary,
+        color: DarkThemeColors.pureWhite,
         fontFamily: 'Poppins',
         overflow: TextOverflow.ellipsis,
         letterSpacing: 0.5,
@@ -420,14 +407,14 @@ class AppTheme {
       labelMedium: TextStyle(
         fontSize: 12.sp,
         fontWeight: FontWeight.w500,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       //used for very small labels like term and policy
       labelSmall: TextStyle(
         fontSize: 10.sp,
         fontWeight: FontWeight.w400,
-        color: onDarkSurface,
+        color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
     ),
@@ -435,15 +422,15 @@ class AppTheme {
     // Enhanced Elevated Button Theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor,
-        foregroundColor: onPrimary,
+        backgroundColor: DarkThemeColors.primaryGreen,
+        foregroundColor: DarkThemeColors.pureWhite,
         elevation: 2,
-        shadowColor: primaryColor.withValues(alpha: 0.4),
+        shadowColor: DarkThemeColors.primaryGreen.withValues(alpha: 0.4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
           fontSize: 16,
-          color: onPrimary,
+          color: DarkThemeColors.pureWhite,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),
@@ -453,8 +440,8 @@ class AppTheme {
     // Enhanced Outlined Button Theme
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: primaryColor,
-        side: BorderSide(color: primaryColor, width: 1.5),
+        foregroundColor: DarkThemeColors.primaryGreen,
+        side: BorderSide(color: DarkThemeColors.primaryGreen, width: 1.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         textStyle: TextStyle(
@@ -468,26 +455,26 @@ class AppTheme {
     // Enhanced Input Decoration Theme
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: darkCard,
+      fillColor: DarkThemeColors.softCharcoal,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFF424242)),
+        borderSide: BorderSide(color: DarkThemeColors.darkBorder),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFF424242)),
+        borderSide: BorderSide(color: DarkThemeColors.darkBorder),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+        borderSide: BorderSide(color: DarkThemeColors.primaryGreen, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFFEF5350)),
+        borderSide: BorderSide(color: DarkThemeColors.errorRed),
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       hintStyle: TextStyle(
-        color: Colors.white54,
+        color: DarkThemeColors.mutedGray,
         fontSize: 14,
         fontFamily: 'Poppins',
       ),
@@ -505,10 +492,10 @@ class AppTheme {
       ),
       backgroundColor: Colors.transparent,
       collapsedBackgroundColor: Colors.transparent,
-      iconColor: primaryColor,
-      collapsedIconColor: primaryColor,
-      textColor: onDarkSurface,
-      collapsedTextColor: onDarkSurface,
+      iconColor: DarkThemeColors.primaryGreen,
+      collapsedIconColor: DarkThemeColors.primaryGreen,
+      textColor: DarkThemeColors.lightGray,
+      collapsedTextColor: DarkThemeColors.lightGray,
     ),
 
     //dividerColor: Colors.transparent,

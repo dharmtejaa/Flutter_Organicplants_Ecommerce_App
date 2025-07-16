@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_filter_service.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class ActiveFiltersWidget extends StatelessWidget {
   final Map<FilterType, dynamic> currentFilters;
@@ -98,13 +99,7 @@ class ActiveFiltersWidget extends StatelessWidget {
           color: colorScheme.primary.withValues(alpha: 0.15),
           width: 1.w,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.06),
-            blurRadius: 8.r,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: AppShadows.elevatedShadow(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,13 +119,7 @@ class ActiveFiltersWidget extends StatelessWidget {
                       color: colorScheme.onPrimary.withValues(alpha: 0.2),
                       width: 1,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.primary.withValues(alpha: 0.3),
-                        blurRadius: 6,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
+                    boxShadow: AppShadows.elevatedShadow(context),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -166,13 +155,7 @@ class ActiveFiltersWidget extends StatelessWidget {
                       color: colorScheme.primary.withValues(alpha: 0.3),
                       width: 1.5,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.primary.withValues(alpha: 0.15),
-                        blurRadius: 6,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
+                    boxShadow: AppShadows.elevatedShadow(context),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -217,13 +200,7 @@ class ActiveFiltersWidget extends StatelessWidget {
                           color: colorScheme.primary.withValues(alpha: 0.2),
                           width: 1,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: colorScheme.shadow.withValues(alpha: 0.04),
-                            blurRadius: 4,
-                            offset: Offset(0, 1),
-                          ),
-                        ],
+                        boxShadow: AppShadows.elevatedShadow(context),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

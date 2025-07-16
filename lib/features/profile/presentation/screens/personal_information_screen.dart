@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
-import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/core/theme/dark_theme_colors.dart';
+import 'package:organicplants/core/theme/light_theme_colors.dart';
+import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/skip_button.dart';
@@ -226,8 +227,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         fillColor:
             (fillColor ??
                 (colorScheme.brightness == Brightness.dark
-                    ? AppTheme.darkBackground
-                    : AppTheme.lightCard)),
+                    ? DarkThemeColors.darkCharcoal
+                    : LightThemeColors.pureWhite)),
         labelText: label,
 
         border: OutlineInputBorder(

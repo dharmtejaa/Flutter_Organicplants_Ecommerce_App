@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class CustomSnackBar {
   static void showSuccess(
@@ -160,13 +161,7 @@ class CustomSnackBar {
                   decoration: BoxDecoration(
                     color: colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(AppSizes.radiusSm),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.shadow.withValues(alpha: 0.1),
-                        blurRadius: AppSizes.shadowBlurRadius,
-                        offset: Offset(0, AppSizes.shadowOffset),
-                      ),
-                    ],
+                    boxShadow: AppShadows.elevatedShadow(context),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

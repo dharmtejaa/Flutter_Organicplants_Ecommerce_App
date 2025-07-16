@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/search/logic/hint_text_provider.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -96,13 +97,7 @@ class _SearchFieldState extends State<SearchField> {
                           borderRadius: BorderRadius.circular(
                             AppSizes.radiusLg,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: colorScheme.shadow.withOpacity(0.08),
-                              blurRadius: 12,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
+                          boxShadow: AppShadows.searchFieldShadow(context),
                         ),
                         constraints: BoxConstraints(maxHeight: 350.h),
                         child: ListView.separated(

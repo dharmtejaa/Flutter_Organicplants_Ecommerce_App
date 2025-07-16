@@ -8,6 +8,7 @@ import 'order_details_screen.dart';
 import 'package:collection/collection.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
@@ -397,16 +398,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(14.r),
-        boxShadow:
-            prominent
-                ? [
-                  BoxShadow(
-                    color: backgroundColor.withOpacity(0.18),
-                    blurRadius: 8,
-                    offset: Offset(0, 2),
-                  ),
-                ]
-                : [],
+        boxShadow: prominent ? AppShadows.elevatedShadow(context) : [],
       ),
       child: Text(
         status,

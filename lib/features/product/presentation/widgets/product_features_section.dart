@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
-import 'package:organicplants/features/auth/presentation/widgets/custom_textfield.dart';
+import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 
 class ProductFeaturesSection extends StatelessWidget {

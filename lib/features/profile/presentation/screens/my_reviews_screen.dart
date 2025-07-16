@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class MyReviewsScreen extends StatelessWidget {
   const MyReviewsScreen({super.key});
@@ -67,15 +68,9 @@ class MyReviewsScreen extends StatelessWidget {
                   return Container(
                     padding: AppSizes.paddingAllMd,
                     decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.shadow.withOpacity(0.06),
-                          blurRadius: 8,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
+                      color: colorScheme.surface,
+                      borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+                      boxShadow: AppShadows.elevatedShadow(context),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

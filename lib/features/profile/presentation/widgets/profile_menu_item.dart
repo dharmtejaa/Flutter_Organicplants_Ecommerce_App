@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 
 class ProfileMenuItem extends StatelessWidget {
@@ -41,13 +42,7 @@ class ProfileMenuItem extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor ?? colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-            boxShadow: [
-              BoxShadow(
-                color: colorScheme.shadow.withValues(alpha: 0.05),
-                blurRadius: AppSizes.shadowBlurRadius,
-                offset: Offset(0, AppSizes.shadowOffset),
-              ),
-            ],
+            boxShadow: AppShadows.elevatedShadow(context),
           ),
           child: Material(
             color: Colors.transparent,
@@ -55,7 +50,7 @@ class ProfileMenuItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSizes.radiusLg),
               onTap: onTap,
               child: Padding(
-                padding: AppSizes.paddingAllMd,
+                padding: AppSizes.paddingAllSm,
                 child: Row(
                   children: [
                     // Icon Container
@@ -68,7 +63,7 @@ class ProfileMenuItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(title, style: textTheme.titleMedium),  
+                          Text(title, style: textTheme.titleMedium),
                           if (subtitle != null) ...[
                             SizedBox(height: AppSizes.spaceXs),
                             Text(
@@ -128,7 +123,7 @@ class ProfileMenuSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    //final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Column(

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'dart:ui';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
   const ProfileHeaderCard({super.key});
@@ -27,13 +28,7 @@ class ProfileHeaderCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: colorScheme.surface,
             borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: colorScheme.shadow.withOpacity(0.08),
-            //     blurRadius: AppSizes.shadowBlurRadius,
-            //     offset: Offset(0, AppSizes.shadowOffset),
-            //   ),
-            // ],
+            boxShadow: AppShadows.cardShadow(context),
           ),
           child: Padding(
             padding: EdgeInsets.all(16.w),

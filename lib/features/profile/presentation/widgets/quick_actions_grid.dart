@@ -8,6 +8,7 @@ import 'package:organicplants/features/profile/presentation/screens/order_histor
 import 'package:organicplants/features/profile/presentation/screens/my_reviews_screen.dart';
 import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/loyalty_points_screen.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class QuickActionsGrid extends StatelessWidget {
   const QuickActionsGrid({super.key});
@@ -119,13 +120,7 @@ class QuickActionsGrid extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.08),
-            blurRadius: AppSizes.shadowBlurRadius,
-            offset: Offset(0, AppSizes.shadowOffset),
-          ),
-        ],
+        boxShadow: AppShadows.elevatedShadow(context),
       ),
       child: Material(
         color: Colors.transparent,

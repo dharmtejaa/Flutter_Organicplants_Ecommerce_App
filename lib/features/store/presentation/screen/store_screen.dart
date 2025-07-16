@@ -12,6 +12,7 @@ import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 import 'package:organicplants/shared/widgets/active_filters_widget.dart';
 import 'package:organicplants/shared/widgets/filter_bottom_sheet.dart';
 import 'package:organicplants/shared/widgets/plant_card_grid.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
@@ -85,17 +86,11 @@ class _StoreScreenState extends State<StoreScreen>
           Container(
             decoration: BoxDecoration(
               color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-              boxShadow: [
-                BoxShadow(
-                  color: colorScheme.shadow.withOpacity(0.04),
-                  blurRadius: 2,
-                  offset: Offset(0, 2),
-                ),
-              ],
+              borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+              boxShadow: AppShadows.elevatedShadow(context),
             ),
             margin: EdgeInsets.symmetric(
-              horizontal: AppSizes.marginMd,
+              horizontal: AppSizes.marginSm,
               vertical: AppSizes.vMarginXs,
             ),
             child: TabBar(
@@ -103,7 +98,7 @@ class _StoreScreenState extends State<StoreScreen>
               isScrollable: true,
               indicator: UnderlineTabIndicator(
                 borderSide: BorderSide(width: 2.5, color: colorScheme.primary),
-                insets: EdgeInsets.symmetric(horizontal: AppSizes.paddingSm),
+                insets: EdgeInsets.symmetric(horizontal: AppSizes.paddingXs),
               ),
               labelColor: colorScheme.primary,
               unselectedLabelColor: colorScheme.onSurfaceVariant,
@@ -120,7 +115,7 @@ class _StoreScreenState extends State<StoreScreen>
                     return Tab(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: AppSizes.paddingSm,
+                          horizontal: AppSizes.paddingXs,
                           vertical: 4.h,
                         ),
                         child: Text(category['title']!),
@@ -216,7 +211,7 @@ class _StoreScreenState extends State<StoreScreen>
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: colorScheme.surface,
+      // backgroundColor: colorScheme.surface,
       barrierColor: colorScheme.shadow.withValues(alpha: 0.15),
       builder:
           (context) => FilterBottomSheet(

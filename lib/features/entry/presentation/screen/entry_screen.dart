@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/entry/logic/bottom_nav_provider.dart';
 import 'package:organicplants/features/home/presentation/screens/home_screen.dart';
@@ -48,13 +49,7 @@ class _HomeScreenState extends State<EntryScreen> {
                   topLeft: Radius.circular(AppSizes.bottomNavRadius),
                   topRight: Radius.circular(AppSizes.bottomNavRadius),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.shadow.withOpacity(0.08),
-                    blurRadius: 8,
-                    offset: Offset(0, -2),
-                  ),
-                ],
+                boxShadow: AppShadows.bottomNavShadow(context),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
