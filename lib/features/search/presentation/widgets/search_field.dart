@@ -298,7 +298,7 @@ class _SearchFieldState extends State<SearchField> {
               // AnimatedTextKit overlay — only when input is empty
               if (widget.searchController.text.isEmpty)
                 Positioned(
-                  left: 52.w,
+                  left: 53.w,
                   top: 14.h,
                   child: IgnorePointer(
                     child: SizedBox(
@@ -311,9 +311,7 @@ class _SearchFieldState extends State<SearchField> {
                                   (hint) => TyperAnimatedText(
                                     hint,
                                     textStyle: textTheme.bodyLarge?.copyWith(
-                                      color: colorScheme.onSurface.withOpacity(
-                                        0.7,
-                                      ),
+                                      color: colorScheme.onSurfaceVariant,
                                     ),
                                     speed: const Duration(milliseconds: 100),
                                   ),

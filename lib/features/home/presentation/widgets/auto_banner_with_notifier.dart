@@ -78,8 +78,8 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                         gradient: LinearGradient(
                           colors: [
                             // ignore: deprecated_member_use
-                            Colors.black.withOpacity(0.3),
-                            Colors.black.withOpacity(0.3),
+                            Colors.black.withOpacity(0.2),
+                            Colors.black.withOpacity(0.2),
                           ],
                           begin: Alignment.bottomLeft,
                           end: Alignment.bottomRight,
@@ -109,7 +109,6 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
 
                               fontWeight: FontWeight.w600,
                             ),
-                           
                           ),
                         ],
                       ),
@@ -231,7 +230,7 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                     dotWidth: 8.sp,
                     expansionFactor: 3,
                     // ignore: deprecated_member_use
-                    dotColor: colorScheme.onSurface,
+                    dotColor: colorScheme.onPrimary.withOpacity(0.6),
                     // ignore: deprecated_member_use
                     activeDotColor: colorScheme.onPrimary,
                     spacing: 10,

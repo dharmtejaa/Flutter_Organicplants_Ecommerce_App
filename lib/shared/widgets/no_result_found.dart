@@ -27,7 +27,7 @@ class NoResultsFound extends StatelessWidget {
         SizedBox(height: 0.15.sh),
         Image.asset(
           imagePath,
-          height: 0.3.sh,
+          height: 0.35.sh,
           errorBuilder:
               (context, error, stackTrace) => Icon(
                 Icons.error_outline,
@@ -47,7 +47,7 @@ class NoResultsFound extends StatelessWidget {
           child: Text(
             message,
             style: textTheme.bodyMedium?.copyWith(
-              color: colorScheme.onSurface.withOpacity(0.6),
+              color: colorScheme.onSurfaceVariant,
             ),
             textAlign: TextAlign.center,
           ),

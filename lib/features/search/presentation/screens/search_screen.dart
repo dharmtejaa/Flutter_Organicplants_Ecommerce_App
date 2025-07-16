@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/dark_theme_colors.dart';
+import 'package:organicplants/core/theme/light_theme_colors.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/search/presentation/widgets/empty_message.dart';
@@ -154,7 +156,12 @@ class _SearchScreenState extends State<SearchScreen> {
                 deleteIcon: const Icon(Icons.close),
                 backgroundColor: colorScheme.surface,
                 shape: const StadiumBorder(),
-                //side: BorderSide(color: colorScheme.surface),
+                shadowColor:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? DarkThemeColors.shadowLight
+                        : LightThemeColors.shadowLight,
+                elevation: 2,
+                side: BorderSide(color: colorScheme.surface),
                 onDeleted: () => provider.removeSearchHistory(query),
               ),
             );
@@ -165,12 +172,12 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildRecentViewed(SearchScreenProvider provider) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 7,
         mainAxisSpacing: 7,
-        childAspectRatio: 0.71,
+        childAspectRatio: 0.735,
       ),
       itemCount: provider.recentViewedPlants.length,
       itemBuilder: (context, index) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DarkThemeColors {
   // ——— Rich Black Shades (Perfect for OLED screens) ———
-  static const Color richBlack = Color(0xFF0A0A0A); // Deepest black
+  static const Color richBlack = Color(0xFF000000); // Deepest black
   static const Color charcoal = Color(0xFF121212); // Material Design dark
   static const Color darkCharcoal = Color(0xFF1A1A1A); // Card background
   static const Color mediumCharcoal = Color(0xFF1E1E1E); // Surface background
@@ -14,7 +14,7 @@ class DarkThemeColors {
   static const Color pureWhite = Color(0xFFFFFFFF); // Primary text
   static const Color softWhite = Color(0xFFF5F5F5); // Secondary text
   static const Color lightGray = Color(0xFFE8E8E8); // Surface text
-  static const Color mediumGray = Color(0xFFD0D0D0); // Container text
+  static const Color softGray = Color(0xFFD0D0D0); // Container text
   static const Color mutedGray = Color(0xFFB8B8B8); // Variant text
   static const Color subtleGray = Color(0xFF9E9E9E); // Disabled text
 
@@ -52,7 +52,7 @@ class DarkThemeColors {
   static Color shadowLight = Colors.black.withValues(alpha: 0.1);
   static Color shadowMedium = Colors.black.withValues(alpha: 0.2);
   static Color shadowHeavy = Colors.black.withValues(alpha: 0.4);
-  static Color shadowIntense = Colors.black.withValues(alpha: 0.6);
+  static Color shadowIntense = Colors.black.withValues(alpha: 0.1);
 
   // ——— Overlay Colors ———
   static Color overlayLight = Colors.black.withValues(alpha: 0.1);
@@ -107,7 +107,7 @@ class DarkThemeColors {
     pureWhite,
     softWhite,
     lightGray,
-    mediumGray,
+    softGray,
     mutedGray,
     subtleGray,
   ];
@@ -156,7 +156,7 @@ class DarkThemeColors {
       case 3: // Body text
         return lightGray;
       case 4: // Caption text
-        return mediumGray;
+        return softGray;
       case 5: // Disabled text
         return mutedGray;
       default:

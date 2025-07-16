@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
@@ -96,7 +95,7 @@ class CustomSnackBar {
     required Duration duration,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
@@ -104,7 +103,7 @@ class CustomSnackBar {
         margin: AppSizes.marginSymmetricMd,
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         ),
         duration: duration,
         dismissDirection: DismissDirection.horizontal,
@@ -115,12 +114,12 @@ class CustomSnackBar {
               padding: AppSizes.paddingAllSm,
               decoration: BoxDecoration(
                 color: colorScheme.onPrimary.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+                borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               ),
               child: Icon(
                 icon,
                 color: colorScheme.onPrimary,
-                size: AppSizes.iconSm,
+                size: AppSizes.iconMd,
               ),
             ),
 
@@ -133,20 +132,21 @@ class CustomSnackBar {
                       ? RichText(
                         text: TextSpan(
                           children: _buildHighlightedText(
+                            textTheme,
                             message,
                             plantName,
                             colorScheme,
                             context,
                           ),
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: textTheme.bodySmall,
                         ),
-                        maxLines: 2,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       )
                       : Text(
                         message,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 2,
+                        style: textTheme.bodySmall,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
             ),
@@ -160,7 +160,7 @@ class CustomSnackBar {
                   padding: AppSizes.paddingSymmetricMd,
                   decoration: BoxDecoration(
                     color: colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+                    borderRadius: BorderRadius.circular(AppSizes.radiusLg),
                     boxShadow: AppShadows.elevatedShadow(context),
                   ),
                   child: Row(
@@ -168,7 +168,9 @@ class CustomSnackBar {
                     children: [
                       Text(
                         actionLabel,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: backgroundColor,
+                        ),
                       ),
                       SizedBox(width: AppSizes.spaceXs),
                       Icon(
@@ -188,6 +190,7 @@ class CustomSnackBar {
   }
 
   static List<TextSpan> _buildHighlightedText(
+    TextTheme textTheme,
     String message,
     String plantName,
     ColorScheme colorScheme,
@@ -199,30 +202,35 @@ class CustomSnackBar {
     final int startIndex = lowerMessage.indexOf(lowerPlantName);
 
     if (startIndex == -1) {
-      spans.add(TextSpan(text: message));
+      spans.add(TextSpan(text: message, style: textTheme.bodySmall));
       return spans;
     }
-
     // Add text before the plant name
     if (startIndex > 0) {
-      spans.add(TextSpan(text: message.substring(0, startIndex)));
+      spans.add(
+        TextSpan(
+          text: message.substring(0, startIndex),
+          style: textTheme.bodySmall,
+        ),
+      );
     }
-
     // Add highlighted plant name
     spans.add(
       TextSpan(
         text: message.substring(startIndex, startIndex + plantName.length),
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: textTheme.bodySmall,
       ),
     );
 
     // Add text after the plant name
     if (startIndex + plantName.length < message.length) {
       spans.add(
-        TextSpan(text: message.substring(startIndex + plantName.length)),
+        TextSpan(
+          text: message.substring(startIndex + plantName.length),
+          style: textTheme.bodySmall,
+        ),
       );
     }
-
     return spans;
   }
 }

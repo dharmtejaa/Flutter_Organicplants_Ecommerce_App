@@ -49,7 +49,11 @@ class CartIconWithBadge extends StatelessWidget {
                     backgroundColor: badgeColor ?? colorScheme.primary,
                     child: Text(
                       '$cartCount',
-                      style: textTheme.labelSmall,
+                      style: textTheme.labelSmall?.copyWith(
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                 ),

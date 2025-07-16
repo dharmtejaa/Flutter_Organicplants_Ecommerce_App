@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 
@@ -40,7 +38,7 @@ class ProfileMenuItem extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
-            color: backgroundColor ?? colorScheme.surfaceContainerHighest,
+            color: backgroundColor ?? colorScheme.surface,
             borderRadius: BorderRadius.circular(AppSizes.radiusLg),
             boxShadow: AppShadows.elevatedShadow(context),
           ),
@@ -56,7 +54,7 @@ class ProfileMenuItem extends StatelessWidget {
                     // Icon Container
                     ProfileCustomIcon(icon: icon, iconColor: iconColor),
 
-                    SizedBox(width: AppSizes.spaceMd),
+                    SizedBox(width: AppSizes.spaceSm),
 
                     // Content
                     Expanded(
@@ -69,7 +67,7 @@ class ProfileMenuItem extends StatelessWidget {
                             Text(
                               subtitle!,
                               style: textTheme.bodySmall?.copyWith(
-                                color: AppColors.mutedText,
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
@@ -112,14 +110,8 @@ class ProfileMenuItem extends StatelessWidget {
 class ProfileMenuSection extends StatelessWidget {
   final String? title;
   final List<ProfileMenuItem> items;
-  final EdgeInsetsGeometry? padding;
 
-  const ProfileMenuSection({
-    super.key,
-    this.title,
-    required this.items,
-    this.padding,
-  });
+  const ProfileMenuSection({super.key, this.title, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -129,12 +121,8 @@ class ProfileMenuSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (title != null) ...[
-          Padding(
-            padding: padding ?? EdgeInsets.fromLTRB(4.w, 16.h, 4.w, 8.h),
-            child: Text(title!, style: textTheme.titleLarge),
-          ),
-        ],
+        if (title != null) ...[Text(title!, style: textTheme.titleLarge)],
+        SizedBox(height: 20.h),
         ...items,
         SizedBox(height: 8.h),
       ],

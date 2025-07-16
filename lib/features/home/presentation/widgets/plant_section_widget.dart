@@ -83,10 +83,10 @@ class PlantSectionWidget extends StatelessWidget {
           children: [
             Text(title, style: textTheme.headlineMedium),
             SizedBox(height: 4.h),
-            // Text(
-            //   '${displayPlants.length} Plants available',
-            //   style: textTheme.titleMedium,
-            // ),
+            Text(
+              '${displayPlants.length} Plants available',
+              style: textTheme.bodySmall,
+            ),
           ],
         ),
         InkWell(

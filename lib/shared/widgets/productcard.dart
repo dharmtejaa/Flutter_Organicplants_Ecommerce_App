@@ -81,7 +81,7 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsets.all(AppSizes.paddingXs),
+              padding: EdgeInsets.all(5.w),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,8 +142,7 @@ class ProductCard extends StatelessWidget {
                               SizedBox(width: 2.w),
                               Text(
                                 plant.rating?.toStringAsFixed(1) ?? '0.0',
-                                style: TextStyle(
-                                  fontSize: 10.sp,
+                                style: textTheme.labelSmall?.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -184,7 +183,7 @@ class ProductCard extends StatelessWidget {
                                   context,
                                 ).textTheme.bodySmall?.copyWith(
                                   decoration: TextDecoration.lineThrough,
-                                  color: AppColors.mutedText,
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             if (originalPrice > offerPrice)
@@ -198,7 +197,8 @@ class ProductCard extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 2.h),
-                        Text('$discount% off', style: textTheme.bodySmall),
+                        if (originalPrice > offerPrice)
+                          Text('$discount% off', style: textTheme.bodySmall),
                         SizedBox(height: 2.h),
                       ],
                     ),
@@ -208,8 +208,8 @@ class ProductCard extends StatelessWidget {
             ),
             // Add to Cart Button with Enhanced Design
             Positioned(
-              bottom: -1, //-AppSizes.spaceXs,
-              right: -1, //-AppSizes.spaceXs,
+              bottom: 0, //-AppSizes.spaceXs,
+              right: 0, //-AppSizes.spaceXs,
               child: AddToCartButton(cartProvider: cartProvider, plant: plant),
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/store/presentation/screen/store_screen.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
 
@@ -21,8 +22,9 @@ class _SearchByCategoryState extends State<SearchByCategory> {
       padding: AppSizes.paddingSymmetricXs,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
           color: colorScheme.surface,
+          boxShadow: AppShadows.productCardShadow(context),
         ),
         padding: EdgeInsets.only(left: 10.w, right: 5.w),
         child: Column(
@@ -39,6 +41,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
+                physics: BouncingScrollPhysics(),
                 separatorBuilder: (context, index) => SizedBox(width: 15.w),
                 itemBuilder: (context, index) {
                   final category = categories[index];
@@ -62,9 +65,15 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             ),
                           );
                         },
-                        child: CircleAvatar(
-                          backgroundColor: colorScheme.inverseSurface,
-                          radius: 35.r,
+                        child: Container(
+                          width: 70.w,
+                          height: 70.h,
+                          decoration: BoxDecoration(
+                            color: colorScheme.inverseSurface,
+                            borderRadius: BorderRadius.circular(50.w),
+                            boxShadow: AppShadows.productCardShadow(context),
+                          ),
+
                           child: Image.asset(
                             category['imagePath']!,
                             width: 60.w,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
@@ -22,20 +22,15 @@ class QuickActionsGrid extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
-              child: Text(
-                'Quick Actions',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ),
+            Text('Quick Actions', style: textTheme.titleLarge),
+            SizedBox(height: 20.h),
             GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               crossAxisSpacing: 8.w,
               mainAxisSpacing: 8.h,
-              childAspectRatio: 1.3,
+              childAspectRatio: 2.3,
               children: [
                 _buildQuickActionCard(
                   context,
@@ -118,7 +113,7 @@ class QuickActionsGrid extends StatelessWidget {
   ) {
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         boxShadow: AppShadows.elevatedShadow(context),
       ),
@@ -129,41 +124,37 @@ class QuickActionsGrid extends StatelessWidget {
           onTap: onTap,
           child: Padding(
             padding: EdgeInsets.all(10.w),
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Icon
-                Container(
-                  width: 36.w,
-                  height: 36.w,
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Icon(icon, color: color, size: 18.r),
+                ProfileCustomIcon(
+                  icon: icon,
+                  iconColor: color,
+                  containerSize: 40.h,
                 ),
-                SizedBox(height: 8.h),
-
                 // Title
-                Flexible(
-                  child: Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleSmall,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                SizedBox(height: 2.h),
-
-                // Subtitle
-                Flexible(
-                  child: Text(
-                    subtitle,
-                    style: Theme.of(context).textTheme.bodySmall,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
+                SizedBox(width: AppSizes.paddingSm),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleSmall,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: 2.h),
+                    // Subtitle
+                    Text(
+                      subtitle,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
                 ),
               ],
             ),

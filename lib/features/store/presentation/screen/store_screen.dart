@@ -174,11 +174,11 @@ class _StoreScreenState extends State<StoreScreen>
             ),
             if (_hasActiveFilters())
               Positioned(
-                right: 8,
-                top: 8,
+                right: 1,
+                top: 1,
                 child: Container(
-                  width: 8,
-                  height: 8,
+                  width: 9.w,
+                  height: 9.h,
                   decoration: BoxDecoration(
                     color: colorScheme.primary,
                     shape: BoxShape.circle,
@@ -357,7 +357,7 @@ class _StoreScreenState extends State<StoreScreen>
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 7,
                                     mainAxisSpacing: 7,
-                                    childAspectRatio: 0.71,
+                                    childAspectRatio: 0.735,
                                   ),
                               delegate: SliverChildBuilderDelegate((
                                 context,

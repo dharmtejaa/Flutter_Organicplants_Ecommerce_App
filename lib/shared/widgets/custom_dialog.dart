@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/shared/widgets/custom_snackbar.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 
 class CustomDialog {
   static Future<bool?> show({
@@ -28,7 +28,7 @@ class CustomDialog {
       builder:
           (context) => AlertDialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.r),
+              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
             ),
             title: Row(
               children: [
@@ -84,7 +84,6 @@ class CustomDialog {
                     cancelText ?? 'Cancel',
                     style: textTheme.labelLarge?.copyWith(
                       color: colorScheme.primary,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -117,7 +116,6 @@ class CustomDialog {
                           isDestructive
                               ? colorScheme.onError
                               : colorScheme.onPrimary,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

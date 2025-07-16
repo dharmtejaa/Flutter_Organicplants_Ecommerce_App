@@ -47,11 +47,10 @@ class ProfileScreen extends StatelessWidget {
           children: [
             // Profile Header Card
             const ProfileHeaderCard(),
-            SizedBox(height: 12.h),
-
+            SizedBox(height: 20.h),
             // Quick Actions Grid
             const QuickActionsGrid(),
-            SizedBox(height: 16.h),
+            SizedBox(height: 20.h),
 
             // Shopping Section (Most Important - Place First)
             ProfileMenuSection(
@@ -119,7 +118,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             // Account & Settings Section
             ProfileMenuSection(
               title: "Account & Settings",
@@ -177,10 +175,13 @@ class ProfileScreen extends StatelessWidget {
                   iconColor: Colors.purple,
                   trailing: Consumer<ProfileProvider>(
                     builder: (context, provider, child) {
-                      return Switch(
-                        value: provider.notificationsEnabled,
-                        onChanged: provider.toggleNotifications,
-                        activeColor: colorScheme.primary,
+                      return Transform.scale(
+                        scale: 0.9,
+                        child: Switch(
+                          value: provider.notificationsEnabled,
+                          onChanged: provider.toggleNotifications,
+                          activeColor: colorScheme.primary,
+                        ),
                       );
                     },
                   ),
@@ -195,7 +196,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             // App Settings Section
             ProfileMenuSection(
               title: "App Settings",
@@ -292,7 +292,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             // Support Section
             ProfileMenuSection(
               title: "Support & Help",
@@ -342,7 +341,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             // About & Legal Section
             ProfileMenuSection(
               title: "About & Legal",
@@ -392,7 +390,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             // App Actions Section
             ProfileMenuSection(
               title: "App Actions",

@@ -69,6 +69,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         Icons.notifications_outlined,
                       ),
                       SizedBox(height: 12.h),
+
                       _buildNotificationTile(
                         "Push Notifications",
                         "Receive notifications on your device",
@@ -107,15 +108,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "Delivery Reminders",
                         "Reminders about upcoming deliveries",
                         Icons.delivery_dining_outlined,
-                        provider.deliveryReminders ?? false,
-                        provider.toggleDeliveryReminders ?? (v) {},
+                        provider.deliveryReminders,
+                        provider.toggleDeliveryReminders,
                       ),
                       _buildNotificationTile(
                         "Price Drops",
                         "Get notified when items in your wishlist go on sale",
                         Icons.trending_down_outlined,
-                        provider.priceDrops ?? false,
-                        provider.togglePriceDrops ?? (v) {},
+                        provider.priceDrops,
+                        provider.togglePriceDrops,
                       ),
                       SizedBox(height: 24.h),
                       _buildSectionHeader(
@@ -127,22 +128,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "New Products",
                         "Be the first to know about new plant arrivals",
                         Icons.new_releases_outlined,
-                        provider.newProducts ?? false,
-                        provider.toggleNewProducts ?? (v) {},
+                        provider.newProducts,
+                        provider.toggleNewProducts,
                       ),
                       _buildNotificationTile(
                         "Plant Care Tips",
                         "Weekly tips for better plant care",
                         Icons.eco_outlined,
-                        provider.plantCareTips ?? false,
-                        provider.togglePlantCareTips ?? (v) {},
+                        provider.plantCareTips,
+                        provider.togglePlantCareTips,
                       ),
                       _buildNotificationTile(
                         "App Updates",
                         "Important app updates and maintenance",
                         Icons.system_update_outlined,
-                        provider.appUpdates ?? false,
-                        provider.toggleAppUpdates ?? (v) {},
+                        provider.appUpdates,
+                        provider.toggleAppUpdates,
                       ),
                       SizedBox(height: 24.h),
                       _buildSectionHeader(
@@ -154,8 +155,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         "Promotional Offers",
                         "Special discounts and promotional offers",
                         Icons.discount_outlined,
-                        provider.promotionalOffers ?? false,
-                        provider.togglePromotionalOffers ?? (v) {},
+                        provider.promotionalOffers,
+                        provider.togglePromotionalOffers,
                       ),
                     ],
                   ),
@@ -311,19 +312,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         padding: AppSizes.paddingAllSm,
         child: Row(
           children: [
-            Container(
-              padding: EdgeInsets.all(6.w),
-              decoration: BoxDecoration(
-                color: colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(6.r),
-              ),
-              child: Icon(
-                icon,
-                color: colorScheme.onSurface,
-                size: AppSizes.iconMd,
-              ),
+            ProfileCustomIcon(
+              icon: icon,
+              iconColor: colorScheme.primary,
+              containerSize: 45.sp,
             ),
-            SizedBox(width: 12.w),
+            SizedBox(width: AppSizes.spaceSm),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -333,7 +327,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   Text(
                     subtitle,
                     style: textTheme.bodySmall?.copyWith(
-                      color: AppColors.mutedText,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
@@ -341,7 +335,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             ),
             //switch widget
             Transform.scale(
-              scale: 0.8,
+              scale: 0.9,
               child: Switch(
                 value: value,
                 onChanged: onChanged,
@@ -355,7 +349,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget _buildScheduleCard() {
-    final colorScheme = Theme.of(context).colorScheme;
+    //final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Card(
@@ -475,7 +469,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
     if (picked != null) {
       CustomSnackBar.showInfo(
+        // ignore: use_build_context_synchronously
         context,
+        // ignore: use_build_context_synchronously
         "Start time updated to ${picked.format(context)}",
       );
     }
@@ -488,7 +484,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
     if (picked != null) {
       CustomSnackBar.showInfo(
+        // ignore: use_build_context_synchronously
         context,
+        // ignore: use_build_context_synchronously
         "End time updated to ${picked.format(context)}",
       );
     }

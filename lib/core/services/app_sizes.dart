@@ -292,7 +292,7 @@ class AppSizes {
   static double dividerHeight = 1.h;
   static double shadowBlurRadius = 8.r;
   static double shadowOffset = 2.r;
-  static double elevation = 4.r;
+  static double elevation = 3.r;
   static double borderWidth = 1.w;
   static double borderWidthThick = 2.w;
 }

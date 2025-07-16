@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
@@ -20,6 +19,7 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final cartProvider = Provider.of<CartProvider>(context, listen: true);
     final remove = Provider.of<WishlistProvider>(context, listen: false);
     final offerPrice = plant.prices?.offerPrice ?? 0;
@@ -54,7 +54,9 @@ class ProductTile extends StatelessWidget {
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(AppSizes.radiusSm),
+                      ),
                       child: Image.network(
                         plant.images?[0].url ?? '',
                         height: 0.1.sh,
@@ -64,83 +66,47 @@ class ProductTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(width: 10.w),
+                SizedBox(width: 15.w),
                 // Text Content
                 Expanded(
                   child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         plant.commonName ?? 'Unknown Plant',
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: textTheme.titleLarge,
                       ),
                       Text(
                         scifiname == true
                             ? plant.scientificName ?? 'Unknown Scientific Name'
                             : plant.category ?? 'Unknown Category',
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: textTheme.bodyMedium,
                       ),
-                      //SizedBox(height: 0.1.h),
-                      // Row(
-                      //   children: [
-                      //     ...List.generate(5, (index) {
-                      //       return Icon(
-                      //         index < plant.rating!.floor()
-                      //             ? Icons.star
-                      //             : Icons.star_border,
-                      //         color: AppTheme.starColor,
-                      //         size: AppSizes.iconXs,
-                      //       );
-                      //     }),
-                      //     SizedBox(width: 0.02.sw),
-                      //     Text(
-                      //       plant.rating!.toStringAsFixed(1),
-                      //       style: TextStyle(
-                      //         fontSize: AppSizes.fontXs,
-                      //         color: AppColors.mutedText,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      //SizedBox(height: 0.1.h),
                       Row(
                         children: [
-                          // Text(
-                          //   '$discount% off',
-                          //   style: TextStyle(
-                          //     color: colorScheme.onSurface,
-                          //     //fontWeight: FontWeight.bold,
-                          //     fontSize: AppSizes.fontSm,
-                          //   ),
-                          // ),
-                          //SizedBox(width: 10.w),
                           Text(
                             '₹${plant.prices?.originalPrice}',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: textTheme.bodySmall?.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                           ),
-                          SizedBox(width: 10.w),
+                          SizedBox(width: 8.w),
                           Text(
                             '₹${plant.prices?.offerPrice}',
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       ),
-                      // Row(
-                      //   children: [
-                      //     Icon(
-                      //       Icons.arrow_downward_outlined,
-                      //       size: AppSizes.iconXs,
-                      //       color: colorScheme.onSurface,
-                      //     ),
-                      Text(
-                        '$discount% off',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      if (offerPrice < originalPrice)
+                        Text('$discount% off', style: textTheme.bodySmall),
                       //],
                       //),
                     ],
@@ -165,13 +131,12 @@ class ProductTile extends StatelessWidget {
                     color: colorScheme.onSurface,
                   ),
                 ),
-                //SizedBox(width: 0.02.sw),
               ],
             ),
           ),
           Positioned(
-            bottom: 4,
-            right: 4,
+            bottom: 6,
+            right: 6,
             child: AddToCartButton(cartProvider: cartProvider, plant: plant),
           ),
         ],

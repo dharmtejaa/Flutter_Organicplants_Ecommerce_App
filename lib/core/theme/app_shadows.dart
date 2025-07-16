@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:organicplants/core/theme/dark_theme_colors.dart';
+import 'package:organicplants/core/theme/light_theme_colors.dart';
 
 class AppShadows {
-  
   // ——— Light Theme Shadows ———
   static List<BoxShadow> get lightCardShadow => [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.08),
+      color: Colors.grey.withValues(alpha: 0.08),
       spreadRadius: 1,
       blurRadius: 4,
       offset: const Offset(0, 2),
@@ -15,7 +15,7 @@ class AppShadows {
 
   static List<BoxShadow> get lightElevatedShadow => [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.12),
+      color: Colors.grey.withValues(alpha: 0.12),
       spreadRadius: 1,
       blurRadius: 6,
       offset: const Offset(0, 3),
@@ -24,7 +24,7 @@ class AppShadows {
 
   static List<BoxShadow> get lightFloatingShadow => [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.16),
+      color: Colors.grey.withValues(alpha: 0.16),
       spreadRadius: 2,
       blurRadius: 8,
       offset: const Offset(0, 4),
@@ -33,7 +33,7 @@ class AppShadows {
 
   static List<BoxShadow> get lightIntenseShadow => [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.24),
+      color: Colors.grey.withValues(alpha: 0.24),
       spreadRadius: 2,
       blurRadius: 12,
       offset: const Offset(0, 6),
@@ -52,10 +52,10 @@ class AppShadows {
 
   static List<BoxShadow> get darkElevatedShadow => [
     BoxShadow(
-      color: DarkThemeColors.shadowMedium,
+      color: DarkThemeColors.shadowIntense,
       spreadRadius: 1,
       blurRadius: 6,
-      offset: const Offset(0, 3),
+      offset: const Offset(0, 4),
     ),
   ];
 
@@ -170,7 +170,7 @@ class AppShadows {
         color:
             Theme.of(context).brightness == Brightness.dark
                 ? DarkThemeColors.shadowLight
-                : Colors.black.withValues(alpha: 0.08),
+                : Colors.grey.withValues(alpha: 0.08),
         spreadRadius: 0,
         blurRadius: 8,
         offset: const Offset(0, -2),
@@ -185,7 +185,7 @@ class AppShadows {
         color:
             Theme.of(context).brightness == Brightness.dark
                 ? DarkThemeColors.shadowHeavy
-                : Colors.black.withValues(alpha: 0.2),
+                : Colors.grey.withValues(alpha: 0.2),
         spreadRadius: 2,
         blurRadius: 8,
         offset: const Offset(0, 4),
@@ -200,7 +200,7 @@ class AppShadows {
         color:
             Theme.of(context).brightness == Brightness.dark
                 ? DarkThemeColors.shadowIntense
-                : Colors.black.withValues(alpha: 0.3),
+                : Colors.grey.withValues(alpha: 0.3),
         spreadRadius: 4,
         blurRadius: 16,
         offset: const Offset(0, 8),
@@ -215,7 +215,7 @@ class AppShadows {
         color:
             Theme.of(context).brightness == Brightness.dark
                 ? DarkThemeColors.shadowLight
-                : Colors.black.withValues(alpha: 0.06),
+                : Colors.grey.withValues(alpha: 0.06),
         spreadRadius: 0,
         blurRadius: 4,
         offset: const Offset(0, 2),
@@ -229,11 +229,11 @@ class AppShadows {
       BoxShadow(
         color:
             Theme.of(context).brightness == Brightness.dark
-                ? DarkThemeColors.shadowMedium
-                : Colors.black.withValues(alpha: 0.1),
-        spreadRadius: 1,
-        blurRadius: 6,
-        offset: const Offset(0, 3),
+                ? DarkThemeColors.shadowIntense.withOpacity(0.18)
+                : LightThemeColors.shadowIntense.withOpacity(0.18),
+        spreadRadius: 2,
+        blurRadius: 4,
+        offset: const Offset(0, 4),
       ),
     ];
   }
@@ -245,7 +245,7 @@ class AppShadows {
         color:
             Theme.of(context).brightness == Brightness.dark
                 ? DarkThemeColors.shadowLight
-                : Colors.black.withValues(alpha: 0.1),
+                : Colors.grey.withValues(alpha: 0.1),
         spreadRadius: 0,
         blurRadius: 4,
         offset: const Offset(0, 2),

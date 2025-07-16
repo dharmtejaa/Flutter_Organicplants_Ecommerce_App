@@ -140,9 +140,8 @@ class SimplePlantCard extends StatelessWidget {
                                 ),
                                 SizedBox(width: 2.w),
                                 Text(
-                                  '${plant.rating?.toStringAsFixed(1) ?? '0.0'}',
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
+                                  plant.rating?.toStringAsFixed(1) ?? '0.0',
+                                  style: textTheme.labelSmall?.copyWith(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -181,7 +180,7 @@ class SimplePlantCard extends StatelessWidget {
                             context,
                           ).textTheme.bodySmall?.copyWith(
                             decoration: TextDecoration.lineThrough,
-                            color: AppColors.mutedText,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       if (originalPrice > offerPrice) SizedBox(width: 0.02.sw),
@@ -193,8 +192,9 @@ class SimplePlantCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 0.002.sh),
-                  Text('$discount% off', style: textTheme.bodySmall),
+                  SizedBox(height: 2.h),
+                  if (originalPrice > offerPrice)
+                    Text('$discount% off', style: textTheme.bodySmall),
                 ],
               ),
             ),

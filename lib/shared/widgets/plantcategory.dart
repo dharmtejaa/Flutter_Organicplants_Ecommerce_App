@@ -224,6 +224,8 @@ class _PlantCategoryState extends State<PlantCategory> {
                                 mainAxisSpacing: 7,
                                 childAspectRatio: 0.735,
                               ),
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return ProductCardGrid(
                               plant: filteredPlants[index],

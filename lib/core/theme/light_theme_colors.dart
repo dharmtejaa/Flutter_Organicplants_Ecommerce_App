@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class LightThemeColors {
   // ——— Clean White Shades (Perfect for Light Mode) ———
   static const Color pureWhite = Color(0xFFFFFFFF); // Pure white background
-  static const Color softWhite = Color(0xFFFAFAFA); // Soft white surface
-  static const Color lightGray = Color(0xFFF5F5F5); // Light gray background
-  static const Color mediumGray = Color(0xFFF0F0F0); // Medium gray surface
+  static const Color softWhite = Color(0xFFFEFFFE); // Soft white surface
+  static const Color lightGray = Color(0xFFfefefe); // Light gray background
+  static const Color mediumGray = Color(0xFFF2F2F2); // Medium gray surface
   static const Color warmGray = Color(0xFFEEEEEE); // Warm gray container
   static const Color subtleGray = Color(0xFFE8E8E8); // Subtle gray variant
   static const Color coolGray = Color(0xFFE0E0E0); // Cool gray border
@@ -13,8 +13,8 @@ class LightThemeColors {
   // ——— Text Colors with Enhanced Contrast ———
   static const Color deepBlack = Color(0xFF1A1A1A); // Primary headings
   static const Color richBlack = Color(0xFF2D2D2D); // Secondary text
-  static const Color darkGray = Color(0xFF424242); // Body text
-  static const Color mediumText = Color(0xFF666666); // Caption text
+  static const Color darkGray = Color(0xFF313130); // Body text
+  static const Color softGrey = Color(0xFF888888); // Caption text
   static const Color mutedText = Color(0xFF9E9E9E); // Disabled text
   static const Color lightText = Color(0xFFBDBDBD); // Placeholder text
 
@@ -49,10 +49,10 @@ class LightThemeColors {
   static const Color priceGreen = Color(0xFF2E7D32); // Price color
 
   // ——— Shadow Colors ———
-  static Color shadowLight = Colors.black.withValues(alpha: 0.05);
-  static Color shadowMedium = Colors.black.withValues(alpha: 0.08);
-  static Color shadowHeavy = Colors.black.withValues(alpha: 0.12);
-  static Color shadowIntense = Colors.black.withValues(alpha: 0.16);
+  static Color shadowLight = Colors.grey.withValues(alpha: 0.05);
+  static Color shadowMedium = Colors.grey.withValues(alpha: 0.08);
+  static Color shadowHeavy = Colors.grey.withValues(alpha: 0.12);
+  static Color shadowIntense = Colors.grey.withOpacity(0.1);
 
   // ——— Overlay Colors ———
   static Color overlayLight = Colors.black.withValues(alpha: 0.05);
@@ -103,7 +103,7 @@ class LightThemeColors {
     deepBlack,
     richBlack,
     darkGray,
-    mediumText,
+    softGrey,
     mutedText,
     lightText,
   ];
@@ -152,7 +152,7 @@ class LightThemeColors {
       case 3: // Body text
         return darkGray;
       case 4: // Caption text
-        return mediumText;
+        return softGrey;
       case 5: // Disabled text
         return mutedText;
       default:

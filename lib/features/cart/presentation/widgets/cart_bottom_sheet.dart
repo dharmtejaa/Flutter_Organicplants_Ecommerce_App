@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
@@ -49,7 +50,14 @@ class CartBottomSheet extends StatelessWidget {
             -discount,
             colorOverride: discountColor ?? Colors.red,
           ),
-          Divider(thickness: 0.5, height: 10.h),
+          Divider(
+            thickness: 2,
+            height: 15.h,
+            //indent: 10.w,
+            //endIndent: 10.w,
+            radius: BorderRadius.circular(AppSizes.radiusLg),
+            color: colorScheme.outline,
+          ),
           _summaryRow(context, "Final Price", finalPrice, isBold: true),
           SizedBox(height: 12.h),
           CustomButton(
@@ -61,7 +69,7 @@ class CartBottomSheet extends StatelessWidget {
                     'Checkout is not implemented yet.',
                   );
                 },
-            textColor: Colors.white,
+            textColor: colorScheme.onPrimary,
             backgroundColor: colorScheme.primary,
             text: 'Proceed to CheckOut',
           ),
@@ -77,6 +85,7 @@ class CartBottomSheet extends StatelessWidget {
     bool isBold = false,
     Color? colorOverride,
   }) {
+    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.h),
       child: Row(
@@ -85,7 +94,7 @@ class CartBottomSheet extends StatelessWidget {
           Text(label, style: Theme.of(context).textTheme.bodyMedium),
           Text(
             "₹${amount.toStringAsFixed(2)}",
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: textTheme.bodyMedium?.copyWith(color: colorOverride),
           ),
         ],
       ),

@@ -17,6 +17,7 @@ class CardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final offerPrice = plant.prices?.offerPrice ?? 0;
     final originalPrice = plant.prices?.originalPrice ?? 0;
@@ -38,9 +39,9 @@ class CardTile extends StatelessWidget {
           Container(
             margin: AppSizes.marginSymmetricXs,
             padding: EdgeInsets.only(
-              left: AppSizes.paddingSm,
-              top: AppSizes.paddingSm,
-              bottom: AppSizes.paddingSm,
+              left: AppSizes.paddingXs,
+              top: AppSizes.paddingXs,
+              bottom: AppSizes.paddingXs,
             ),
             decoration: BoxDecoration(
               color: colorScheme.surface,
@@ -52,7 +53,9 @@ class CardTile extends StatelessWidget {
               children: [
                 // Plant Image
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(AppSizes.radiusSm),
+                  ),
                   child: Image.network(
                     plant.images?[0].url ?? '',
                     height: 0.1.sh,
@@ -60,7 +63,7 @@ class CardTile extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(width: 10.w),
+                SizedBox(width: 15.w),
 
                 // Text Section
                 Expanded(
@@ -69,35 +72,39 @@ class CardTile extends StatelessWidget {
                     children: [
                       Text(
                         plant.commonName ?? 'Unknown Plant',
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: textTheme.titleLarge,
                       ),
                       Text(
                         scifiname == true
                             ? plant.scientificName ?? 'Unknown Scientific Name'
                             : plant.category ?? 'Unknown Category',
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: textTheme.bodyMedium,
                       ),
                       Row(
                         children: [
                           Text(
                             '₹${plant.prices?.originalPrice}',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: textTheme.bodySmall?.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                              color: colorScheme.onSurfaceVariant,
+                            ),
                           ),
                           SizedBox(width: 8.w),
                           Text(
                             '₹${plant.prices?.offerPrice}',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       ),
-                      Text(
-                        '$discount% off',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      if (offerPrice < originalPrice)
+                        Text('$discount% off', style: textTheme.bodySmall),
                     ],
                   ),
                 ),
@@ -163,15 +170,13 @@ class _QuantitySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Container(
       height: 35.h,
       width: 90.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        color:
-            colorScheme.brightness == Brightness.dark
-                ? const Color(0xFFF0F0F0).withValues(alpha: 0.1)
-                : const Color(0xFFF0F0F0),
+        color: colorScheme.tertiary,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -179,13 +184,21 @@ class _QuantitySelector extends StatelessWidget {
           Flexible(
             child: IconButton(
               iconSize: AppSizes.iconSm,
+              color: colorScheme.onSurfaceVariant,
               icon: const Icon(Icons.remove),
               onPressed: onDecrease,
             ),
           ),
-          Text('$quantity', style: Theme.of(context).textTheme.bodySmall),
+          Text(
+            '$quantity',
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           Flexible(
             child: IconButton(
+              color: colorScheme.onSurfaceVariant,
               iconSize: AppSizes.iconSm,
               icon: const Icon(Icons.add),
               onPressed: onIncrease,

@@ -62,8 +62,12 @@ class CartScreen extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 180.h),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  //shrinkWrap: true,
+                  shrinkWrap: true,
                   itemCount: cartItems.length,
+
+                  physics: const BouncingScrollPhysics(),
+                  itemExtent: 120.h,
+
                   itemBuilder: (context, index) {
                     final CartItem item = cartItems[index];
                     return CardTile(plant: item.plant);
@@ -82,7 +86,6 @@ class CartScreen extends StatelessWidget {
                 discountColor: AppTheme.offerColor,
                 labelColor: colorScheme.onSurface,
                 valueColor: colorScheme.onSurface,
-
                 onCheckout: () {
                   Navigator.push(
                     context,

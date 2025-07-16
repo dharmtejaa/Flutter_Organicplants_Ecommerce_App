@@ -15,6 +15,7 @@ class WishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final wishListProvider = Provider.of<WishlistProvider>(
       context,
       listen: false,
@@ -26,7 +27,7 @@ class WishlistScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            //size: AppSizes.iconLg,
+
             color: colorScheme.onSurface,
             size: AppSizes.iconMd,
           ),
@@ -34,14 +35,11 @@ class WishlistScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text(
-          "My WishList",
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        title: Text("My WishList", style: textTheme.headlineMedium),
         centerTitle: true,
         actions: [
           SearchButton(),
-          SizedBox(width: 10.w),
+          SizedBox(width: 8.w),
           CartIconWithBadge(
             iconColor: colorScheme.onSurface,
             onPressed: () {
@@ -66,9 +64,8 @@ class WishlistScreen extends StatelessWidget {
               )
               : ListView.builder(
                 scrollDirection: Axis.vertical,
-
                 shrinkWrap: true,
-                //physics: NeverScrollableScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 itemCount: value.wishList.length,
                 itemBuilder: (context, index) {
                   return ProductTile(plant: value.wishList[index]);

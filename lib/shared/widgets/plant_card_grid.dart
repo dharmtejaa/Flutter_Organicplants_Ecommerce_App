@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
@@ -72,7 +71,7 @@ class ProductCardGrid extends StatelessWidget {
       child: Container(
         //margin: EdgeInsets.only(bottom: AppSizes.vMarginXs),
         decoration: BoxDecoration(
-          color: colorScheme.inverseSurface,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
           boxShadow: AppShadows.productCardShadow(context),
         ),
@@ -80,7 +79,7 @@ class ProductCardGrid extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsets.all(6.w),
+              padding: EdgeInsets.all(5.w),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,8 +134,7 @@ class ProductCardGrid extends StatelessWidget {
                               SizedBox(width: 2.w),
                               Text(
                                 plant.rating?.toStringAsFixed(1) ?? '0.0',
-                                style: TextStyle(
-                                  fontSize: 10.sp,
+                                style: textTheme.labelSmall?.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -177,7 +175,7 @@ class ProductCardGrid extends StatelessWidget {
                                   context,
                                 ).textTheme.bodySmall?.copyWith(
                                   decoration: TextDecoration.lineThrough,
-                                  color: AppColors.mutedText,
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             if (originalPrice > offerPrice)
@@ -191,7 +189,8 @@ class ProductCardGrid extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 0.002.sh),
-                        Text('$discount% off', style: textTheme.bodySmall),
+                        if (originalPrice > offerPrice)
+                          Text('$discount% off', style: textTheme.bodySmall),
                         SizedBox(height: 0.004.sh),
                       ],
                     ),
@@ -201,8 +200,8 @@ class ProductCardGrid extends StatelessWidget {
             ),
             // Add to Cart Button
             Positioned(
-              bottom: 2, //-AppSizes.spaceXs,
-              right: 2, //-AppSizes.spaceXs,
+              bottom: 0, //-AppSizes.spaceXs,
+              right: 0, //-AppSizes.spaceXs,
               child: AddToCartButton(cartProvider: cartProvider, plant: plant),
             ),
           ],
