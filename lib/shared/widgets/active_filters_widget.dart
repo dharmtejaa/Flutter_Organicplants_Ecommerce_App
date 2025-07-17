@@ -20,11 +20,8 @@ class ActiveFiltersWidget extends StatelessWidget {
     this.originalPriceRange,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
+  // Memoized computation of active filters
+  List<Map<String, dynamic>> _getActiveFilters() {
     final activeFilters = <Map<String, dynamic>>[];
 
     if (currentFilters.containsKey(FilterType.sort)) {
@@ -37,6 +34,7 @@ class ActiveFiltersWidget extends StatelessWidget {
         });
       }
     }
+
     if (currentFilters.containsKey(FilterType.price)) {
       final priceRange = currentFilters[FilterType.price] as RangeValues;
       // Only show price filter if it's different from the original range
@@ -52,6 +50,7 @@ class ActiveFiltersWidget extends StatelessWidget {
         });
       }
     }
+
     if (currentFilters.containsKey(FilterType.size)) {
       final size = currentFilters[FilterType.size] as String;
       if (size != 'All Sizes') {
@@ -62,6 +61,7 @@ class ActiveFiltersWidget extends StatelessWidget {
         });
       }
     }
+
     if (currentFilters.containsKey(FilterType.careLevel)) {
       final careLevel = currentFilters[FilterType.careLevel] as String;
       if (careLevel != 'All Levels') {
@@ -72,6 +72,7 @@ class ActiveFiltersWidget extends StatelessWidget {
         });
       }
     }
+
     if (currentFilters.containsKey(FilterType.attributes)) {
       final attributes = currentFilters[FilterType.attributes] as List<String>;
       if (attributes.isNotEmpty) {
@@ -88,7 +89,17 @@ class ActiveFiltersWidget extends StatelessWidget {
       }
     }
 
-    if (activeFilters.isEmpty) return SizedBox.shrink();
+    return activeFilters;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final activeFilters = _getActiveFilters();
+
+    if (activeFilters.isEmpty) return const SizedBox.shrink();
 
     return Container(
       padding: AppSizes.paddingAllSm,
@@ -141,11 +152,12 @@ class ActiveFiltersWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
               // Clear all button
-              GestureDetector(
+              InkWell(
                 onTap: onClearAll,
+                borderRadius: BorderRadius.circular(8.r),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
@@ -187,54 +199,67 @@ class ActiveFiltersWidget extends StatelessWidget {
               spacing: 5.w,
               runSpacing: 4.h,
               children:
-                  activeFilters.map((filter) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8.w,
-                        vertical: 5.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius: BorderRadius.circular(10.r),
-                        border: Border.all(
-                          color: colorScheme.primary.withValues(alpha: 0.2),
-                          width: 1,
+                  activeFilters
+                      .map(
+                        (filter) => _buildFilterChip(
+                          filter,
+                          colorScheme,
+                          textTheme,
+                          context,
                         ),
-                        boxShadow: AppShadows.elevatedShadow(context),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(3.w),
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                            child: Icon(
-                              filter['icon'] as IconData,
-                              size: 10.sp,
-                              color: colorScheme.primary,
-                            ),
-                          ),
-                          SizedBox(width: 5.w),
-                          Flexible(
-                            child: Text(
-                              '${filter['label']}: ${filter['value']}',
-                              style: textTheme.bodySmall?.copyWith(
-                                color: colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 10.sp,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
+                      )
+                      .toList(),
             ),
           ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilterChip(
+    Map<String, dynamic> filter,
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+    BuildContext context,
+  ) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(
+          color: colorScheme.primary.withValues(alpha: 0.2),
+          width: 1,
+        ),
+        boxShadow: AppShadows.elevatedShadow(context),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.all(3.w),
+            decoration: BoxDecoration(
+              color: colorScheme.primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(4.r),
+            ),
+            child: Icon(
+              filter['icon'] as IconData,
+              size: 10.sp,
+              color: colorScheme.primary,
+            ),
+          ),
+          SizedBox(width: 5.w),
+          Flexible(
+            child: Text(
+              '${filter['label']}: ${filter['value']}',
+              style: textTheme.bodySmall?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w600,
+                fontSize: 10.sp,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

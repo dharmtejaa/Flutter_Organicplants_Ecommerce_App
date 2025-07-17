@@ -28,34 +28,35 @@ class _StoreScreenState extends State<StoreScreen>
   late Animation<double> _fadeAnimation;
 
   final String _searchQuery = '';
-  String _selectedSortOption = 'Name A-Z';
 
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  // Filter state using global filter system
-  final ValueNotifier<Map<FilterType, dynamic>> _currentFilters = ValueNotifier(
-    {},
-  );
+  // Simplified filter state management like PlantCategory
+  final Map<String, ValueNotifier<Map<FilterType, dynamic>>>
+  _categoryFilterNotifiers = {};
+  final Map<String, RangeValues> _categoryPriceRanges = {};
+  final Map<String, Map<FilterType, dynamic>?> _lastFilters = {};
+
   final List<FilterType> _enabledFilters = [
     FilterType.sort,
     FilterType.price,
-    //FilterType.rating,
     FilterType.size,
-    //FilterType.careLevel,
     FilterType.attributes,
-    //FilterType.stock,
   ];
 
-  // Remove filter state fields, filter options, and filter logic
-  // Remove filter icon and filter bottom sheet from the tab bar
-  // Refactor the tab bar for a modern look
+  // Cache for expensive computations
+  final Map<String, List<AllPlantsModel>> _filteredPlantsCache = {};
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: categories.length, vsync: this);
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) return;
+    });
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
 
@@ -64,6 +65,31 @@ class _StoreScreenState extends State<StoreScreen>
     );
 
     _animationController.forward();
+
+    // Initialize filter notifiers for each category
+    _initializeCategoryFilters();
+  }
+
+  void _initializeCategoryFilters() {
+    for (final category in categories) {
+      final categoryTag = category['filterTag']!;
+      final basePlants = getPlantsByCategory(categoryTag.toLowerCase().trim());
+
+      // Calculate price range for this category
+      _categoryPriceRanges[categoryTag] =
+          PlantFilterService.calculatePriceRange(basePlants);
+
+      // Initialize filter notifier with default values
+      final defaultFilters = <FilterType, dynamic>{
+        FilterType.sort: 'Name A-Z',
+        FilterType.price: _categoryPriceRanges[categoryTag]!,
+        FilterType.size: 'All Sizes',
+        FilterType.attributes: <String>[],
+      };
+
+      _categoryFilterNotifiers[categoryTag] =
+          ValueNotifier<Map<FilterType, dynamic>>(defaultFilters);
+    }
   }
 
   @override
@@ -72,6 +98,13 @@ class _StoreScreenState extends State<StoreScreen>
     _animationController.dispose();
     _searchController.dispose();
     _searchFocusNode.dispose();
+
+    // Dispose all filter notifiers
+    for (final notifier in _categoryFilterNotifiers.values) {
+      notifier.dispose();
+    }
+
+    _filteredPlantsCache.clear();
     super.dispose();
   }
 
@@ -89,7 +122,7 @@ class _StoreScreenState extends State<StoreScreen>
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(AppSizes.radiusXl),
-              boxShadow: AppShadows.elevatedShadow(context),
+              boxShadow: AppShadows.buttonShadow(context),
             ),
             margin: EdgeInsets.symmetric(
               horizontal: AppSizes.marginSm,
@@ -128,16 +161,12 @@ class _StoreScreenState extends State<StoreScreen>
           ),
           // Tab Content
           Expanded(
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 400),
-              child: TabBarView(
-                key: ValueKey(_tabController.index),
-                controller: _tabController,
-                children:
-                    categories.map((category) {
-                      return _buildCategoryContent(category, colorScheme);
-                    }).toList(),
-              ),
+            child: TabBarView(
+              controller: _tabController,
+              children:
+                  categories.map((category) {
+                    return _buildCategoryContent(category, colorScheme);
+                  }).toList(),
             ),
           ),
         ],
@@ -159,19 +188,22 @@ class _StoreScreenState extends State<StoreScreen>
         },
       ),
       title: Text("Plant Store", style: textTheme.headlineMedium),
-
       centerTitle: true,
       actions: [
         SearchButton(),
         SizedBox(width: 10.w),
         Stack(
           children: [
-            GestureDetector(
+            InkWell(
               onTap: _showFilterBottomSheet,
-              child: Icon(
-                Icons.filter_list,
-                color: colorScheme.onSurface,
-                size: AppSizes.iconMd,
+              borderRadius: BorderRadius.circular(24),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(
+                  Icons.filter_list,
+                  color: colorScheme.onSurface,
+                  size: AppSizes.iconMd,
+                ),
               ),
             ),
             if (_hasActiveFilters())
@@ -206,48 +238,86 @@ class _StoreScreenState extends State<StoreScreen>
     );
   }
 
-  // Filter methods using global filter system
   void _showFilterBottomSheet() {
     final colorScheme = Theme.of(context).colorScheme;
+    final currentCategory = categories[_tabController.index]['filterTag']!;
+    final currentFilters = _categoryFilterNotifiers[currentCategory]!.value;
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      // backgroundColor: colorScheme.surface,
       barrierColor: colorScheme.shadow.withValues(alpha: 0.15),
       builder:
           (context) => FilterBottomSheet(
-            plants: _getAllPlants(),
-            currentFilters: _currentFilters.value,
+            plants: getPlantsByCategory(currentCategory.toLowerCase().trim()),
+            currentFilters: currentFilters,
             enabledFilters: _enabledFilters,
-            onApplyFilters: _applyFilters,
+            onApplyFilters:
+                (filters) => _applyFilters(filters, currentCategory),
           ),
     );
   }
 
-  void _applyFilters(Map<FilterType, dynamic> filters) {
-    _currentFilters.value.clear();
-    _currentFilters.value.addAll(filters);
-    _selectedSortOption = filters[FilterType.sort] as String? ?? 'Name A-Z';
+  void _applyFilters(Map<FilterType, dynamic> filters, String category) {
+    print('StoreScreen: Applying filters: $filters');
+    _categoryFilterNotifiers[category]!.value = Map.from(filters);
+    print(
+      'StoreScreen: Current filters after applying: ${_categoryFilterNotifiers[category]!.value}',
+    );
+
+    // Clear cache when filters change
+    _filteredPlantsCache.clear();
+    _lastFilters[category] = null;
   }
 
   bool _hasActiveFilters() {
-    return _currentFilters.value.isNotEmpty;
+    final currentCategory = categories[_tabController.index]['filterTag']!;
+    final filters = _categoryFilterNotifiers[currentCategory]!.value;
+
+    return filters.entries.any((entry) {
+      final key = entry.key;
+      final value = entry.value;
+      if (key == FilterType.sort) {
+        return value != 'Name A-Z';
+      } else if (key == FilterType.size) {
+        return value != 'All Sizes';
+      } else if (key == FilterType.attributes) {
+        return (value as List<String>).isNotEmpty;
+      } else if (key == FilterType.price) {
+        // Check if price range is different from original
+        final originalRange = _categoryPriceRanges[currentCategory];
+        if (originalRange != null) {
+          final priceRange = value as RangeValues;
+          return priceRange.start != originalRange.start ||
+              priceRange.end != originalRange.end;
+        }
+      }
+      return value != null;
+    });
   }
 
-  List<AllPlantsModel> _getAllPlants() {
-    return allPlantsGlobal;
-  }
-
-  // New: Category content with filter icon at top right
-  Widget _buildCategoryContent(
-    Map<String, String> category,
-    ColorScheme colorScheme,
+  // Memoized filtered plants calculation like PlantCategory
+  List<AllPlantsModel> _getFilteredPlants(
+    List<AllPlantsModel> basePlants,
+    String category,
   ) {
-    final textTheme = Theme.of(context).textTheme;
-    List<AllPlantsModel> plants = getPlantsByCategory(
-      category['filterTag']!.toLowerCase().trim(),
-    );
+    final filters = _categoryFilterNotifiers[category]!.value;
+    final cacheKey = filters.hashCode.toString();
+
+    print('StoreScreen: Getting filtered plants for category: $category');
+    print('StoreScreen: Base plants count: ${basePlants.length}');
+    print('StoreScreen: Current filters: $filters');
+
+    // Check if we can use cached result
+    if (_filteredPlantsCache.containsKey(cacheKey) &&
+        _lastFilters[category] == filters) {
+      print(
+        'StoreScreen: Using cached result: ${_filteredPlantsCache[cacheKey]!.length} plants',
+      );
+      return _filteredPlantsCache[cacheKey]!;
+    }
+
+    List<AllPlantsModel> plants = List.from(basePlants);
 
     // Apply search filter
     if (_searchQuery.isNotEmpty) {
@@ -268,142 +338,176 @@ class _StoreScreenState extends State<StoreScreen>
           }).toList();
     }
 
-    // Apply filters
-    plants = _applyAllFilters(plants);
+    // Apply filters using the service
+    plants = PlantFilterService.getFilteredPlants(
+      plants: plants,
+      filters: filters,
+    );
+
+    print('StoreScreen: After filtering: ${plants.length} plants');
+
+    // Cache the result
+    _filteredPlantsCache[cacheKey] = plants;
+    _lastFilters[category] = Map.from(filters);
+
+    // Limit cache size
+    if (_filteredPlantsCache.length > 10) {
+      _filteredPlantsCache.clear();
+      _lastFilters.clear();
+    }
+
+    return plants;
+  }
+
+  Widget _buildCategoryContent(
+    Map<String, String> category,
+    ColorScheme colorScheme,
+  ) {
+    final categoryTag = category['filterTag']!;
+    final basePlants = getPlantsByCategory(categoryTag.toLowerCase().trim());
 
     return FadeTransition(
       opacity: _fadeAnimation,
-      child: Column(
-        children: [
-          // Filter summary - only show when there are active filters and plants found
-          ValueListenableBuilder<Map<FilterType, dynamic>>(
-            valueListenable: _currentFilters,
-            builder: (context, currentFilters, _) {
-              if (currentFilters.isNotEmpty && plants.isNotEmpty) {
-                return Padding(
+      child: ValueListenableBuilder<Map<FilterType, dynamic>>(
+        valueListenable: _categoryFilterNotifiers[categoryTag]!,
+        builder: (context, filters, _) {
+          final plants = _getFilteredPlants(basePlants, categoryTag);
+          final hasActiveFilters = _hasActiveFilters();
+
+          return Column(
+            children: [
+              // Filter summary - only show when there are active filters and plants found
+              if (hasActiveFilters && plants.isNotEmpty)
+                Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.w,
                     vertical: 8.h,
                   ),
                   child: ActiveFiltersWidget(
-                    currentFilters: currentFilters,
+                    currentFilters: filters,
                     plantCount: plants.length,
                     onClearAll: () {
-                      _currentFilters.value.clear();
+                      // Reset to default filters
+                      final defaultFilters = <FilterType, dynamic>{
+                        FilterType.sort: 'Name A-Z',
+                        FilterType.price: _categoryPriceRanges[categoryTag]!,
+                        FilterType.size: 'All Sizes',
+                        FilterType.attributes: <String>[],
+                      };
+                      _categoryFilterNotifiers[categoryTag]!.value =
+                          defaultFilters;
+                      _filteredPlantsCache.clear();
+                      _lastFilters[categoryTag] = null;
                     },
                     showPlantCount: true,
-                    originalPriceRange: PlantFilterService.calculatePriceRange(
-                      _getAllPlants(),
-                    ),
+                    originalPriceRange: _categoryPriceRanges[categoryTag]!,
                   ),
-                );
-              } else {
-                return SizedBox.shrink();
-              }
-            },
+                ),
+              // Modern grid or empty state
+              Expanded(
+                child:
+                    plants.isEmpty
+                        ? _buildEmptyState(colorScheme, categoryTag)
+                        : _buildPlantGrid(plants),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(ColorScheme colorScheme, String categoryTag) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 40.h),
+          Image.asset(
+            'assets/No_Plant_Found.png',
+            width: 120.w,
+            height: 120.w,
+            fit: BoxFit.contain,
           ),
-          // Modern grid or empty state
-          Expanded(
-            child:
-                plants.isEmpty
-                    ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 40.h),
-                          Image.asset(
-                            'assets/No_Plant_Found.png',
-                            width: 120.w,
-                            height: 120.w,
-                            fit: BoxFit.contain,
-                          ),
-                          SizedBox(height: 16.h),
-                          Text(
-                            'No plants found',
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            'Try adjusting your filters or search.',
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              color: colorScheme.onSurfaceVariant,
-                            ),
-                          ),
-                          SizedBox(height: 16.h),
-                          ElevatedButton.icon(
-                            onPressed: () => _currentFilters.notifyListeners(),
-                            icon: Icon(Icons.refresh),
-                            label: Text('Refresh'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: colorScheme.primary,
-                              foregroundColor: colorScheme.onPrimary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                    : AnimatedSwitcher(
-                      duration: Duration(milliseconds: 400),
-                      child: CustomScrollView(
-                        key: ValueKey(plants.length),
-                        slivers: [
-                          SliverPadding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 8.h,
-                            ),
-                            sliver: SliverGrid(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 7,
-                                    mainAxisSpacing: 7,
-                                    childAspectRatio: 0.735,
-                                  ),
-                              delegate: SliverChildBuilderDelegate((
-                                context,
-                                index,
-                              ) {
-                                if (index >= plants.length) return null;
-                                return TweenAnimationBuilder<double>(
-                                  tween: Tween(begin: 0.85, end: 1.0),
-                                  duration: Duration(
-                                    milliseconds: 350 + (index * 40),
-                                  ),
-                                  curve: Curves.easeOutBack,
-                                  builder:
-                                      (context, scale, child) =>
-                                          Transform.scale(
-                                            scale: scale,
-                                            child: child,
-                                          ),
-                                  child: ProductCardGrid(plant: plants[index]),
-                                );
-                              }, childCount: plants.length),
-                            ),
-                          ),
-                          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
-                        ],
-                      ),
-                    ),
+          SizedBox(height: 16.h),
+          Text(
+            'No plants found',
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            'Try adjusting your filters or search.',
+            style: TextStyle(
+              fontSize: 13.sp,
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+          SizedBox(height: 16.h),
+          ElevatedButton.icon(
+            onPressed: () {
+              // Reset to default filters
+              final defaultFilters = <FilterType, dynamic>{
+                FilterType.sort: 'Name A-Z',
+                FilterType.price: _categoryPriceRanges[categoryTag]!,
+                FilterType.size: 'All Sizes',
+                FilterType.attributes: <String>[],
+              };
+              _categoryFilterNotifiers[categoryTag]!.value = defaultFilters;
+              _filteredPlantsCache.clear();
+              _lastFilters[categoryTag] = null;
+            },
+            icon: const Icon(Icons.refresh),
+            label: const Text('Refresh'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  List<AllPlantsModel> _applyAllFilters(List<AllPlantsModel> plants) {
-    return PlantFilterService.getFilteredPlants(
-      plants: plants,
-      filters: _currentFilters.value,
+  Widget _buildPlantGrid(List<AllPlantsModel> plants) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 400),
+      child: CustomScrollView(
+        key: ValueKey(plants.length),
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 7,
+                mainAxisSpacing: 7,
+                childAspectRatio: 0.735,
+              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
+                if (index >= plants.length) return null;
+                return TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.85, end: 1.0),
+                  duration: Duration(milliseconds: 350 + (index * 40)),
+                  curve: Curves.easeOutBack,
+                  builder:
+                      (context, scale, child) =>
+                          Transform.scale(scale: scale, child: child),
+                  child: ProductCardGrid(plant: plants[index]),
+                );
+              }, childCount: plants.length),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        ],
+      ),
     );
   }
 }

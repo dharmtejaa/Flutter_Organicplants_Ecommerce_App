@@ -366,4 +366,57 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     // TODO: Navigate to edit payment method screen
     CustomSnackBar.showInfo(context, 'Edit payment method form coming soon!');
   }
+
+  //   void deletePaymentMethod(Map<String, dynamic> paymentMethod) {
+  //     final colorScheme = Theme.of(context).colorScheme;
+  //     final textTheme = Theme.of(context).textTheme;
+
+  //     showDialog(
+  //       context: context,
+  //       builder:
+  //           (context) => AlertDialog(
+  //             title: Text(
+  //               'Delete Payment Method',
+  //               style: textTheme.headlineSmall?.copyWith(
+  //                 color: colorScheme.error,
+  //               ),
+  //             ),
+  //             content: Text(
+  //               'Are you sure you want to delete this payment method?',
+  //               style: textTheme.bodyMedium,
+  //             ),
+  //             actions: [
+  //               TextButton(
+  //                 onPressed: () => Navigator.pop(context),
+  //                 child: Text(
+  //                   'Cancel',
+  //                   style: textTheme.labelLarge?.copyWith(
+  //                     color: colorScheme.primary,
+  //                   ),
+  //                 ),
+  //               ),
+  //               ElevatedButton(
+  //                 onPressed: () {
+  //                   setState(() {
+  //                     _paymentMethods.removeWhere(
+  //                       (method) => method['id'] == paymentMethod['id'],
+  //                     );
+  //                   });
+  //                   Navigator.pop(context);
+  //                   CustomSnackBar.showInfo(
+  //                     context,
+  //                     'Payment method deleted successfully!',
+  //                   );
+  //                 },
+  //                 style: ElevatedButton.styleFrom(
+  //                   backgroundColor: colorScheme.error,
+  //                   foregroundColor: colorScheme.onError,
+  //                 ),
+  //                 child: Text('Delete', style: textTheme.labelLarge),
+  //               ),
+  //             ],
+  //           ),
+  //     );
+  //   }
+  // }
 }

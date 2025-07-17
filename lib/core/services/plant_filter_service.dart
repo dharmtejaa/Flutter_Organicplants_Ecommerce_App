@@ -4,17 +4,29 @@ import 'package:organicplants/models/all_plants_model.dart';
 enum FilterType { sort, price, rating, size, careLevel, attributes, stock }
 
 class PlantFilterService {
+  // Cache for price range calculations
+  static final Map<String, RangeValues> _priceRangeCache = {};
+
   static List<AllPlantsModel> getFilteredPlants({
     required List<AllPlantsModel> plants,
     Map<FilterType, dynamic>? filters,
   }) {
-    List<AllPlantsModel> filtered = List.from(plants);
-
     if (filters == null || filters.isEmpty) {
-      return filtered;
+      return List.from(plants);
     }
 
-    // Price Range Filter
+    // Apply filters in order of most restrictive first for better performance
+    List<AllPlantsModel> filtered = List.from(plants);
+
+    // Stock Filter (most restrictive)
+    if (filters.containsKey(FilterType.stock)) {
+      final inStockOnly = filters[FilterType.stock] as bool;
+      if (inStockOnly) {
+        filtered = filtered.where((plant) => plant.inStock == true).toList();
+      }
+    }
+
+    // Price Range Filter (very restrictive)
     if (filters.containsKey(FilterType.price)) {
       final priceRange = filters[FilterType.price] as RangeValues;
       filtered =
@@ -25,7 +37,7 @@ class PlantFilterService {
           }).toList();
     }
 
-    // Rating Range Filter
+    // Rating Range Filter (restrictive)
     if (filters.containsKey(FilterType.rating)) {
       final ratingRange = filters[FilterType.rating] as RangeValues;
       filtered =
@@ -35,7 +47,7 @@ class PlantFilterService {
           }).toList();
     }
 
-    // Plant Size Filter (using height from plantQuickGuide)
+    // Plant Size Filter
     if (filters.containsKey(FilterType.size)) {
       final selectedSize = filters[FilterType.size] as String;
       if (selectedSize != 'All Sizes') {
@@ -56,8 +68,7 @@ class PlantFilterService {
                 case 'Small Plants':
                   return maxHeight <= 2; // 1-2 feet
                 case 'Medium Plants':
-                  return maxHeight >= 2 &&
-                      maxHeight <= 4; // 2-4 feet (covers the gap)
+                  return maxHeight >= 2 && maxHeight <= 4; // 2-4 feet
                 case 'Large Plants':
                   return maxHeight >= 5; // 5+ feet
                 default:
@@ -67,7 +78,7 @@ class PlantFilterService {
       }
     }
 
-    // Care Level Filter (using available attributes)
+    // Care Level Filter
     if (filters.containsKey(FilterType.careLevel)) {
       final selectedCareLevel = filters[FilterType.careLevel] as String;
       if (selectedCareLevel != 'All Levels') {
@@ -82,7 +93,6 @@ class PlantFilterService {
                 case 'Low Maintenance':
                   return attributes.isLowMaintenance == true;
                 case 'High Maintenance':
-                  // Plants that are not beginner-friendly and not low maintenance
                   return (attributes.isBeginnerFriendly != true) &&
                       (attributes.isLowMaintenance != true);
                 default:
@@ -145,85 +155,105 @@ class PlantFilterService {
       }
     }
 
-    // Stock Filter
-    if (filters.containsKey(FilterType.stock)) {
-      final inStockOnly = filters[FilterType.stock] as bool;
-      if (inStockOnly) {
-        filtered =
-            filtered.where((plant) {
-              // Check if plant is in stock
-              return plant.inStock == true;
-            }).toList();
-      }
-    }
-
-    // Sort
+    // Sort (apply last as it doesn't reduce the list)
     if (filters.containsKey(FilterType.sort)) {
       final selectedSortOption = filters[FilterType.sort] as String;
-      switch (selectedSortOption) {
-        case 'Name A-Z':
-          filtered.sort(
-            (a, b) => (a.commonName ?? '').compareTo(b.commonName ?? ''),
-          );
-          break;
-        case 'Name Z-A':
-          filtered.sort(
-            (a, b) => (b.commonName ?? '').compareTo(a.commonName ?? ''),
-          );
-          break;
-        case 'Price Low to High':
-          filtered.sort((a, b) {
-            final priceA = a.prices?.offerPrice ?? a.prices?.originalPrice ?? 0;
-            final priceB = b.prices?.offerPrice ?? b.prices?.originalPrice ?? 0;
-            return priceA.compareTo(priceB);
-          });
-          break;
-        case 'Price High to Low':
-          filtered.sort((a, b) {
-            final priceA = a.prices?.offerPrice ?? a.prices?.originalPrice ?? 0;
-            final priceB = b.prices?.offerPrice ?? b.prices?.originalPrice ?? 0;
-            return priceB.compareTo(priceA);
-          });
-          break;
-        case 'Rating High to Low':
-          filtered.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
-          break;
-        case 'Most Popular':
-          filtered.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
-          break;
-        case 'Newest First':
-          filtered.sort((a, b) => (b.id ?? '').compareTo(a.id ?? ''));
-          break;
-      }
+      _applySorting(filtered, selectedSortOption);
     }
 
     return filtered;
   }
 
+  // Separate sorting method for better performance
+  static void _applySorting(List<AllPlantsModel> plants, String sortOption) {
+    switch (sortOption) {
+      case 'Name A-Z':
+        plants.sort(
+          (a, b) => (a.commonName ?? '').compareTo(b.commonName ?? ''),
+        );
+        break;
+      case 'Name Z-A':
+        plants.sort(
+          (a, b) => (b.commonName ?? '').compareTo(a.commonName ?? ''),
+        );
+        break;
+      case 'Price Low to High':
+        plants.sort((a, b) {
+          final priceA = a.prices?.offerPrice ?? a.prices?.originalPrice ?? 0;
+          final priceB = b.prices?.offerPrice ?? b.prices?.originalPrice ?? 0;
+          return priceA.compareTo(priceB);
+        });
+        break;
+      case 'Price High to Low':
+        plants.sort((a, b) {
+          final priceA = a.prices?.offerPrice ?? a.prices?.originalPrice ?? 0;
+          final priceB = b.prices?.offerPrice ?? b.prices?.originalPrice ?? 0;
+          return priceB.compareTo(priceA);
+        });
+        break;
+      case 'Rating High to Low':
+        plants.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
+        break;
+      case 'Most Popular':
+        plants.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
+        break;
+      case 'Newest First':
+        plants.sort((a, b) => (b.id ?? '').compareTo(a.id ?? ''));
+        break;
+    }
+  }
+
   static RangeValues calculatePriceRange(List<AllPlantsModel> plants) {
+    // Create a cache key based on plant list length and first few IDs
+    final cacheKey =
+        plants.length.toString() +
+        (plants.isNotEmpty ? '_${plants.first.id}' : '') +
+        (plants.length > 1 ? '_${plants[1].id}' : '');
+
+    // Check cache first
+    if (_priceRangeCache.containsKey(cacheKey)) {
+      return _priceRangeCache[cacheKey]!;
+    }
+
     if (plants.isEmpty) {
-      return RangeValues(0, 2000);
+      return const RangeValues(0, 2000);
     }
 
     double minPrice = double.infinity;
     double maxPrice = 0;
 
+    // Single pass through the list
     for (var plant in plants) {
       final price =
           (plant.prices?.offerPrice ?? plant.prices?.originalPrice ?? 0)
               .toDouble();
       if (price > 0) {
-        minPrice = minPrice > price ? price : minPrice;
-        maxPrice = maxPrice < price ? price : maxPrice;
+        if (price < minPrice) minPrice = price;
+        if (price > maxPrice) maxPrice = price;
       }
     }
 
+    RangeValues result;
     if (minPrice != double.infinity && maxPrice > 0) {
-      return RangeValues(minPrice, maxPrice);
+      result = RangeValues(minPrice, maxPrice);
     } else {
-      // Fallback to default range if no valid prices found
-      return RangeValues(0, 2000);
+      result = const RangeValues(0, 2000);
     }
+
+    // Cache the result
+    _priceRangeCache[cacheKey] = result;
+
+    // Limit cache size to prevent memory leaks
+    if (_priceRangeCache.length > 10) {
+      _priceRangeCache.clear();
+    }
+
+    return result;
+  }
+
+  // Clear cache when needed (e.g., when data changes)
+  static void clearCache() {
+    _priceRangeCache.clear();
   }
 
   // Helper method for backward compatibility

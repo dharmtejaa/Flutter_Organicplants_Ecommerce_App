@@ -206,6 +206,7 @@ class CareGuideSection extends StatelessWidget {
         value: care.watering?.frequency ?? '',
         description: care.watering?.description ?? '',
         color: AppColors.info,
+        // ignore: deprecated_member_use
         bgColor: AppColors.info.withOpacity(0.12),
       ),
       _CareItem(
@@ -214,6 +215,7 @@ class CareGuideSection extends StatelessWidget {
         value: care.temperature?.range ?? '',
         description: care.temperature?.description ?? '',
         color: AppColors.warning,
+        // ignore: deprecated_member_use
         bgColor: AppColors.warning.withOpacity(0.12),
       ),
       _CareItem(
@@ -222,6 +224,7 @@ class CareGuideSection extends StatelessWidget {
         value: care.humidity?.level ?? '',
         description: care.humidity?.description ?? '',
         color: AppColors.secondaryOrange,
+        // ignore: deprecated_member_use
         bgColor: AppColors.secondaryOrange.withOpacity(0.12),
       ),
       _CareItem(
@@ -230,6 +233,7 @@ class CareGuideSection extends StatelessWidget {
         value: care.fertilizer?.type ?? '',
         description: care.fertilizer?.description ?? '',
         color: AppColors.primaryGreen,
+        // ignore: deprecated_member_use
         bgColor: AppColors.primaryGreen.withOpacity(0.12),
       ),
     ];
@@ -312,32 +316,37 @@ class _CareCard extends StatelessWidget {
                         Spacer(),
                         ValueListenableBuilder<bool>(
                           valueListenable: expandedNotifier,
-                          builder: (context, expanded, _) => Icon(
-                            expanded ? Icons.expand_less : Icons.expand_more,
-                            color: colorScheme.onSurface,
-                            size: AppSizes.iconSm,
-                          ),
+                          builder:
+                              (context, expanded, _) => Icon(
+                                expanded
+                                    ? Icons.expand_less
+                                    : Icons.expand_more,
+                                color: colorScheme.onSurface,
+                                size: AppSizes.iconSm,
+                              ),
                         ),
                       ],
                     ),
                     ValueListenableBuilder<bool>(
                       valueListenable: expandedNotifier,
-                      builder: (context, expanded, _) => AnimatedCrossFade(
-                        firstChild: SizedBox.shrink(),
-                        secondChild: Padding(
-                          padding: EdgeInsets.only(top: 8.h),
-                          child: Text(
-                            item.description,
-                            style: textTheme.bodyMedium,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
+                      builder:
+                          (context, expanded, _) => AnimatedCrossFade(
+                            firstChild: SizedBox.shrink(),
+                            secondChild: Padding(
+                              padding: EdgeInsets.only(top: 8.h),
+                              child: Text(
+                                item.description,
+                                style: textTheme.bodyMedium,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            crossFadeState:
+                                expanded
+                                    ? CrossFadeState.showSecond
+                                    : CrossFadeState.showFirst,
+                            duration: Duration(milliseconds: 250),
                           ),
-                        ),
-                        crossFadeState: expanded
-                            ? CrossFadeState.showSecond
-                            : CrossFadeState.showFirst,
-                        duration: Duration(milliseconds: 250),
-                      ),
                     ),
                   ],
                 ),
@@ -371,6 +380,7 @@ class FAQSection extends StatelessWidget {
           question: faq.question ?? '',
           answer: faq.answer ?? '',
           color: colorScheme.primary,
+          // ignore: deprecated_member_use
           bgColor: colorScheme.primaryContainer.withOpacity(0.15),
         );
       },
@@ -408,6 +418,7 @@ class _FAQCard extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
+                  // ignore: deprecated_member_use
                   color: color.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
@@ -433,33 +444,38 @@ class _FAQCard extends StatelessWidget {
                         ),
                         ValueListenableBuilder<bool>(
                           valueListenable: expandedNotifier,
-                          builder: (context, expanded, _) => Icon(
-                            expanded ? Icons.expand_less : Icons.expand_more,
-                            color: color,
-                            size: 20.r,
-                          ),
+                          builder:
+                              (context, expanded, _) => Icon(
+                                expanded
+                                    ? Icons.expand_less
+                                    : Icons.expand_more,
+                                color: color,
+                                size: 20.r,
+                              ),
                         ),
                       ],
                     ),
                     ValueListenableBuilder<bool>(
                       valueListenable: expandedNotifier,
-                      builder: (context, expanded, _) => AnimatedCrossFade(
-                        firstChild: SizedBox.shrink(),
-                        secondChild: Padding(
-                          padding: EdgeInsets.only(top: 8.h),
-                          child: Text(
-                            answer,
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.black54,
+                      builder:
+                          (context, expanded, _) => AnimatedCrossFade(
+                            firstChild: SizedBox.shrink(),
+                            secondChild: Padding(
+                              padding: EdgeInsets.only(top: 8.h),
+                              child: Text(
+                                answer,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: Colors.black54,
+                                ),
+                              ),
                             ),
+                            crossFadeState:
+                                expanded
+                                    ? CrossFadeState.showSecond
+                                    : CrossFadeState.showFirst,
+                            duration: Duration(milliseconds: 250),
                           ),
-                        ),
-                        crossFadeState: expanded
-                            ? CrossFadeState.showSecond
-                            : CrossFadeState.showFirst,
-                        duration: Duration(milliseconds: 250),
-                      ),
                     ),
                   ],
                 ),

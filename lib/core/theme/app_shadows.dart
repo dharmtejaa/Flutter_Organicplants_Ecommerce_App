@@ -6,7 +6,7 @@ class AppShadows {
   // ——— Light Theme Shadows ———
   static List<BoxShadow> get lightCardShadow => [
     BoxShadow(
-      color: Colors.grey.withValues(alpha: 0.08),
+      color: Colors.grey.withValues(alpha: 0.07),
       spreadRadius: 1,
       blurRadius: 4,
       offset: const Offset(0, 2),
@@ -15,10 +15,10 @@ class AppShadows {
 
   static List<BoxShadow> get lightElevatedShadow => [
     BoxShadow(
-      color: Colors.grey.withValues(alpha: 0.12),
+      color: Colors.grey.withValues(alpha: 0.2),
       spreadRadius: 1,
       blurRadius: 6,
-      offset: const Offset(0, 3),
+      offset: const Offset(0, 4),
     ),
   ];
 
@@ -35,7 +35,7 @@ class AppShadows {
     BoxShadow(
       color: Colors.grey.withValues(alpha: 0.24),
       spreadRadius: 2,
-      blurRadius: 12,
+      blurRadius: 10,
       offset: const Offset(0, 6),
     ),
   ];
@@ -52,7 +52,7 @@ class AppShadows {
 
   static List<BoxShadow> get darkElevatedShadow => [
     BoxShadow(
-      color: DarkThemeColors.shadowIntense,
+      color: DarkThemeColors.shadowIntense.withValues(alpha: 0.2),
       spreadRadius: 1,
       blurRadius: 6,
       offset: const Offset(0, 4),
@@ -72,7 +72,7 @@ class AppShadows {
     BoxShadow(
       color: DarkThemeColors.shadowIntense,
       spreadRadius: 2,
-      blurRadius: 12,
+      blurRadius: 10,
       offset: const Offset(0, 6),
     ),
   ];

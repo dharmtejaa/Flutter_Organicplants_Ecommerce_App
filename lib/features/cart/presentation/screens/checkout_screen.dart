@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/features/cart/data/cart_items_quantity_model.dart';
 import 'package:provider/provider.dart';
@@ -160,13 +161,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         itemBuilder: (context, index) {
           final item = cartItems[index];
           return ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(8.r),
-              child: Image.asset(
-                item['image'],
-                width: 44.w,
-                height: 44.w,
-                fit: BoxFit.cover,
+            leading: SizedBox(
+              width: 44.w,
+              height: 44.w,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.r),
+                child: Image.asset(item['image'], fit: BoxFit.cover),
               ),
             ),
             title: Text(
@@ -248,7 +248,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddressesScreen()),
+              );
+            },
             child: Text('Change', style: TextStyle(color: colorScheme.primary)),
           ),
         ],

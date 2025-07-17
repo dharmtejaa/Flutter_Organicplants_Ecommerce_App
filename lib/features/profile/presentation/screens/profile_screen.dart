@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        padding: AppSizes.paddingSymmetricSm,
         child: Column(
           children: [
             // Profile Header Card

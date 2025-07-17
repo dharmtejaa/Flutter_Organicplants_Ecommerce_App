@@ -170,10 +170,10 @@ class _PlantCategoryState extends State<PlantCategory> {
             borderRadius: BorderRadius.circular(24),
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-            child: Icon(
-              Icons.filter_list,
-              color: colorScheme.onSurface,
-              size: AppSizes.iconMd,
+              child: Icon(
+                Icons.filter_list,
+                color: colorScheme.onSurface,
+                size: AppSizes.iconMd,
               ),
             ),
           ),

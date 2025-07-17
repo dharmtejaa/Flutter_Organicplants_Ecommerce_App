@@ -24,14 +24,14 @@ class _SearchByCategoryState extends State<SearchByCategory> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSizes.radiusLg),
           color: colorScheme.surface,
-          boxShadow: AppShadows.productCardShadow(context),
+          boxShadow: AppShadows.cardShadow(context),
         ),
         padding: EdgeInsets.only(left: 10.w, right: 5.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 6.w, right: 15.w, top: 15.h),
+              padding: EdgeInsets.only(left: 6.w, right: 6.w, top: 15.h),
               child: _buildModernHeader(context, colorScheme, textTheme),
             ),
             SizedBox(height: 10.h),
@@ -71,7 +71,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                           decoration: BoxDecoration(
                             color: colorScheme.inverseSurface,
                             borderRadius: BorderRadius.circular(50.w),
-                            boxShadow: AppShadows.productCardShadow(context),
+                            boxShadow: AppShadows.elevatedShadow(context),
                           ),
 
                           child: Image.asset(
@@ -130,19 +130,25 @@ class _SearchByCategoryState extends State<SearchByCategory> {
             );
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
             decoration: BoxDecoration(
               color: colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(AppSizes.radiusXl),
             ),
             child: Row(
               children: [
-                Text('View All', style: textTheme.titleMedium),
+                Text(
+                  'View All',
+                  style: textTheme.labelMedium?.copyWith(
+                    color: colorScheme.primaryFixed,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 SizedBox(width: 6.w),
                 Icon(
                   Icons.arrow_forward_rounded,
                   size: AppSizes.iconXs,
-                  color: colorScheme.onSurface,
+                  color: colorScheme.primaryFixed,
                 ),
               ],
             ),

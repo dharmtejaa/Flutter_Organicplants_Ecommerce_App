@@ -205,12 +205,12 @@ class AppTheme {
         //elevation: 2,
         //shadowColor: primaryColor.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         textStyle: TextStyle(
           fontSize: 16.sp,
-          color: LightThemeColors.pureWhite,
+          color: LightThemeColors.primaryGreen,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),
@@ -223,11 +223,12 @@ class AppTheme {
         foregroundColor: LightThemeColors.primaryGreen,
         side: BorderSide(color: LightThemeColors.primaryGreen, width: 1.5),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         textStyle: TextStyle(
           fontSize: 16.sp,
+          color: LightThemeColors.primaryGreen,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),
@@ -277,6 +278,7 @@ class AppTheme {
       textColor: LightThemeColors.deepBlack,
       collapsedTextColor: LightThemeColors.deepBlack,
     ),
+    // ignore: deprecated_member_use
     dividerColor: LightThemeColors.softGrey.withOpacity(0.5),
   );
 
@@ -298,7 +300,7 @@ class AppTheme {
       // ignore: deprecated_member_use
       primaryContainer: DarkThemeColors.primaryGreen.withOpacity(0.1),
       onPrimaryContainer: DarkThemeColors.pureWhite,
-
+      primaryFixed: DarkThemeColors.pureWhite,
       secondary: DarkThemeColors.secondaryOrange,
       secondaryContainer: DarkThemeColors.secondaryOrange.withOpacity(0.1),
 
@@ -455,12 +457,12 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: DarkThemeColors.primaryGreen,
         foregroundColor: DarkThemeColors.pureWhite,
-        elevation: 2,
-        shadowColor: DarkThemeColors.primaryGreen.withValues(alpha: 0.4),
+        // elevation: 2,
+        // shadowColor: DarkThemeColors.primaryGreen.withValues(alpha: 0.4),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         textStyle: TextStyle(
           fontSize: 16.sp,
           color: DarkThemeColors.pureWhite,
@@ -478,9 +480,10 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSizes.radiusSm),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         textStyle: TextStyle(
           fontSize: 16.sp,
+          //color: DarkThemeColors.pureWhite,
           fontWeight: FontWeight.w600,
           fontFamily: 'Poppins',
         ),

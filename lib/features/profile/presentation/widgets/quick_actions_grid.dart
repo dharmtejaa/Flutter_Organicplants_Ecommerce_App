@@ -26,11 +26,11 @@ class QuickActionsGrid extends StatelessWidget {
             SizedBox(height: 20.h),
             GridView.count(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               crossAxisCount: 2,
               crossAxisSpacing: 8.w,
               mainAxisSpacing: 8.h,
-              childAspectRatio: 2.3,
+              childAspectRatio: 2.4,
               children: [
                 _buildQuickActionCard(
                   context,
@@ -114,13 +114,13 @@ class QuickActionsGrid extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-        boxShadow: AppShadows.elevatedShadow(context),
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+        boxShadow: AppShadows.buttonShadow(context),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           onTap: onTap,
           child: Padding(
             padding: EdgeInsets.all(10.w),

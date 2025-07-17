@@ -152,14 +152,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 }
               },
               child: Chip(
-                label: Text(query, style: textTheme.bodyMedium),
-                deleteIcon: const Icon(Icons.close),
+                label: Text(query, style: textTheme.labelMedium),
+                deleteIcon: Icon(Icons.close, color: colorScheme.onSurface),
                 backgroundColor: colorScheme.surface,
                 shape: const StadiumBorder(),
-                shadowColor:
-                    Theme.of(context).brightness == Brightness.dark
-                        ? DarkThemeColors.shadowLight
-                        : LightThemeColors.shadowLight,
+                shadowColor: colorScheme.shadow,
                 elevation: 2,
                 side: BorderSide(color: colorScheme.surface),
                 onDeleted: () => provider.removeSearchHistory(query),
@@ -171,8 +168,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildRecentViewed(SearchScreenProvider provider) {
     return GridView.builder(
-      shrinkWrap: true,
-      physics: BouncingScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 7,

@@ -39,13 +39,13 @@ class ProfileMenuItem extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
             color: backgroundColor ?? colorScheme.surface,
-            borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-            boxShadow: AppShadows.elevatedShadow(context),
+            borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+            boxShadow: AppShadows.cardShadow(context),
           ),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+              borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               onTap: onTap,
               child: Padding(
                 padding: AppSizes.paddingAllSm,
@@ -115,7 +115,6 @@ class ProfileMenuSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Column(

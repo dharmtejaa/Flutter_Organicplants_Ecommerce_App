@@ -63,8 +63,6 @@ class WishlistScreen extends StatelessWidget {
                 ),
               )
               : ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
                 physics: BouncingScrollPhysics(),
                 itemCount: value.wishList.length,
                 itemBuilder: (context, index) {

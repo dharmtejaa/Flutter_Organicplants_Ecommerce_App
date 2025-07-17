@@ -86,6 +86,18 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     _calculatePriceRange();
   }
 
+  @override
+  void dispose() {
+    _selectedSort.dispose();
+    _selectedSize.dispose();
+    _selectedCareLevel.dispose();
+    _selectedAttributes.dispose();
+    _inStockOnly.dispose();
+    _priceRange.dispose();
+    _ratingRange.dispose();
+    super.dispose();
+  }
+
   void _initializeFilters() {
     _selectedSort.value = widget.currentFilters[FilterType.sort] ?? 'Name A-Z';
     _selectedSize.value = widget.currentFilters[FilterType.size] ?? 'All Sizes';
@@ -189,20 +201,22 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         constraints: BoxConstraints(maxHeight: 0.85.sh),
         decoration: BoxDecoration(
           color: colorScheme.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
-          boxShadow: AppShadows.elevatedShadow(context),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppSizes.radiusLg),
+          ),
+          boxShadow: AppShadows.bottomNavShadow(context),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // Handle bar
             Container(
-              width: 40,
-              height: 4,
+              width: 40.w,
+              height: 5.h,
               margin: EdgeInsets.only(top: 12.h, bottom: 8.h),
               decoration: BoxDecoration(
-                color: colorScheme.onSurfaceVariant,
-                borderRadius: BorderRadius.circular(2),
+                color: colorScheme.outline,
+                borderRadius: BorderRadius.circular(AppSizes.radiusSm),
               ),
             ),
 
@@ -212,19 +226,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Filter & Sort',
-                    style: textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  Text('Filter & Sort', style: textTheme.titleMedium),
                   Row(
                     children: [
-                      TextButton(
-                        onPressed: _clearAllFilters,
+                      GestureDetector(
+                        onTap: _clearAllFilters,
                         child: Text(
                           'Reset',
-                          style: textTheme.bodySmall?.copyWith(
+                          style: textTheme.bodyMedium?.copyWith(
                             color: colorScheme.primary,
                             fontWeight: FontWeight.w600,
                           ),
@@ -239,8 +248,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         onPressed: () => Navigator.pop(context),
                         padding: EdgeInsets.zero,
                         constraints: BoxConstraints(
-                          minWidth: 32,
-                          minHeight: 32,
+                          minWidth: 32.w,
+                          minHeight: 32.h,
                         ),
                       ),
                     ],
@@ -276,7 +285,12 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     if (widget.enabledFilters.contains(FilterType.price)) ...[
                       _buildSectionHeader('Price Range', Icons.currency_rupee),
                       SizedBox(height: 6.h),
-                      _buildCompactPriceSlider(),
+                      ValueListenableBuilder<RangeValues>(
+                        valueListenable: _priceRange,
+                        builder: (context, range, _) {
+                          return _buildCompactPriceSlider(range);
+                        },
+                      ),
                       SizedBox(height: 16.h),
                     ],
 
@@ -358,15 +372,11 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
             // Action Buttons
             Container(
-              padding: EdgeInsets.all(20.w),
-              decoration: BoxDecoration(
-                color: colorScheme.surface,
-                border: Border(
-                  top: BorderSide(
-                    color: colorScheme.outline.withValues(alpha: 0.2),
-                  ),
-                ),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSizes.paddingLg,
+                vertical: AppSizes.paddingMd,
               ),
+              decoration: BoxDecoration(color: colorScheme.surface),
               child: Row(
                 children: [
                   Expanded(
@@ -380,15 +390,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                           ),
                         ),
                       ),
-                      child: Text('Cancel', style: textTheme.labelLarge),
+                      child: Text('Cancel'),
                     ),
                   ),
                   SizedBox(width: 12.w),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: _applyFilters,
-
-                      child: Text('Apply', style: textTheme.labelLarge),
+                      child: Text('Apply'),
                     ),
                   ),
                 ],
@@ -406,7 +415,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
     return Row(
       children: [
-        Icon(icon, size: AppSizes.iconMd, color: colorScheme.primary),
+        Icon(icon, size: AppSizes.iconSm, color: colorScheme.primary),
         SizedBox(width: 6.w),
         Text(
           title,
@@ -428,8 +437,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     final textTheme = Theme.of(context).textTheme;
 
     return Wrap(
-      spacing: 6.w,
-      runSpacing: 6.h,
+      spacing: 8.w,
+      runSpacing: 8.h,
       children:
           options.map((option) {
             final isSelected = selectedValue == option;
@@ -440,17 +449,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color:
-                      isSelected
-                          ? colorScheme.primary
-                          : colorScheme.surfaceContainerHighest,
+                      isSelected ? colorScheme.primary : colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(
-                    color:
-                        isSelected
-                            ? colorScheme.primary
-                            : colorScheme.outline.withValues(alpha: 0.3),
-                    width: 1,
-                  ),
                 ),
                 child: Text(
                   option,
@@ -469,19 +469,16 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     );
   }
 
-  Widget _buildCompactPriceSlider() {
+  Widget _buildCompactPriceSlider(RangeValues range) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
-      padding: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(AppSizes.paddingSm),
+
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: colorScheme.outline.withValues(alpha: 0.2),
-          width: 1,
-        ),
+        color: colorScheme.tertiary,
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -490,7 +487,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '₹${_priceRange.value.start.toInt()}',
+                '₹${range.start.toInt()}',
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -498,12 +495,12 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               Text(
                 'to',
-                style: textTheme.bodySmall?.copyWith(
+                style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
               Text(
-                '₹${_priceRange.value.end.toInt()}',
+                '₹${range.end.toInt()}',
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -513,13 +510,18 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           SizedBox(height: 8.h),
           RangeSlider(
-            values: _priceRange.value,
+            values: range,
             activeColor: colorScheme.primary,
             inactiveColor: colorScheme.primary.withValues(alpha: 0.2),
             min: _minPrice,
             max: _maxPrice,
-            divisions: 40,
-            onChanged: (values) => _priceRange.value = values,
+            divisions:
+                (_maxPrice - _minPrice).toInt() > 0
+                    ? (_maxPrice - _minPrice).toInt().clamp(1, 100)
+                    : 1,
+            onChanged: (values) {
+              _priceRange.value = values;
+            },
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -548,14 +550,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     final textTheme = Theme.of(context).textTheme;
 
     return Container(
-      padding: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(AppSizes.paddingSm),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: colorScheme.outline.withValues(alpha: 0.2),
-          width: 1,
-        ),
+        color: colorScheme.tertiary,
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -622,8 +620,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     final textTheme = Theme.of(context).textTheme;
 
     return Wrap(
-      spacing: 6.w,
-      runSpacing: 6.h,
+      spacing: 8.w,
+      runSpacing: 8.h,
       children:
           _attributeOptions.map((attribute) {
             final isSelected = _selectedAttributes.value.contains(attribute);
@@ -649,15 +647,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   )..remove(attribute);
                 }
               },
-              backgroundColor: colorScheme.surfaceContainerHighest,
+              backgroundColor: colorScheme.surfaceContainer,
               selectedColor: colorScheme.primary,
               checkmarkColor: colorScheme.onPrimary,
-              side: BorderSide(
-                color:
-                    isSelected
-                        ? colorScheme.primary
-                        : colorScheme.outline.withValues(alpha: 0.3),
-              ),
+
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
               labelPadding: EdgeInsets.symmetric(horizontal: 4.w),
             );
@@ -672,12 +665,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: colorScheme.outline.withValues(alpha: 0.2),
-          width: 1,
-        ),
+        color: colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+        border: Border.all(color: colorScheme.outline, width: 1),
       ),
       child: Row(
         children: [

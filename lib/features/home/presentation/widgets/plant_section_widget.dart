@@ -33,7 +33,7 @@ class PlantSectionWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSizes.radiusLg),
           color: colorScheme.surface,
-          boxShadow: AppShadows.productCardShadow(context),
+          boxShadow: AppShadows.cardShadow(context),
         ),
         padding: EdgeInsets.only(left: 10.w, right: 5.w),
         child: Column(
@@ -42,7 +42,7 @@ class PlantSectionWidget extends StatelessWidget {
           children: [
             // Header Section
             Padding(
-              padding: EdgeInsets.only(left: 5.w, right: 15.w, top: 15.h),
+              padding: EdgeInsets.only(left: 6.w, right: 6.w, top: 15.h),
               child: _buildModernHeader(
                 context,
                 colorScheme,
@@ -95,19 +95,25 @@ class PlantSectionWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppSizes.radiusXl),
           onTap: onSeeAll,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
             decoration: BoxDecoration(
               color: colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(AppSizes.radiusXl),
             ),
             child: Row(
               children: [
-                Text('View All', style: textTheme.titleMedium),
+                Text(
+                  'View All',
+                  style: textTheme.labelMedium?.copyWith(
+                    color: colorScheme.primaryFixed,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 SizedBox(width: 6.w),
                 Icon(
                   Icons.arrow_forward_rounded,
-                  size: AppSizes.radiusLg,
-                  color: colorScheme.onSurface,
+                  size: AppSizes.iconXs,
+                  color: colorScheme.primaryFixed,
                 ),
               ],
             ),

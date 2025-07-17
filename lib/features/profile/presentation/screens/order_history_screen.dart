@@ -9,6 +9,7 @@ import 'package:collection/collection.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
@@ -30,6 +31,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final orders = Provider.of<ProfileProvider>(context).orders;
 
     return DefaultTabController(
@@ -39,23 +41,20 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text(
-            "Order History",
-            style: TextStyle(
-              color: colorScheme.onSurface,
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          title: Text("Order History", style: textTheme.headlineMedium),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: colorScheme.onSurface,
+              size: AppSizes.iconMd,
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(56),
+            preferredSize: Size.fromHeight(56.h),
             child: Container(
-              height: 56,
+              height: 56.h,
               alignment: Alignment.centerLeft,
               child: TabBar(
                 isScrollable: true,
@@ -86,7 +85,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                   return _buildEmptyState();
                 }
                 return ListView.builder(
-                  padding: EdgeInsets.all(16.w),
+                  padding: AppSizes.paddingAllMd,
                   itemCount: filteredOrders.length,
                   itemBuilder: (context, index) {
                     return _buildOrderCard(filteredOrders[index]);
@@ -110,7 +109,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
             size: 80.r,
             color: colorScheme.outline,
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: AppSizes.spaceHeightMd),
           Text(
             "No Orders Found",
             style: TextStyle(
@@ -119,16 +118,13 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
               color: colorScheme.onSurface,
             ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: AppSizes.spaceHeightMd),
           Text(
             "Start shopping to see your order history here",
-            style: TextStyle(
-              fontSize: 16.sp,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: TextStyle(fontSize: 16, color: colorScheme.onSurfaceVariant),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 24.h),
+          SizedBox(height: AppSizes.spaceHeightMd),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
@@ -202,7 +198,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
             Text(
               "Items",
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: colorScheme.onSurface,
               ),
@@ -218,7 +214,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                         Text(
                           "• ${item['name']}",
                           style: TextStyle(
-                            fontSize: 14.sp,
+                            fontSize: 14,
                             color: colorScheme.onSurface,
                           ),
                         ),
@@ -226,15 +222,15 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                         Text(
                           "Qty: ${item['quantity']}",
                           style: TextStyle(
-                            fontSize: 14.sp,
+                            fontSize: 14,
                             color: colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        SizedBox(width: 8.w),
+                        SizedBox(width: AppSizes.spaceMd),
                         Text(
                           item['price'],
                           style: TextStyle(
-                            fontSize: 14.sp,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: colorScheme.onSurface,
                           ),
@@ -245,7 +241,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                 )
                 .toList(),
 
-            SizedBox(height: 16.h),
+            SizedBox(height: AppSizes.spaceHeightMd),
 
             // Order Total
             Row(
@@ -366,7 +362,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     final colorScheme = Theme.of(context).colorScheme;
     Color backgroundColor;
     Color textColor;
-    double fontSize = prominent ? 14.sp : 12.sp;
+    double fontSize = prominent ? 14 : 12;
     FontWeight fontWeight = prominent ? FontWeight.bold : FontWeight.w600;
     EdgeInsets padding =
         prominent
@@ -397,7 +393,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       padding: padding,
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(14.r),
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         boxShadow: prominent ? AppShadows.elevatedShadow(context) : [],
       ),
       child: Text(
@@ -439,11 +435,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
               }
             },
             child: Container(
-              margin: EdgeInsets.only(right: 8.w),
-              width: 44.w,
-              height: 44.w,
+              margin: EdgeInsets.only(right: AppSizes.spaceMd),
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                 border: Border.all(
                   color: colorScheme.outline.withOpacity(0.15),
                 ),
@@ -453,12 +449,12 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                   items[i]['image'] != null &&
                           items[i]['image'].toString().isNotEmpty
                       ? ClipRRect(
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                         child: Image.network(
                           items[i]['image'],
                           fit: BoxFit.cover,
-                          width: 44.w,
-                          height: 44.w,
+                          width: 44,
+                          height: 44,
                         ),
                       )
                       : Icon(
@@ -471,17 +467,17 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         ),
         if (items.length > maxThumbs)
           Container(
-            width: 44.w,
-            height: 44.w,
+            width: 44,
+            height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
+              borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               color: colorScheme.primary.withOpacity(0.1),
             ),
             child: Text(
               "+${items.length - maxThumbs} more",
               style: TextStyle(
-                fontSize: 13.sp,
+                fontSize: 13,
                 color: colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),

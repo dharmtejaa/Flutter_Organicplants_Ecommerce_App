@@ -18,17 +18,17 @@ class ProfileHeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final profileProvider = Provider.of<ProfileProvider>(context);
+    //final profileProvider = Provider.of<ProfileProvider>(context);
     return Consumer<ProfileProvider>(
       builder: (context, profileProvider, child) {
         return Container(
           decoration: BoxDecoration(
             color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+            borderRadius: BorderRadius.circular(AppSizes.radiusXl),
             boxShadow: AppShadows.cardShadow(context),
           ),
           child: Padding(
-            padding: EdgeInsets.all(16.w),
+            padding: AppSizes.paddingSymmetricSm,
             child: Column(
               children: [
                 Row(
@@ -41,17 +41,12 @@ class ProfileHeaderCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: colorScheme.primary.withOpacity(0.18),
+                          // ignore: deprecated_member_use
+                          color: colorScheme.primary.withValues(alpha: 0.18),
                           width: 2,
                         ),
                         color: colorScheme.inverseSurface,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: colorScheme.shadow.withOpacity(0.10),
-                        //     blurRadius: 10,
-                        //     offset: Offset(0, 3),
-                        //   ),
-                        // ],
+                        boxShadow: AppShadows.cardShadow(context),
                       ),
                       child: ClipOval(
                         child:
@@ -88,10 +83,12 @@ class ProfileHeaderCard extends StatelessWidget {
                               vertical: 2.h,
                             ),
                             decoration: BoxDecoration(
-                              color: colorScheme.primary.withOpacity(0.08),
+                              // ignore: deprecated_member_use
+                              color: colorScheme.primaryContainer,
                               borderRadius: BorderRadius.circular(
                                 AppSizes.radiusLg,
                               ),
+                              boxShadow: AppShadows.buttonShadow(context),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -118,7 +115,10 @@ class ProfileHeaderCard extends StatelessWidget {
                       color: colorScheme.primary,
                       shape: CircleBorder(),
                       child: InkWell(
-                        customBorder: CircleBorder(),
+
+                        customBorder: CircleBorder(
+                          
+                        ),
                         onTap: () {
                           // Navigate to edit profile screen
                           Navigator.push(
