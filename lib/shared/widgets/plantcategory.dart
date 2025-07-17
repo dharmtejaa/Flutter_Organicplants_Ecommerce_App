@@ -9,6 +9,7 @@ import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 import 'package:organicplants/shared/widgets/active_filters_widget.dart';
 import 'package:organicplants/shared/widgets/filter_bottom_sheet.dart';
+import 'package:organicplants/shared/widgets/no_result_found.dart';
 import 'package:organicplants/shared/widgets/plant_card_grid.dart';
 
 class PlantCategory extends StatefulWidget {
@@ -93,6 +94,11 @@ class _PlantCategoryState extends State<PlantCategory> {
             _filteredPlantsCache.clear();
             _lastFilters = null;
           },
+          // Example usage:
+          // showApplyToAllTabs: true,
+          // onApplyFiltersForAllTabs: (filters) {
+          //   // Implement logic to apply filters to all tabs if needed
+          // },
         );
       },
     );
@@ -244,22 +250,10 @@ class _PlantCategoryState extends State<PlantCategory> {
 
   Widget _buildEmptyState(ColorScheme colorScheme, TextTheme textTheme) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.local_florist,
-            size: 64,
-            color: colorScheme.primary.withValues(alpha: 0.2),
-          ),
-          SizedBox(height: 18.h),
-          Text('No plants found', style: textTheme.bodyMedium),
-          SizedBox(height: 8.h),
-          Text(
-            'Try adjusting your filters or search.',
-            style: textTheme.bodySmall,
-          ),
-        ],
+      child: NoResultsFound(
+        title: "No plants found",
+        message: "Try adjusting your fiters or Search.",
+        imagePath: "assets/No_Plant_Found.png",
       ),
     );
   }

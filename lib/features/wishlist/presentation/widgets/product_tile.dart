@@ -45,7 +45,7 @@ class ProductTile extends StatelessWidget {
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-              boxShadow: AppShadows.productCardShadow(context),
+              boxShadow: AppShadows.cardShadow(context),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,6 +71,7 @@ class ProductTile extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         plant.commonName ?? 'Unknown Plant',
@@ -78,14 +79,14 @@ class ProductTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: textTheme.titleLarge,
                       ),
-                      Text(
-                        scifiname == true
-                            ? plant.scientificName ?? 'Unknown Scientific Name'
-                            : plant.category ?? 'Unknown Category',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.bodyMedium,
-                      ),
+                      // Text(
+                      //   scifiname == true
+                      //       ? plant.scientificName ?? 'Unknown Scientific Name'
+                      //       : plant.category ?? 'Unknown Category',
+                      //   maxLines: 2,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   style: textTheme.bodyMedium,
+                      // ),
                       Row(
                         children: [
                           Text(

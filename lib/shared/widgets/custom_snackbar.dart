@@ -138,14 +138,18 @@ class CustomSnackBar {
                             colorScheme,
                             context,
                           ),
-                          style: textTheme.bodyMedium,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onPrimary,
+                          ),
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       )
                       : Text(
                         message,
-                        style: textTheme.bodyMedium,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onPrimary,
+                        ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -191,33 +195,24 @@ class CustomSnackBar {
     final int startIndex = lowerMessage.indexOf(lowerPlantName);
 
     if (startIndex == -1) {
-      spans.add(TextSpan(text: message, style: textTheme.bodyMedium));
+      spans.add(TextSpan(text: message));
       return spans;
     }
     // Add text before the plant name
     if (startIndex > 0) {
-      spans.add(
-        TextSpan(
-          text: message.substring(0, startIndex),
-          style: textTheme.bodyMedium,
-        ),
-      );
+      spans.add(TextSpan(text: message.substring(0, startIndex)));
     }
     // Add highlighted plant name
     spans.add(
       TextSpan(
         text: message.substring(startIndex, startIndex + plantName.length),
-        style: textTheme.bodyMedium,
       ),
     );
 
     // Add text after the plant name
     if (startIndex + plantName.length < message.length) {
       spans.add(
-        TextSpan(
-          text: message.substring(startIndex + plantName.length),
-          style: textTheme.bodyMedium,
-        ),
+        TextSpan(text: message.substring(startIndex + plantName.length)),
       );
     }
     return spans;

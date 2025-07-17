@@ -59,13 +59,16 @@ class CartScreen extends StatelessWidget {
                 ),
               )
               : Padding(
-                padding: EdgeInsets.only(bottom: 180.h),
+                padding: EdgeInsets.only(
+                  bottom: 190.h,
+                  top: 8.h,
+                  left: 8.w,
+                  right: 8.w,
+                ),
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: cartItems.length,
-
-                  itemExtent: 120.h,
-
+                  itemExtent: 112.h,
                   itemBuilder: (context, index) {
                     final CartItem item = cartItems[index];
                     return CardTile(plant: item.plant);

@@ -51,6 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
           CartIconWithBadge(
             iconColor: colorScheme.onSurface,
             onPressed: () {
+              FocusScope.of(context).unfocus();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CartScreen()),
@@ -129,6 +130,7 @@ class _SearchScreenState extends State<SearchScreen> {
           provider.recentSearchHistory.map((query) {
             return GestureDetector(
               onTap: () {
+                FocusScope.of(context).unfocus();
                 // Perform search on chip tap
                 provider.updateSearchText(query);
                 provider.search(query);
@@ -168,6 +170,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildRecentViewed(SearchScreenProvider provider) {
     return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 7,

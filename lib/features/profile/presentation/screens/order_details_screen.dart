@@ -12,18 +12,12 @@ class OrderDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          'Order Details',
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            fontSize: 24.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        title: Text('Order Details', style: textTheme.headlineMedium),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),

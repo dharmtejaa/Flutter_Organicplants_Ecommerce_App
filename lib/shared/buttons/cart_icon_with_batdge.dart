@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
+import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 class CartIconWithBadge extends StatelessWidget {
@@ -25,40 +26,48 @@ class CartIconWithBadge extends StatelessWidget {
       builder: (context, cartProvider, child) {
         final cartCount = cartProvider.cartItemsCount;
 
-        Widget icon = Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.center,
-          children: [
-            Icon(
-              Icons.shopping_cart_outlined,
-              size: AppSizes.iconMd,
-              color: iconColor ?? colorScheme.onSurface,
-            ),
-            if (cartCount > 0)
-              Positioned(
-                top: -6,
-                right: -6,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  transitionBuilder:
-                      (child, animation) =>
-                          ScaleTransition(scale: animation, child: child),
-                  child: CircleAvatar(
-                    key: ValueKey<int>(cartCount),
-                    radius: 8.r,
-                    backgroundColor: badgeColor ?? colorScheme.primary,
-                    child: Text(
-                      '$cartCount',
-                      style: textTheme.labelSmall?.copyWith(
-                        fontSize: 9.sp,
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onPrimary,
+        Widget icon = GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartScreen()),
+            );
+          },
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              Icon(
+                Icons.shopping_cart_outlined,
+                size: AppSizes.iconMd,
+                color: iconColor ?? colorScheme.onSurface,
+              ),
+              if (cartCount > 0)
+                Positioned(
+                  top: -6,
+                  right: -6,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder:
+                        (child, animation) =>
+                            ScaleTransition(scale: animation, child: child),
+                    child: CircleAvatar(
+                      key: ValueKey<int>(cartCount),
+                      radius: 8.r,
+                      backgroundColor: badgeColor ?? colorScheme.primary,
+                      child: Text(
+                        '$cartCount',
+                        style: textTheme.labelSmall?.copyWith(
+                          fontSize: 9.sp,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onPrimary,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         );
 
         if (onPressed != null) {

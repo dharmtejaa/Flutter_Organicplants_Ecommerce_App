@@ -200,7 +200,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       child: Container(
         constraints: BoxConstraints(maxHeight: 0.85.sh),
         decoration: BoxDecoration(
-          color: colorScheme.surface,
+          color: colorScheme.tertiary,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(AppSizes.radiusLg),
           ),
@@ -243,7 +243,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         icon: Icon(
                           Icons.close,
                           size: AppSizes.iconMd,
-                          color: colorScheme.onSurfaceVariant,
+                          color: colorScheme.onSurface,
                         ),
                         onPressed: () => Navigator.pop(context),
                         padding: EdgeInsets.zero,
@@ -448,9 +448,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 duration: Duration(milliseconds: 150),
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color:
-                      isSelected ? colorScheme.primary : colorScheme.tertiary,
-                  borderRadius: BorderRadius.circular(16.r),
+                  color: isSelected ? colorScheme.primary : colorScheme.surface,
+                  borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                  boxShadow: AppShadows.cardShadow(context),
                 ),
                 child: Text(
                   option,
@@ -458,7 +458,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     color:
                         isSelected
                             ? colorScheme.onPrimary
-                            : colorScheme.onSurfaceVariant,
+                            : colorScheme.onSurface,
                     fontWeight:
                         isSelected ? FontWeight.w600 : FontWeight.normal,
                   ),
@@ -477,8 +477,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       padding: EdgeInsets.all(AppSizes.paddingSm),
 
       decoration: BoxDecoration(
-        color: colorScheme.tertiary,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+        boxShadow: AppShadows.cardShadow(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -496,7 +497,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               Text(
                 'to',
                 style: textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurface,
                 ),
               ),
               Text(
@@ -526,18 +527,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '₹${_minPrice.toInt()}',
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-              Text(
-                '₹${_maxPrice.toInt()}',
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
+              Text('₹${_minPrice.toInt()}', style: textTheme.bodySmall),
+              Text('₹${_maxPrice.toInt()}', style: textTheme.bodySmall),
             ],
           ),
         ],
@@ -554,6 +545,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       decoration: BoxDecoration(
         color: colorScheme.tertiary,
         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+        boxShadow: AppShadows.cardShadow(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -571,7 +563,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               Text(
                 'to',
                 style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurface,
                 ),
               ),
               Text(
@@ -605,7 +597,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               Text(
                 '5.0★',
                 style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -621,7 +613,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
     return Wrap(
       spacing: 8.w,
-      runSpacing: 8.h,
+      runSpacing: 2.h,
       children:
           _attributeOptions.map((attribute) {
             final isSelected = _selectedAttributes.value.contains(attribute);
@@ -632,7 +624,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   color:
                       isSelected
                           ? colorScheme.onPrimary
-                          : colorScheme.onSurfaceVariant,
+                          : colorScheme.onSurface,
                 ),
               ),
               selected: isSelected,
@@ -647,12 +639,16 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   )..remove(attribute);
                 }
               },
-              backgroundColor: colorScheme.surfaceContainer,
+              backgroundColor: colorScheme.surface,
               selectedColor: colorScheme.primary,
               checkmarkColor: colorScheme.onPrimary,
 
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
               labelPadding: EdgeInsets.symmetric(horizontal: 4.w),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+              ),
+              shadowColor: colorScheme.shadow,
             );
           }).toList(),
     );

@@ -14,6 +14,13 @@ import 'package:organicplants/shared/widgets/filter_bottom_sheet.dart';
 import 'package:organicplants/shared/widgets/plant_card_grid.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 
+// Add this ValueNotifier to notify when allPlantsGlobal changes
+final ValueNotifier<int> allPlantsGlobalVersion = ValueNotifier<int>(0);
+
+// Update allPlantsGlobal in splashscreen.dart like this:
+// allPlantsGlobal = await PlantServices.loadAllPlantsApi();
+// allPlantsGlobalVersion.value++;
+
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key});
 
@@ -31,6 +38,12 @@ class _StoreScreenState extends State<StoreScreen>
 
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
+
+  // Add All Plants tab at index 0
+  late final List<Map<String, String>> _storeTabs = [
+    {"imagePath": "", "title": "All Plants", "filterTag": "ALL_PLANTS_TAB"},
+    ...categories,
+  ];
 
   // Simplified filter state management like PlantCategory
   final Map<String, ValueNotifier<Map<FilterType, dynamic>>>
@@ -51,7 +64,7 @@ class _StoreScreenState extends State<StoreScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: categories.length, vsync: this);
+    _tabController = TabController(length: _storeTabs.length, vsync: this);
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) return;
     });
@@ -66,16 +79,32 @@ class _StoreScreenState extends State<StoreScreen>
 
     _animationController.forward();
 
-    // Initialize filter notifiers for each category
+    // Listen for changes in allPlantsGlobal
+    allPlantsGlobalVersion.addListener(_onAllPlantsChanged);
+
+    // Initialize filter notifiers for each tab
     _initializeCategoryFilters();
   }
 
-  void _initializeCategoryFilters() {
-    for (final category in categories) {
-      final categoryTag = category['filterTag']!;
-      final basePlants = getPlantsByCategory(categoryTag.toLowerCase().trim());
+  void _onAllPlantsChanged() {
+    // Re-initialize filters and price ranges when allPlantsGlobal changes
+    setState(() {
+      _initializeCategoryFilters();
+      _filteredPlantsCache.clear();
+    });
+  }
 
-      // Calculate price range for this category
+  void _initializeCategoryFilters() {
+    _categoryFilterNotifiers.clear();
+    _categoryPriceRanges.clear();
+    for (final category in _storeTabs) {
+      final categoryTag = category['filterTag']!;
+      final basePlants =
+          categoryTag == 'ALL_PLANTS_TAB'
+              ? allPlantsGlobal
+              : getPlantsByCategory(categoryTag.toLowerCase().trim());
+
+      // Calculate price range for this tab
       _categoryPriceRanges[categoryTag] =
           PlantFilterService.calculatePriceRange(basePlants);
 
@@ -98,6 +127,7 @@ class _StoreScreenState extends State<StoreScreen>
     _animationController.dispose();
     _searchController.dispose();
     _searchFocusNode.dispose();
+    allPlantsGlobalVersion.removeListener(_onAllPlantsChanged);
 
     // Dispose all filter notifiers
     for (final notifier in _categoryFilterNotifiers.values) {
@@ -115,61 +145,71 @@ class _StoreScreenState extends State<StoreScreen>
 
     return Scaffold(
       appBar: _buildAppBar(colorScheme),
-      body: Column(
-        children: [
-          // Sticky Tab Bar
-          Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(AppSizes.radiusXl),
-              boxShadow: AppShadows.buttonShadow(context),
-            ),
-            margin: EdgeInsets.symmetric(
-              horizontal: AppSizes.marginSm,
-              vertical: AppSizes.vMarginXs,
-            ),
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              indicator: UnderlineTabIndicator(
-                borderSide: BorderSide(width: 2.5, color: colorScheme.primary),
-                insets: EdgeInsets.symmetric(horizontal: AppSizes.paddingXs),
+      body: ValueListenableBuilder<int>(
+        valueListenable: allPlantsGlobalVersion,
+        builder: (context, _, __) {
+          return Column(
+            children: [
+              // Sticky Tab Bar
+              Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+                  boxShadow: AppShadows.buttonShadow(context),
+                ),
+                margin: EdgeInsets.symmetric(
+                  horizontal: AppSizes.marginSm,
+                  vertical: AppSizes.vMarginXs,
+                ),
+                child: TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  indicator: UnderlineTabIndicator(
+                    borderSide: BorderSide(
+                      width: 2.5,
+                      color: colorScheme.primary,
+                    ),
+                    insets: EdgeInsets.symmetric(
+                      horizontal: AppSizes.paddingXs,
+                    ),
+                  ),
+                  labelColor: colorScheme.primary,
+                  unselectedLabelColor: colorScheme.onSurfaceVariant,
+                  labelStyle: textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  unselectedLabelStyle: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                  splashFactory: InkRipple.splashFactory,
+                  tabAlignment: TabAlignment.start,
+                  tabs:
+                      _storeTabs.map((category) {
+                        return Tab(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppSizes.paddingXs,
+                              vertical: 4.h,
+                            ),
+                            child: Text(category['title']!),
+                          ),
+                        );
+                      }).toList(),
+                ),
               ),
-              labelColor: colorScheme.primary,
-              unselectedLabelColor: colorScheme.onSurfaceVariant,
-              labelStyle: textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w600,
+              // Tab Content
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children:
+                      _storeTabs.map((category) {
+                        return _buildCategoryContent(category, colorScheme);
+                      }).toList(),
+                ),
               ),
-              unselectedLabelStyle: textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-              splashFactory: InkRipple.splashFactory,
-              tabAlignment: TabAlignment.start,
-              tabs:
-                  categories.map((category) {
-                    return Tab(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: AppSizes.paddingXs,
-                          vertical: 4.h,
-                        ),
-                        child: Text(category['title']!),
-                      ),
-                    );
-                  }).toList(),
-            ),
-          ),
-          // Tab Content
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children:
-                  categories.map((category) {
-                    return _buildCategoryContent(category, colorScheme);
-                  }).toList(),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
@@ -200,7 +240,7 @@ class _StoreScreenState extends State<StoreScreen>
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Icon(
-                  Icons.filter_list,
+                  Icons.filter_alt_outlined,
                   color: colorScheme.onSurface,
                   size: AppSizes.iconMd,
                 ),
@@ -240,7 +280,15 @@ class _StoreScreenState extends State<StoreScreen>
 
   void _showFilterBottomSheet() {
     final colorScheme = Theme.of(context).colorScheme;
-    final currentCategory = categories[_tabController.index]['filterTag']!;
+    final currentCategory = _storeTabs[_tabController.index]['filterTag']!;
+    if (!_categoryFilterNotifiers.containsKey(currentCategory) ||
+        !_categoryPriceRanges.containsKey(currentCategory)) {
+      showDialog(
+        context: context,
+        builder: (_) => const Center(child: CircularProgressIndicator()),
+      );
+      return;
+    }
     final currentFilters = _categoryFilterNotifiers[currentCategory]!.value;
 
     showModalBottomSheet(
@@ -249,7 +297,10 @@ class _StoreScreenState extends State<StoreScreen>
       barrierColor: colorScheme.shadow.withValues(alpha: 0.15),
       builder:
           (context) => FilterBottomSheet(
-            plants: getPlantsByCategory(currentCategory.toLowerCase().trim()),
+            plants:
+                currentCategory == 'ALL_PLANTS_TAB'
+                    ? allPlantsGlobal
+                    : getPlantsByCategory(currentCategory.toLowerCase().trim()),
             currentFilters: currentFilters,
             enabledFilters: _enabledFilters,
             onApplyFilters:
@@ -271,7 +322,8 @@ class _StoreScreenState extends State<StoreScreen>
   }
 
   bool _hasActiveFilters() {
-    final currentCategory = categories[_tabController.index]['filterTag']!;
+    final currentCategory = _storeTabs[_tabController.index]['filterTag']!;
+    if (!_categoryFilterNotifiers.containsKey(currentCategory)) return false;
     final filters = _categoryFilterNotifiers[currentCategory]!.value;
 
     return filters.entries.any((entry) {
@@ -364,7 +416,20 @@ class _StoreScreenState extends State<StoreScreen>
     ColorScheme colorScheme,
   ) {
     final categoryTag = category['filterTag']!;
-    final basePlants = getPlantsByCategory(categoryTag.toLowerCase().trim());
+    final isAllPlantsTab = categoryTag == 'ALL_PLANTS_TAB';
+    final basePlants =
+        isAllPlantsTab
+            ? allPlantsGlobal
+            : getPlantsByCategory(categoryTag.toLowerCase().trim());
+
+    // Show loading or empty state for All Plants tab if not loaded
+    if (isAllPlantsTab && (allPlantsGlobal.isEmpty)) {
+      return Center(child: CircularProgressIndicator());
+    }
+    if (!_categoryFilterNotifiers.containsKey(categoryTag) ||
+        !_categoryPriceRanges.containsKey(categoryTag)) {
+      return Center(child: CircularProgressIndicator());
+    }
 
     return FadeTransition(
       opacity: _fadeAnimation,

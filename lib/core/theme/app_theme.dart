@@ -177,7 +177,7 @@ class AppTheme {
       labelLarge: TextStyle(
         fontSize: 16.sp,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: LightThemeColors.pureWhite,
         fontFamily: 'Poppins',
         overflow: TextOverflow.ellipsis,
         letterSpacing: 0.5,
@@ -381,13 +381,13 @@ class AppTheme {
       ),
       headlineMedium: TextStyle(
         fontSize: 20.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       headlineSmall: TextStyle(
         fontSize: 18.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
@@ -399,13 +399,13 @@ class AppTheme {
       ),
       titleMedium: TextStyle(
         fontSize: 14.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),
       titleSmall: TextStyle(
         fontSize: 12.sp,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: DarkThemeColors.lightGray,
         fontFamily: 'Poppins',
       ),

@@ -37,16 +37,19 @@ class CardTile extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            margin: AppSizes.marginSymmetricXs,
+            margin: EdgeInsets.symmetric(
+              vertical: 6.h,
+              horizontal: 2.w,
+            ), // reduced margin
             padding: EdgeInsets.only(
-              left: AppSizes.paddingXs,
+              left: AppSizes.paddingXs, // use smallest defined padding
               top: AppSizes.paddingXs,
               bottom: AppSizes.paddingXs,
             ),
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-              boxShadow: AppShadows.productCardShadow(context),
+              boxShadow: AppShadows.cardShadow(context),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +72,7 @@ class CardTile extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         plant.commonName ?? 'Unknown Plant',
@@ -76,14 +80,14 @@ class CardTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: textTheme.titleLarge,
                       ),
-                      Text(
-                        scifiname == true
-                            ? plant.scientificName ?? 'Unknown Scientific Name'
-                            : plant.category ?? 'Unknown Category',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.bodyMedium,
-                      ),
+                      // Text(
+                      //   scifiname == true
+                      //       ? plant.scientificName ?? 'Unknown Scientific Name'
+                      //       : plant.category ?? 'Unknown Category',
+
+                      //   overflow: TextOverflow.ellipsis,
+                      //   style: textTheme.bodyMedium,
+                      // ),
                       Row(
                         children: [
                           Text(

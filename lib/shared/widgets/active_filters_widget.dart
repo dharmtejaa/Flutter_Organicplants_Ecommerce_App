@@ -158,35 +158,11 @@ class ActiveFiltersWidget extends StatelessWidget {
               InkWell(
                 onTap: onClearAll,
                 borderRadius: BorderRadius.circular(8.r),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color: colorScheme.primary.withValues(alpha: 0.3),
-                      width: 1.5,
-                    ),
-                    boxShadow: AppShadows.elevatedShadow(context),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.clear_all,
-                        size: 12.sp,
-                        color: colorScheme.primary,
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        'Clear',
-                        style: textTheme.bodySmall?.copyWith(
-                          color: colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 10.sp,
-                        ),
-                      ),
-                    ],
+                child: Text(
+                  'Clear All',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

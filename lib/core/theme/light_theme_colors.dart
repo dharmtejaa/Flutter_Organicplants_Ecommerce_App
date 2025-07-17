@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class LightThemeColors {
   // ——— Clean White Shades (Perfect for Light Mode) ———
   static const Color pureWhite = Color(0xFFFFFFFF); // Pure white background
-  static const Color softWhite = Color(0xFFFEFFFE); // Soft white surface
+  static const Color softWhite = Color(0xFFFbFbFb); // Soft white surface
   static const Color lightGray = Color(0xFFfefefe); // Light gray background
-  static const Color mediumGray = Color(0xFFF2F2F2); // Medium gray surface
+  static const Color mediumGray = Color(0xFFF1F0F0); // Medium gray surface
   static const Color warmGray = Color(0xFFEEEEEE); // Warm gray container
   static const Color subtleGray = Color(0xFFE8E8E8); // Subtle gray variant
   static const Color coolGray = Color(0xFFE0E0E0); // Cool gray border

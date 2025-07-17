@@ -28,11 +28,9 @@ class ProductScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: colorScheme.surface,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(plants.commonName ?? "empty", style: textTheme.headlineMedium),
-          ],
+        title: Text(
+          plants.commonName ?? "empty",
+          style: textTheme.headlineMedium,
         ),
         actions: [
           IconButton(
