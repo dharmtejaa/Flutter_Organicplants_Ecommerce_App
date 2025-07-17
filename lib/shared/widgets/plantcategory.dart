@@ -30,11 +30,33 @@ class _PlantCategoryState extends State<PlantCategory> {
   ];
   late RangeValues _originalPriceRange;
 
+  // Cache for expensive computations
+  final Map<String, List<AllPlantsModel>> _filteredPlantsCache = {};
+  Map<FilterType, dynamic>? _lastFilters;
+
+  // Memoized main categories list
+  static const List<String> _mainCategories = [
+    'Indoor Plants',
+    'Outdoor Plants',
+    'Herbs Plants',
+    'Succulents Plants',
+    'Flowering Plants',
+    'Bonsai Plants',
+    'Medicinal Plants',
+  ];
+
   @override
   void initState() {
     super.initState();
     _filtersNotifier = ValueNotifier<Map<FilterType, dynamic>>({});
     _initializeFilters();
+  }
+
+  @override
+  void dispose() {
+    _filtersNotifier.dispose();
+    _filteredPlantsCache.clear();
+    super.dispose();
   }
 
   void _initializeFilters() {
@@ -46,6 +68,10 @@ class _PlantCategoryState extends State<PlantCategory> {
     filters[FilterType.size] = 'All Sizes';
     filters[FilterType.careLevel] = 'All Levels';
     _filtersNotifier.value = filters;
+
+    // Clear cache when filters are reset
+    _filteredPlantsCache.clear();
+    _lastFilters = null;
   }
 
   void _showFilterBottomSheet() {
@@ -63,19 +89,43 @@ class _PlantCategoryState extends State<PlantCategory> {
           enabledFilters: _enabledFilters,
           onApplyFilters: (filters) {
             _filtersNotifier.value = Map<FilterType, dynamic>.from(filters);
+            // Clear cache when filters change
+            _filteredPlantsCache.clear();
+            _lastFilters = null;
           },
         );
       },
     );
   }
 
+  // Memoized filtered plants calculation
   List<AllPlantsModel> getFilteredPlants() {
-    return PlantFilterService.getFilteredPlants(
+    final cacheKey = _filtersNotifier.value.hashCode.toString();
+
+    // Check if we can use cached result
+    if (_filteredPlantsCache.containsKey(cacheKey) &&
+        _lastFilters == _filtersNotifier.value) {
+      return _filteredPlantsCache[cacheKey]!;
+    }
+
+    final filteredPlants = PlantFilterService.getFilteredPlants(
       plants: widget.plant,
       filters: _filtersNotifier.value,
     );
+
+    // Cache the result
+    _filteredPlantsCache[cacheKey] = filteredPlants;
+    _lastFilters = Map.from(_filtersNotifier.value);
+
+    // Limit cache size
+    if (_filteredPlantsCache.length > 5) {
+      _filteredPlantsCache.clear();
+    }
+
+    return filteredPlants;
   }
 
+  // Memoized active filters check
   bool _hasActiveFilters() {
     return _filtersNotifier.value.entries.any((entry) {
       final key = entry.key;
@@ -98,16 +148,7 @@ class _PlantCategoryState extends State<PlantCategory> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final List<String> mainCategories = [
-      'Indoor Plants',
-      'Outdoor Plants',
-      'Herbs Plants',
-      'Succulents Plants',
-      'Flowering Plants',
-      'Bonsai Plants',
-      'Medicinal Plants',
-    ];
-    final bool isMainCategory = mainCategories.contains(widget.category);
+    final bool isMainCategory = _mainCategories.contains(widget.category);
 
     return Scaffold(
       appBar: AppBar(
@@ -119,19 +160,21 @@ class _PlantCategoryState extends State<PlantCategory> {
           },
           color: colorScheme.onSurface,
         ),
-
         title: Text(widget.category, style: textTheme.headlineMedium),
         centerTitle: true,
-
         actions: [
           SearchButton(),
           SizedBox(width: 10.w),
-          GestureDetector(
+          InkWell(
             onTap: _showFilterBottomSheet,
+            borderRadius: BorderRadius.circular(24),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
             child: Icon(
               Icons.filter_list,
               color: colorScheme.onSurface,
               size: AppSizes.iconMd,
+              ),
             ),
           ),
           SizedBox(width: 10.w),
@@ -156,7 +199,6 @@ class _PlantCategoryState extends State<PlantCategory> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Active filters widget
-              //SizedBox(height: 10.h),
               ValueListenableBuilder<Map<FilterType, dynamic>>(
                 valueListenable: _filtersNotifier,
                 builder: (context, filters, child) {
@@ -171,10 +213,7 @@ class _PlantCategoryState extends State<PlantCategory> {
                           currentFilters: _filtersNotifier.value,
                           plantCount: filteredPlants.length,
                           onClearAll: () {
-                            _filtersNotifier
-                                .value = Map<FilterType, dynamic>.from(
-                              _filtersNotifier.value,
-                            )..clear();
+                            _initializeFilters();
                           },
                           showPlantCount: true,
                           originalPriceRange: _originalPriceRange,
@@ -191,48 +230,8 @@ class _PlantCategoryState extends State<PlantCategory> {
                     final filteredPlants = getFilteredPlants();
 
                     return filteredPlants.isEmpty
-                        ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.local_florist,
-                                size: 64,
-                                color: colorScheme.primary.withValues(
-                                  alpha: 0.2,
-                                ),
-                              ),
-                              SizedBox(height: 18.h),
-                              Text(
-                                'No plants found',
-                                style: textTheme.bodyMedium,
-                              ),
-                              SizedBox(height: 8.h),
-                              Text(
-                                'Try adjusting your filters or search.',
-                                style: textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                        )
-                        : GridView.builder(
-                          itemCount: filteredPlants.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 7,
-                                mainAxisSpacing: 7,
-                                childAspectRatio: 0.735,
-                              ),
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return ProductCardGrid(
-                              plant: filteredPlants[index],
-                              scifiname: isMainCategory,
-                            );
-                          },
-                        );
+                        ? _buildEmptyState(colorScheme, textTheme)
+                        : _buildPlantGrid(filteredPlants, isMainCategory);
                   },
                 ),
               ),
@@ -240,6 +239,51 @@ class _PlantCategoryState extends State<PlantCategory> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildEmptyState(ColorScheme colorScheme, TextTheme textTheme) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.local_florist,
+            size: 64,
+            color: colorScheme.primary.withValues(alpha: 0.2),
+          ),
+          SizedBox(height: 18.h),
+          Text('No plants found', style: textTheme.bodyMedium),
+          SizedBox(height: 8.h),
+          Text(
+            'Try adjusting your filters or search.',
+            style: textTheme.bodySmall,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPlantGrid(
+    List<AllPlantsModel> filteredPlants,
+    bool isMainCategory,
+  ) {
+    return GridView.builder(
+      itemCount: filteredPlants.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 7,
+        mainAxisSpacing: 7,
+        childAspectRatio: 0.735,
+      ),
+
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return ProductCardGrid(
+          plant: filteredPlants[index],
+          scifiname: isMainCategory,
+        );
+      },
     );
   }
 }

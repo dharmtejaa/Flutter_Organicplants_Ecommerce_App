@@ -43,6 +43,10 @@ class AppTheme {
       primaryContainer: LightThemeColors.primaryGreen.withOpacity(0.1),
       onPrimaryContainer: LightThemeColors.pureWhite,
 
+      // ignore: deprecated_member_use
+      onPrimaryFixed: LightThemeColors.primaryGreen,
+
+      // ignore: deprecated_member_use
       secondary: LightThemeColors.secondaryOrange,
       onSecondary: LightThemeColors.deepBlack,
       // ignore: deprecated_member_use

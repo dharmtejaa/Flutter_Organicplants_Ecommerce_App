@@ -73,7 +73,7 @@ class ProductCardGrid extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surface,
           borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
-          boxShadow: AppShadows.productCardShadow(context),
+          boxShadow: AppShadows.cardShadow(context),
         ),
         //padding: EdgeInsets.all(5),
         child: Stack(
