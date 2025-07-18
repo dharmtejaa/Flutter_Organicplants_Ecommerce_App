@@ -42,7 +42,7 @@ class CustomButton extends StatelessWidget {
         width: width ?? double.infinity,
         height: height ?? 52.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+          borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           //gradient: useGradient ? AppColors.primaryGradient : null,
           color: backgroundColor,
           // boxShadow: [
@@ -90,11 +90,17 @@ class CustomButton extends StatelessWidget {
               Row(
                 children: [
                   if (icon != null)
-                    Icon(
-                      icon,
-                      size: AppSizes.iconMd,
-                      color: colorScheme.onPrimary,
+                    Row(
+                      children: [
+                        Icon(
+                          icon,
+                          size: AppSizes.iconMd,
+                          color: colorScheme.onPrimary,
+                        ),
+                        SizedBox(width: 4.w),
+                      ],
                     ),
+
                   Text(text!, style: textTheme.labelLarge),
                 ],
               ),

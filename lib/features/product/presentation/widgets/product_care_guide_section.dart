@@ -27,7 +27,9 @@ class ProductCareGuideSection extends StatelessWidget {
           SizedBox(height: 12.h),
           // Care Guide
           Card(
-            elevation: 1,
+            shadowColor: colorScheme.shadow,
+            // elevation: 1,
+            color: colorScheme.surfaceContainer,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSizes.radiusLg),
             ),
@@ -44,7 +46,9 @@ class ProductCareGuideSection extends StatelessWidget {
           SizedBox(height: 12.h),
           // FAQs
           Card(
-            elevation: 1,
+            shadowColor: colorScheme.shadow,
+            //elevation: 1,
+            color: colorScheme.surfaceContainer,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSizes.radiusLg),
             ),
@@ -139,7 +143,7 @@ class _GuideCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return Card(
-      color: colorScheme.inverseSurface,
+      color: colorScheme.surfaceContainer,
       elevation: 0,
       shadowColor: colorScheme.shadow,
       shape: RoundedRectangleBorder(
@@ -197,8 +201,8 @@ class CareGuideSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final care = plant.careGuide;
     if (care == null) return const SizedBox();
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+    // final colorScheme = Theme.of(context).colorScheme;
+    // final textTheme = Theme.of(context).textTheme;
     final items = [
       _CareItem(
         icon: Icons.water_drop_outlined,
@@ -271,6 +275,7 @@ class _CareCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return Card(
+      shadowColor: colorScheme.shadow,
       color: colorScheme.inverseSurface,
       elevation: 0,
       margin: EdgeInsets.only(bottom: 10.h),
@@ -380,8 +385,8 @@ class FAQSection extends StatelessWidget {
           question: faq.question ?? '',
           answer: faq.answer ?? '',
           color: colorScheme.primary,
+
           // ignore: deprecated_member_use
-          bgColor: colorScheme.primaryContainer.withOpacity(0.15),
         );
       },
     );
@@ -392,38 +397,41 @@ class _FAQCard extends StatelessWidget {
   final String question;
   final String answer;
   final Color color;
-  final Color bgColor;
-  _FAQCard({
-    required this.question,
-    required this.answer,
-    required this.color,
-    required this.bgColor,
-  });
+
+  _FAQCard({required this.question, required this.answer, required this.color});
   final ValueNotifier<bool> expandedNotifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Card(
-      color: bgColor,
+      shadowColor: colorScheme.shadow,
+      color: colorScheme.surface,
       elevation: 0,
       margin: EdgeInsets.only(bottom: 10.h),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+      ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(14.r),
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        splashFactory: NoSplash.splashFactory,
+
+        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
         onTap: () => expandedNotifier.value = !expandedNotifier.value,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          padding: AppSizes.paddingAllSm,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  // ignore: deprecated_member_use
-                  color: color.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                padding: EdgeInsets.all(7.r),
-                child: Icon(Icons.question_answer, color: color, size: 22.r),
+              ProfileCustomIcon(
+                icon: Icons.question_answer,
+                iconColor: color,
+                containerSize: 35.w,
+                iconSize: AppSizes.iconSm,
               ),
               SizedBox(width: 10.w),
               Expanded(
@@ -433,14 +441,7 @@ class _FAQCard extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
-                            question,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14.sp,
-                              color: color,
-                            ),
-                          ),
+                          child: Text(question, style: textTheme.titleMedium),
                         ),
                         ValueListenableBuilder<bool>(
                           valueListenable: expandedNotifier,
@@ -450,7 +451,7 @@ class _FAQCard extends StatelessWidget {
                                     ? Icons.expand_less
                                     : Icons.expand_more,
                                 color: color,
-                                size: 20.r,
+                                size: AppSizes.iconSm,
                               ),
                         ),
                       ],
@@ -462,13 +463,7 @@ class _FAQCard extends StatelessWidget {
                             firstChild: SizedBox.shrink(),
                             secondChild: Padding(
                               padding: EdgeInsets.only(top: 8.h),
-                              child: Text(
-                                answer,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: Colors.black54,
-                                ),
-                              ),
+                              child: Text(answer, style: textTheme.bodySmall),
                             ),
                             crossFadeState:
                                 expanded

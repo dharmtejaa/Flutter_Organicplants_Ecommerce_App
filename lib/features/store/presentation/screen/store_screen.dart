@@ -78,8 +78,22 @@ class _StoreScreenState extends State<StoreScreen>
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOutCubic,
+      ),
     );
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          _animationController.reverse();
+        });
+      } else if (status == AnimationStatus.dismissed) {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          _animationController.forward();
+        });
+      }
+    });
 
     _animationController.forward();
 
@@ -224,7 +238,7 @@ class _StoreScreenState extends State<StoreScreen>
           children: [
             InkWell(
               onTap: _showFilterBottomSheet,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(AppSizes.radiusXxl),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Icon(
@@ -467,10 +481,9 @@ class _StoreScreenState extends State<StoreScreen>
             message: "Try adjusting your filters or search.",
             imagePath: "assets/No_Plant_Found.png",
           ),
-          //SizedBox(height: 16.h),
-          ElevatedButton.icon(
+          SizedBox(height: 16.h),
+          TextButton.icon(
             onPressed: () {
-              // Reset to default filters
               final defaultFilters = <FilterType, dynamic>{
                 FilterType.sort: 'Name A-Z',
                 FilterType.price: _categoryPriceRanges[categoryTag]!,
@@ -481,14 +494,17 @@ class _StoreScreenState extends State<StoreScreen>
               _filteredPlantsCache.clear();
               _lastFilters[categoryTag] = null;
             },
-            icon: const Icon(Icons.refresh),
-            label: const Text('Refresh'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorScheme.primary,
-              foregroundColor: colorScheme.onPrimary,
+            icon: Icon(Icons.refresh, color: colorScheme.primary),
+            label: Text(
+              'Reset Filters',
+              style: TextStyle(color: colorScheme.primary),
+            ),
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               ),
+              backgroundColor: colorScheme.surface,
             ),
           ),
         ],
@@ -517,7 +533,7 @@ class _StoreScreenState extends State<StoreScreen>
                 return TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0.85, end: 1.0),
                   duration: Duration(milliseconds: 350 + (index * 40)),
-                  curve: Curves.easeOutBack,
+                  curve: Curves.fastOutSlowIn,
                   builder:
                       (context, scale, child) =>
                           Transform.scale(scale: scale, child: child),

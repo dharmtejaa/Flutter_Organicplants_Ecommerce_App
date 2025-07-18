@@ -7,6 +7,7 @@ import 'package:organicplants/features/product/presentation/widgets/product_desc
 import 'package:organicplants/features/product/presentation/widgets/product_features_section.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_header_info.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_image_gallery.dart';
+import 'package:organicplants/features/profile/presentation/screens/share_app_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
@@ -33,14 +34,20 @@ class ProductScreen extends StatelessWidget {
           style: textTheme.headlineMedium,
         ),
         actions: [
-          IconButton(
-            icon: Icon(
+          GestureDetector(
+            child: Icon(
               Icons.share,
               color: colorScheme.onSurface,
               size: AppSizes.iconMd,
             ),
-            onPressed: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ShareAppScreen()),
+              );
+            },
           ),
+          SizedBox(width: 10.w),
           WishlistIconWithBadge(),
           SizedBox(width: 10.w),
           CartIconWithBadge(),
@@ -56,20 +63,21 @@ class ProductScreen extends StatelessWidget {
               children: [
                 // Image Gallery Section
                 ProductImageGallery(plants: plants),
+                SizedBox(height: 12.h),
                 // Product Header Info Section
                 ProductHeaderInfo(plants: plants),
-                SizedBox(height: 10.h),
+                SizedBox(height: 16.h),
                 // Product Features Section
                 ProductFeaturesSection(searchController: searchController),
                 SizedBox(height: 12.h),
                 // divider
-                Divider(color: colorScheme.onSurfaceVariant, thickness: 1),
+                Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
                 // Product Description Section
                 ProductDescriptionSection(plants: plants),
                 SizedBox(height: 12.h),
                 // divider
-                Divider(color: colorScheme.onSurfaceVariant, thickness: 1),
+                Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
                 // Product Care Guide Section
                 ProductCareGuideSection(plants: plants),
@@ -77,7 +85,12 @@ class ProductScreen extends StatelessWidget {
             ),
           ),
           // Sticky Bottom Bar
-          Positioned(left: 0, right: 0, bottom: 0, child: ProductBottomBar()),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: ProductBottomBar(plants: plants),
+          ),
         ],
       ),
     );

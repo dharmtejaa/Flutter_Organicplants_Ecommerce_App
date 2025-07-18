@@ -29,6 +29,7 @@ class ProductFeaturesSection extends StatelessWidget {
               SizedBox(
                 width: 200.w,
                 child: CustomTextField(
+                  fillColor: colorScheme.tertiary,
                   controller: searchController,
                   hintText: 'Enter Pincode',
                   prefixIcon: Icons.location_on,

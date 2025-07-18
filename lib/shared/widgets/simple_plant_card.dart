@@ -165,10 +165,7 @@ class SimplePlantCard extends StatelessWidget {
                         Positioned(
                           top: 4,
                           right: 4,
-                          child: WishlistIconButton(
-                            plant: plant,
-                            isDark: isDark,
-                          ),
+                          child: WishlistIconButton(plant: plant),
                         ),
                       ],
                     ),

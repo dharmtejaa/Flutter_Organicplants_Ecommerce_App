@@ -120,7 +120,7 @@ class ProductImageGallery extends StatelessWidget {
               ),
             ),
           ),
-        SizedBox(height: 8.h),
+        SizedBox(height: 12.h),
         Center(
           child: AnimatedSmoothIndicator(
             activeIndex: carouselProvider.activeIndex,
@@ -132,7 +132,6 @@ class ProductImageGallery extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 8.h),
       ],
     );
   }

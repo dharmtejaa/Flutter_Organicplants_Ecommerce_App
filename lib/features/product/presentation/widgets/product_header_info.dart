@@ -29,9 +29,21 @@ class ProductHeaderInfo extends StatelessWidget {
             children: [
               Text(plants.commonName ?? '', style: textTheme.displaySmall),
               SizedBox(width: 16.w),
-              Text('(${plants.category})', style: textTheme.bodyMedium),
+              Text(
+                '(${plants.category})',
+                style: textTheme.titleLarge?.copyWith(
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ],
           ),
+          SizedBox(height: 16.h),
+          Text(
+            plants.scientificName ?? '',
+            style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
+          ),
+          SizedBox(height: 16.h),
           // Rating
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +111,7 @@ class ProductHeaderInfo extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 12.h),
           if (originalPrice > offerPrice)
             Padding(
               padding: EdgeInsets.only(top: 8.h),

@@ -7,13 +7,15 @@ import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class WishlistIconButton extends StatelessWidget {
+  final double? radius;
+  final double? iconSize;
   final AllPlantsModel plant;
-  final bool isDark;
 
   const WishlistIconButton({
     super.key,
     required this.plant,
-    required this.isDark,
+    this.radius,
+    this.iconSize,
   });
 
   @override
@@ -24,7 +26,7 @@ class WishlistIconButton extends StatelessWidget {
       builder: (context, value, child) {
         final isWishListed = value.isInWishlist(plant.id!);
 
-        return InkWell(
+        return GestureDetector(
           onTap: () {
             value.toggleWishList(plant);
             final isNowWishlisted = value.isInWishlist(plant.id!);
@@ -46,16 +48,11 @@ class WishlistIconButton extends StatelessWidget {
                     ScaleTransition(scale: animation, child: child),
             child: CircleAvatar(
               key: ValueKey<bool>(isWishListed),
-              radius: 15.r,
-              backgroundColor:
-                  isDark
-                      // ignore: deprecated_member_use
-                      ? Colors.grey.withOpacity(0.2)
-                      // ignore: deprecated_member_use
-                      : colorScheme.primaryContainer,
+              radius: radius ?? 15.r,
+              backgroundColor: colorScheme.primaryContainer,
               child: Icon(
                 isWishListed ? Icons.favorite : Icons.favorite_border,
-                size: AppSizes.iconMd,
+                size: iconSize ?? AppSizes.iconMd,
                 color: colorScheme.primary,
               ),
             ),

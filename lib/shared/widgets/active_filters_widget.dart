@@ -107,10 +107,10 @@ class ActiveFiltersWidget extends StatelessWidget {
         color: colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
         border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.15),
+          color: colorScheme.primary.withValues(alpha: 0.18),
           width: 1.w,
         ),
-        boxShadow: AppShadows.elevatedShadow(context),
+        boxShadow: AppShadows.cardShadow(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,28 +125,23 @@ class ActiveFiltersWidget extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
                     color: colorScheme.primary,
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color: colorScheme.onPrimary.withValues(alpha: 0.2),
-                      width: 1,
-                    ),
-                    boxShadow: AppShadows.elevatedShadow(context),
+                    borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+                    boxShadow: AppShadows.cardShadow(context),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.local_florist,
-                        size: 12.sp,
+                        Icons.local_florist_sharp,
+                        size: 10.h,
                         color: colorScheme.onPrimary,
                       ),
                       SizedBox(width: 4.w),
                       Text(
                         '$plantCount plants',
-                        style: textTheme.bodySmall?.copyWith(
+                        style: textTheme.labelSmall?.copyWith(
                           color: colorScheme.onPrimary,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -155,9 +150,9 @@ class ActiveFiltersWidget extends StatelessWidget {
                 const Spacer(),
               ],
               // Clear all button
-              InkWell(
+              GestureDetector(
                 onTap: onClearAll,
-                borderRadius: BorderRadius.circular(8.r),
+                //borderRadius: BorderRadius.circular(8.r),
                 child: Text(
                   'Clear All',
                   style: textTheme.bodyMedium?.copyWith(
@@ -199,15 +194,12 @@ class ActiveFiltersWidget extends StatelessWidget {
     BuildContext context,
   ) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.2),
-          width: 1,
-        ),
-        boxShadow: AppShadows.elevatedShadow(context),
+        borderRadius: BorderRadius.circular(AppSizes.radiusSm),
+
+        boxShadow: AppShadows.cardShadow(context),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -220,7 +212,7 @@ class ActiveFiltersWidget extends StatelessWidget {
             ),
             child: Icon(
               filter['icon'] as IconData,
-              size: 10.sp,
+              size: 10.h,
               color: colorScheme.primary,
             ),
           ),
@@ -228,10 +220,9 @@ class ActiveFiltersWidget extends StatelessWidget {
           Flexible(
             child: Text(
               '${filter['label']}: ${filter['value']}',
-              style: textTheme.bodySmall?.copyWith(
+              style: textTheme.labelSmall?.copyWith(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
-                fontSize: 10.sp,
               ),
               overflow: TextOverflow.ellipsis,
             ),

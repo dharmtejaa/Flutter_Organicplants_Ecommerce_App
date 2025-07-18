@@ -10,16 +10,10 @@ import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 
-class OrderHistoryScreen extends StatefulWidget {
+class OrderHistoryScreen extends StatelessWidget {
   const OrderHistoryScreen({super.key});
 
-  @override
-  State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
-}
-
-class _OrderHistoryScreenState extends State<OrderHistoryScreen>
-    with SingleTickerProviderStateMixin {
-  final List<String> _tabs = [
+  static final List<String> _tabs = [
     'All',
     'Delivered',
     'In Transit',
@@ -142,12 +136,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
 
   Widget _buildOrderCard(BuildContext context, Map<String, dynamic> order) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Card(
       margin: EdgeInsets.only(bottom: 20.h),
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+        // ignore: deprecated_member_use
         side: BorderSide(color: colorScheme.outline.withOpacity(0.08)),
       ),
       child: Padding(
@@ -246,7 +242,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
             Row(
               children: [
                 Text(
-                  "Total:",
+                  "Total: ₹${order['total']}",
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -255,7 +251,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                 ),
                 Spacer(),
                 Text(
-                  order['total'],
+                  "₹${order['total']}",
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700,
@@ -272,7 +268,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () => _viewOrderDetails(order),
+                    onPressed: () => _viewOrderDetails(context, order),
                     icon: Icon(Icons.receipt_long, color: colorScheme.primary),
                     label: Text(
                       "View Details",
@@ -291,12 +287,12 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                 if (order['status'] == 'Delivered')
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () => _reorder(order),
+                      onPressed: () => _reorder(context, order),
                       icon: Icon(
                         Icons.shopping_bag,
                         color: colorScheme.onPrimary,
                       ),
-                      label: Text("Reorder"),
+                      label: Text("Reorder", style: textTheme.labelLarge),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colorScheme.primary,
                         foregroundColor: colorScheme.onPrimary,
@@ -329,13 +325,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                           ).cancelOrder(order['id']);
                         }
                       },
-                      icon: Icon(
-                        Icons.cancel,
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+                      icon: Icon(Icons.cancel, color: colorScheme.onPrimary),
                       label: Text(
                         "Cancel Order",
-                        style: Theme.of(context).textTheme.labelLarge,
+                        style: textTheme.labelLarge,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -363,6 +356,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     bool prominent = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     Color backgroundColor;
     Color textColor;
     double fontSize = prominent ? 14 : 12;
@@ -493,14 +487,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     );
   }
 
-  void _viewOrderDetails(Map<String, dynamic> order) {
+  void _viewOrderDetails(BuildContext context, Map<String, dynamic> order) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => OrderDetailsScreen(order: order)),
     );
   }
 
-  void _reorder(Map<String, dynamic> order) {
+  void _reorder(BuildContext context, Map<String, dynamic> order) {
     // TODO: Add items to cart and navigate to cart
     ScaffoldMessenger.of(
       context,

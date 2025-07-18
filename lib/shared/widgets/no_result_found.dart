@@ -26,7 +26,7 @@ class NoResultsFound extends StatelessWidget {
         SizedBox(height: 0.15.sh),
         Image.asset(
           imagePath,
-          height: 0.34.sh,
+          height: 0.33.sh,
           errorBuilder:
               (context, error, stackTrace) => Icon(
                 Icons.error_outline,
