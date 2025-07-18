@@ -65,21 +65,11 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             ),
                           );
                         },
-                        child: Container(
+                        child: Image.asset(
+                          category['imagePath']!,
                           width: 70.w,
-                          height: 70.h,
-                          decoration: BoxDecoration(
-                            color: colorScheme.inverseSurface,
-                            borderRadius: BorderRadius.circular(50.w),
-                            boxShadow: AppShadows.elevatedShadow(context),
-                          ),
-
-                          child: Image.asset(
-                            category['imagePath']!,
-                            width: 60.w,
-                            height: 60.w,
-                            fit: BoxFit.cover,
-                          ),
+                          height: 70.w,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       SizedBox(height: 10.h),

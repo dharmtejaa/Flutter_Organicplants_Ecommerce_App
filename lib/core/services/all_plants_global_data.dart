@@ -1,4 +1,3 @@
-
 import 'package:organicplants/models/all_plants_model.dart';
 
 List<AllPlantsModel> allPlantsGlobal = [];
@@ -91,11 +90,7 @@ final List<Map<String, String>> categories = [
     "title": "Indoor Plants",
     "filterTag": "Indoor plant",
   },
-  {
-    "imagePath": "assets/category/outdoor.png",
-    'title': "Outdoor Plants",
-    "filterTag": "Outdoor plant",
-  },
+
   {
     "imagePath": "assets/category/medicinal.png",
     "title": "Medicinal Plants",
@@ -111,6 +106,7 @@ final List<Map<String, String>> categories = [
     "title": "Flowering Plants",
     "filterTag": "Flowering plant",
   },
+
   {
     "imagePath": "assets/category/bonsai.png",
     "title": "Bonsai Plants",
@@ -120,5 +116,10 @@ final List<Map<String, String>> categories = [
     "imagePath": "assets/category/succulent.png",
     "title": "Succulents Plants",
     "filterTag": "Succulents & Cacti Plants",
+  },
+  {
+    "imagePath": "assets/category/outdoor.png",
+    'title': "Outdoor Plants",
+    "filterTag": "Outdoor plant",
   },
 ];

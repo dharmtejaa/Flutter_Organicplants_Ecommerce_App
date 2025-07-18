@@ -51,73 +51,69 @@ class _HomeScreenState extends State<EntryScreen> {
                 ),
                 boxShadow: AppShadows.bottomNavShadow(context),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(AppSizes.bottomNavRadius),
-                  topRight: Radius.circular(AppSizes.bottomNavRadius),
-                ),
-                child: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  elevation: 0,
-                  enableFeedback: true,
-                  currentIndex: provider.currentIndex,
-                  iconSize: 20.sp,
-                  selectedFontSize: 11.sp,
-                  unselectedFontSize: 11.sp,
-                  selectedItemColor: colorScheme.primary,
-                  unselectedItemColor: colorScheme.onSurfaceVariant,
-                  backgroundColor: Colors.transparent,
-                  showSelectedLabels: true,
-                  showUnselectedLabels: true,
-                  onTap: provider.updateIndex,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: _NavBarIcon(
-                        icon: Icons.home_rounded,
-                        selected: provider.currentIndex == 0,
-                        colorScheme: colorScheme,
-                      ),
-                      label: "Home",
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                elevation: 0,
+                enableFeedback: true,
+                currentIndex: provider.currentIndex,
+                iconSize: 20.sp,
+                selectedFontSize: 11.sp,
+                unselectedFontSize: 11.sp,
+                selectedItemColor: colorScheme.primary,
+                unselectedItemColor: colorScheme.onSurfaceVariant,
+                backgroundColor: Colors.transparent,
+                showSelectedLabels: true,
+                showUnselectedLabels: true,
+                onTap: provider.updateIndex,
+
+                //splashFactory: NoSplash.splashFactory,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: _NavBarIcon(
+                      icon: Icons.home_rounded,
+                      selected: provider.currentIndex == 0,
+                      colorScheme: colorScheme,
                     ),
-                    BottomNavigationBarItem(
-                      icon: _NavBarIcon(
-                        icon: Icons.storefront_rounded,
-                        selected: provider.currentIndex == 1,
-                        colorScheme: colorScheme,
-                      ),
-                      label: "Store",
+                    label: "Home",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: _NavBarIcon(
+                      icon: Icons.storefront_rounded,
+                      selected: provider.currentIndex == 1,
+                      colorScheme: colorScheme,
                     ),
-                    BottomNavigationBarItem(
-                      icon: _NavBarIcon(
-                        icon: Icons.search_rounded,
-                        selected: provider.currentIndex == 2,
-                        colorScheme: colorScheme,
-                      ),
-                      label: "Search",
+                    label: "Store",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: _NavBarIcon(
+                      icon: Icons.search_rounded,
+                      selected: provider.currentIndex == 2,
+                      colorScheme: colorScheme,
                     ),
-                    BottomNavigationBarItem(
-                      icon: _NavBarIcon(
-                        icon: Icons.person_rounded,
-                        selected: provider.currentIndex == 3,
-                        colorScheme: colorScheme,
-                      ),
-                      label: "Profile",
+                    label: "Search",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: _NavBarIcon(
+                      icon: Icons.person_rounded,
+                      selected: provider.currentIndex == 3,
+                      colorScheme: colorScheme,
                     ),
-                    BottomNavigationBarItem(
-                      icon: _NavBarIcon(
-                        iconWidget: CartIconWithBadge(
-                          iconColor: colorScheme.onSurfaceVariant,
-                        ),
-                        selected: provider.currentIndex == 4,
-                        colorScheme: colorScheme,
-                        activeIconWidget: CartIconWithBadge(
-                          iconColor: colorScheme.primary,
-                        ),
+                    label: "Profile",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: _NavBarIcon(
+                      iconWidget: CartIconWithBadge(
+                        iconColor: colorScheme.onSurfaceVariant,
                       ),
-                      label: "Cart",
+                      selected: provider.currentIndex == 4,
+                      colorScheme: colorScheme,
+                      activeIconWidget: CartIconWithBadge(
+                        iconColor: colorScheme.primary,
+                      ),
                     ),
-                  ],
-                ),
+                    label: "Cart",
+                  ),
+                ],
               ),
             ),
       ),

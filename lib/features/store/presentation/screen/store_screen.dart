@@ -11,6 +11,7 @@ import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 import 'package:organicplants/shared/widgets/active_filters_widget.dart';
 import 'package:organicplants/shared/widgets/filter_bottom_sheet.dart';
+import 'package:organicplants/shared/widgets/no_result_found.dart';
 import 'package:organicplants/shared/widgets/plant_card_grid.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 
@@ -151,51 +152,35 @@ class _StoreScreenState extends State<StoreScreen>
           return Column(
             children: [
               // Sticky Tab Bar
-              Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(AppSizes.radiusXl),
-                  boxShadow: AppShadows.buttonShadow(context),
+              TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                indicator: UnderlineTabIndicator(
+                  borderSide: BorderSide(
+                    width: 2.5,
+                    color: colorScheme.primary,
+                  ),
+                  insets: EdgeInsets.symmetric(horizontal: AppSizes.paddingXs),
                 ),
-                margin: EdgeInsets.symmetric(
-                  horizontal: AppSizes.marginSm,
-                  vertical: AppSizes.vMarginXs,
-                ),
-                child: TabBar(
-                  controller: _tabController,
-                  isScrollable: true,
-                  indicator: UnderlineTabIndicator(
-                    borderSide: BorderSide(
-                      width: 2.5,
-                      color: colorScheme.primary,
-                    ),
-                    insets: EdgeInsets.symmetric(
-                      horizontal: AppSizes.paddingXs,
-                    ),
-                  ),
-                  labelColor: colorScheme.primary,
-                  unselectedLabelColor: colorScheme.onSurfaceVariant,
-                  labelStyle: textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                  unselectedLabelStyle: textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                  splashFactory: InkRipple.splashFactory,
-                  tabAlignment: TabAlignment.start,
-                  tabs:
-                      _storeTabs.map((category) {
-                        return Tab(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: AppSizes.paddingXs,
-                              vertical: 4.h,
-                            ),
-                            child: Text(category['title']!),
+                labelColor: colorScheme.primary,
+                unselectedLabelColor: colorScheme.onSurfaceVariant,
+                labelStyle: textTheme.bodyLarge,
+
+                unselectedLabelStyle: textTheme.bodyMedium,
+                splashFactory: InkRipple.splashFactory,
+                tabAlignment: TabAlignment.start,
+                tabs:
+                    _storeTabs.map((category) {
+                      return Tab(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppSizes.paddingXs,
+                            vertical: 4.h,
                           ),
-                        );
-                      }).toList(),
-                ),
+                          child: Text(category['title']!),
+                        ),
+                      );
+                    }).toList(),
               ),
               // Tab Content
               Expanded(
@@ -487,29 +472,10 @@ class _StoreScreenState extends State<StoreScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 40.h),
-          Image.asset(
-            'assets/No_Plant_Found.png',
-            width: 120.w,
-            height: 120.w,
-            fit: BoxFit.contain,
-          ),
-          SizedBox(height: 16.h),
-          Text(
-            'No plants found',
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            'Try adjusting your filters or search.',
-            style: TextStyle(
-              fontSize: 13.sp,
-              color: colorScheme.onSurfaceVariant,
-            ),
+          NoResultsFound(
+            title: "No plants found",
+            message: "Try adjusting your filters or search.",
+            imagePath: "assets/No_Plant_Found.png",
           ),
           SizedBox(height: 16.h),
           ElevatedButton.icon(
@@ -531,7 +497,7 @@ class _StoreScreenState extends State<StoreScreen>
               backgroundColor: colorScheme.primary,
               foregroundColor: colorScheme.onPrimary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
+                borderRadius: BorderRadius.circular(AppSizes.radiusMd),
               ),
             ),
           ),
