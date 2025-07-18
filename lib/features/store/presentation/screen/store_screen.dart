@@ -13,6 +13,7 @@ import 'package:organicplants/shared/widgets/active_filters_widget.dart';
 import 'package:organicplants/shared/widgets/filter_bottom_sheet.dart';
 import 'package:organicplants/shared/widgets/no_result_found.dart';
 import 'package:organicplants/shared/widgets/plant_card_grid.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 
 // Add this ValueNotifier to notify when allPlantsGlobal changes
 final ValueNotifier<int> allPlantsGlobalVersion = ValueNotifier<int>(0);
@@ -34,7 +35,6 @@ class StoreScreen extends StatefulWidget {
 class _StoreScreenState extends State<StoreScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  late PageController _pageController;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -44,7 +44,10 @@ class _StoreScreenState extends State<StoreScreen>
   final FocusNode _searchFocusNode = FocusNode();
 
   // Add All Plants tab at index 0
-  late List<Map<String, String>> _storeTabs;
+  late final List<Map<String, String>> _storeTabs = [
+    {"imagePath": "", "title": "All Plants", "filterTag": "ALL_PLANTS_TAB"},
+    ...categories,
+  ];
 
   // Simplified filter state management like PlantCategory
   final Map<String, ValueNotifier<Map<FilterType, dynamic>>>
@@ -65,27 +68,10 @@ class _StoreScreenState extends State<StoreScreen>
   @override
   void initState() {
     super.initState();
-
-    // Initialize store tabs
-    _storeTabs = [
-      {"imagePath": "", "title": "All Plants", "filterTag": "ALL_PLANTS_TAB"},
-      ...categories,
-    ];
-
     _tabController = TabController(length: _storeTabs.length, vsync: this);
-    _pageController = PageController(initialPage: 0);
-
     _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        // Animate page when tab changes
-        _pageController.animateToPage(
-          _tabController.index,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-      }
+      if (_tabController.indexIsChanging) return;
     });
-
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
@@ -142,7 +128,6 @@ class _StoreScreenState extends State<StoreScreen>
   @override
   void dispose() {
     _tabController.dispose();
-    _pageController.dispose();
     _animationController.dispose();
     _searchController.dispose();
     _searchFocusNode.dispose();
@@ -200,20 +185,14 @@ class _StoreScreenState extends State<StoreScreen>
                       );
                     }).toList(),
               ),
-              // Tab Content with smooth sliding transition
+              // Tab Content
               Expanded(
-                child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    _tabController.animateTo(index);
-                  },
-                  itemCount: _storeTabs.length,
-                  itemBuilder: (context, index) {
-                    return _buildCategoryContent(
-                      _storeTabs[index],
-                      colorScheme,
-                    );
-                  },
+                child: TabBarView(
+                  controller: _tabController,
+                  children:
+                      _storeTabs.map((category) {
+                        return _buildCategoryContent(category, colorScheme);
+                      }).toList(),
                 ),
               ),
             ],
@@ -427,64 +406,53 @@ class _StoreScreenState extends State<StoreScreen>
       return Center(child: CircularProgressIndicator());
     }
 
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(0.1, 0.0),
-        end: Offset.zero,
-      ).animate(
-        CurvedAnimation(
-          parent: _animationController,
-          curve: Curves.easeOutCubic,
-        ),
-      ),
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: ValueListenableBuilder<Map<FilterType, dynamic>>(
-          valueListenable: _categoryFilterNotifiers[categoryTag]!,
-          builder: (context, filters, _) {
-            final plants = _getFilteredPlants(basePlants, categoryTag);
-            final hasActiveFilters = _hasActiveFilters();
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: ValueListenableBuilder<Map<FilterType, dynamic>>(
+        valueListenable: _categoryFilterNotifiers[categoryTag]!,
+        builder: (context, filters, _) {
+          final plants = _getFilteredPlants(basePlants, categoryTag);
+          final hasActiveFilters = _hasActiveFilters();
 
-            return Column(
-              children: [
-                // Filter summary - only show when there are active filters and plants found
-                if (hasActiveFilters && plants.isNotEmpty)
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 8.h,
-                    ),
-                    child: ActiveFiltersWidget(
-                      currentFilters: filters,
-                      plantCount: plants.length,
-                      onClearAll: () {
-                        // Reset to default filters
-                        final defaultFilters = <FilterType, dynamic>{
-                          FilterType.sort: 'Name A-Z',
-                          FilterType.price: _categoryPriceRanges[categoryTag]!,
-                          FilterType.size: 'All Sizes',
-                          FilterType.attributes: <String>[],
-                        };
-                        _categoryFilterNotifiers[categoryTag]!.value =
-                            defaultFilters;
-                        _filteredPlantsCache.clear();
-                        _lastFilters[categoryTag] = null;
-                      },
-                      showPlantCount: true,
-                      originalPriceRange: _categoryPriceRanges[categoryTag]!,
-                    ),
+          return Column(
+            children: [
+              // Filter summary - only show when there are active filters and plants found
+              if (hasActiveFilters && plants.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
                   ),
-                // Modern grid or empty state
-                Expanded(
-                  child:
-                      plants.isEmpty
-                          ? _buildEmptyState(colorScheme, categoryTag)
-                          : _buildPlantGrid(plants),
+                  child: ActiveFiltersWidget(
+                    currentFilters: filters,
+                    plantCount: plants.length,
+                    onClearAll: () {
+                      // Reset to default filters
+                      final defaultFilters = <FilterType, dynamic>{
+                        FilterType.sort: 'Name A-Z',
+                        FilterType.price: _categoryPriceRanges[categoryTag]!,
+                        FilterType.size: 'All Sizes',
+                        FilterType.attributes: <String>[],
+                      };
+                      _categoryFilterNotifiers[categoryTag]!.value =
+                          defaultFilters;
+                      _filteredPlantsCache.clear();
+                      _lastFilters[categoryTag] = null;
+                    },
+                    showPlantCount: true,
+                    originalPriceRange: _categoryPriceRanges[categoryTag]!,
+                  ),
                 ),
-              ],
-            );
-          },
-        ),
+              // Modern grid or empty state
+              Expanded(
+                child:
+                    plants.isEmpty
+                        ? _buildEmptyState(colorScheme, categoryTag)
+                        : _buildPlantGrid(plants),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -499,7 +467,7 @@ class _StoreScreenState extends State<StoreScreen>
             message: "Try adjusting your filters or search.",
             imagePath: "assets/No_Plant_Found.png",
           ),
-          SizedBox(height: 16.h),
+          //SizedBox(height: 16.h),
           ElevatedButton.icon(
             onPressed: () {
               // Reset to default filters

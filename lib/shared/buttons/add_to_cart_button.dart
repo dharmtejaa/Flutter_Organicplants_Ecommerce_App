@@ -47,7 +47,7 @@ class AddToCartButton extends StatelessWidget {
         padding: AppSizes.paddingAllXs,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(AppSizes.radiusXl),
+            topLeft: Radius.circular(AppSizes.radiusLg),
             bottomRight: Radius.circular(AppSizes.radiusLg),
           ),
           //shape: BoxShape.circle,

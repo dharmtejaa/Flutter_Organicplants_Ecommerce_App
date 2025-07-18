@@ -23,40 +23,78 @@ class _LoginscreenState extends State<Loginscreen> {
   final formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
   final countryCode = "+91";
+
+  // Add ValueNotifier for state management
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
+  final ValueNotifier<bool> _isPhoneValid = ValueNotifier(false);
+  final ValueNotifier<String> _errorMessage = ValueNotifier('');
+
+  @override
+  void initState() {
+    super.initState();
+    number.addListener(_validatePhone);
+  }
+
+  void _validatePhone() {
+    final phone = number.text.trim();
+    _isPhoneValid.value =
+        phone.length == 10 && RegExp(r'^[0-9]+$').hasMatch(phone);
+    _errorMessage.value = '';
+  }
+
+  @override
+  void dispose() {
+    number.removeListener(_validatePhone);
+    _isLoading.dispose();
+    _isPhoneValid.dispose();
+    _errorMessage.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     void login() {
-      if (formKey.currentState!.validate()) {
-        auth.verifyPhoneNumber(
-          phoneNumber: "+91${number.text}",
-          verificationCompleted: (_) {
-            CustomSnackBar.showSuccess(context, "Verification Completed! 🎉");
-          },
-          verificationFailed: (e) {
-            CustomSnackBar.showError(context, "Verification Failed! ❌");
-          },
-          codeSent: (String verificationId, int? resendToken) {
-            CustomSnackBar.showSuccess(context, 'OTP sent successfully');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder:
-                    (context) => OTPscreen(
-                      verificationId: verificationId,
-                      text: number.text,
-                    ),
-              ),
-            );
-          },
-          codeAutoRetrievalTimeout: (e) {
-            CustomSnackBar.showError(context, "Code Auto Retrieval Timeout! ❌");
-          },
-        );
-      } else {
-        CustomSnackBar.showError(context, "Please enter a valid phone number");
+      if (!_isPhoneValid.value) {
+        _errorMessage.value = "Please enter a valid 10-digit phone number";
+        return;
       }
+
+      _isLoading.value = true;
+      _errorMessage.value = '';
+
+      auth.verifyPhoneNumber(
+        phoneNumber: "+91${number.text}",
+        verificationCompleted: (_) {
+          _isLoading.value = false;
+          CustomSnackBar.showSuccess(context, "Verification Completed! 🎉");
+        },
+        verificationFailed: (e) {
+          _isLoading.value = false;
+          _errorMessage.value = "Verification Failed: ${e.message}";
+          CustomSnackBar.showError(context, "Verification Failed! ❌");
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          _isLoading.value = false;
+          CustomSnackBar.showSuccess(context, 'OTP sent successfully');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) => OTPscreen(
+                    verificationId: verificationId,
+                    text: number.text,
+                  ),
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (e) {
+          _isLoading.value = false;
+          _errorMessage.value = "Code Auto Retrieval Timeout!";
+          CustomSnackBar.showError(context, "Code Auto Retrieval Timeout! ❌");
+        },
+      );
     }
 
     // ignore: deprecated_member_use
@@ -110,7 +148,9 @@ class _LoginscreenState extends State<Loginscreen> {
                       children: [
                         TextSpan(
                           text: "to get Started",
-                          style: textTheme.displayMedium,
+                          style: textTheme.displayMedium?.copyWith(
+                            color: colorScheme.tertiary,
+                          ),
                         ),
                       ],
                     ),
@@ -161,11 +201,45 @@ class _LoginscreenState extends State<Loginscreen> {
                       //const Spacer(), // push button to bottom
                       Column(
                         children: [
-                          CustomButton(
-                            ontap: login,
-                            backgroundColor: colorScheme.primary,
-                            text: 'Continue',
-                            //textColor: colorScheme.onPrimary,
+                          ValueListenableBuilder<bool>(
+                            valueListenable: _isLoading,
+                            builder: (context, isLoading, child) {
+                              return ValueListenableBuilder<String>(
+                                valueListenable: _errorMessage,
+                                builder: (context, errorMessage, child) {
+                                  return Column(
+                                    children: [
+                                      if (errorMessage.isNotEmpty)
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: 10.h,
+                                          ),
+                                          child: Text(
+                                            errorMessage,
+                                            style: textTheme.bodySmall
+                                                ?.copyWith(
+                                                  color: colorScheme.error,
+                                                ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      CustomButton(
+                                        ontap: isLoading ? null : login,
+                                        backgroundColor:
+                                            isLoading
+                                                ? colorScheme.onSurfaceVariant
+                                                : colorScheme.primary,
+                                        text:
+                                            isLoading
+                                                ? 'Sending OTP...'
+                                                : 'Continue',
+                                        //textColor: colorScheme.onPrimary,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                           ),
                           SizedBox(height: 10.h),
                           Padding(

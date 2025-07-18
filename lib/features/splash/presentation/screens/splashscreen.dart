@@ -15,6 +15,13 @@ class Splashscreen extends StatefulWidget {
 }
 
 class _SplashscreenState extends State<Splashscreen> {
+  // Add ValueNotifier for state management
+  final ValueNotifier<bool> _isLoading = ValueNotifier(true);
+  final ValueNotifier<String> _loadingMessage = ValueNotifier(
+    'Loading plants...',
+  );
+  final ValueNotifier<double> _loadingProgress = ValueNotifier(0.0);
+
   @override
   void initState() {
     super.initState();
@@ -23,21 +30,42 @@ class _SplashscreenState extends State<Splashscreen> {
 
   Future<void> _loadInitialData() async {
     try {
-      allPlantsGlobal = await PlantServices.loadAllPlantsApi();
+      _loadingMessage.value = 'Loading plants...';
+      _loadingProgress.value = 0.1;
 
+      allPlantsGlobal = await PlantServices.loadAllPlantsApi();
+      _loadingProgress.value = 0.3;
+
+      _loadingMessage.value = 'Categorizing plants...';
       indoorPlants = getPlantsByCategory('Indoor plant');
+      _loadingProgress.value = 0.4;
+
       outdoorPlants = getPlantsByCategory('Outdoor plant');
+      _loadingProgress.value = 0.5;
+
       medicinalPlants = getPlantsByCategory('Medicinal plant');
+      _loadingProgress.value = 0.6;
+
       herbsPlants = getPlantsByCategory('Herbs plant');
+      _loadingProgress.value = 0.7;
+
       floweringPlants = getPlantsByCategory('Flowering plant');
+      _loadingProgress.value = 0.8;
+
       bonsaiPlants = getPlantsByCategory('Bonsai plant');
+      _loadingProgress.value = 0.85;
+
       succulentsCactiPlants = getPlantsByCategory('Succulents & Cacti Plants');
+      _loadingProgress.value = 0.9;
+
       petFriendlyPlants = getPlantsByTag('Pet_Friendly');
       lowMaintenancePlants = getPlantsByTag('Low_Maintenance');
       airPurifyingPlants = getPlantsByTag('Air_Purifying');
       sunLovingPlants = getPlantsByTag('Sun_Loving');
+      _loadingProgress.value = 1.0;
 
-      await Future.delayed(const Duration(seconds: 2));
+      _loadingMessage.value = 'Ready!';
+      await Future.delayed(const Duration(seconds: 1));
 
       if (!mounted) return;
 
@@ -47,7 +75,17 @@ class _SplashscreenState extends State<Splashscreen> {
       );
     } catch (e) {
       debugPrint('Error loading data in Splashscreen: $e');
+      _loadingMessage.value = 'Error loading data. Please try again.';
+      _isLoading.value = false;
     }
+  }
+
+  @override
+  void dispose() {
+    _isLoading.dispose();
+    _loadingMessage.dispose();
+    _loadingProgress.dispose();
+    super.dispose();
   }
 
   @override
@@ -81,7 +119,39 @@ class _SplashscreenState extends State<Splashscreen> {
                       color: colorScheme.primary,
                     ),
                   ),
-                  SizedBox(height: 150.h),
+                  SizedBox(height: 30.h),
+                  // Add loading progress and message
+                  ValueListenableBuilder<String>(
+                    valueListenable: _loadingMessage,
+                    builder: (context, message, child) {
+                      return ValueListenableBuilder<double>(
+                        valueListenable: _loadingProgress,
+                        builder: (context, progress, child) {
+                          return Column(
+                            children: [
+                              Text(
+                                message,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 10.h),
+                              LinearProgressIndicator(
+                                value: progress,
+                                backgroundColor:
+                                    colorScheme.surfaceContainerHighest,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  colorScheme.primary,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 100.h),
                 ],
               ),
             ),
