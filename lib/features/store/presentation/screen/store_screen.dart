@@ -18,6 +18,9 @@ import 'package:organicplants/core/theme/app_shadows.dart';
 // Add this ValueNotifier to notify when allPlantsGlobal changes
 final ValueNotifier<int> allPlantsGlobalVersion = ValueNotifier<int>(0);
 
+// Add this ValueNotifier to trigger UI updates when filters are reinitialized
+final ValueNotifier<int> filterInitializationVersion = ValueNotifier<int>(0);
+
 // Update allPlantsGlobal in splashscreen.dart like this:
 // allPlantsGlobal = await PlantServices.loadAllPlantsApi();
 // allPlantsGlobalVersion.value++;
@@ -89,10 +92,10 @@ class _StoreScreenState extends State<StoreScreen>
 
   void _onAllPlantsChanged() {
     // Re-initialize filters and price ranges when allPlantsGlobal changes
-    setState(() {
-      _initializeCategoryFilters();
-      _filteredPlantsCache.clear();
-    });
+    _initializeCategoryFilters();
+    _filteredPlantsCache.clear();
+    // Trigger UI update
+    filterInitializationVersion.value++;
   }
 
   void _initializeCategoryFilters() {
@@ -147,7 +150,7 @@ class _StoreScreenState extends State<StoreScreen>
     return Scaffold(
       appBar: _buildAppBar(colorScheme),
       body: ValueListenableBuilder<int>(
-        valueListenable: allPlantsGlobalVersion,
+        valueListenable: filterInitializationVersion,
         builder: (context, _, __) {
           return Column(
             children: [
@@ -295,11 +298,7 @@ class _StoreScreenState extends State<StoreScreen>
   }
 
   void _applyFilters(Map<FilterType, dynamic> filters, String category) {
-    print('StoreScreen: Applying filters: $filters');
     _categoryFilterNotifiers[category]!.value = Map.from(filters);
-    print(
-      'StoreScreen: Current filters after applying: ${_categoryFilterNotifiers[category]!.value}',
-    );
 
     // Clear cache when filters change
     _filteredPlantsCache.clear();
@@ -341,16 +340,9 @@ class _StoreScreenState extends State<StoreScreen>
     final filters = _categoryFilterNotifiers[category]!.value;
     final cacheKey = filters.hashCode.toString();
 
-    print('StoreScreen: Getting filtered plants for category: $category');
-    print('StoreScreen: Base plants count: ${basePlants.length}');
-    print('StoreScreen: Current filters: $filters');
-
     // Check if we can use cached result
     if (_filteredPlantsCache.containsKey(cacheKey) &&
         _lastFilters[category] == filters) {
-      print(
-        'StoreScreen: Using cached result: ${_filteredPlantsCache[cacheKey]!.length} plants',
-      );
       return _filteredPlantsCache[cacheKey]!;
     }
 
@@ -380,8 +372,6 @@ class _StoreScreenState extends State<StoreScreen>
       plants: plants,
       filters: filters,
     );
-
-    print('StoreScreen: After filtering: ${plants.length} plants');
 
     // Cache the result
     _filteredPlantsCache[cacheKey] = plants;
