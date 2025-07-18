@@ -25,11 +25,13 @@ class ProductHeaderInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(plants.commonName ?? '', style: textTheme.displaySmall),
-          SizedBox(height: 16.h),
-          // Category
-          Text(plants.category ?? '', style: textTheme.bodyMedium),
-          SizedBox(height: 16.h),
+          Row(
+            children: [
+              Text(plants.commonName ?? '', style: textTheme.displaySmall),
+              SizedBox(width: 16.w),
+              Text('(${plants.category})', style: textTheme.bodyMedium),
+            ],
+          ),
           // Rating
           Row(
             mainAxisAlignment: MainAxisAlignment.start,

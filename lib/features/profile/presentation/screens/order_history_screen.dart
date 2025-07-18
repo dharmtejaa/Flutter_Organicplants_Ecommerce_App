@@ -81,13 +81,13 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                       orders.where((order) => order['status'] == tab).toList();
                 }
                 if (filteredOrders.isEmpty) {
-                  return _buildEmptyState();
+                  return _buildEmptyState(context);
                 }
                 return ListView.builder(
                   padding: AppSizes.paddingAllMd,
                   itemCount: filteredOrders.length,
                   itemBuilder: (context, index) {
-                    return _buildOrderCard(filteredOrders[index]);
+                    return _buildOrderCard(context, filteredOrders[index]);
                   },
                 );
               }).toList(),
@@ -96,7 +96,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Center(
@@ -140,7 +140,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     );
   }
 
-  Widget _buildOrderCard(Map<String, dynamic> order) {
+  Widget _buildOrderCard(BuildContext context, Map<String, dynamic> order) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
@@ -182,14 +182,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                     ],
                   ),
                 ),
-                _buildStatusChip(order['status'], prominent: true),
+                _buildStatusChip(context, order['status'], prominent: true),
               ],
             ),
             SizedBox(height: 10.h),
             Divider(thickness: 1, color: colorScheme.outline.withOpacity(0.08)),
             SizedBox(height: 10.h),
             // Product Thumbnails
-            _buildProductThumbnails(order),
+            _buildProductThumbnails(context, order),
 
             SizedBox(height: 16.h),
 
@@ -357,7 +357,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     );
   }
 
-  Widget _buildStatusChip(String status, {bool prominent = false}) {
+  Widget _buildStatusChip(
+    BuildContext context,
+    String status, {
+    bool prominent = false,
+  }) {
     final colorScheme = Theme.of(context).colorScheme;
     Color backgroundColor;
     Color textColor;
@@ -406,7 +410,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     );
   }
 
-  Widget _buildProductThumbnails(Map<String, dynamic> order) {
+  Widget _buildProductThumbnails(
+    BuildContext context,
+    Map<String, dynamic> order,
+  ) {
     final colorScheme = Theme.of(context).colorScheme;
     final items = order['items'] as List;
     final int maxThumbs = 3;

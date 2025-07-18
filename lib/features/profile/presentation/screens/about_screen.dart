@@ -5,14 +5,9 @@ import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
-class AboutScreen extends StatefulWidget {
+class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
-  @override
-  State<AboutScreen> createState() => _AboutScreenState();
-}
-
-class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -69,6 +64,7 @@ class _AboutScreenState extends State<AboutScreen> {
             SizedBox(height: 16.h),
             // Our Story Section
             _buildSection(
+              context,
               "Our Story",
               Icons.history_edu_rounded,
               "Organic Plants was founded with a simple\n\nmission: to make the joy of plant parenthood accessible to everyone. We believe that every home deserves the beauty and benefits that plants bring.\n\nOur journey began in 2020 when we noticed that many people wanted to bring plants into their homes but were intimidated by the complexity of plant care. We set out to change that by providing not just beautiful, healthy plants, but also the knowledge and support needed to help them thrive.",
@@ -78,6 +74,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
             // Our Mission Section
             _buildSection(
+              context,
               "Our Mission",
               Icons.flag_outlined,
               "To inspire and empower people to create greener, healthier living spaces by providing premium plants, expert care guidance, and exceptional customer support.\n\nWe're committed to sustainability, quality, and making plant care accessible to everyone, from beginners to experienced gardeners.",
@@ -86,22 +83,22 @@ class _AboutScreenState extends State<AboutScreen> {
             SizedBox(height: 16.h),
 
             // What We Offer Section
-            _buildFeaturesSection(),
+            _buildFeaturesSection(context),
 
             SizedBox(height: 16.h),
 
             // Team Section
-            _buildTeamSection(),
+            _buildTeamSection(context),
 
             SizedBox(height: 16.h),
 
             // Contact Information
-            _buildContactSection(),
+            _buildContactSection(context),
 
             SizedBox(height: 16.h),
 
             // Social Media Links
-            _buildSocialMediaSection(),
+            _buildSocialMediaSection(context),
 
             SizedBox(height: 32.h),
           ],
@@ -110,7 +107,12 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  Widget _buildSection(String title, IconData icon, String content) {
+  Widget _buildSection(
+    BuildContext context,
+    String title,
+    IconData icon,
+    String content,
+  ) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Card(
@@ -138,7 +140,7 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  Widget _buildFeaturesSection() {
+  Widget _buildFeaturesSection(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -165,30 +167,35 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             SizedBox(height: 16.h),
             _buildFeatureItem(
+              context,
               "Premium Plants",
               "Carefully selected, healthy plants from trusted growers",
               Icons.local_florist_rounded,
               Colors.yellow,
             ),
             _buildFeatureItem(
+              context,
               "Expert Care Guidance",
               "Detailed care instructions and plant care tips",
               Icons.menu_book_rounded,
               Colors.deepOrangeAccent,
             ),
             _buildFeatureItem(
+              context,
               "Plant Care Support",
               "24/7 support from our plant care experts",
               Icons.support_agent_rounded,
               Colors.grey,
             ),
             _buildFeatureItem(
+              context,
               "Sustainable Packaging",
               "Eco-friendly packaging to protect your plants",
               Icons.recycling_rounded,
               Colors.green,
             ),
             _buildFeatureItem(
+              context,
               "Plant Guarantee",
               "30-day guarantee on all our plants",
               Icons.verified_rounded,
@@ -201,6 +208,7 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Widget _buildFeatureItem(
+    BuildContext context,
     String title,
     String description,
     IconData icon,
@@ -236,7 +244,7 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  Widget _buildTeamSection() {
+  Widget _buildTeamSection(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Card(
@@ -271,7 +279,7 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  Widget _buildContactSection() {
+  Widget _buildContactSection(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Card(
@@ -297,24 +305,28 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             SizedBox(height: 16.h),
             _buildContactItem(
+              context,
               "Email",
               "support@organicplants.com",
               Icons.email_rounded,
-              () => _launchEmail(),
+              () => _launchEmail(context),
             ),
             _buildContactItem(
+              context,
               "Phone",
               "+91 98765 43210",
               Icons.phone_rounded,
-              () => _launchPhone(),
+              () => _launchPhone(context),
             ),
             _buildContactItem(
+              context,
               "Address",
               "123 Green Street, Garden Colony, Mumbai - 400001",
               Icons.location_on_rounded,
-              () => _launchMaps(),
+              () => _launchMaps(context),
             ),
             _buildContactItem(
+              context,
               "Business Hours",
               "Monday - Sunday: 9:00 AM - 8:00 PM",
               Icons.access_time_rounded,
@@ -327,6 +339,7 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Widget _buildContactItem(
+    BuildContext context,
     String title,
     String value,
     IconData icon,
@@ -372,7 +385,7 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  Widget _buildSocialMediaSection() {
+  Widget _buildSocialMediaSection(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Card(
@@ -404,25 +417,25 @@ class _AboutScreenState extends State<AboutScreen> {
                   "Instagram",
                   Icons.camera_alt_outlined,
                   Colors.redAccent,
-                  () => _launchSocialMedia("instagram"),
+                  () => _launchSocialMedia(context, "instagram"),
                 ),
                 _buildSocialMediaButton(
                   "Facebook",
                   Icons.facebook_outlined,
                   Colors.blue,
-                  () => _launchSocialMedia("facebook"),
+                  () => _launchSocialMedia(context, "facebook"),
                 ),
                 _buildSocialMediaButton(
                   "Twitter",
                   Icons.flutter_dash_outlined,
                   Colors.lightBlue,
-                  () => _launchSocialMedia("twitter"),
+                  () => _launchSocialMedia(context, "twitter"),
                 ),
                 _buildSocialMediaButton(
                   "YouTube",
                   Icons.play_circle_outline_outlined,
                   Colors.red,
-                  () => _launchSocialMedia("youtube"),
+                  () => _launchSocialMedia(context, "youtube"),
                 ),
               ],
             ),
@@ -445,19 +458,19 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  void _launchEmail() {
+  void _launchEmail(BuildContext context) {
     CustomSnackBar.showInfo(context, "Opening email app...");
   }
 
-  void _launchPhone() {
+  void _launchPhone(BuildContext context) {
     CustomSnackBar.showInfo(context, "Opening phone app...");
   }
 
-  void _launchMaps() {
+  void _launchMaps(BuildContext context) {
     CustomSnackBar.showInfo(context, "Opening maps app...");
   }
 
-  void _launchSocialMedia(String platform) {
+  void _launchSocialMedia(BuildContext context, String platform) {
     CustomSnackBar.showInfo(context, "Opening $platform...");
   }
 }
