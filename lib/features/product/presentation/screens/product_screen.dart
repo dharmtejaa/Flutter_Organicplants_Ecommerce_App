@@ -58,7 +58,7 @@ class ProductScreen extends StatelessWidget {
                 ProductImageGallery(plants: plants),
                 // Product Header Info Section
                 ProductHeaderInfo(plants: plants),
-                SizedBox(height: 12.h),
+                SizedBox(height: 10.h),
                 // Product Features Section
                 ProductFeaturesSection(searchController: searchController),
                 SizedBox(height: 12.h),

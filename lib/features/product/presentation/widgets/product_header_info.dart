@@ -97,7 +97,7 @@ class ProductHeaderInfo extends StatelessWidget {
                 ),
             ],
           ),
-          
+          SizedBox(height: 16.h),
           if (originalPrice > offerPrice)
             Padding(
               padding: EdgeInsets.only(top: 8.h),

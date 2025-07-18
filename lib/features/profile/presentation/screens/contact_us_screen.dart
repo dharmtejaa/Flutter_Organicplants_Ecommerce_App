@@ -5,14 +5,21 @@ import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
-class ContactUsScreen extends StatefulWidget {
+class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
 
   @override
-  State<ContactUsScreen> createState() => _ContactUsScreenState();
+  Widget build(BuildContext context) {
+    return _ContactUsContent();
+  }
 }
 
-class _ContactUsScreenState extends State<ContactUsScreen> {
+class _ContactUsContent extends StatefulWidget {
+  @override
+  State<_ContactUsContent> createState() => _ContactUsContentState();
+}
+
+class _ContactUsContentState extends State<_ContactUsContent> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();

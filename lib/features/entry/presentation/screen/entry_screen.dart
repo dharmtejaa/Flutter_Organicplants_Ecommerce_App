@@ -11,7 +11,7 @@ import 'package:organicplants/features/store/presentation/screen/store_screen.da
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:provider/provider.dart';
 
-class EntryScreen extends StatefulWidget {
+class EntryScreen extends StatelessWidget {
   const EntryScreen({super.key});
 
   static final List<Widget> _screens = [
@@ -22,11 +22,6 @@ class EntryScreen extends StatefulWidget {
     const CartScreen(),
   ];
 
-  @override
-  State<EntryScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<EntryScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;

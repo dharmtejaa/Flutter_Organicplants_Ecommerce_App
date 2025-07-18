@@ -12,14 +12,9 @@ import 'package:organicplants/shared/widgets/plantcategory.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeTabState();
-}
-
-class _HomeTabState extends State<HomeScreen> {
   String getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) {
@@ -29,11 +24,6 @@ class _HomeTabState extends State<HomeScreen> {
     } else {
       return 'Good Evening';
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
