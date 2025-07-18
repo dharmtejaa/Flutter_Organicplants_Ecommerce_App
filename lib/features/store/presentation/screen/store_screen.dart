@@ -44,10 +44,7 @@ class _StoreScreenState extends State<StoreScreen>
   final FocusNode _searchFocusNode = FocusNode();
 
   // Add All Plants tab at index 0
-  late final List<Map<String, String>> _storeTabs = [
-    {"imagePath": "", "title": "All Plants", "filterTag": "ALL_PLANTS_TAB"},
-    ...categories,
-  ];
+  late List<Map<String, String>> _storeTabs;
 
   // Simplified filter state management like PlantCategory
   final Map<String, ValueNotifier<Map<FilterType, dynamic>>>
@@ -68,6 +65,13 @@ class _StoreScreenState extends State<StoreScreen>
   @override
   void initState() {
     super.initState();
+
+    // Initialize store tabs
+    _storeTabs = [
+      {"imagePath": "", "title": "All Plants", "filterTag": "ALL_PLANTS_TAB"},
+      ...categories,
+    ];
+
     _tabController = TabController(length: _storeTabs.length, vsync: this);
     _pageController = PageController(initialPage: 0);
 

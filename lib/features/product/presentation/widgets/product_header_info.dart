@@ -27,6 +27,9 @@ class ProductHeaderInfo extends StatelessWidget {
         children: [
           Text(plants.commonName ?? '', style: textTheme.displaySmall),
           SizedBox(height: 16.h),
+          // Category
+          Text(plants.category ?? '', style: textTheme.bodyMedium),
+          SizedBox(height: 16.h),
           // Rating
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
