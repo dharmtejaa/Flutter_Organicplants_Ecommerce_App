@@ -10,7 +10,6 @@ class ProductDescriptionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
@@ -43,7 +42,6 @@ class PlantDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final Map<String, String> detailsMap = {
       "Plant Name": plant.commonName ?? '',
       "Scientific Name": plant.scientificName ?? '',

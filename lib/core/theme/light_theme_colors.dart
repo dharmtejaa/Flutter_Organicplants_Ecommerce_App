@@ -52,6 +52,7 @@ class LightThemeColors {
   static Color shadowLight = Colors.grey.withValues(alpha: 0.05);
   static Color shadowMedium = Colors.grey.withValues(alpha: 0.08);
   static Color shadowHeavy = Colors.grey.withValues(alpha: 0.12);
+  // ignore: deprecated_member_use
   static Color shadowIntense = Colors.grey.withOpacity(0.1);
 
   // ——— Overlay Colors ———

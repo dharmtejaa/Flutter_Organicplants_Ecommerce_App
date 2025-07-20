@@ -1,5 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 
 class TrackOrdersScreen extends StatefulWidget {
   final Map<String, dynamic>? order;
@@ -138,8 +141,10 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
           SizedBox(height: 32.h),
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.pop(context);
-              // TODO: Navigate to store
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EntryScreen()),
+              );
             },
             icon: Icon(Icons.shopping_bag_outlined),
             label: Text("Start Shopping"),
@@ -412,7 +417,7 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
 
   void _refreshOrders() {
     // Simulate refresh
-    // TODO: Replace with actual API call if needed
+
     _orders.value = List<Map<String, dynamic>>.from(_orders.value);
     ScaffoldMessenger.of(
       context,
@@ -420,14 +425,14 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
   }
 
   void _viewOrderDetails(Map<String, dynamic> order) {
-    // TODO: Navigate to order details screen
+   
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('Viewing order details...')));
   }
 
   void _trackOrder(Map<String, dynamic> order) {
-    // TODO: Navigate to detailed tracking screen
+   
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('Opening detailed tracking...')));

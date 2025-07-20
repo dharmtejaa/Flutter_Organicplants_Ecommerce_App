@@ -5,7 +5,6 @@ import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/features/cart/data/cart_items_quantity_model.dart';
-import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/features/profile/presentation/screens/order_history_screen.dart';
@@ -402,6 +401,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       );
       //CustomSnackBar.showSuccess(context, 'Order placed successfully!');
       Navigator.pushAndRemoveUntil(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => OrderHistoryScreen()),
         (route) => route.isFirst,

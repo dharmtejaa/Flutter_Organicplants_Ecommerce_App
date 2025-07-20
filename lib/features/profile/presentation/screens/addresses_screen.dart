@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
@@ -166,6 +168,7 @@ class _AddressesScreenState extends State<AddressesScreen> {
             updated.add(newAddress);
             addresses.value = updated;
             ScaffoldMessenger.of(
+              // ignore: use_build_context_synchronously
               context,
             ).showSnackBar(SnackBar(content: Text('Address added!')));
           }

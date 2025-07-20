@@ -1,9 +1,14 @@
+// ignore_for_file: deprecated_member_use, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'order_details_screen.dart';
+// ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
@@ -120,8 +125,10 @@ class OrderHistoryScreen extends StatelessWidget {
           SizedBox(height: AppSizes.spaceHeightMd),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
-              // TODO: Navigate to store
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EntryScreen()),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: colorScheme.primary,
@@ -182,6 +189,7 @@ class OrderHistoryScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10.h),
+            // ignore: deprecated_member_use
             Divider(thickness: 1, color: colorScheme.outline.withOpacity(0.08)),
             SizedBox(height: 10.h),
             // Product Thumbnails
@@ -320,6 +328,7 @@ class OrderHistoryScreen extends StatelessWidget {
                         );
                         if (confirm == true) {
                           Provider.of<ProfileProvider>(
+                            // ignore: use_build_context_synchronously
                             context,
                             listen: false,
                           ).cancelOrder(order['id']);
@@ -356,7 +365,6 @@ class OrderHistoryScreen extends StatelessWidget {
     bool prominent = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     Color backgroundColor;
     Color textColor;
     double fontSize = prominent ? 14 : 12;
@@ -495,9 +503,6 @@ class OrderHistoryScreen extends StatelessWidget {
   }
 
   void _reorder(BuildContext context, Map<String, dynamic> order) {
-    // TODO: Add items to cart and navigate to cart
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Items added to cart for reorder!')));
+    CustomSnackBar.showSuccess(context, "Items added to cart for reorder!");
   }
 }

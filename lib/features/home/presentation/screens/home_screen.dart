@@ -38,14 +38,32 @@ class HomeScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Consumer<ProfileProvider>(
           builder: (context, profileProvider, child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Organic Plants', style: textTheme.displaySmall),
-                SizedBox(height: 2.h),
-                Text(
-                  '${getGreeting()}, ${profileProvider.userName}! 🌱',
-                  style: textTheme.bodySmall,
+                Image.asset(
+                  'assets/app_logo.png',
+                  height: 42.h,
+                  width: 42.w,
+                  color: colorScheme.primary,
+                  colorBlendMode: BlendMode.srcIn,
+                ),
+                SizedBox(width: 5.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Organic Plants',
+                      style: textTheme.displaySmall?.copyWith(
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      '${getGreeting()}, ${profileProvider.userName}! 🌱',
+                      style: textTheme.bodySmall,
+                    ),
+                  ],
                 ),
               ],
             );

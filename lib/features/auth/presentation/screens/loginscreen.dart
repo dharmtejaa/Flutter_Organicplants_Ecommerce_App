@@ -9,7 +9,7 @@ import 'package:organicplants/features/auth/presentation/widgets/terms_and_polic
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
-import 'package:organicplants/shared/widgets/skip_button.dart';
+import 'package:organicplants/shared/widgets/gesture_detector_button.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -92,7 +92,7 @@ class _LoginscreenState extends State<Loginscreen> {
         codeAutoRetrievalTimeout: (e) {
           _isLoading.value = false;
           _errorMessage.value = "Code Auto Retrieval Timeout!";
-          CustomSnackBar.showError(context, "Code Auto Retrieval Timeout! ❌");
+          // CustomSnackBar.showError(context, "Code Auto Retrieval Timeout! ❌");
         },
       );
     }
@@ -119,7 +119,7 @@ class _LoginscreenState extends State<Loginscreen> {
           actions: [
             Padding(
               padding: EdgeInsets.only(right: AppSizes.paddingSm),
-              child: SkipButton(
+              child: GestureDetectorButton(
                 textColor: AppTheme.primaryColor,
                 onPressed:
                     () => Navigator.push(
@@ -149,7 +149,8 @@ class _LoginscreenState extends State<Loginscreen> {
                         TextSpan(
                           text: "to get Started",
                           style: textTheme.displayMedium?.copyWith(
-                            color: colorScheme.tertiary,
+                            color: colorScheme.onSurface,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],

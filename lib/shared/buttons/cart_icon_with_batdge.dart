@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
-import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 class CartIconWithBadge extends StatelessWidget {
@@ -27,12 +26,7 @@ class CartIconWithBadge extends StatelessWidget {
         final cartCount = cartProvider.cartItemsCount;
 
         Widget icon = GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CartScreen()),
-            );
-          },
+          onTap: onPressed,
           child: Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.center,

@@ -69,4 +69,10 @@ class CartProvider extends ChangeNotifier {
   int get cartItemsCount {
     return _items.values.fold(0, (sum, item) => sum + item.quantity);
   }
+
+  // Helper method to check if a plant is in the cart
+  bool isInCart(String? plantId) {
+    if (plantId == null) return false;
+    return _items.containsKey(plantId);
+  }
 }

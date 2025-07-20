@@ -28,19 +28,21 @@ class ProductHeaderInfo extends StatelessWidget {
           Row(
             children: [
               Text(plants.commonName ?? '', style: textTheme.displaySmall),
-              SizedBox(width: 16.w),
+              SizedBox(width: 15.w),
               Text(
-                '(${plants.category})',
+                '(${plants.scientificName})',
                 style: textTheme.titleLarge?.copyWith(
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w500,
                 ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
             ],
           ),
           SizedBox(height: 16.h),
           Text(
-            plants.scientificName ?? '',
+            plants.category ?? '',
             style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 16.h),
@@ -87,8 +89,12 @@ class ProductHeaderInfo extends StatelessWidget {
               if (originalPrice > offerPrice)
                 Container(
                   margin: EdgeInsets.only(left: 15.w),
-                  padding: EdgeInsets.all(6.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 4.h,
+                  ),
                   decoration: BoxDecoration(
+                    // ignore: deprecated_member_use
                     color: colorScheme.error.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                   ),
@@ -97,13 +103,14 @@ class ProductHeaderInfo extends StatelessWidget {
                       Icon(
                         Icons.local_offer,
                         color: colorScheme.error,
-                        size: AppSizes.iconXs,
+                        size: 12.sp,
                       ),
                       SizedBox(width: 4.w),
                       Text(
                         '$discount% OFF',
-                        style: textTheme.labelMedium?.copyWith(
+                        style: textTheme.labelSmall?.copyWith(
                           color: colorScheme.error,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -111,7 +118,7 @@ class ProductHeaderInfo extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: 10.h),
           if (originalPrice > offerPrice)
             Padding(
               padding: EdgeInsets.only(top: 8.h),

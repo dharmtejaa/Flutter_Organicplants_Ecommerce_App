@@ -44,8 +44,8 @@ class AppShadows {
   static List<BoxShadow> get darkCardShadow => [
     BoxShadow(
       color: DarkThemeColors.shadowLight,
-      spreadRadius: 1,
-      blurRadius: 4,
+      spreadRadius: 2,
+      blurRadius: 6,
       offset: const Offset(0, 2),
     ),
   ];
@@ -229,7 +229,9 @@ class AppShadows {
       BoxShadow(
         color:
             Theme.of(context).brightness == Brightness.dark
+                // ignore: deprecated_member_use
                 ? DarkThemeColors.shadowIntense.withOpacity(0.18)
+                // ignore: deprecated_member_use
                 : LightThemeColors.shadowIntense.withOpacity(0.18),
         spreadRadius: 2,
         blurRadius: 4,

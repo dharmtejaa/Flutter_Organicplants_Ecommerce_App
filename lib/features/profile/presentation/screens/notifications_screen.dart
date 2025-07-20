@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
-import 'package:organicplants/shared/widgets/skip_button.dart';
+import 'package:organicplants/shared/widgets/gesture_detector_button.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
@@ -46,7 +46,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          SkipButton(
+          GestureDetectorButton(
             onPressed: _savePreferences,
             text: "Save",
             textColor: colorScheme.primary,

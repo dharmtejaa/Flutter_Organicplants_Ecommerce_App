@@ -458,7 +458,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     color:
                         isSelected
                             ? colorScheme.onPrimary
-                            : colorScheme.onSurface,
+                            : colorScheme.onSurfaceVariant,
                     fontWeight:
                         isSelected ? FontWeight.w600 : FontWeight.normal,
                   ),

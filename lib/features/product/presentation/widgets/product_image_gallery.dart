@@ -16,11 +16,13 @@ class ProductImageGallery extends StatelessWidget {
   Widget build(BuildContext context) {
     final carouselProvider = Provider.of<CarouselProvider>(context);
     final colorScheme = Theme.of(context).colorScheme;
+    final CarouselController _carouselController = CarouselController();
 
     return Column(
       children: [
         // Image Gallery
         CarouselSlider.builder(
+          carouselController: _carouselController,
           itemCount: plants.images?.length ?? 0,
           itemBuilder: (context, index, realIndex) {
             final imageUrl = plants.images?[index].url ?? '';
@@ -69,6 +71,7 @@ class ProductImageGallery extends StatelessWidget {
           options: CarouselOptions(
             height: 300.h,
             viewportFraction: 1,
+            initialPage: carouselProvider.activeIndex,
             onPageChanged: (index, reason) {
               carouselProvider.setIndex(index);
             },
@@ -88,7 +91,10 @@ class ProductImageGallery extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final thumbUrl = plants.images![index].url ?? '';
                   return GestureDetector(
-                    onTap: () => carouselProvider.setIndex(index),
+                    onTap: () {
+                      _carouselController.animateToPage(index);
+                      carouselProvider.setIndex(index);
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(

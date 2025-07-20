@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
+// ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 import 'track_orders_screen.dart';
 

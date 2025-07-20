@@ -7,6 +7,7 @@ import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
+import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/add_to_cart_button.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
@@ -24,7 +25,6 @@ class ProductCardGrid extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    final isDark = colorScheme.brightness == Brightness.dark;
     final wishlistProvider = Provider.of<WishlistProvider>(
       context,
       listen: false,
@@ -53,20 +53,33 @@ class ProductCardGrid extends StatelessWidget {
         );
       },
       onDoubleTap: () {
-        wishlistProvider.toggleWishList(plant);
         final isNowWishlisted = wishlistProvider.isInWishlist(plant.id!);
-        CustomSnackBar.showSuccess(
-          context,
-          isNowWishlisted
-              ? '${plant.commonName} Added to wishlist!'
-              : '${plant.commonName} Removed from wishlist.',
-          plantName: plant.commonName,
-          actionLabel: isNowWishlisted ? 'Undo' : null,
-          onAction:
-              isNowWishlisted
-                  ? () => wishlistProvider.toggleWishList(plant)
-                  : null,
-        );
+        if (!isNowWishlisted) {
+          wishlistProvider.toggleWishList(plant);
+          CustomSnackBar.showSuccess(
+            context,
+            '${plant.commonName} added to wishlist',
+            actionLabel: 'View Wishlist',
+            onAction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishlistScreen()),
+              );
+            },
+          );
+        } else {
+          CustomSnackBar.showInfo(
+            context,
+            '${plant.commonName} already in wishlist',
+            actionLabel: 'View Wishlist',
+            onAction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishlistScreen()),
+              );
+            },
+          );
+        }
       },
       child: Container(
         //margin: EdgeInsets.only(bottom: AppSizes.vMarginXs),

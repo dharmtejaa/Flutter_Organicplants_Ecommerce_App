@@ -53,7 +53,7 @@ class PlantSectionWidget extends StatelessWidget {
             SizedBox(height: 10.h),
             // Product Cards List
             SizedBox(
-              height: 237.h,
+              height: 241.h,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: displayPlants.length,

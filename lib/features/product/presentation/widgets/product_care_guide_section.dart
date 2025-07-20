@@ -20,51 +20,21 @@ class ProductCareGuideSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 12.h),
+          //SizedBox(height: 12.h),
           Text('Plant Highlights', style: textTheme.titleLarge),
           SizedBox(height: 12.h),
           QuickGuideCard(plants: plants),
+          SizedBox(height: 14.h),
+          // Care Guid
+          Text('Plant Care Guide', style: textTheme.titleLarge),
           SizedBox(height: 12.h),
-          // Care Guide
-          Card(
-            shadowColor: colorScheme.shadow,
-            // elevation: 1,
-            color: colorScheme.surfaceContainer,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-            ),
-            child: ExpansionTile(
-              leading: Icon(
-                Icons.spa,
-                color: colorScheme.primary,
-                size: AppSizes.iconMd,
-              ),
-              title: Text('Plant Care Guide', style: textTheme.titleLarge),
-              children: [CareGuideSection(plant: plants)],
-            ),
-          ),
+          CareGuideSection(plant: plants),
           SizedBox(height: 12.h),
+
           // FAQs
-          Card(
-            shadowColor: colorScheme.shadow,
-            //elevation: 1,
-            color: colorScheme.surfaceContainer,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-            ),
-            child: ExpansionTile(
-              leading: Icon(Icons.question_answer, color: colorScheme.primary),
-              title: Text(
-                'FAQs',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.sp,
-                  color: colorScheme.onSurface,
-                ),
-              ),
-              children: [FAQSection(plant: plants)],
-            ),
-          ),
+          Text('FAQs', style: textTheme.titleLarge),
+          SizedBox(height: 8.h),
+          FAQSection(plant: plants),
           SizedBox(height: 12.h),
         ],
       ),
@@ -276,7 +246,7 @@ class _CareCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Card(
       shadowColor: colorScheme.shadow,
-      color: colorScheme.inverseSurface,
+      color: colorScheme.surfaceContainer,
       elevation: 0,
       margin: EdgeInsets.only(bottom: 10.h),
       shape: RoundedRectangleBorder(
@@ -311,7 +281,9 @@ class _CareCard extends StatelessWidget {
                               width: 250.w,
                               child: Text(
                                 item.value,
-                                style: textTheme.titleMedium,
+                                style: textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 3,
                               ),
@@ -341,7 +313,9 @@ class _CareCard extends StatelessWidget {
                               padding: EdgeInsets.only(top: 8.h),
                               child: Text(
                                 item.description,
-                                style: textTheme.bodyMedium,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -403,81 +377,33 @@ class _FAQCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    //final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return Card(
-      shadowColor: colorScheme.shadow,
-      color: colorScheme.surface,
-      elevation: 0,
-      margin: EdgeInsets.only(bottom: 10.h),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-      ),
-      child: InkWell(
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        splashFactory: NoSplash.splashFactory,
-
-        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-        onTap: () => expandedNotifier.value = !expandedNotifier.value,
-        child: Padding(
-          padding: AppSizes.paddingAllSm,
-          child: Row(
+    return Padding(
+      padding: AppSizes.paddingAllSm,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Q. $question', style: textTheme.titleMedium),
+          SizedBox(height: 3.h),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfileCustomIcon(
-                icon: Icons.question_answer,
-                iconColor: color,
-                containerSize: 35.w,
-                iconSize: AppSizes.iconSm,
-              ),
-              SizedBox(width: 10.w),
+              Text('A.'),
+              SizedBox(width: 4.w),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(question, style: textTheme.titleMedium),
-                        ),
-                        ValueListenableBuilder<bool>(
-                          valueListenable: expandedNotifier,
-                          builder:
-                              (context, expanded, _) => Icon(
-                                expanded
-                                    ? Icons.expand_less
-                                    : Icons.expand_more,
-                                color: color,
-                                size: AppSizes.iconSm,
-                              ),
-                        ),
-                      ],
-                    ),
-                    ValueListenableBuilder<bool>(
-                      valueListenable: expandedNotifier,
-                      builder:
-                          (context, expanded, _) => AnimatedCrossFade(
-                            firstChild: SizedBox.shrink(),
-                            secondChild: Padding(
-                              padding: EdgeInsets.only(top: 8.h),
-                              child: Text(answer, style: textTheme.bodySmall),
-                            ),
-                            crossFadeState:
-                                expanded
-                                    ? CrossFadeState.showSecond
-                                    : CrossFadeState.showFirst,
-                            duration: Duration(milliseconds: 250),
-                          ),
-                    ),
-                  ],
+                child: Text(
+                  answer,
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
                 ),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

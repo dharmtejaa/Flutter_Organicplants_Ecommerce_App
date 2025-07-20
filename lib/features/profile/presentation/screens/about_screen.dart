@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
@@ -33,30 +35,54 @@ class AboutScreen extends StatelessWidget {
             // Hero Section
             Container(
               width: double.infinity,
-              padding: AppSizes.paddingAllSm,
+              padding: EdgeInsets.symmetric(vertical: 32.h, horizontal: 20.w),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [colorScheme.primaryContainer, colorScheme.surface],
+                  colors: [
+                    colorScheme.primary.withOpacity(0.95),
+                    Colors.greenAccent.withOpacity(0.7),
+                    colorScheme.primary.withOpacity(0.7),
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                borderRadius: BorderRadius.circular(32.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.primary.withOpacity(0.18),
+                    blurRadius: 18,
+                    offset: Offset(0, 8),
+                  ),
+                ],
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.18),
+                  width: 1.2,
+                ),
               ),
               child: Column(
                 children: [
-                  Icon(
-                    Icons.eco_rounded,
-                    size: AppSizes.iconXl,
-                    color: colorScheme.onPrimary,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.18),
+                      shape: BoxShape.circle,
+                    ),
+                    padding: EdgeInsets.all(10.w),
+                    child: Image.asset(
+                      'assets/app_logo.png',
+                      height: 48.h,
+                      width: 48.h,
+                      color: colorScheme.onSurface,
+                      colorBlendMode: BlendMode.srcIn,
+                    ),
                   ),
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 20.h),
                   Text("Organic Plants", style: textTheme.headlineMedium),
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 10.h),
                   Text(
                     "Bringing Nature to Your Home",
                     style: textTheme.bodyMedium,
                   ),
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 18.h),
                   Text("Version 1.0.0", style: textTheme.bodyMedium),
                 ],
               ),

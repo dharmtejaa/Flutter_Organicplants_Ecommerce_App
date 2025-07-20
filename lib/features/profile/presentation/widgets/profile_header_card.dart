@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
-import 'package:organicplants/features/profile/presentation/screens/loyalty_points_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/my_reviews_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/order_history_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/personal_information_screen.dart';
-import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
+import 'package:organicplants/core/theme/appcolors.dart';
+// ignore: unused_import
+import 'package:organicplants/core/theme/light_theme_colors.dart';
+import 'package:organicplants/features/profile/presentation/screens/personal_information_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:organicplants/features/profile/logic/profile_provider.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
   const ProfileHeaderCard({super.key});
@@ -18,109 +16,88 @@ class ProfileHeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     //final profileProvider = Provider.of<ProfileProvider>(context);
-    return Consumer<ProfileProvider>(
-      builder: (context, profileProvider, child) {
-        return Container(
-          decoration: BoxDecoration(
-            color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(AppSizes.radiusXl),
-            boxShadow: AppShadows.cardShadow(context),
+    return SizedBox(
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 240.h,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 146, 241, 197),
+                    Color.fromARGB(255, 35, 172, 101),
+                  ],
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40.r),
+                  bottomRight: Radius.circular(40.r),
+                ),
+              ),
+            ),
           ),
-          child: Padding(
-            padding: AppSizes.paddingSymmetricSm,
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Positioned(
+            top: 80.h,
+            left: -50.w,
+            child: _decorativeBlob(AppColors.warning, 140),
+          ),
+          Positioned(
+            top: 120.h,
+            right: -40.w,
+            child: _decorativeBlob(AppColors.success, 100),
+          ),
+          Positioned(
+            top: 30.h,
+            right: 60.w,
+            child: _decorativeBlob(AppColors.warning, 60),
+          ),
+          // Enhanced decorative elements with theme-aware colors
+          Column(
+            children: [
+              SizedBox(height: 60.h),
+
+              // Enhanced Avatar with theme-aware styling
+              Center(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
                   children: [
-                    // Avatar
                     Container(
-                      width: AppSizes.profileAvatarSize + 4,
-                      height: AppSizes.profileAvatarSize + 4,
+                      padding: EdgeInsets.all(8.r),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          // ignore: deprecated_member_use
-                          color: colorScheme.primary.withValues(alpha: 0.18),
-                          width: 2,
-                        ),
-                        color: colorScheme.inverseSurface,
                         boxShadow: AppShadows.cardShadow(context),
                       ),
-                      child: ClipOval(
-                        child:
-                            profileProvider.userAvatar.isNotEmpty
-                                ? Image.network(
-                                  profileProvider.userAvatar,
-                                  fit: BoxFit.cover,
-                                  errorBuilder:
-                                      (context, error, stackTrace) =>
-                                          _buildDefaultAvatar(colorScheme),
-                                )
-                                : _buildDefaultAvatar(colorScheme),
-                      ),
-                    ),
-                    SizedBox(width: 16.w),
-                    // User Info
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            profileProvider.userName,
-                            style: textTheme.titleLarge,
-                          ),
-                          SizedBox(height: 2.h),
-                          Text(
-                            profileProvider.userEmail,
-                            style: textTheme.bodySmall,
-                          ),
-                          SizedBox(height: 6.h),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8.w,
-                              vertical: 2.h,
-                            ),
-                            decoration: BoxDecoration(
-                              // ignore: deprecated_member_use
-                              color: colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(
-                                AppSizes.radiusLg,
-                              ),
-                              boxShadow: AppShadows.buttonShadow(context),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.star_rounded,
-                                  color: AppColors.starFilled,
-                                  size: AppSizes.iconSm,
-                                ),
-                                SizedBox(width: 3.w),
-                                Text(
-                                  '${profileProvider.membershipTier} Member',
-                                  style: textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 8.w),
-                    // Edit Button
-                    Material(
-                      color: colorScheme.primary,
-                      shape: CircleBorder(),
-                      child: InkWell(
+                      child: CircleAvatar(
+                        radius: 60.r,
+                        backgroundColor: colorScheme.surface,
 
-                        customBorder: CircleBorder(
-                          
-                        ),
+                        backgroundImage:
+                            profileProvider.userAvatar.isNotEmpty
+                                ? NetworkImage(profileProvider.userAvatar)
+                                : null,
+                        child:
+                            profileProvider.userAvatar.isEmpty
+                                ? Icon(
+                                  Icons.person,
+                                  size: 58.r,
+                                  color: colorScheme.primary,
+                                )
+                                : null,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: GestureDetector(
                         onTap: () {
-                          // Navigate to edit profile screen
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -128,11 +105,16 @@ class ProfileHeaderCard extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Padding(
-                          padding: EdgeInsets.all(6.sp),
+                        child: Container(
+                          padding: EdgeInsets.all(06.w),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: colorScheme.surface,
+                            boxShadow: AppShadows.cardShadow(context),
+                          ),
                           child: Icon(
-                            Icons.edit_rounded,
-                            color: colorScheme.onPrimary,
+                            Icons.edit,
+                            color: colorScheme.primary,
                             size: AppSizes.iconMd,
                           ),
                         ),
@@ -140,119 +122,94 @@ class ProfileHeaderCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildStatItem(
-                      context,
-                      profileProvider.totalOrders.toString(),
-                      'Orders',
-                      Icons.shopping_bag_rounded,
-                      Colors.blue,
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OrderHistoryScreen(),
+              ),
+
+              // Enhanced User Info Card with theme-aware colors
+              Padding(
+                padding: AppSizes.paddingAllSm,
+                child: Container(
+                  width: double.infinity,
+                  padding: AppSizes.paddingAllXl,
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface,
+                    borderRadius: BorderRadius.circular(AppSizes.radiusXl),
+                    boxShadow: AppShadows.cardShadow(context),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Hi, ${profileProvider.userName}! 🌱',
+                        style: textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      Text(
+                        profileProvider.userEmail,
+                        style: textTheme.bodyLarge?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 14.h),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 14.w,
+                          vertical: 6.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.amberAccent,
+                          borderRadius: BorderRadius.circular(
+                            AppSizes.radiusLg,
                           ),
-                        );
-                      },
-                      colorScheme,
-                    ),
-                    _buildStatItem(
-                      context,
-                      profileProvider.wishlistItems.toString(),
-                      'items',
-                      Icons.favorite_rounded,
-                      Colors.red,
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WishlistScreen(),
-                          ),
-                        );
-                      },
-                      colorScheme,
-                    ),
-                    _buildStatItem(
-                      context,
-                      profileProvider.reviewsGiven.toString(),
-                      'reviews',
-                      Icons.rate_review_rounded,
-                      Colors.orange,
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyReviewsScreen(),
-                          ),
-                        );
-                      },
-                      colorScheme,
-                    ),
-                    _buildStatItem(
-                      context,
-                      profileProvider.formattedLoyaltyPoints,
-                      'points',
-                      Icons.card_giftcard_rounded,
-                      Colors.purple,
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoyaltyPointsScreen(),
-                          ),
-                        );
-                      },
-                      colorScheme,
-                    ),
-                  ],
+                          boxShadow: AppShadows.cardShadow(context),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.workspace_premium,
+                              color: colorScheme.surface,
+                              size: AppSizes.iconXs,
+                            ),
+                            SizedBox(width: 6.w),
+                            Text(
+                              '${profileProvider.membershipTier} Member',
+                              style: textTheme.bodySmall?.copyWith(
+                                color: colorScheme.surface,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
-  Widget _buildDefaultAvatar(ColorScheme colorScheme) {
-    return Icon(
-      Icons.person_rounded,
-      size: AppSizes.iconXl,
-      color: colorScheme.onSurface,
-    );
-  }
-
-  Widget _buildStatItem(
-    BuildContext context,
-    String title,
-    String subtitle,
-    IconData icon,
-    Color color,
-    VoidCallback onTap,
-    ColorScheme colorScheme,
-  ) {
-    final textTheme = Theme.of(context).textTheme;
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Container(
-            width: 36.w,
-            height: 36.w,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Icon(icon, color: color, size: 18.r),
+  Widget _decorativeBlob(Color color, double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        // ignore: deprecated_member_use
+        color: color.withOpacity(0.15),
+        boxShadow: [
+          BoxShadow(
+            // ignore: deprecated_member_use
+            color: color.withOpacity(0.2),
+            blurRadius: 20.r,
+            spreadRadius: 5.r,
           ),
-          SizedBox(height: 6.h),
-          Text(title, style: textTheme.bodyMedium),
-          SizedBox(height: 1.h),
-          Text(subtitle, style: textTheme.bodySmall),
         ],
       ),
     );

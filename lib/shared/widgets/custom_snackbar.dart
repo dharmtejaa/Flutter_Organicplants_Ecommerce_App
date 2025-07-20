@@ -10,7 +10,7 @@ class CustomSnackBar {
     String? plantName,
     String? actionLabel,
     VoidCallback? onAction,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 2),
   }) {
     _showSnackBar(
       context,
@@ -30,7 +30,7 @@ class CustomSnackBar {
     String? plantName,
     String? actionLabel,
     VoidCallback? onAction,
-    Duration duration = const Duration(seconds: 4),
+    Duration duration = const Duration(seconds: 2),
   }) {
     _showSnackBar(
       context,
@@ -50,7 +50,7 @@ class CustomSnackBar {
     String? plantName,
     String? actionLabel,
     VoidCallback? onAction,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 2),
   }) {
     _showSnackBar(
       context,
@@ -70,7 +70,7 @@ class CustomSnackBar {
     String? plantName,
     String? actionLabel,
     VoidCallback? onAction,
-    Duration duration = const Duration(seconds: 4),
+    Duration duration = const Duration(seconds: 2),
   }) {
     _showSnackBar(
       context,

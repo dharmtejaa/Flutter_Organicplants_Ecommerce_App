@@ -107,6 +107,7 @@ class _SearchFieldState extends State<SearchField> {
                           separatorBuilder:
                               (_, __) => Divider(
                                 height: 1,
+                                // ignore: deprecated_member_use
                                 color: colorScheme.outline.withOpacity(0.08),
                               ),
                           itemBuilder: (context, idx) {

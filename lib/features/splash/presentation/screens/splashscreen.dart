@@ -1,99 +1,79 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_services.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 
-class Splashscreen extends StatefulWidget {
-  const Splashscreen({super.key});
+// Top-level ValueNotifier and timer for splash progress
+final ValueNotifier<double> splashProgress = ValueNotifier(0.0);
+bool _splashNavigated = false;
 
-  @override
-  State<Splashscreen> createState() => _SplashscreenState();
-}
-
-class _SplashscreenState extends State<Splashscreen> {
-  // Add ValueNotifier for state management
-  final ValueNotifier<bool> _isLoading = ValueNotifier(true);
-  final ValueNotifier<String> _loadingMessage = ValueNotifier(
-    'Loading plants...',
-  );
-  final ValueNotifier<double> _loadingProgress = ValueNotifier(0.0);
-
-  @override
-  void initState() {
-    super.initState();
-    _loadInitialData();
+Future<void> loadSplashInitialData(BuildContext context) async {
+  const totalSteps = 11;
+  int completedSteps = 0;
+  void updateProgress() {
+    completedSteps++;
+    splashProgress.value = completedSteps / totalSteps;
   }
 
-  Future<void> _loadInitialData() async {
-    try {
-      _loadingMessage.value = 'Loading plants...';
-      _loadingProgress.value = 0.1;
-
-      allPlantsGlobal = await PlantServices.loadAllPlantsApi();
-      _loadingProgress.value = 0.3;
-
-      _loadingMessage.value = 'Categorizing plants...';
-      indoorPlants = getPlantsByCategory('Indoor plant');
-      _loadingProgress.value = 0.4;
-
-      outdoorPlants = getPlantsByCategory('Outdoor plant');
-      _loadingProgress.value = 0.5;
-
-      medicinalPlants = getPlantsByCategory('Medicinal plant');
-      _loadingProgress.value = 0.6;
-
-      herbsPlants = getPlantsByCategory('Herbs plant');
-      _loadingProgress.value = 0.7;
-
-      floweringPlants = getPlantsByCategory('Flowering plant');
-      _loadingProgress.value = 0.8;
-
-      bonsaiPlants = getPlantsByCategory('Bonsai plant');
-      _loadingProgress.value = 0.85;
-
-      succulentsCactiPlants = getPlantsByCategory('Succulents & Cacti Plants');
-      _loadingProgress.value = 0.9;
-
-      petFriendlyPlants = getPlantsByTag('Pet_Friendly');
-      lowMaintenancePlants = getPlantsByTag('Low_Maintenance');
-      airPurifyingPlants = getPlantsByTag('Air_Purifying');
-      sunLovingPlants = getPlantsByTag('Sun_Loving');
-      _loadingProgress.value = 1.0;
-
-      _loadingMessage.value = 'Ready!';
-      await Future.delayed(const Duration(seconds: 1));
-
-      if (!mounted) return;
-
+  try {
+    allPlantsGlobal = await PlantServices.loadAllPlantsApi();
+    updateProgress();
+    indoorPlants = getPlantsByCategory('Indoor plant');
+    updateProgress();
+    outdoorPlants = getPlantsByCategory('Outdoor plant');
+    updateProgress();
+    medicinalPlants = getPlantsByCategory('Medicinal plant');
+    updateProgress();
+    herbsPlants = getPlantsByCategory('Herbs plant');
+    updateProgress();
+    floweringPlants = getPlantsByCategory('Flowering plant');
+    updateProgress();
+    bonsaiPlants = getPlantsByCategory('Bonsai plant');
+    updateProgress();
+    succulentsCactiPlants = getPlantsByCategory('Succulents & Cacti Plants');
+    updateProgress();
+    petFriendlyPlants = getPlantsByTag('Pet_Friendly');
+    updateProgress();
+    lowMaintenancePlants = getPlantsByTag('Low_Maintenance');
+    updateProgress();
+    airPurifyingPlants = getPlantsByTag('Air_Purifying');
+    updateProgress();
+    sunLovingPlants = getPlantsByTag('Sun_Loving');
+    updateProgress();
+    // Ensure progress is 100%
+    splashProgress.value = 1.0;
+    if (!_splashNavigated && context.mounted) {
+      _splashNavigated = true;
+      await Future.delayed(const Duration(milliseconds: 300));
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (_) => const EntryScreen()),
       );
-    } catch (e) {
-      debugPrint('Error loading data in Splashscreen: $e');
-      _loadingMessage.value = 'Error loading data. Please try again.';
-      _isLoading.value = false;
+    }
+  } catch (e) {
+    debugPrint('Error loading data in Splashscreen: $e');
+  }
+}
+
+class Splashscreen extends StatelessWidget {
+  const Splashscreen({super.key});
+
+  void _init(BuildContext context) {
+    if (splashProgress.value == 0.0) {
+      loadSplashInitialData(context);
     }
   }
 
   @override
-  void dispose() {
-    _isLoading.dispose();
-    _loadingMessage.dispose();
-    _loadingProgress.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _init(context);
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
         padding: AppSizes.marginSymmetricSm,
         child: Column(
@@ -103,55 +83,50 @@ class _SplashscreenState extends State<Splashscreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Lottie.asset(
-                    'assets/splash screen/earth_animation.json',
-                    height: AppSizes.splashLogoHeight,
-                    width: AppSizes.splashLogoWidth,
-                    repeat: false,
+                  Image.asset(
+                    'assets/app_logo.png',
+                    height: 200.h,
+                    width: 250.w,
+                    color: colorScheme.primary,
+                    colorBlendMode: BlendMode.srcIn,
                   ),
                   SizedBox(height: 20.h),
                   Text(
                     'ORGANIC\nPLANTS',
                     textAlign: TextAlign.center,
-                    style: textTheme.displaySmall?.copyWith(
+                    style: textTheme.headlineLarge?.copyWith(
                       letterSpacing: 5,
                       fontWeight: FontWeight.w600,
                       color: colorScheme.primary,
                     ),
                   ),
                   SizedBox(height: 30.h),
-                  // Add loading progress and message
-                  ValueListenableBuilder<String>(
-                    valueListenable: _loadingMessage,
-                    builder: (context, message, child) {
-                      return ValueListenableBuilder<double>(
-                        valueListenable: _loadingProgress,
-                        builder: (context, progress, child) {
-                          return Column(
-                            children: [
-                              Text(
-                                message,
-                                style: textTheme.bodyMedium?.copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
-                                textAlign: TextAlign.center,
+                  SizedBox(
+                    width: 170.w,
+                    child: ValueListenableBuilder<double>(
+                      valueListenable: splashProgress,
+                      builder: (context, value, child) {
+                        return TweenAnimationBuilder<double>(
+                          tween: Tween<double>(begin: 0.0, end: value),
+                          duration: const Duration(milliseconds: 350),
+                          curve: Curves.easeInOut,
+                          builder: (context, animatedValue, _) {
+                            return LinearProgressIndicator(
+                              minHeight: 6.h,
+                              borderRadius: BorderRadius.circular(10.r),
+                              value: animatedValue,
+                              backgroundColor:
+                                  colorScheme.surfaceContainerHighest,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                colorScheme.primary,
                               ),
-                              SizedBox(height: 10.h),
-                              LinearProgressIndicator(
-                                value: progress,
-                                backgroundColor:
-                                    colorScheme.surfaceContainerHighest,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  colorScheme.primary,
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
-                  SizedBox(height: 100.h),
+                  SizedBox(height: 150.h),
                 ],
               ),
             ),
@@ -159,7 +134,9 @@ class _SplashscreenState extends State<Splashscreen> {
               alignment: Alignment.bottomRight,
               child: Text(
                 "developed by: dharmtejaa",
-                style: textTheme.labelMedium,
+                style: textTheme.labelMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
               ),
             ),
           ],

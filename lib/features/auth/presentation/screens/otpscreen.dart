@@ -9,7 +9,7 @@ import 'package:organicplants/features/auth/presentation/screens/loginscreen.dar
 import 'package:organicplants/features/auth/presentation/widgets/terms_and_policy_text.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
-import 'package:organicplants/shared/widgets/skip_button.dart';
+import 'package:organicplants/shared/widgets/gesture_detector_button.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPscreen extends StatefulWidget {
@@ -127,7 +127,7 @@ class _OTPscreenState extends State<OTPscreen> {
           width: 60.w,
           height: 4.h,
           decoration: BoxDecoration(
-            color: colorScheme.onSurface,
+            color: colorScheme.onSurfaceVariant,
             borderRadius: BorderRadius.circular(AppSizes.radiusMd),
           ),
         ),
@@ -139,7 +139,7 @@ class _OTPscreenState extends State<OTPscreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
-          SkipButton(
+          GestureDetectorButton(
             onPressed:
                 () => Navigator.pushReplacement(
                   context,
@@ -182,7 +182,10 @@ class _OTPscreenState extends State<OTPscreen> {
                       children: [
                         TextSpan(
                           text: "Verification",
-                          style: textTheme.displayMedium,
+                          style: textTheme.displayMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: colorScheme.onSurface,
+                          ),
                         ),
                       ],
                     ),

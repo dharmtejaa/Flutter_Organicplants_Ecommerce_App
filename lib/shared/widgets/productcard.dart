@@ -11,6 +11,7 @@ import 'package:organicplants/shared/buttons/add_to_cart_button.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
+import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 
 class ProductCard extends StatelessWidget {
   final AllPlantsModel plant;
@@ -22,7 +23,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final isDark = colorScheme.brightness == Brightness.dark;
+    //final isDark = colorScheme.brightness == Brightness.dark;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final wishlistProvider = Provider.of<WishlistProvider>(
       context,
@@ -33,7 +34,7 @@ class ProductCard extends StatelessWidget {
       listen: false,
     );
     final cardWidth = 160.w; //AppSizes.homeProductCardWidth;
-    final imageHeight = cardWidth * 0.837; //AppSizes.productImageHeight;
+    final imageHeight = cardWidth * 0.83; //AppSizes.productImageHeight;
     final offerPrice = (plant.prices?.offerPrice ?? 0).toInt();
     final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
     final discountPercent =
@@ -52,20 +53,33 @@ class ProductCard extends StatelessWidget {
       },
 
       onDoubleTap: () {
-        wishlistProvider.toggleWishList(plant);
         final isNowWishlisted = wishlistProvider.isInWishlist(plant.id!);
-        CustomSnackBar.showSuccess(
-          context,
-          isNowWishlisted
-              ? '${plant.commonName} Added to wishlist!'
-              : '${plant.commonName} Removed from wishlist.',
-          plantName: plant.commonName,
-          actionLabel: isNowWishlisted ? 'Undo' : null,
-          onAction:
-              isNowWishlisted
-                  ? () => wishlistProvider.toggleWishList(plant)
-                  : null,
-        );
+        if (!isNowWishlisted) {
+          wishlistProvider.toggleWishList(plant);
+          CustomSnackBar.showSuccess(
+            context,
+            '${plant.commonName} added to wishlist',
+            actionLabel: 'View Wishlist',
+            onAction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishlistScreen()),
+              );
+            },
+          );
+        } else {
+          CustomSnackBar.showInfo(
+            context,
+            '${plant.commonName} already in wishlist',
+            actionLabel: 'View Wishlist',
+            onAction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishlistScreen()),
+              );
+            },
+          );
+        }
       },
       child: Container(
         width: cardWidth,
@@ -74,7 +88,7 @@ class ProductCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.inverseSurface,
           borderRadius: BorderRadius.circular(AppSizes.productCardRadius),
-          boxShadow: AppShadows.productCardShadow(context),
+          boxShadow: AppShadows.cardShadow(context),
         ),
         //padding: EdgeInsets.all(2),
         child: Stack(

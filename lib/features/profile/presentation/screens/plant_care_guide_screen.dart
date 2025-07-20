@@ -196,7 +196,6 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
   }
 
   Widget _buildCareGuideCard(Map<String, dynamic> guide) {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Card(
@@ -247,7 +246,6 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
   }
 
   Widget _buildQuickTipsSection() {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Card(
@@ -358,7 +356,6 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
   }
 
   Widget _buildEmergencyTip(String title, String solution, IconData icon) {
-    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(

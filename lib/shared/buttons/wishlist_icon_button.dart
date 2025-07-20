@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
+import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
@@ -28,18 +29,33 @@ class WishlistIconButton extends StatelessWidget {
 
         return GestureDetector(
           onTap: () {
-            value.toggleWishList(plant);
             final isNowWishlisted = value.isInWishlist(plant.id!);
-            CustomSnackBar.showSuccess(
-              context,
-              isNowWishlisted
-                  ? '${plant.commonName} Added to wishlist!'
-                  : '${plant.commonName} Removed from wishlist.',
-              plantName: plant.commonName,
-              actionLabel: isNowWishlisted ? 'Undo' : null,
-              onAction:
-                  isNowWishlisted ? () => value.toggleWishList(plant) : null,
-            );
+            if (!isNowWishlisted) {
+              value.toggleWishList(plant);
+              CustomSnackBar.showSuccess(
+                context,
+                '${plant.commonName} added to wishlist',
+                actionLabel: 'View Wishlist',
+                onAction: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WishlistScreen()),
+                  );
+                },
+              );
+            } else {
+              CustomSnackBar.showInfo(
+                context,
+                '${plant.commonName} already in wishlist',
+                actionLabel: 'View Wishlist',
+                onAction: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WishlistScreen()),
+                  );
+                },
+              );
+            }
           },
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),

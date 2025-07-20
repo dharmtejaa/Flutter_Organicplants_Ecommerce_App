@@ -79,6 +79,7 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                           colors: [
                             // ignore: deprecated_member_use
                             Colors.black.withOpacity(0.2),
+                            // ignore: deprecated_member_use
                             Colors.black.withOpacity(0.2),
                           ],
                           begin: Alignment.bottomLeft,

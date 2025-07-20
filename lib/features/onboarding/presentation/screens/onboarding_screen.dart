@@ -10,7 +10,7 @@ import 'package:organicplants/features/auth/presentation/screens/loginscreen.dar
 import 'package:organicplants/features/home/logic/onboarding_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:organicplants/shared/widgets/skip_button.dart';
+import 'package:organicplants/shared/widgets/gesture_detector_button.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               currentPage <
                       totalPages -
                           1 // Use totalPages here for clarity
-                  ? SkipButton(
+                  ? GestureDetectorButton(
                     textColor: AppTheme.primaryColor,
                     onPressed:
                         () => provider.skipToEnd(_controller, totalPages),
@@ -96,7 +96,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 child: Text(
                                   onboardingData[index]['description']!,
                                   textAlign: TextAlign.center,
-                                  style: textTheme.bodyMedium,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -119,7 +121,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 controller: _controller,
                                 count: totalPages, // Use totalPages here
                                 effect: ExpandingDotsEffect(
-                                  dotColor: colorScheme.outline,
+                                  dotColor: colorScheme.onSurfaceVariant,
                                   activeDotColor: colorScheme.primary,
                                   dotHeight: AppSizes.onboardingDotHeight,
                                   dotWidth: AppSizes.onboardingDotwidth,

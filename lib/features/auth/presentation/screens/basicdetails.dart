@@ -74,7 +74,13 @@ class _BasicdetailsState extends State<Basicdetails> {
                     text: "Basic ",
                     style: textTheme.displayLarge,
                     children: [
-                      TextSpan(text: "Detials", style: textTheme.displayMedium),
+                      TextSpan(
+                        text: "Detials",
+                        style: textTheme.displayMedium?.copyWith(
+                          color: colorScheme.onSurface,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -125,7 +131,13 @@ class _BasicdetailsState extends State<Basicdetails> {
                           prefixIcon: Icons.calendar_month,
                         ),
                         SizedBox(height: 10.h),
-                        Text("Select Gender", style: textTheme.titleLarge),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Select Gender",
+                            style: textTheme.titleLarge,
+                          ),
+                        ),
                         ValueListenableBuilder<Gender?>(
                           valueListenable: selectedGender,
                           builder: (context, value, _) {
@@ -147,10 +159,9 @@ class _BasicdetailsState extends State<Basicdetails> {
                                         ),
                                         Text(
                                           gender.label,
-                                          style:
-                                              Theme.of(
-                                                context,
-                                              ).textTheme.titleLarge,
+                                          style: textTheme.bodyLarge?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ],
                                     );

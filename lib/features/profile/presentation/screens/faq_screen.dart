@@ -219,7 +219,8 @@ class _FAQScreenState extends State<FAQScreen> {
       builder: (context, selectedCategory, _) {
         final isSelected = selectedCategory == category;
         return FilterChip(
-          label: Text(category, style: textTheme.bodyLarge),
+          label: Text(category, style: textTheme.bodyMedium),
+
           selected: isSelected,
           onSelected: (selected) {
             _selectedCategory.value = category;
@@ -228,6 +229,7 @@ class _FAQScreenState extends State<FAQScreen> {
           backgroundColor: colorScheme.surface,
           selectedColor: colorScheme.primary,
           checkmarkColor: colorScheme.onPrimary,
+          
           side: BorderSide(color: colorScheme.surface),
         );
       },
@@ -305,7 +307,12 @@ class _FAQScreenState extends State<FAQScreen> {
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.w),
-            child: Text(faq['answer'], style: textTheme.bodyMedium),
+            child: Text(
+              faq['answer'],
+              style: textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ),
         ],
       ),

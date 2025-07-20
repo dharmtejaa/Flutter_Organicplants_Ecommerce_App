@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
@@ -460,14 +462,14 @@ class _ReturnsRefundsScreenState extends State<ReturnsRefundsScreen> {
   }
 
   void _requestReturn() {
-    // TODO: Navigate to request return screen
+   
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Request return feature coming soon!')),
     );
   }
 
   void _viewReturnDetails(Map<String, dynamic> returnItem) {
-    // TODO: Navigate to return details screen
+    
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('Viewing return details...')));

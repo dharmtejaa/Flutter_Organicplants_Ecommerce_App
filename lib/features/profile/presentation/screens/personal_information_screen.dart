@@ -6,7 +6,7 @@ import 'package:organicplants/core/theme/light_theme_colors.dart';
 import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
-import 'package:organicplants/shared/widgets/skip_button.dart';
+import 'package:organicplants/shared/widgets/gesture_detector_button.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
   const PersonalInformationScreen({super.key});
@@ -55,7 +55,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          SkipButton(
+          GestureDetectorButton(
             onPressed: _saveChanges,
             text: "Save",
             textColor: colorScheme.primary,
@@ -249,7 +249,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   void _changeProfilePicture() {
-    // TODO: Implement profile picture change
+   
     CustomSnackBar.showInfo(
       context,
       "Profile picture change feature coming soon!",
@@ -259,8 +259,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
-      // TODO: Save changes to backend
-      CustomSnackBar.showSuccess(
+    CustomSnackBar.showSuccess(
         context,
         "Changes saved successfully!",
         duration: Duration(seconds: 2),
@@ -276,7 +275,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
       content:
           'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.',
       onDelete: () {
-        // TODO: Implement account deletion
+       
         CustomSnackBar.showInfo(
           context,
           "Account deletion feature coming soon!",

@@ -91,8 +91,8 @@ class AppTheme {
     // Enhanced Card Theme
     cardTheme: CardThemeData(
       color: LightThemeColors.softWhite,
-      elevation: 2,
-      shadowColor: LightThemeColors.shadowLight,
+      elevation: 1,
+      //shadowColor: LightThemeColors.shadowLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
       ),
@@ -302,6 +302,7 @@ class AppTheme {
       onPrimaryContainer: DarkThemeColors.pureWhite,
       primaryFixed: DarkThemeColors.pureWhite,
       secondary: DarkThemeColors.secondaryOrange,
+      // ignore: deprecated_member_use
       secondaryContainer: DarkThemeColors.secondaryOrange.withOpacity(0.1),
 
       surface: DarkThemeColors.mediumCharcoal,
@@ -346,8 +347,8 @@ class AppTheme {
     // Enhanced Card Theme
     cardTheme: CardThemeData(
       color: DarkThemeColors.mediumCharcoal,
-      elevation: 2,
-      shadowColor: DarkThemeColors.shadowLight,
+      elevation: 1,
+      //shadowColor: DarkThemeColors.shadowLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSizes.radiusLg),
       ),
@@ -533,6 +534,7 @@ class AppTheme {
       textColor: DarkThemeColors.lightGray,
       collapsedTextColor: DarkThemeColors.lightGray,
     ),
+    // ignore: deprecated_member_use
     dividerColor: DarkThemeColors.mutedGray.withOpacity(0.5),
   );
 }

@@ -268,7 +268,7 @@ class _PlantCategoryState extends State<PlantCategory> {
         crossAxisCount: 2,
         crossAxisSpacing: 7,
         mainAxisSpacing: 7,
-        childAspectRatio: 0.735,
+        childAspectRatio: 0.73,
       ),
 
       shrinkWrap: true,

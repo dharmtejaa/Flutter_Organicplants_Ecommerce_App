@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
+import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
@@ -27,18 +28,26 @@ class AddToCartButton extends StatelessWidget {
           CustomSnackBar.showSuccess(
             context,
             '${plant.commonName} has been added to the cart!',
-            plantName: plant.commonName,
-            actionLabel: 'Undo',
+            actionLabel: 'View in Cart',
             onAction: () {
-              cartProvider.removeFromCart(plant.id!);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
             },
           );
         } else {
           CustomSnackBar.showInfo(
             context,
             '${plant.commonName} is already in the cart!',
-            plantName: plant.commonName,
+
             actionLabel: 'View Cart',
+            onAction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
           );
         }
       },

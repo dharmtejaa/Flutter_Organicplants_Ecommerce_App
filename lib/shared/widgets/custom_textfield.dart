@@ -92,7 +92,7 @@ class CustomTextField extends StatelessWidget {
             controller: controller,
             obscureText: isObscure,
             keyboardType: keyboardType,
-            style: textTheme.bodyLarge,
+            style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
             validator: _validateInput,
             //readOnly: readOnly ?? false,
             maxLength: maxLength ?? 50,
@@ -102,7 +102,9 @@ class CustomTextField extends StatelessWidget {
               hintText: hintText,
               counterText: '',
               hintStyle: textTheme.bodyLarge?.copyWith(
+                // ignore: deprecated_member_use
                 color: colorScheme.onSurface.withOpacity(0.6),
+                fontWeight: FontWeight.w500,
               ),
               contentPadding: EdgeInsets.all(AppSizes.paddingMd),
               prefixIcon:
@@ -126,8 +128,8 @@ class CustomTextField extends StatelessWidget {
               fillColor:
                   (fillColor ??
                       (colorScheme.brightness == Brightness.dark
-                          ? DarkThemeColors.darkCharcoal
-                          : LightThemeColors.pureWhite)),
+                          ? DarkThemeColors.richBlack
+                          : LightThemeColors.mediumGray)),
 
               suffixIconColor: colorScheme.onSurface,
               prefixIconColor: colorScheme.onSurface,
