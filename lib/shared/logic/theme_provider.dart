@@ -48,16 +48,12 @@ class ThemeProvider with ChangeNotifier {
     final String? storedMode = prefs.getString(_themeModeKey);
 
     if (storedMode != null) {
-      // Convert string back to ThemeMode enum
       _themeMode = ThemeMode.values.firstWhere(
         (e) => e.toString().split('.').last == storedMode,
-        orElse: () => ThemeMode.system, // Fallback if string is invalid
+        orElse: () => ThemeMode.system,
       );
     }
-    // No need to notifyListeners here as this is called during app initialization
-    // and MaterialApp's themeMode will pick it up on the first build.
-    // If you experience a flicker, uncomment notifyListeners().
-    // notifyListeners();
+    notifyListeners(); // Ensure UI updates after loading
   }
 
   Future<void> _saveThemeMode(ThemeMode mode) async {

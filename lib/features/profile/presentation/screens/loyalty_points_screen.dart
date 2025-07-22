@@ -22,7 +22,7 @@ class LoyaltyPointsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Loyalty Points', style: textTheme.headlineMedium),
-        centerTitle: true,
+       
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

@@ -24,19 +24,8 @@ class WishlistScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-
-            color: colorScheme.onSurface,
-            size: AppSizes.iconMd,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
         title: Text("My WishList", style: textTheme.headlineMedium),
-        centerTitle: true,
+
         actions: [
           SearchButton(),
           SizedBox(width: 8.w),
@@ -59,7 +48,8 @@ class WishlistScreen extends StatelessWidget {
                 child: NoResultsFound(
                   title: "Your Wishlist is empty",
                   message: "Add some plants to get started!",
-                  imagePath: "assets/No_Plant_Found.png",
+                  imagePath:
+                      "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png",
                 ),
               )
               : ListView.builder(

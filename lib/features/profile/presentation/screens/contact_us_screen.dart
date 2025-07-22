@@ -40,7 +40,7 @@ class _ContactUsContentState extends State<_ContactUsContent> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Contact Us', style: textTheme.headlineMedium),
-        centerTitle: true,
+        
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

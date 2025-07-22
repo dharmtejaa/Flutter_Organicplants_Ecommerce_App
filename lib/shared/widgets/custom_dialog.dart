@@ -129,6 +129,7 @@ class CustomDialog {
   // Convenience method for delete confirmations
   static Future<bool?> showDeleteConfirmation({
     required BuildContext context,
+    String? confirmText,
     required String title,
     required String content,
     String? itemName,
@@ -138,7 +139,7 @@ class CustomDialog {
       context: context,
       title: title,
       content: content,
-      confirmText: 'Delete',
+      confirmText: confirmText ?? 'Delete',
       cancelText: 'Cancel',
       isDestructive: true,
       icon: Icons.delete_outline_rounded,

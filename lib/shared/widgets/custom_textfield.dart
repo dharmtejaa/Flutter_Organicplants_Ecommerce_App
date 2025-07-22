@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? confirmPasswordController;
   final VoidCallback? onTap;
   final Color? fillColor;
+  final EdgeInsets? contentPadding;
   final int? maxLines;
   final int? maxLength;
   final double? width;
@@ -33,6 +34,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.width,
     this.fillColor,
+    this.contentPadding,
     required this.controller,
     this.confirmPasswordController,
     this.isObscureNotifier, // 👈 pass this for obscure toggle
@@ -101,12 +103,14 @@ class CustomTextField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               counterText: '',
+
               hintStyle: textTheme.bodyLarge?.copyWith(
                 // ignore: deprecated_member_use
                 color: colorScheme.onSurface.withOpacity(0.6),
                 fontWeight: FontWeight.w500,
               ),
-              contentPadding: EdgeInsets.all(AppSizes.paddingMd),
+              contentPadding:
+                  contentPadding ?? EdgeInsets.all(AppSizes.paddingMd),
               prefixIcon:
                   prefixIcon != null
                       ? Icon(prefixIcon, size: AppSizes.iconSm)

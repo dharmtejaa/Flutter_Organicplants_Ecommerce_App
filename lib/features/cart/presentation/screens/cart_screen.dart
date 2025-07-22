@@ -25,21 +25,9 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => EntryScreen()),
-            );
-          },
-          icon: Icon(
-            Icons.arrow_back_sharp,
-            color: colorScheme.onSurface,
-            size: AppSizes.iconMd,
-          ),
-        ),
+        //automaticallyImplyLeading: false,
         title: Text("My cart", style: textTheme.headlineMedium),
-        centerTitle: true,
+
         actions: [
           SearchButton(),
           SizedBox(width: 10.w),
@@ -53,7 +41,8 @@ class CartScreen extends StatelessWidget {
           return cartItems.isEmpty
               ? Center(
                 child: NoResultsFound(
-                  imagePath: "assets/No_Plant_Found.png",
+                  imagePath:
+                      "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png",
                   title: "Your cart is empty",
                   message: "Add some plants to get started!",
                 ),

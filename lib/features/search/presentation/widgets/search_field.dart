@@ -119,7 +119,7 @@ class _SearchFieldState extends State<SearchField> {
                               onTap: () {
                                 HapticFeedback.lightImpact();
                                 _removeOverlay();
-                                FocusScope.of(context).unfocus();
+
                                 widget.searchController.text =
                                     plant.commonName ?? '';
                                 searchProvider.addRecentSearchHistory(
@@ -157,15 +157,15 @@ class _SearchFieldState extends State<SearchField> {
                                                       context,
                                                       error,
                                                       stackTrace,
-                                                    ) => Image.asset(
-                                                      'assets/No_Plant_Found.png',
+                                                    ) => Image.network(
+                                                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
                                                       width: 38.w,
                                                       height: 38.w,
                                                       fit: BoxFit.cover,
                                                     ),
                                               )
-                                              : Image.asset(
-                                                'assets/No_Plant_Found.png',
+                                              : Image.network(
+                                                'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
                                                 width: 38.w,
                                                 height: 38.w,
                                                 fit: BoxFit.cover,
@@ -219,7 +219,6 @@ class _SearchFieldState extends State<SearchField> {
                 cursorColor: colorScheme.onSurface,
                 onChanged: searchProvider.updateSearchText,
                 onFieldSubmitted: (query) async {
-                  FocusScope.of(context).unfocus();
                   final trimmedQuery = query.trim();
                   if (trimmedQuery.isEmpty) {
                     CustomSnackBar.showError(

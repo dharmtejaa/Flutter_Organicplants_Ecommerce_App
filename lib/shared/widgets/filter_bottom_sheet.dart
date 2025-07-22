@@ -196,7 +196,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     return AnimatedPadding(
       duration: Duration(milliseconds: 250),
       curve: Curves.easeOut,
-      padding: MediaQuery.of(context).viewInsets,
+      padding: AppSizes.paddingAllXs,
       child: Container(
         constraints: BoxConstraints(maxHeight: 0.85.sh),
         decoration: BoxDecoration(
@@ -527,8 +527,18 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('₹${_minPrice.toInt()}', style: textTheme.bodySmall),
-              Text('₹${_maxPrice.toInt()}', style: textTheme.bodySmall),
+              Text(
+                '₹${_minPrice.toInt()}',
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              Text(
+                '₹${_maxPrice.toInt()}',
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ],

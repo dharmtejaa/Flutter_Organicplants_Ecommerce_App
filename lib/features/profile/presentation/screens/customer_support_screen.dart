@@ -80,7 +80,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Customer Support", style: textTheme.headlineMedium),
-        centerTitle: true,
+       
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

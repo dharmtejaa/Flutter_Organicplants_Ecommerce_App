@@ -17,7 +17,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("About Organic Plants", style: textTheme.headlineMedium),
-        centerTitle: true,
+
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -67,8 +67,8 @@ class AboutScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     padding: EdgeInsets.all(10.w),
-                    child: Image.asset(
-                      'assets/app_logo.png',
+                    child: Image.network(
+                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080823/app_logo_lxl2fw.png',
                       height: 48.h,
                       width: 48.h,
                       color: colorScheme.onSurface,

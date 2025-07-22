@@ -29,7 +29,6 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    //final height = MediaQuery.of(context).size.height;
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -72,7 +71,7 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.asset(banner['imagePath']!, fit: BoxFit.fill),
+                    Image.network(banner['imagePath']!, fit: BoxFit.fill),
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(

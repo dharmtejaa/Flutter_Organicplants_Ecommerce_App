@@ -30,7 +30,7 @@ class _RateAppScreenState extends State<RateAppScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Rate Our App', style: textTheme.headlineMedium),
-        centerTitle: true,
+        
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

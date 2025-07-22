@@ -64,9 +64,9 @@ class MyApp extends StatelessWidget {
           builder: (context, widget) {
             // 👇 Overrides global system font scaling
             return MediaQuery(
-              data: MediaQuery.of(
-                context,
-              ).copyWith(textScaler: TextScaler.linear(1.0)),
+              data: MediaQuery.of(context).copyWith(
+                textScaler: TextScaler.linear(1.0),
+              ),
               child: widget!,
             );
           },

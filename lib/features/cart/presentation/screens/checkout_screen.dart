@@ -84,8 +84,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Checkout', style: textTheme.headlineMedium),
-        centerTitle: true,
-
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -366,10 +364,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Lottie.asset(
+                    Lottie.network(
                       //width: 320.w,
                       height: 220.h,
-                      'assets/payment_success/successful.json', // Use your confetti/sprinkle animation here
+                      'https://res.cloudinary.com/daqvdhmw8/raw/upload/v1753080800/successful_toc6py.json', // Use your confetti/sprinkle animation here
                       repeat: false,
                     ),
                     //SizedBox(height: 16),

@@ -54,7 +54,7 @@ class _AddEditAddressScreenState extends State<AddEditAddressScreen> {
           widget.initialData == null ? 'Add Address' : 'Edit Address',
           style: textTheme.headlineSmall,
         ),
-        centerTitle: true,
+        
       ),
       body: Padding(
         padding: EdgeInsets.all(20.w),

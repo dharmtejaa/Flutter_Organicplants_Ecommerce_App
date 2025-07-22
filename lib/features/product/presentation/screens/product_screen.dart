@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_bottom_bar.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_care_guide_section.dart';
@@ -8,9 +7,10 @@ import 'package:organicplants/features/product/presentation/widgets/product_desc
 import 'package:organicplants/features/product/presentation/widgets/product_features_section.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_header_info.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_image_gallery.dart';
-import 'package:organicplants/features/profile/presentation/screens/share_app_screen.dart';
+import 'package:organicplants/features/product/presentation/widgets/product_suggestions_section.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
+import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -28,28 +28,13 @@ class ProductScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: colorScheme.surface,
         title: Text(
           plants.commonName ?? "empty",
           style: textTheme.headlineMedium,
         ),
         actions: [
-          GestureDetector(
-            child: Icon(
-              Icons.share,
-              color: colorScheme.onSurface,
-              size: AppSizes.iconMd,
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ShareAppScreen()),
-              );
-            },
-          ),
-          SizedBox(width: 10.w),
-          WishlistIconWithBadge(),
+          SearchButton(),
           SizedBox(width: 10.w),
           CartIconWithBadge(
             onPressed: () {
@@ -78,23 +63,25 @@ class ProductScreen extends StatelessWidget {
                 // Product Features Section
                 ProductFeaturesSection(searchController: searchController),
                 SizedBox(height: 12.h),
-                // divider
                 Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
                 // Product Description Section
                 ProductDescriptionSection(plants: plants),
                 SizedBox(height: 12.h),
-                // divider
                 Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
                 // Product Care Guide Section
                 ProductCareGuideSection(plants: plants),
-                // Move reviews section to the bottom
+                // Reviews section
                 SizedBox(height: 12.h),
-                // divider
                 Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
                 _DefaultReviewsSection(),
+                // Product Suggestions Section
+                SizedBox(height: 12.h),
+                Divider(thickness: 6.h),
+                SizedBox(height: 12.h),
+                ProductSuggestionsSection(currentPlant: plants),
               ],
             ),
           ),

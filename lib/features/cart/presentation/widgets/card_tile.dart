@@ -67,7 +67,6 @@ class CardTile extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 15.w),
-
                 // Text Section
                 Expanded(
                   child: Column(
@@ -84,7 +83,6 @@ class CardTile extends StatelessWidget {
                       //   scifiname == true
                       //       ? plant.scientificName ?? 'Unknown Scientific Name'
                       //       : plant.category ?? 'Unknown Category',
-
                       //   overflow: TextOverflow.ellipsis,
                       //   style: textTheme.bodyMedium,
                       // ),
@@ -109,6 +107,24 @@ class CardTile extends StatelessWidget {
                       ),
                       if (offerPrice < originalPrice)
                         Text('$discount% off', style: textTheme.bodySmall),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 16.r,
+                            color: colorScheme.primary,
+                          ),
+                          SizedBox(width: 2.w),
+                          Text(
+                            plant.rating?.toStringAsFixed(1) ?? '0.0',
+                            style: textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onSurface,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

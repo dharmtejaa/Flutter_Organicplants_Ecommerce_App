@@ -72,7 +72,7 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        centerTitle: true,
+        
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),

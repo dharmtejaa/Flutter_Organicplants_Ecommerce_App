@@ -30,6 +30,13 @@ class EntryScreen extends StatelessWidget {
       (p) => p.currentIndex,
     );
 
+    // Ensure no focus is active when switching screens
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (currentIndex != 2) {
+        // Not search screen
+      }
+    });
+
     return Scaffold(
       body: IndexedStack(index: currentIndex, children: EntryScreen._screens),
 

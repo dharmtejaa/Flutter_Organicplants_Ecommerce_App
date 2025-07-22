@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/home/presentation/widgets/auto_banner_with_notifier.dart';
 import 'package:organicplants/features/home/presentation/widgets/search_by_category.dart';
+import 'package:organicplants/features/profile/presentation/screens/notification_screen.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
@@ -30,8 +32,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    // double height = MediaQuery.of(context).size.height;
-    //double width = MediaQuery.of(context).size.width;
+
+    // Ensure no focus is active when home screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
 
     return Scaffold(
       appBar: AppBar(
@@ -41,14 +44,14 @@ class HomeScreen extends StatelessWidget {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/app_logo.png',
-                  height: 42.h,
-                  width: 42.w,
+                Image.network(
+                  'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
+                  height: 53.h,
+                  width: 53.w,
                   color: colorScheme.primary,
                   colorBlendMode: BlendMode.srcIn,
                 ),
-                SizedBox(width: 5.w),
+                //SizedBox(width: 5.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -70,20 +73,22 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         actions: [
-          SearchButton(),
-          SizedBox(width: 10.w),
-          WishlistIconWithBadge(),
-          SizedBox(width: 10.w),
-          CartIconWithBadge(
-            iconColor: colorScheme.onSurface,
+          //SearchButton(),
+          //SizedBox(width: 10.w),
+          IconButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CartScreen()),
+                MaterialPageRoute(builder: (context) => NotificationScreen()),
               );
             },
+            icon: Icon(
+              Icons.notifications_none_rounded,
+              size: AppSizes.iconMd,
+              color: colorScheme.onSurface,
+            ),
           ),
-          SizedBox(width: 10.w),
+          //SizedBox(width: 10.w),
         ],
       ),
 

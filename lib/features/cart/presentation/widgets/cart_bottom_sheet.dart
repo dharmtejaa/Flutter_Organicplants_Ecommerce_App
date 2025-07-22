@@ -36,8 +36,8 @@ class CartBottomSheet extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor ?? colorScheme.surface,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(AppSizes.radiusLg),
-          topRight: Radius.circular(AppSizes.radiusLg),
+          topLeft: Radius.circular(AppSizes.radiusXxxl),
+          topRight: Radius.circular(AppSizes.radiusXxxl),
         ),
       ),
       child: Column(
@@ -57,7 +57,13 @@ class CartBottomSheet extends StatelessWidget {
             radius: BorderRadius.circular(AppSizes.radiusLg),
             color: colorScheme.outline,
           ),
-          _summaryRow(context, "Final Price", finalPrice, isBold: true),
+          _summaryRow(
+            context,
+            "Final Price",
+            finalPrice,
+            isBold: true,
+            colorOverride: colorScheme.primary,
+          ),
           SizedBox(height: 12.h),
           CustomButton(
             ontap:

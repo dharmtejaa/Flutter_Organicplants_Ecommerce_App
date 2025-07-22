@@ -18,13 +18,11 @@ class NoResultsFound extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     // ignore: non_constant_identifier_names
     final colorScheme = Theme.of(context).colorScheme;
-    // double height = MediaQuery.of(context).size.height;
-    //double width = MediaQuery.of(context).size.width;
     return Column(
       //mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(height: 0.15.sh),
-        Image.asset(
+        Image.network(
           imagePath,
           height: 0.33.sh,
           errorBuilder:

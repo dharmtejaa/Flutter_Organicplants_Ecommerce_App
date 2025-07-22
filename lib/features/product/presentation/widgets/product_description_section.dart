@@ -22,7 +22,9 @@ class ProductDescriptionSection extends StatelessWidget {
             padding: AppSizes.paddingAllSm,
             child: Text(
               plants.description?.intro ?? '',
-              style: textTheme.bodyMedium,
+              style: textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
               maxLines: 5,
             ),
           ),
@@ -90,7 +92,9 @@ class PlantDetails extends StatelessWidget {
                 child: Text(
                   value,
                   textAlign: TextAlign.start,
-                  style: textTheme.bodyMedium,
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -36,18 +36,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Notifications", style: textTheme.headlineMedium),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: colorScheme.onSurface,
-            size: AppSizes.iconMd,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
         actions: [
           GestureDetectorButton(
-            onPressed: _savePreferences,
+            onPressed: () {
+              Navigator.pop(context);
+            },
             text: "Save",
             textColor: colorScheme.primary,
           ),
@@ -64,35 +57,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   (context, provider, child) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildSectionHeader(
-                        "General Notifications",
-                        Icons.notifications_outlined,
-                      ),
-                      SizedBox(height: 12.h),
-
-                      // Remove or comment out legacy/provider-based notification toggles that use bool
-                      // _buildNotificationTile(
-                      //   "Push Notifications",
-                      //   "Receive push notifications",
-                      //   Icons.notifications_active,
-                      //   provider.pushNotifications,
-                      //   provider.togglePushNotifications,
-                      // ),
-                      // _buildNotificationTile(
-                      //   "Email Notifications",
-                      //   "Receive email notifications",
-                      //   Icons.email_outlined,
-                      //   provider.emailNotifications,
-                      //   provider.toggleEmailNotifications,
-                      // ),
-                      // _buildNotificationTile(
-                      //   "SMS Notifications",
-                      //   "Receive SMS notifications",
-                      //   Icons.sms_outlined,
-                      //   provider.smsNotifications,
-                      //   provider.toggleSmsNotifications,
-                      // ),
-                      SizedBox(height: 24.h),
+                      //SizedBox(height: 24.h),
                       _buildSectionHeader(
                         "Order & Shopping",
                         Icons.shopping_bag_outlined,
@@ -154,79 +119,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       ),
                     ],
                   ),
-            ),
-
-            SizedBox(height: 24.h),
-
-            // Order & Shopping
-            _buildSectionHeader(
-              "Order & Shopping",
-              Icons.shopping_bag_outlined,
-            ),
-            SizedBox(height: 12.h),
-
-            _buildNotificationTile(
-              "Order Updates",
-              "Get notified about order status changes",
-              Icons.local_shipping_outlined,
-              _orderUpdates,
-            ),
-
-            _buildNotificationTile(
-              "Delivery Reminders",
-              "Reminders about upcoming deliveries",
-              Icons.delivery_dining_outlined,
-              _deliveryReminders,
-            ),
-
-            _buildNotificationTile(
-              "Price Drops",
-              "Get notified when items in your wishlist go on sale",
-              Icons.trending_down_outlined,
-              _priceDrops,
-            ),
-
-            SizedBox(height: 24.h),
-
-            // Content & Updates
-            _buildSectionHeader(
-              "Content & Updates",
-              Icons.content_copy_outlined,
-            ),
-            SizedBox(height: 12.h),
-
-            _buildNotificationTile(
-              "New Products",
-              "Be the first to know about new plant arrivals",
-              Icons.new_releases_outlined,
-              _newProducts,
-            ),
-
-            _buildNotificationTile(
-              "Plant Care Tips",
-              "Weekly tips for better plant care",
-              Icons.eco_outlined,
-              _plantCareTips,
-            ),
-
-            _buildNotificationTile(
-              "App Updates",
-              "Important app updates and maintenance",
-              Icons.system_update_outlined,
-              _appUpdates,
-            ),
-
-            SizedBox(height: 24.h),
-
-            // Promotional
-            _buildSectionHeader("Promotional", Icons.local_offer_outlined),
-            SizedBox(height: 12.h),
-
-            _buildNotificationTile(
-              "Promotional Offers",
-              "Special discounts and promotional offers",
-              Icons.discount_outlined,
-              _promotionalOffers,
             ),
 
             SizedBox(height: 24.h),

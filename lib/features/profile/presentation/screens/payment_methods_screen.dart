@@ -60,7 +60,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Payment Methods", style: textTheme.headlineSmall),
-        centerTitle: true,
+        
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),

@@ -69,19 +69,18 @@ class ProductBottomBar extends StatelessWidget {
               icon: Icons.shopping_cart_outlined,
               textColor: colorScheme.onPrimary,
               text: cartProvider.isInCart(plants.id) ? 'In Cart' : 'Add',
-              height: 45.h,
+              height: 50.h,
               width: 100.w,
             ),
           ),
           SizedBox(width: 10.w),
           Expanded(
             child: CustomButton(
-            
               backgroundColor: AppTheme.secondaryColor,
               icon: Icons.flash_on_rounded,
               textColor: colorScheme.onPrimary,
               text: 'Buy Now',
-              height: 45.h,
+              height: 50.h,
               width: 100.w,
               ontap: () {
                 Navigator.push(

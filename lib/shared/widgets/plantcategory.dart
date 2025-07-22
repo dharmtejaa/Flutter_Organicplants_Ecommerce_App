@@ -158,32 +158,12 @@ class _PlantCategoryState extends State<PlantCategory> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          iconSize: AppSizes.iconMd,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: colorScheme.onSurface,
-        ),
         title: Text(widget.category, style: textTheme.headlineMedium),
-        centerTitle: true,
+
         actions: [
           SearchButton(),
           SizedBox(width: 10.w),
-          InkWell(
-            onTap: _showFilterBottomSheet,
-            borderRadius: BorderRadius.circular(24),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Icon(
-                Icons.filter_list,
-                color: colorScheme.onSurface,
-                size: AppSizes.iconMd,
-              ),
-            ),
-          ),
-          SizedBox(width: 10.w),
+
           WishlistIconWithBadge(),
           SizedBox(width: 10.w),
           CartIconWithBadge(
@@ -245,6 +225,24 @@ class _PlantCategoryState extends State<PlantCategory> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: "filter_button",
+        backgroundColor: colorScheme.primary,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusXxxl),
+        ),
+
+        enableFeedback: true,
+        onPressed: () {
+          _showFilterBottomSheet();
+        },
+        child: Icon(
+          Icons.filter_list_alt,
+          size: AppSizes.iconLg,
+          color: colorScheme.onPrimary,
+        ),
+      ),
     );
   }
 
@@ -253,7 +251,8 @@ class _PlantCategoryState extends State<PlantCategory> {
       child: NoResultsFound(
         title: "No plants found",
         message: "Try adjusting your fiters or Search.",
-        imagePath: "assets/No_Plant_Found.png",
+        imagePath:
+            "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png",
       ),
     );
   }

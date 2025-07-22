@@ -84,7 +84,6 @@ class _BasicdetailsState extends State<Basicdetails> {
                     ],
                   ),
                 ),
-                //Image.asset('assets/stree.png', width: 0.4.sw, height: 0.2.sh),
               ],
             ),
           ),

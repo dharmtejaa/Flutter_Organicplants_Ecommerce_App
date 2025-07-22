@@ -78,6 +78,7 @@ class _LoginscreenState extends State<Loginscreen> {
         codeSent: (String verificationId, int? resendToken) {
           _isLoading.value = false;
           CustomSnackBar.showSuccess(context, 'OTP sent successfully');
+
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -121,11 +122,12 @@ class _LoginscreenState extends State<Loginscreen> {
               padding: EdgeInsets.only(right: AppSizes.paddingSm),
               child: GestureDetectorButton(
                 textColor: AppTheme.primaryColor,
-                onPressed:
-                    () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EntryScreen()),
-                    ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EntryScreen()),
+                  );
+                },
               ),
             ),
           ],
@@ -156,8 +158,8 @@ class _LoginscreenState extends State<Loginscreen> {
                       ],
                     ),
                   ),
-                  Image.asset(
-                    'assets/ltree.png',
+                  Image.network(
+                    'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080572/ltree_hyjza1.png',
                     width: 0.3.sw,
                     height: 0.2.sh,
                   ),

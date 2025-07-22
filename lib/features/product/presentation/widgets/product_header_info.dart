@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/features/profile/presentation/screens/share_app_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 
 class ProductHeaderInfo extends StatelessWidget {
@@ -28,15 +29,30 @@ class ProductHeaderInfo extends StatelessWidget {
           Row(
             children: [
               Text(plants.commonName ?? '', style: textTheme.displaySmall),
-              SizedBox(width: 15.w),
-              Text(
-                '(${plants.scientificName})',
-                style: textTheme.titleLarge?.copyWith(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w500,
+              SizedBox(width: 16.w),
+              Expanded(
+                child: Text(
+                  '(${plants.scientificName})',
+                  style: textTheme.titleLarge?.copyWith(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
                 ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+              ),
+              GestureDetector(
+                child: Icon(
+                  Icons.share_outlined,
+                  color: colorScheme.onSurface,
+                  size: AppSizes.iconMd,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ShareAppScreen()),
+                  );
+                },
               ),
             ],
           ),

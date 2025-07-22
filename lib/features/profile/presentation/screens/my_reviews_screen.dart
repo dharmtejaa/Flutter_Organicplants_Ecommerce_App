@@ -28,7 +28,7 @@ class MyReviewsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Reviews', style: textTheme.headlineMedium),
-        centerTitle: true,
+       
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

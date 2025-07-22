@@ -6,10 +6,8 @@ import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
-import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:organicplants/shared/buttons/add_to_cart_button.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
-import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class SimplePlantCard extends StatelessWidget {
@@ -47,33 +45,7 @@ class SimplePlantCard extends StatelessWidget {
         );
       },
       onDoubleTap: () {
-        final isNowWishlisted = wishlistProvider.isInWishlist(plant.id!);
-        if (!isNowWishlisted) {
-          wishlistProvider.toggleWishList(plant);
-          CustomSnackBar.showSuccess(
-            context,
-            '${plant.commonName} added to wishlist',
-            actionLabel: 'View Wishlist',
-            onAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WishlistScreen()),
-              );
-            },
-          );
-        } else {
-          CustomSnackBar.showInfo(
-            context,
-            '${plant.commonName} already in wishlist',
-            actionLabel: 'View Wishlist',
-            onAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WishlistScreen()),
-              );
-            },
-          );
-        }
+        wishlistProvider.toggleWishList(plant);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -129,14 +101,14 @@ class SimplePlantCard extends StatelessWidget {
                                         error,
                                         stackTrace,
                                       ) {
-                                        return Image.asset(
-                                          'assets/No_Plant_Found.png',
+                                        return Image.network(
+                                          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
                                           fit: BoxFit.cover,
                                         );
                                       },
                                     )
-                                    : Image.asset(
-                                      'assets/No_Plant_Found.png',
+                                    : Image.network(
+                                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
                                       fit: BoxFit.cover,
                                     ),
                           ),

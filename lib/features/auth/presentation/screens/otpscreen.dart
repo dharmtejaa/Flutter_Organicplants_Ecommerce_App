@@ -75,6 +75,8 @@ class _OTPscreenState extends State<OTPscreen> {
           'OTP Verified Successfully! 🎉',
         );
         Future.delayed(const Duration(seconds: 2), () {
+          // ignore: use_build_context_synchronously
+
           Navigator.pushReplacement(
             // ignore: use_build_context_synchronously
             context,
@@ -140,11 +142,12 @@ class _OTPscreenState extends State<OTPscreen> {
         automaticallyImplyLeading: false,
         actions: [
           GestureDetectorButton(
-            onPressed:
-                () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Loginscreen()),
-                ),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Loginscreen()),
+              );
+            },
           ),
           //SizedBox(width: 10.w),
         ],

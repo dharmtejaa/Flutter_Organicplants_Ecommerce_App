@@ -41,7 +41,7 @@ class CartIconWithBadge extends StatelessWidget {
                   top: -6,
                   right: -6,
                   child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 200),
                     transitionBuilder:
                         (child, animation) =>
                             ScaleTransition(scale: animation, child: child),

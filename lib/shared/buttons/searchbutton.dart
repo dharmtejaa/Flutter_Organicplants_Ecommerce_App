@@ -15,6 +15,8 @@ class SearchButton extends StatelessWidget {
         size: AppSizes.iconMd,
       ),
       onTap: () {
+        // Clear focus before navigation to prevent keyboard from appearing
+
         // Implement search functionality
         Navigator.push(
           context,

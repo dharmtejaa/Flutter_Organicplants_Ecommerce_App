@@ -4,7 +4,7 @@ import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/plant_filter_service.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
-import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/notification_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
@@ -198,72 +198,80 @@ class _StoreScreenState extends State<StoreScreen>
           );
         },
       ),
+      //filters button
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: colorScheme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizes.radiusXxxl),
+        ),
+        elevation: 0,
+        enableFeedback: true,
+        onPressed: () {
+          _showFilterBottomSheet();
+        },
+        child: Icon(
+          Icons.filter_list_alt,
+          size: AppSizes.iconLg,
+          color: colorScheme.onPrimary,
+        ),
+      ),
     );
   }
 
   PreferredSizeWidget _buildAppBar(ColorScheme colorScheme) {
     final textTheme = Theme.of(context).textTheme;
     return AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
-        iconSize: AppSizes.iconMd,
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => EntryScreen()),
-          );
-        },
+      automaticallyImplyLeading: false,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.network(
+            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
+            height: 38.h,
+            width: 38.w,
+            color: colorScheme.primary,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          //SizedBox(width: 10.w),
+          Text(
+            "Organic Store",
+            style: textTheme.displaySmall?.copyWith(color: colorScheme.primary),
+          ),
+        ],
       ),
-      title: Text("Plant Store", style: textTheme.headlineMedium),
-      centerTitle: true,
       actions: [
-        SearchButton(),
-        SizedBox(width: 10.w),
-        Stack(
-          children: [
-            InkWell(
-              onTap: _showFilterBottomSheet,
-              borderRadius: BorderRadius.circular(24),
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.filter_alt_outlined,
-                  color: colorScheme.onSurface,
-                  size: AppSizes.iconMd,
-                ),
-              ),
-            ),
-            if (_hasActiveFilters())
-              Positioned(
-                right: 1,
-                top: 1,
-                child: Container(
-                  width: 9.w,
-                  height: 9.h,
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-          ],
-        ),
-        SizedBox(width: 10.w),
-        WishlistIconWithBadge(),
-        SizedBox(width: 10.w),
-        CartIconWithBadge(
-          iconColor: colorScheme.onSurface,
+        IconButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CartScreen()),
+              MaterialPageRoute(builder: (context) => NotificationScreen()),
             );
           },
+          icon: Icon(
+            Icons.notifications_none_rounded,
+            size: AppSizes.iconMd,
+            color: colorScheme.onSurface,
+          ),
         ),
-        SizedBox(width: 10.w),
       ],
     );
   }
+  //SizedBox(width: 10.w),
+
+  // WishlistIconWithBadge(),
+  // SizedBox(width: 10.w),
+  // CartIconWithBadge(
+  //   iconColor: colorScheme.onSurface,
+  //   onPressed: () {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => CartScreen()),
+  //     );
+  //   },
+  // ),
+  // SizedBox(width: 10.w),
 
   void _showFilterBottomSheet() {
     final colorScheme = Theme.of(context).colorScheme;
@@ -464,9 +472,10 @@ class _StoreScreenState extends State<StoreScreen>
           NoResultsFound(
             title: "No plants found",
             message: "Try adjusting your filters or search.",
-            imagePath: "assets/No_Plant_Found.png",
+            imagePath:
+                "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png",
           ),
-          //SizedBox(height: 16.h),
+          SizedBox(height: 16.h),
           ElevatedButton.icon(
             onPressed: () {
               // Reset to default filters

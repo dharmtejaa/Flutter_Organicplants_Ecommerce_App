@@ -35,7 +35,6 @@ class _AddressesScreenState extends State<AddressesScreen> {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text('My Addresses', style: textTheme.headlineSmall),
       ),
       body: Padding(

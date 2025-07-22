@@ -45,7 +45,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Personal Information", style: textTheme.headlineMedium),
-        centerTitle: true,
+        
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

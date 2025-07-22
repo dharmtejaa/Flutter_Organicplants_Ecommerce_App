@@ -97,7 +97,7 @@ class _FAQScreenState extends State<FAQScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("FAQ", style: textTheme.headlineMedium),
-        centerTitle: true,
+       
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

@@ -97,7 +97,7 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Plant Care Guide', style: textTheme.headlineMedium),
-        centerTitle: true,
+       
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -389,7 +389,7 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
       backgroundColor: Colors.transparent,
       builder:
           (context) => Container(
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: 0.8.sh,
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.vertical(

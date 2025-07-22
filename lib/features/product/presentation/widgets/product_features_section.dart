@@ -4,10 +4,23 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 
-class ProductFeaturesSection extends StatelessWidget {
+class ProductFeaturesSection extends StatefulWidget {
   final TextEditingController searchController;
 
   const ProductFeaturesSection({super.key, required this.searchController});
+
+  @override
+  State<ProductFeaturesSection> createState() => _ProductFeaturesSectionState();
+}
+
+class _ProductFeaturesSectionState extends State<ProductFeaturesSection> {
+  final FocusNode _pincodeFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _pincodeFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,22 +39,26 @@ class ProductFeaturesSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 200.w,
-                child: CustomTextField(
-                  fillColor: colorScheme.tertiary,
-                  controller: searchController,
-                  hintText: 'Enter Pincode',
-                  prefixIcon: Icons.location_on,
-                ),
+              CustomTextField(
+                width: 180.w,
+                contentPadding: AppSizes.paddingAllSm,
+                fillColor: colorScheme.tertiary,
+                controller: widget.searchController,
+                keyboardType: TextInputType.number,
+                hintText: 'Enter Pincode',
+                prefixIcon: Icons.location_on,
               ),
               SizedBox(width: 10.w),
               CustomButton(
                 backgroundColor: colorScheme.primary,
                 text: "Check",
                 textColor: colorScheme.onPrimary,
-                height: 45.h,
+                height: 43.h,
                 width: 70.w,
+                ontap: () {
+                  // Clear focus when checking pincode
+                  _pincodeFocusNode.unfocus();
+                },
               ),
             ],
           ),
@@ -54,19 +71,22 @@ class ProductFeaturesSection extends StatelessWidget {
                 ProductFeatureCard(
                   title: 'Free Delivery',
                   subtitle: 'On Orders Above ₹499',
-                  imagePath: 'assets/features/free-shipping.png',
+                  imagePath:
+                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080733/free-shipping_w4sua1.png',
                 ),
                 SizedBox(width: 8.w),
                 ProductFeatureCard(
                   title: '7-Day Replacement',
                   subtitle: 'Hassle-free return',
-                  imagePath: 'assets/features/exchange.png',
+                  imagePath:
+                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080732/exchange_hjc0rm.png',
                 ),
                 SizedBox(width: 8.w),
                 ProductFeatureCard(
                   title: 'Eco Packaging',
                   subtitle: '100% sustainable',
-                  imagePath: 'assets/features/eco_packing.png',
+                  imagePath:
+                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080733/eco_packing_tajgaw.png',
                 ),
               ],
             ),
@@ -100,7 +120,7 @@ class ProductFeatureCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
+          Image.network(
             imagePath,
             width: 30.w,
             height: 30.h,

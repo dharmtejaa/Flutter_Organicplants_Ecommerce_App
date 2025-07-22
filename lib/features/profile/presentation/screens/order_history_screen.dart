@@ -40,7 +40,7 @@ class OrderHistoryScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text("Order History", style: textTheme.headlineMedium),
-          centerTitle: true,
+          
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,

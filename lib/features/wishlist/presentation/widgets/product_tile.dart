@@ -51,20 +51,16 @@ class ProductTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Plant Image
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(AppSizes.radiusSm),
-                      ),
-                      child: Image.network(
-                        plant.images?[0].url ?? '',
-                        height: 0.1.sh,
-                        width: 0.22.sw,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
+                ClipRRect(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(AppSizes.radiusSm),
+                  ),
+                  child: Image.network(
+                    plant.images?[0].url ?? '',
+                    height: 0.1.sh,
+                    width: 0.22.sw,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 SizedBox(width: 15.w),
                 // Text Content
@@ -79,6 +75,7 @@ class ProductTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: textTheme.titleLarge,
                       ),
+                      SizedBox(height: 3.h),
                       // Text(
                       //   scifiname == true
                       //       ? plant.scientificName ?? 'Unknown Scientific Name'
@@ -106,10 +103,30 @@ class ProductTile extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 3.h),
                       if (offerPrice < originalPrice)
                         Text('$discount% off', style: textTheme.bodySmall),
                       //],
                       //),
+                      SizedBox(height: 3.h),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 16.r,
+                            color: colorScheme.primary,
+                          ),
+                          SizedBox(width: 2.w),
+                          Text(
+                            plant.rating?.toStringAsFixed(1) ?? '0.0',
+                            style: textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onSurface,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

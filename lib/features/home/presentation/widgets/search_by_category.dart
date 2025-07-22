@@ -65,7 +65,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             ),
                           );
                         },
-                        child: Image.asset(
+                        child: Image.network(
                           category['imagePath']!,
                           width: 70.w,
                           height: 70.w,

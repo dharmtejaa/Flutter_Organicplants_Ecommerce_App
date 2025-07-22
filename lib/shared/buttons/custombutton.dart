@@ -71,7 +71,7 @@ class CustomButton extends StatelessWidget {
               if (imagePath != null)
                 Padding(
                   padding: EdgeInsets.only(right: 8.w),
-                  child: Image.asset(
+                  child: Image.network(
                     imagePath!,
                     width: 24.w,
                     height: 24.h,

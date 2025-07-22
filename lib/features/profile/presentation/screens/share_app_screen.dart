@@ -13,7 +13,7 @@ class ShareAppScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Share App', style: textTheme.headlineMedium),
-        centerTitle: true,
+       
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

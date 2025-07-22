@@ -3,6 +3,7 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WishlistIconWithBadge extends StatelessWidget {
   const WishlistIconWithBadge({super.key});
@@ -13,7 +14,7 @@ class WishlistIconWithBadge extends StatelessWidget {
 
     return Consumer<WishlistProvider>(
       builder: (context, wishlistProvider, child) {
-        //final wishlistCount = wishlistProvider.wishList.length;
+        final wishlistCount = wishlistProvider.wishList.length;
 
         return GestureDetector(
           onTap: () {

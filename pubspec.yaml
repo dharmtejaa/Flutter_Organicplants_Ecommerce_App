@@ -23,14 +23,13 @@ dependencies:
   firebase_remote_config: ^5.4.3
   firebase_auth: ^5.5.3
   smooth_page_indicator: ^1.2.1
-  carousel_slider: 5.1.1
-  adb_wifi: ^1.0.2
+  carousel_slider: 5.1.1 
   shared_preferences: ^2.2.0
   animated_text_kit: ^4.2.3
   flutter_screenutil : ^5.9.3
-  flutter_svg: ^2.0.7
-  google_fonts: ^6.1.0
-  flutter_cache_manager: ^3.4.1
+  # flutter_svg: ^2.0.7  # Commented out - large dependency
+  # google_fonts: ^6.1.0  # Commented out - very large dependency, use local fonts instead
+  # flutter_cache_manager: ^3.4.1  # Commented out - can use simpler caching
 
 dev_dependencies:
   flutter_test:
@@ -43,16 +42,5 @@ flutter:
 
   uses-material-design: true
 
-  assets:
-    - assets/ltree.png
-    - assets/app_logo.png
-    - assets/No_Plant_Found.png
-    - assets/No_WishList.png
-    - assets/stree.png
-    - assets/splash screen/
-    - assets/onBoarding/
-    - assets/banner/
-    - assets/category/
-    - assets/features/
-    - assets/payment_success/
+
 

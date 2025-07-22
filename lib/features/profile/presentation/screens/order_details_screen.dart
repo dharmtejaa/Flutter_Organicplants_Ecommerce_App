@@ -19,7 +19,7 @@ class OrderDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text('Order Details', style: textTheme.headlineMedium),
-        centerTitle: true,
+        
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),

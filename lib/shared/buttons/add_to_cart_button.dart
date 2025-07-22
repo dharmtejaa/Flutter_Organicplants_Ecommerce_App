@@ -25,22 +25,10 @@ class AddToCartButton extends StatelessWidget {
         final alreadyInCart = cartProvider.items.containsKey(plant.id);
         if (!alreadyInCart) {
           cartProvider.addToCart(plant);
-          CustomSnackBar.showSuccess(
-            context,
-            '${plant.commonName} has been added to the cart!',
-            actionLabel: 'View in Cart',
-            onAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CartScreen()),
-              );
-            },
-          );
         } else {
           CustomSnackBar.showInfo(
             context,
             '${plant.commonName} is already in the cart!',
-
             actionLabel: 'View Cart',
             onAction: () {
               Navigator.push(

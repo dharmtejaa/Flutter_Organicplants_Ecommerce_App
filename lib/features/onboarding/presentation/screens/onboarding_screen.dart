@@ -74,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               SizedBox(
                                 height: AppSizes.onboardingImageHeight,
                                 width: AppSizes.onboardingIamgeWidth,
-                                child: Lottie.asset(
+                                child: Lottie.network(
                                   onboardingData[index]['image']!,
                                   repeat: true,
                                   fit: BoxFit.contain,

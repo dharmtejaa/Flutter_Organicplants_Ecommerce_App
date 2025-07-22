@@ -140,52 +140,56 @@ class ProfileScreen extends StatelessWidget {
                         subtitle: 'Track your current orders',
                         icon: Icons.local_shipping_outlined,
                         iconColor: Colors.teal,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TrackOrdersScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TrackOrdersScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Order History',
                         subtitle: 'View all your past orders',
                         icon: Icons.history_rounded,
                         iconColor: Colors.indigo,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OrderHistoryScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OrderHistoryScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Returns & Refunds',
                         subtitle: 'Manage returns and refunds',
                         icon: Icons.assignment_return_outlined,
                         iconColor: Colors.amber,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ReturnsRefundsScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReturnsRefundsScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Plant Care Guide',
                         subtitle: 'Learn how to care for your plants',
                         icon: Icons.eco_outlined,
                         iconColor: Colors.lightGreen,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PlantCareGuideScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlantCareGuideScreen(),
                             ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -201,53 +205,56 @@ class ProfileScreen extends StatelessWidget {
                         subtitle: 'Manage your profile details',
                         icon: Icons.person_outline_rounded,
                         iconColor: Colors.blue,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) => PersonalInformationScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PersonalInformationScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Addresses',
                         subtitle: 'Manage delivery addresses',
                         icon: Icons.location_on_outlined,
                         iconColor: Colors.green,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddressesScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddressesScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Payment Methods',
                         subtitle: 'Manage payment options',
                         icon: Icons.payment_rounded,
                         iconColor: Colors.orange,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentMethodsScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentMethodsScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Notifications',
                         subtitle: 'Manage notification preferences',
                         icon: Icons.notifications_outlined,
                         iconColor: Colors.purple,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NotificationsScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationsScreen(),
                             ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -303,39 +310,42 @@ class ProfileScreen extends StatelessWidget {
                         subtitle: 'Get help and support',
                         icon: Icons.support_agent_outlined,
                         iconColor: Colors.tealAccent,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CustomerSupportScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CustomerSupportScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'FAQ',
                         subtitle: 'Frequently asked questions',
                         icon: Icons.help_outline_rounded,
                         iconColor: Colors.lightBlueAccent,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FAQScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FAQScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Contact Us',
                         subtitle: 'Reach out to our team',
                         icon: Icons.contact_support_outlined,
                         iconColor: Colors.orangeAccent,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ContactUsScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContactUsScreen(),
                             ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -351,39 +361,42 @@ class ProfileScreen extends StatelessWidget {
                         subtitle: 'Read our privacy policy',
                         icon: Icons.privacy_tip_outlined,
                         iconColor: Colors.redAccent,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PrivacyPolicyScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PrivacyPolicyScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'Terms of Service',
                         subtitle: 'Read our terms of service',
                         icon: Icons.description_outlined,
                         iconColor: Colors.redAccent,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TermsOfServiceScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TermsOfServiceScreen(),
                             ),
+                          );
+                        },
                       ),
                       ProfileMenuItem(
                         title: 'About',
                         subtitle: 'Learn more about us',
                         icon: Icons.info_outline_rounded,
                         iconColor: Colors.blueAccent,
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AboutScreen(),
-                              ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AboutScreen(),
                             ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -462,46 +475,56 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  String _getThemeModeText(ThemeMode mode) {
-    switch (mode) {
-      case ThemeMode.light:
-        return 'Light';
-      case ThemeMode.dark:
-        return 'Dark';
-      case ThemeMode.system:
-        return 'System';
-    }
-  }
+  String _getThemeModeText(ThemeMode mode) =>
+      mode == ThemeMode.light ? 'Light' : mode == ThemeMode.dark ? 'Dark' : 'System';
 
   void _showThemeDialog(BuildContext context, ThemeProvider themeProvider) {
+    final themeOptions = [
+      {
+        'mode': ThemeMode.system,
+        'title': 'System Default',
+        'icon': Icons.brightness_auto_rounded,
+      },
+      {
+        'mode': ThemeMode.light,
+        'title': 'Light Mode',
+        'icon': Icons.light_mode_rounded,
+      },
+      {
+        'mode': ThemeMode.dark,
+        'title': 'Dark Mode',
+        'icon': Icons.dark_mode_rounded,
+      },
+    ];
     CustomDialog.showCustom(
       context: context,
       title: 'Choose Theme',
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildThemeOption(
-            context,
-            themeProvider,
-            ThemeMode.system,
-            'System Default',
-            Icons.brightness_auto_rounded,
-          ),
-          _buildThemeOption(
-            context,
-            themeProvider,
-            ThemeMode.light,
-            'Light Mode',
-            Icons.light_mode_rounded,
-          ),
-          _buildThemeOption(
-            context,
-            themeProvider,
-            ThemeMode.dark,
-            'Dark Mode',
-            Icons.dark_mode_rounded,
-          ),
-        ],
+        children: themeOptions.map((opt) {
+          final mode = opt['mode'] as ThemeMode;
+          final isSelected = themeProvider.themeMode == mode;
+          final colorScheme = Theme.of(context).colorScheme;
+          final textTheme = Theme.of(context).textTheme;
+          return ListTile(
+            leading: Icon(
+              opt['icon'] as IconData,
+              color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant,
+            ),
+            title: Text(
+              opt['title'] as String,
+              style: textTheme.bodyMedium?.copyWith(
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                color: isSelected ? colorScheme.primary : colorScheme.onSurface,
+              ),
+            ),
+            trailing: isSelected ? Icon(Icons.check_rounded, color: colorScheme.primary) : null,
+            onTap: () {
+              themeProvider.setThemeMode(mode);
+              Navigator.pop(context);
+            },
+          );
+        }).toList(),
       ),
       showCancelButton: false,
       showConfirmButton: false,
@@ -509,46 +532,15 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildThemeOption(
-    BuildContext context,
-    ThemeProvider themeProvider,
-    ThemeMode mode,
-    String title,
-    IconData icon,
-  ) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final isSelected = themeProvider.themeMode == mode;
-    final textTheme = Theme.of(context).textTheme;
-
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant,
-      ),
-      title: Text(
-        title,
-        style: textTheme.bodyMedium?.copyWith(
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-          color: isSelected ? colorScheme.primary : colorScheme.onSurface,
-        ),
-      ),
-      trailing:
-          isSelected
-              ? Icon(Icons.check_rounded, color: colorScheme.primary)
-              : null,
-      onTap: () {
-        themeProvider.setThemeMode(mode);
-        Navigator.pop(context);
-      },
-    );
-  }
-
   void _showLogoutDialog(BuildContext context) {
     CustomDialog.showDeleteConfirmation(
       context: context,
+
       title: 'Logout',
+
       content:
           'Are you sure you want to logout? You will need to sign in again to access your account.',
+      confirmText: 'Confirm',
       onDelete: () {
         Navigator.pushReplacement(
           context,

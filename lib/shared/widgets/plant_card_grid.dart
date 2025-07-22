@@ -7,11 +7,9 @@ import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
-import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/add_to_cart_button.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
-import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class ProductCardGrid extends StatelessWidget {
@@ -53,33 +51,7 @@ class ProductCardGrid extends StatelessWidget {
         );
       },
       onDoubleTap: () {
-        final isNowWishlisted = wishlistProvider.isInWishlist(plant.id!);
-        if (!isNowWishlisted) {
-          wishlistProvider.toggleWishList(plant);
-          CustomSnackBar.showSuccess(
-            context,
-            '${plant.commonName} added to wishlist',
-            actionLabel: 'View Wishlist',
-            onAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WishlistScreen()),
-              );
-            },
-          );
-        } else {
-          CustomSnackBar.showInfo(
-            context,
-            '${plant.commonName} already in wishlist',
-            actionLabel: 'View Wishlist',
-            onAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WishlistScreen()),
-              );
-            },
-          );
-        }
+        wishlistProvider.toggleWishList(plant);
       },
       child: Container(
         //margin: EdgeInsets.only(bottom: AppSizes.vMarginXs),
