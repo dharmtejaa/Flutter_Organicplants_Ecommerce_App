@@ -399,11 +399,4 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  void _savePreferences() {
-    CustomSnackBar.showSuccess(
-      context,
-      "Notification preferences saved successfully!",
-    );
-    Navigator.pop(context);
-  }
 }

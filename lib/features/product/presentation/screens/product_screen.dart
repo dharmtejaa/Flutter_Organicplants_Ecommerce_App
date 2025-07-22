@@ -11,7 +11,6 @@ import 'package:organicplants/features/product/presentation/widgets/product_sugg
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
-import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
 
 class ProductScreen extends StatelessWidget {
   final AllPlantsModel plants;

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/cart/data/cart_items_quantity_model.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/cart/presentation/widgets/card_tile.dart';
 import 'package:organicplants/features/cart/presentation/widgets/cart_bottom_sheet.dart';
-import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/features/cart/presentation/screens/checkout_screen.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_with_badge.dart';
