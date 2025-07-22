@@ -1,14 +1,10 @@
 name: organicplants
-description: "A new Flutter project."
-
+description: "A modern Flutter-based e-commerce app for organic plants, featuring Firebase integration, user authentication, product browsing, cart, wishlist, and smooth UI animations."
 publish_to: 'none' 
-
-
 version: 1.0.0+1
 
 environment:
   sdk: ^3.7.2
-
 
 dependencies:
   flutter:
@@ -27,19 +23,13 @@ dependencies:
   shared_preferences: ^2.2.0
   animated_text_kit: ^4.2.3
   flutter_screenutil : ^5.9.3
-  # flutter_svg: ^2.0.7  # Commented out - large dependency
-  # google_fonts: ^6.1.0  # Commented out - very large dependency, use local fonts instead
-  # flutter_cache_manager: ^3.4.1  # Commented out - can use simpler caching
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
   flutter_lints: ^5.0.0
 
 flutter:
-
   uses-material-design: true
 
 
