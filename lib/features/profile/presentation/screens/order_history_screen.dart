@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -40,7 +42,7 @@ class OrderHistoryScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text("Order History", style: textTheme.headlineMedium),
-          
+
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
@@ -458,11 +460,12 @@ class OrderHistoryScreen extends StatelessWidget {
                           items[i]['image'].toString().isNotEmpty
                       ? ClipRRect(
                         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                        child: Image.network(
-                          items[i]['image'],
+                        child: CachedNetworkImage(
+                          imageUrl: items[i]['image'],
                           fit: BoxFit.cover,
                           width: 44,
                           height: 44,
+                          cacheManager: MyCustomCacheManager.instance,
                         ),
                       )
                       : Icon(

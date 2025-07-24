@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 
 class NoResultsFound extends StatelessWidget {
   final String title;
@@ -22,15 +24,16 @@ class NoResultsFound extends StatelessWidget {
       //mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(height: 0.15.sh),
-        Image.network(
-          imagePath,
+        CachedNetworkImage(
+          imageUrl: imagePath,
           height: 0.33.sh,
-          errorBuilder:
+          errorWidget:
               (context, error, stackTrace) => Icon(
                 Icons.error_outline,
                 size: 100,
                 color: colorScheme.error,
               ),
+          cacheManager: MyCustomCacheManager.instance,
         ),
         SizedBox(height: 10.h),
         Text(

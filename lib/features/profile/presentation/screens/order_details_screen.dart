@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 // ignore: depend_on_referenced_packages
@@ -19,7 +21,7 @@ class OrderDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text('Order Details', style: textTheme.headlineMedium),
-        
+
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),
@@ -128,11 +130,13 @@ class OrderDetailsScreen extends StatelessWidget {
                                       item['image'].toString().isNotEmpty
                                   ? ClipRRect(
                                     borderRadius: BorderRadius.circular(8.r),
-                                    child: Image.network(
-                                      item['image'],
+                                    child: CachedNetworkImage(
+                                      imageUrl: item['image'],
                                       fit: BoxFit.cover,
                                       width: 56.w,
                                       height: 56.w,
+                                      cacheManager:
+                                          MyCustomCacheManager.instance,
                                     ),
                                   )
                                   : (() {
@@ -149,11 +153,14 @@ class OrderDetailsScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(
                                           8.r,
                                         ),
-                                        child: Image.network(
-                                          plant.images!.first.url ?? '',
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              plant.images!.first.url ?? '',
                                           fit: BoxFit.cover,
                                           width: 56.w,
                                           height: 56.w,
+                                          cacheManager:
+                                              MyCustomCacheManager.instance,
                                         ),
                                       );
                                     }

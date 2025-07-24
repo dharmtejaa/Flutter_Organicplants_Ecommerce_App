@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
@@ -71,21 +73,23 @@ class CustomButton extends StatelessWidget {
               if (imagePath != null)
                 Padding(
                   padding: EdgeInsets.only(right: 8.w),
-                  child: Image.network(
-                    imagePath!,
+                  child: CachedNetworkImage(
+                    imageUrl: imagePath!,
                     width: 24.w,
                     height: 24.h,
                     fit: BoxFit.cover,
+                    cacheManager: MyCustomCacheManager.instance,
                   ),
                 ),
               if (networkImage != null)
                 Padding(
                   padding: EdgeInsets.only(right: 8.w),
-                  child: Image.network(
-                    networkImage!,
+                  child: CachedNetworkImage(
+                    imageUrl: networkImage!,
                     width: 24.w,
                     height: 24.h,
                     fit: BoxFit.cover,
+                    cacheManager: MyCustomCacheManager.instance,
                   ),
                 ),
               if (text != null && !isLoading)

@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
@@ -74,12 +76,12 @@ class ProductCardGrid extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                        child: Image.network(
-                          plant.images![0].url!,
+                        child: CachedNetworkImage(
+                          imageUrl: plant.images![0].url!,
                           width: double.infinity,
                           height: imageHeight,
                           fit: BoxFit.cover,
-                          errorBuilder:
+                          errorWidget:
                               (_, __, ___) => Container(
                                 height: imageHeight,
                                 decoration: BoxDecoration(
@@ -94,6 +96,7 @@ class ProductCardGrid extends StatelessWidget {
                                   color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
+                          cacheManager: MyCustomCacheManager.instance,
                         ),
                       ),
                       Positioned(

@@ -29,6 +29,7 @@ class ProductHeaderInfo extends StatelessWidget {
           Row(
             children: [
               Text(plants.commonName ?? '', style: textTheme.displaySmall),
+
               SizedBox(width: 16.w),
               Expanded(
                 child: Text(

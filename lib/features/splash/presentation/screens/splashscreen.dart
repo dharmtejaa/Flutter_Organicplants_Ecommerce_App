@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/services/plant_services.dart';
-import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
+import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 
 // Top-level ValueNotifier and timer for splash progress
 final ValueNotifier<double> splashProgress = ValueNotifier(0.0);
@@ -65,7 +67,7 @@ Future<void> loadSplashInitialData(BuildContext context) async {
       Navigator.pushReplacement(
         // ignore: use_build_context_synchronously
         context,
-        MaterialPageRoute(builder: (_) => const EntryScreen()),
+        MaterialPageRoute(builder: (_) => const Loginscreen()),
       );
     }
   } catch (e) {
@@ -107,10 +109,12 @@ class Splashscreen extends StatelessWidget {
                         // ignore: deprecated_member_use
                         color: colorScheme.primaryContainer.withOpacity(0.2),
                       ),
-                      child: Image.network(
-                        'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
                         height: 140.h,
                         width: 140.w,
+                        cacheManager: MyCustomCacheManager.instance,
                         color: colorScheme.primary,
                         colorBlendMode: BlendMode.srcIn,
                       ),

@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
@@ -145,13 +147,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           return ListTile(
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(AppSizes.radiusSm),
-              child: Image.network(
+              child: CachedNetworkImage(
                 height: 45.h,
                 width: 45.w,
-                item.plant.images?[0].url ?? '',
+                imageUrl: item.plant.images?[0].url ?? '',
                 fit: BoxFit.cover,
-                errorBuilder:
-                    (context, error, stackTrace) => Icon(Icons.broken_image),
+                cacheManager: MyCustomCacheManager.instance,
               ),
             ),
             title: Text(

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -71,7 +73,11 @@ class _AutoBannerWithNotifierState extends State<AutoBannerWithNotifier> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.network(banner['imagePath']!, fit: BoxFit.fill),
+                    CachedNetworkImage(
+                      imageUrl: banner['imagePath']!,
+                      fit: BoxFit.fill,
+                      cacheManager: MyCustomCacheManager.instance,
+                    ),
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(

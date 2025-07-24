@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/auth/presentation/screens/otpscreen.dart';
 import 'package:organicplants/shared/widgets/custom_textfield.dart';
@@ -158,10 +160,12 @@ class _LoginscreenState extends State<Loginscreen> {
                       ],
                     ),
                   ),
-                  Image.network(
-                    'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080572/ltree_hyjza1.png',
+                  CachedNetworkImage(
+                    imageUrl:
+                        'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080572/ltree_hyjza1.png',
                     width: 0.3.sw,
                     height: 0.2.sh,
+                    cacheManager: MyCustomCacheManager.instance,
                   ),
                 ],
               ),

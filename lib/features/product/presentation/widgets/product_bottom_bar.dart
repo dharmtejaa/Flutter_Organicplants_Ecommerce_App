@@ -40,17 +40,17 @@ class ProductBottomBar extends StatelessWidget {
               ontap: () {
                 if (!cartProvider.isInCart(plants.id)) {
                   cartProvider.addToCart(plants);
-                  CustomSnackBar.showSuccess(
-                    context,
-                    '${plants.commonName} Added to Cart',
-                    actionLabel: 'View Cart',
-                    onAction: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CartScreen()),
-                      );
-                    },
-                  );
+                  // CustomSnackBar.showSuccess(
+                  //   context,
+                  //   '${plants.commonName} Added to Cart',
+                  //   actionLabel: 'View Cart',
+                  //   onAction: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (context) => CartScreen()),
+                  //     );
+                  //   },
+                  // );
                 } else {
                   CustomSnackBar.showInfo(
                     context,

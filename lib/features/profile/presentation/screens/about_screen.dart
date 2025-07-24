@@ -1,8 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -67,12 +69,14 @@ class AboutScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     padding: EdgeInsets.all(10.w),
-                    child: Image.network(
-                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080823/app_logo_lxl2fw.png',
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080823/app_logo_lxl2fw.png',
                       height: 48.h,
                       width: 48.h,
                       color: colorScheme.onSurface,
                       colorBlendMode: BlendMode.srcIn,
+                      cacheManager: MyCustomCacheManager.instance,
                     ),
                   ),
                   SizedBox(height: 20.h),

@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/features/product/logic/carousel_provider.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:provider/provider.dart';
@@ -34,37 +36,20 @@ class ProductImageGallery extends StatelessWidget {
                       (_) => Dialog(
                         backgroundColor: Colors.transparent,
                         child: InteractiveViewer(
-                          child: Image.network(
-                            imageUrl,
+                          child: CachedNetworkImage(
+                            imageUrl: imageUrl,
                             fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(child: CircularProgressIndicator());
-                            },
-                            errorBuilder:
-                                (context, error, stackTrace) => Image.asset(
-                                  'assets/No_Plant_Found.png',
-                                  fit: BoxFit.cover,
-                                ),
+                            cacheManager: MyCustomCacheManager.instance,
                           ),
                         ),
                       ),
                 );
               },
-              child: Image.network(
-                imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
                 height: 300.h,
                 width: double.infinity,
                 fit: BoxFit.contain,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(child: CircularProgressIndicator());
-                },
-                errorBuilder:
-                    (context, error, stackTrace) => Image.asset(
-                      'assets/No_Plant_Found.png',
-                      fit: BoxFit.cover,
-                    ),
               ),
             );
           },
@@ -107,15 +92,28 @@ class ProductImageGallery extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-                        child: Image.network(
-                          thumbUrl,
+                        child: CachedNetworkImage(
+                          imageUrl: thumbUrl,
                           height: 54.h,
                           width: 54.w,
                           fit: BoxFit.cover,
-                          errorBuilder:
-                              (context, error, stackTrace) => Image.asset(
-                                'assets/No_Plant_Found.png',
+                          cacheManager: MyCustomCacheManager.instance,
+                          errorWidget:
+                              (
+                                context,
+                                error,
+                                stackTrace,
+                              ) => CachedNetworkImage(
+                                imageUrl:
+                                    "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png",
                                 fit: BoxFit.cover,
+                                errorWidget:
+                                    (context, url, error) =>
+                                        Icon(Icons.image_rounded),
+                                cacheManager: MyCustomCacheManager.instance,
+                                placeholder:
+                                    (context, url) =>
+                                        CircularProgressIndicator(),
                               ),
                         ),
                       ),

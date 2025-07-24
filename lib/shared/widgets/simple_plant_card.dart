@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
@@ -93,23 +95,32 @@ class SimplePlantCard extends StatelessWidget {
                             ),
                             child:
                                 plant.images != null && plant.images!.isNotEmpty
-                                    ? Image.network(
-                                      plant.images!.first.url ?? '',
+                                    ? CachedNetworkImage(
+                                      imageUrl: plant.images!.first.url ?? '',
                                       fit: BoxFit.cover,
-                                      errorBuilder: (
+                                      cacheManager:
+                                          MyCustomCacheManager.instance,
+
+                                      errorWidget: (
                                         context,
                                         error,
                                         stackTrace,
                                       ) {
-                                        return Image.network(
-                                          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
+                                        return CachedNetworkImage(
+                                          imageUrl:
+                                              'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
                                           fit: BoxFit.cover,
+                                          cacheManager:
+                                              MyCustomCacheManager.instance,
                                         );
                                       },
                                     )
-                                    : Image.network(
-                                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
+                                    : CachedNetworkImage(
+                                      imageUrl:
+                                          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
                                       fit: BoxFit.cover,
+                                      cacheManager:
+                                          MyCustomCacheManager.instance,
                                     ),
                           ),
                         ),

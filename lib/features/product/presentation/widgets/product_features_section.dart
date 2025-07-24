@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 
@@ -120,11 +122,12 @@ class ProductFeatureCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.network(
-            imagePath,
+          CachedNetworkImage(
+            imageUrl: imagePath,
             width: 30.w,
             height: 30.h,
             fit: BoxFit.contain,
+            cacheManager: MyCustomCacheManager.instance,
           ),
           SizedBox(height: 6.h),
           Text(

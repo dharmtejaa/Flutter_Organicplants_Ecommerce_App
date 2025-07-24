@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/features/home/presentation/widgets/auto_banner_with_notifier.dart';
 import 'package:organicplants/features/home/presentation/widgets/search_by_category.dart';
 import 'package:organicplants/features/profile/presentation/screens/notification_screen.dart';
@@ -40,12 +43,14 @@ class HomeScreen extends StatelessWidget {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.network(
-                  'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
                   height: 53.h,
                   width: 53.w,
                   color: colorScheme.primary,
                   colorBlendMode: BlendMode.srcIn,
+                  cacheManager: MyCustomCacheManager.instance,
                 ),
                 //SizedBox(width: 5.w),
                 Column(

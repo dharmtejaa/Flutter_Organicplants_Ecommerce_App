@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/store/presentation/screen/store_screen.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
@@ -65,11 +67,12 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             ),
                           );
                         },
-                        child: Image.network(
-                          category['imagePath']!,
+                        child: CachedNetworkImage(
+                          imageUrl: category['imagePath']!,
                           width: 70.w,
                           height: 70.w,
                           fit: BoxFit.cover,
+                          cacheManager: MyCustomCacheManager.instance,
                         ),
                       ),
                       SizedBox(height: 10.h),

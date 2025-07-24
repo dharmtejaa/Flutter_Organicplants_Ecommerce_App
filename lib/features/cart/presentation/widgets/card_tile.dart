@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
@@ -59,11 +61,12 @@ class CardTile extends StatelessWidget {
                   borderRadius: BorderRadius.all(
                     Radius.circular(AppSizes.radiusSm),
                   ),
-                  child: Image.network(
-                    plant.images?[0].url ?? '',
+                  child: CachedNetworkImage(
+                    imageUrl: plant.images?[0].url ?? '',
                     height: 0.1.sh,
                     width: 0.22.sw,
                     fit: BoxFit.cover,
+                    cacheManager: MyCustomCacheManager.instance,
                   ),
                 ),
                 SizedBox(width: 15.w),

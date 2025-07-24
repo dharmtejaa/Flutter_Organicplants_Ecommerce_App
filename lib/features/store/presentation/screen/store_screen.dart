@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/services/plant_filter_service.dart';
 import 'package:organicplants/features/profile/presentation/screens/notification_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
@@ -223,12 +225,14 @@ class _StoreScreenState extends State<StoreScreen>
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.network(
-            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
+          CachedNetworkImage(
+            imageUrl:
+                'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
             height: 38.h,
             width: 38.w,
             color: colorScheme.primary,
             colorBlendMode: BlendMode.srcIn,
+            cacheManager: MyCustomCacheManager.instance,
           ),
           //SizedBox(width: 10.w),
           Text(
