@@ -82,7 +82,7 @@ class ProductBottomBar extends StatelessWidget {
               text: 'Buy Now',
               height: 50.h,
               width: 100.w,
-              ontap: () {
+              ontap: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

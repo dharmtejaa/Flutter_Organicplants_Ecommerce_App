@@ -311,7 +311,7 @@ class AppTheme {
       inverseSurface: DarkThemeColors.mediumCharcoal,
       onInverseSurface: DarkThemeColors.lightGray,
 
-      surfaceContainerHighest: DarkThemeColors.lightCharcoal,
+      surfaceContainerHighest: DarkThemeColors.richBlack,
       surfaceContainerHigh: DarkThemeColors.softCharcoal,
       surfaceContainer: DarkThemeColors.lightCharcoal,
 

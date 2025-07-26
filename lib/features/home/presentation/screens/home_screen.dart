@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
@@ -9,9 +8,9 @@ import 'package:organicplants/features/home/presentation/widgets/auto_banner_wit
 import 'package:organicplants/features/home/presentation/widgets/search_by_category.dart';
 import 'package:organicplants/features/profile/presentation/screens/notification_screen.dart';
 import 'package:organicplants/features/home/presentation/widgets/plant_section_widget.dart';
+import 'package:organicplants/shared/logic/user_profile_provider.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
 import 'package:provider/provider.dart';
-import 'package:organicplants/features/profile/logic/profile_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,40 +37,60 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Consumer<ProfileProvider>(
-          builder: (context, profileProvider, child) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CachedNetworkImage(
+              imageUrl:
+                  'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
+              height: 53.h,
+              width: 53.w,
+              color: colorScheme.primary,
+              colorBlendMode: BlendMode.srcIn,
+              cacheManager: MyCustomCacheManager.instance,
+            ),
+            //SizedBox(width: 5.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CachedNetworkImage(
-                  imageUrl:
-                      'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753159417/app_logo2_itg7uy.png',
-                  height: 53.h,
-                  width: 53.w,
-                  color: colorScheme.primary,
-                  colorBlendMode: BlendMode.srcIn,
-                  cacheManager: MyCustomCacheManager.instance,
+                Text(
+                  'Organic Plants',
+                  style: textTheme.displaySmall?.copyWith(
+                    color: colorScheme.primary,
+                  ),
                 ),
-                //SizedBox(width: 5.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Organic Plants',
-                      style: textTheme.displaySmall?.copyWith(
-                        color: colorScheme.primary,
-                      ),
-                    ),
-                    SizedBox(height: 2.h),
-                    Text(
-                      '${getGreeting()}, ${profileProvider.userName}! 🌱',
+                SizedBox(height: 2.h),
+                Consumer<UserProfileProvider>(
+                  builder: (context, userProfileProvider, child) {
+                    String userName = 'Nature Lover'; // Default value
+                    if (userProfileProvider.userProfile != null &&
+                        userProfileProvider.userProfile!.fullName.isNotEmpty) {
+                      final nameParts = userProfileProvider
+                          .userProfile!
+                          .fullName
+                          .trim()
+                          .split(' ');
+                      if (nameParts.length >= 2) {
+                        // Get the last name (last element in the array)
+                        userName = nameParts.last;
+                      } else {
+                        // If only one name, use it as is
+                        userName = nameParts.first;
+                      }
+                    } else {
+                      userName = 'Nature Lover';
+                    }
+                    return Text(
+                      '${getGreeting()}, $userName!',
                       style: textTheme.bodySmall,
-                    ),
-                  ],
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    );
+                  },
                 ),
               ],
-            );
-          },
+            ),
+          ],
         ),
         actions: [
           //SearchButton(),

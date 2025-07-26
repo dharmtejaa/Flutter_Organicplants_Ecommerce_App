@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
@@ -7,86 +8,116 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/services/plant_services.dart';
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
+import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
+import 'package:organicplants/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Top-level ValueNotifier and timer for splash progress
 final ValueNotifier<double> splashProgress = ValueNotifier(0.0);
 bool _splashNavigated = false;
 
 Future<void> loadSplashInitialData(BuildContext context) async {
-  const totalSteps = 11;
+  const totalSteps = 12;
   int completedSteps = 0;
+
   void updateProgress() {
     completedSteps++;
     splashProgress.value = completedSteps / totalSteps;
   }
 
   try {
-    updateProgress();
+    updateProgress(); // 1
     allPlantsGlobal = await PlantServices.loadAllPlantsApi();
 
-    updateProgress();
+    updateProgress(); // 2
     indoorPlants = getPlantsByCategory('Indoor plant');
 
-    updateProgress();
+    updateProgress(); // 3
     outdoorPlants = getPlantsByCategory('Outdoor plant');
 
-    updateProgress();
+    updateProgress(); // 4
     medicinalPlants = getPlantsByCategory('Medicinal plant');
 
-    updateProgress();
+    updateProgress(); // 5
     herbsPlants = getPlantsByCategory('Herbs plant');
 
-    updateProgress();
+    updateProgress(); // 6
     floweringPlants = getPlantsByCategory('Flowering plant');
 
-    updateProgress();
+    updateProgress(); // 7
     bonsaiPlants = getPlantsByCategory('Bonsai plant');
 
-    updateProgress();
+    updateProgress(); // 8
     succulentsCactiPlants = getPlantsByCategory('Succulents & Cacti Plants');
 
-    updateProgress();
+    updateProgress(); // 9
     petFriendlyPlants = getPlantsByTag('Pet_Friendly');
 
-    updateProgress();
+    updateProgress(); // 10
     lowMaintenancePlants = getPlantsByTag('Low_Maintenance');
 
-    updateProgress();
+    updateProgress(); // 11
     airPurifyingPlants = getPlantsByTag('Air_Purifying');
 
-    updateProgress();
+    updateProgress(); // 12
     sunLovingPlants = getPlantsByTag('Sun_Loving');
 
-    updateProgress();
-    // Ensure progress is 100%
-    splashProgress.value = 1.0;
-
-    if (!_splashNavigated && context.mounted) {
-      _splashNavigated = true;
-      await Future.delayed(const Duration(milliseconds: 400));
-      Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
-        context,
-        MaterialPageRoute(builder: (_) => const Loginscreen()),
-      );
-    }
+    await Future.delayed(const Duration(milliseconds: 400));
   } catch (e) {
     debugPrint('Error loading data in Splashscreen: $e');
+  } finally {
+    splashProgress.value = 1.0;
+    if (!_splashNavigated && context.mounted) {
+      _splashNavigated = true;
+      await _checkFirstLaunch(context);
+    }
   }
 }
 
-class Splashscreen extends StatelessWidget {
+Future<void> _checkFirstLaunch(BuildContext context) async {
+  final prefs = await SharedPreferences.getInstance();
+  const String launchKey = 'is_first_launch';
+  final isFirstLaunch = prefs.getBool(launchKey) ?? true;
+
+  await prefs.setBool(launchKey, false); // Always set after first check
+
+  if (isFirstLaunch) {
+    Navigator.pushReplacement(
+      // ignore: use_build_context_synchronously
+      context,
+      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+    );
+  } else {
+    final user = FirebaseAuth.instance.currentUser;
+    Navigator.pushReplacement(
+      // ignore: use_build_context_synchronously
+      context,
+      MaterialPageRoute(
+        builder:
+            (_) => user != null ? const EntryScreen() : const Loginscreen(),
+      ),
+    );
+  }
+}
+
+class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
 
-  void _init(BuildContext context) {
-    if (splashProgress.value == 0.0) {
-      loadSplashInitialData(context);
-    }
+  @override
+  State<Splashscreen> createState() => _SplashscreenState();
+}
+
+class _SplashscreenState extends State<Splashscreen> {
+  @override
+  void initState() {
+    super.initState();
+    splashProgress.value = 0.0;
+    _splashNavigated = false;
+    loadSplashInitialData(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    _init(context);
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 

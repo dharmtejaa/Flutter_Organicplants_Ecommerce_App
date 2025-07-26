@@ -3,7 +3,7 @@
     <application
         android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="false"
-        android:label="organicplants"
+        android:label="Organic Plants"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

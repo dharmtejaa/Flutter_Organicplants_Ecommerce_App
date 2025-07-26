@@ -57,7 +57,7 @@ class _ProductFeaturesSectionState extends State<ProductFeaturesSection> {
                 textColor: colorScheme.onPrimary,
                 height: 43.h,
                 width: 70.w,
-                ontap: () {
+                ontap: () async {
                   // Clear focus when checking pincode
                   _pincodeFocusNode.unfocus();
                 },

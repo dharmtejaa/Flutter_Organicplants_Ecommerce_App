@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,83 +8,34 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/auth/logic/auth_service.dart';
-import 'package:organicplants/features/auth/presentation/screens/forgot_password_screen.dart';
-import 'package:organicplants/features/auth/presentation/screens/signup_screen.dart';
+import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/shared/buttons/submit_custom_buttons.dart';
+import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/custom_textfield.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/widgets/gesture_detector_button.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
-class Loginscreen extends StatefulWidget {
-  const Loginscreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
   @override
-  State<Loginscreen> createState() => _LoginscreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginscreenState extends State<Loginscreen> {
+class _SignupScreenState extends State<SignupScreen> {
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
-  //logi with user email and password
-
-  // final auth = FirebaseAuth.instance;
-  // final countryCode = "+91";
-
-  // Add ValueNotifier for state management
-  // final ValueNotifier<bool> _isLoading = ValueNotifier(false);
-  // final ValueNotifier<bool> _isPhoneValid = ValueNotifier(false);
-  // final ValueNotifier<String> _errorMessage = ValueNotifier('');
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-
-    //login with google account
-
-    // void login() {
-    //   if (!_isPhoneValid.value) {
-    //     _errorMessage.value = "Please enter a valid 10-digit phone number";
-    //     return;
-    //   }
-
-    //   _isLoading.value = true;
-    //   _errorMessage.value = '';
-
-    //   auth.verifyPhoneNumber(
-    //     phoneNumber: "+91${number.text}",
-    //     verificationCompleted: (_) {
-    //       _isLoading.value = false;
-    //       CustomSnackBar.showSuccess(context, "Verification Completed! 🎉");
-    //     },
-    //     verificationFailed: (e) {
-    //       _isLoading.value = false;
-    //       _errorMessage.value = "Verification Failed: ${e.message}";
-    //       CustomSnackBar.showError(context, "Verification Failed! ❌");
-    //     },
-    //     codeSent: (String verificationId, int? resendToken) {
-    //       _isLoading.value = false;
-    //       CustomSnackBar.showSuccess(context, 'OTP sent successfully');
-
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //           builder:
-    //               (context) => OTPscreen(
-    //                 verificationId: verificationId,
-    //                 text: number.text,
-    //               ),
-    //         ),
-    //       );
-    //     },
-    //     codeAutoRetrievalTimeout: (e) {
-    //       _isLoading.value = false;
-    //       _errorMessage.value = "Code Auto Retrieval Timeout!";
-    //       // CustomSnackBar.showError(context, "Code Auto Retrieval Timeout! ❌");
-    //     },
-    //   );
-    // }
 
     // ignore: deprecated_member_use
     return WillPopScope(
@@ -129,7 +82,7 @@ class _LoginscreenState extends State<Loginscreen> {
                 children: [
                   RichText(
                     text: TextSpan(
-                      text: "Login \n",
+                      text: "Sign Up \n",
                       style: textTheme.displayLarge,
                       children: [
                         TextSpan(
@@ -171,6 +124,13 @@ class _LoginscreenState extends State<Loginscreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(height: 10.h),
+                        //full name
+                        CustomTextField(
+                          hintText: 'Name',
+                          controller: nameController,
+                          prefixIcon: Icons.person_outline,
+                        ),
+                        SizedBox(height: 10.h),
                         //email field
                         CustomTextField(
                           hintText: 'Email',
@@ -179,38 +139,27 @@ class _LoginscreenState extends State<Loginscreen> {
                           prefixIcon: Icons.email_outlined,
                         ),
                         SizedBox(height: 10.h),
-                        //password field
+                        //password filed
                         CustomTextField(
-                          hintText: 'Password',
+                          hintText: 'New Password',
                           controller: passwordController,
                           keyboardType: TextInputType.visiblePassword,
                           prefixIcon: Icons.lock_outline,
                           suffixIcon: Icons.visibility_off_outlined,
                           obsecureText: true,
                         ),
-                        SizedBox(height: 6.h),
-                        //forgot password
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => const ForgotPasswordScreen(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'Forgot Password?    ',
-                              style: textTheme.labelLarge?.copyWith(
-                                color: AppTheme.primaryColor,
-                              ),
-                            ),
-                          ),
+                        SizedBox(height: 10.h),
+                        //confirm password
+                        CustomTextField(
+                          hintText: 'Confirm Password',
+                          controller: confirmPasswordController,
+                          keyboardType: TextInputType.visiblePassword,
+                          prefixIcon: Icons.lock_outline,
+                          suffixIcon: Icons.visibility_off_outlined,
+                          obsecureText: true,
                         ),
-                        SizedBox(height: 12.h),
+                        SizedBox(height: 10.h),
+                        //phone number
                         //divider
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -245,7 +194,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           ],
                         ),
                         SizedBox(height: 16.h),
-                        //coninue with google account sign in
+                        //coninue with google sign in
                         SubmitCustomButtons(
                           width: 323.w,
                           ontap: () async {
@@ -259,21 +208,31 @@ class _LoginscreenState extends State<Loginscreen> {
                           isBorder: true,
                           //icon: Icons.google,
                         ),
-                        SizedBox(height: 110.h),
-                        //login button
+                        SizedBox(height: 50.h),
+                        //sign up  button
                         SubmitCustomButtons(
                           width: 323.w,
                           ontap: () async {
                             if (formKey.currentState!.validate()) {
-                              await AuthService.loginWithEmailAndPassword(
+                              // Additional validation for password matching
+                              if (passwordController.text !=
+                                  confirmPasswordController.text) {
+                                CustomSnackBar.showWarning(
+                                  context,
+                                  'Passwords do not match!',
+                                );
+                                return;
+                              }
+                              await AuthService.signUpWithEmailAndPassword(
                                 context,
+                                name: nameController.text.trim(),
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               );
                             }
                           },
                           backgroundColor: colorScheme.primary,
-                          text: 'LogIn',
+                          text: 'Sign Up',
                         ),
                         SizedBox(height: 10.h),
                         Padding(
@@ -282,14 +241,14 @@ class _LoginscreenState extends State<Loginscreen> {
                           ),
                           child: RichText(
                             text: TextSpan(
-                              text: "Don't have an account? ",
+                              text: "Already have an account? ",
                               style: textTheme.labelLarge?.copyWith(
                                 color: colorScheme.onSurface,
                                 fontWeight: FontWeight.w400,
                               ),
                               children: [
                                 TextSpan(
-                                  text: "Sign Up",
+                                  text: "LogIn",
                                   style: textTheme.labelLarge?.copyWith(
                                     color: AppTheme.primaryColor,
                                   ),
@@ -301,7 +260,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                             MaterialPageRoute(
                                               builder:
                                                   (context) =>
-                                                      const SignupScreen(),
+                                                      const Loginscreen(),
                                             ),
                                           );
                                         },

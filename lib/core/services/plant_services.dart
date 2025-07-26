@@ -13,9 +13,7 @@ class PlantServices {
   /// from the API
 
   static Future<List<AllPlantsModel>> loadAllPlantsApi() async {
-    final allPlantsResponse = await http.get(
-      Uri.parse('${baseUrl}all_plants.json'),
-    );
+    final allPlantsResponse = await http.get(Uri.parse(baseUrl));
     if (allPlantsResponse.statusCode == 200) {
       List<dynamic> allPlantsList = json.decode(allPlantsResponse.body);
       return allPlantsList.map((e) => AllPlantsModel.fromJson(e)).toList();

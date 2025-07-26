@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
@@ -100,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                     },
                     'Reviews',
                     profileProvider.reviewsGiven.toString(),
-                    Icons.rate_review_rounded,
+                    Icons.star_rounded,
                     colorScheme.primary,
                   ),
                   _enhancedMiniStatCard(
@@ -476,7 +477,11 @@ class ProfileScreen extends StatelessWidget {
   }
 
   String _getThemeModeText(ThemeMode mode) =>
-      mode == ThemeMode.light ? 'Light' : mode == ThemeMode.dark ? 'Dark' : 'System';
+      mode == ThemeMode.light
+          ? 'Light'
+          : mode == ThemeMode.dark
+          ? 'Dark'
+          : 'System';
 
   void _showThemeDialog(BuildContext context, ThemeProvider themeProvider) {
     final themeOptions = [
@@ -501,30 +506,40 @@ class ProfileScreen extends StatelessWidget {
       title: 'Choose Theme',
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: themeOptions.map((opt) {
-          final mode = opt['mode'] as ThemeMode;
-          final isSelected = themeProvider.themeMode == mode;
-          final colorScheme = Theme.of(context).colorScheme;
-          final textTheme = Theme.of(context).textTheme;
-          return ListTile(
-            leading: Icon(
-              opt['icon'] as IconData,
-              color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant,
-            ),
-            title: Text(
-              opt['title'] as String,
-              style: textTheme.bodyMedium?.copyWith(
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: isSelected ? colorScheme.primary : colorScheme.onSurface,
-              ),
-            ),
-            trailing: isSelected ? Icon(Icons.check_rounded, color: colorScheme.primary) : null,
-            onTap: () {
-              themeProvider.setThemeMode(mode);
-              Navigator.pop(context);
-            },
-          );
-        }).toList(),
+        children:
+            themeOptions.map((opt) {
+              final mode = opt['mode'] as ThemeMode;
+              final isSelected = themeProvider.themeMode == mode;
+              final colorScheme = Theme.of(context).colorScheme;
+              final textTheme = Theme.of(context).textTheme;
+              return ListTile(
+                leading: Icon(
+                  opt['icon'] as IconData,
+                  color:
+                      isSelected
+                          ? colorScheme.primary
+                          : colorScheme.onSurfaceVariant,
+                ),
+                title: Text(
+                  opt['title'] as String,
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                    color:
+                        isSelected
+                            ? colorScheme.primary
+                            : colorScheme.onSurface,
+                  ),
+                ),
+                trailing:
+                    isSelected
+                        ? Icon(Icons.check_rounded, color: colorScheme.primary)
+                        : null,
+                onTap: () {
+                  themeProvider.setThemeMode(mode);
+                  Navigator.pop(context);
+                },
+              );
+            }).toList(),
       ),
       showCancelButton: false,
       showConfirmButton: false,
@@ -535,13 +550,15 @@ class ProfileScreen extends StatelessWidget {
   void _showLogoutDialog(BuildContext context) {
     CustomDialog.showDeleteConfirmation(
       context: context,
-
       title: 'Logout',
-
       content:
           'Are you sure you want to logout? You will need to sign in again to access your account.',
       confirmText: 'Confirm',
-      onDelete: () {
+      onDelete: () async {
+        await FirebaseAuth.instance.signOut();
+        await Future.delayed(Duration(milliseconds: 100)); // optional quick fix
+
+        if (!context.mounted) return;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => EntryScreen()),

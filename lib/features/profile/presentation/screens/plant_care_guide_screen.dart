@@ -1,8 +1,11 @@
+// ignore_for_file: unused_local_variable, unused_element
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/presentation/screens/customer_support_screen.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
+// ignore: unused_import
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
@@ -97,7 +100,6 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Plant Care Guide', style: textTheme.headlineMedium),
-       
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,

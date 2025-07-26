@@ -95,6 +95,7 @@ class CustomTextField extends StatelessWidget {
             obscureText: isObscure,
             keyboardType: keyboardType,
             style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+
             validator: _validateInput,
             //readOnly: readOnly ?? false,
             maxLength: maxLength ?? 50,
@@ -120,7 +121,9 @@ class CustomTextField extends StatelessWidget {
                       ? GestureDetector(
                         onTap: () => notifier.value = !notifier.value,
                         child: Icon(
-                          isObscure ? Icons.visibility : Icons.visibility_off,
+                          isObscure
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
                         ),
                       )
                       : (suffixIcon != null

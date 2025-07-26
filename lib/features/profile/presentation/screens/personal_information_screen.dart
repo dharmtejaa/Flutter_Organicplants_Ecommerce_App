@@ -45,7 +45,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Personal Information", style: textTheme.headlineMedium),
-        
+
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -249,7 +249,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   void _changeProfilePicture() {
-   
     CustomSnackBar.showInfo(
       context,
       "Profile picture change feature coming soon!",
@@ -259,7 +258,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
-    CustomSnackBar.showSuccess(
+      CustomSnackBar.showSuccess(
         context,
         "Changes saved successfully!",
         duration: Duration(seconds: 2),
@@ -275,7 +274,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
       content:
           'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.',
       onDelete: () {
-       
         CustomSnackBar.showInfo(
           context,
           "Account deletion feature coming soon!",

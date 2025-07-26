@@ -5,7 +5,6 @@ import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
-
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/home/logic/onboarding_provider.dart';
 import 'package:provider/provider.dart';

@@ -7,10 +7,11 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 
-class CustomButton extends StatelessWidget {
+class SubmitCustomButtons extends StatelessWidget {
   final String? text;
+
   final String? networkImage;
-  final VoidCallback? ontap;
+  final Future<void> Function()? ontap;
   final Color backgroundColor;
   final IconData? icon;
   final Color? textColor;
@@ -20,9 +21,10 @@ class CustomButton extends StatelessWidget {
   final double? height;
   final bool? isBorder;
 
-  const CustomButton({
+  const SubmitCustomButtons({
     super.key,
     this.text,
+
     this.networkImage,
     this.ontap,
     this.icon,

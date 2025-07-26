@@ -4,6 +4,7 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
+// ignore: unused_import
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
@@ -60,7 +61,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Payment Methods", style: textTheme.headlineSmall),
-        
+
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),
@@ -89,7 +90,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                 width: 350.w,
                 backgroundColor: colorScheme.primary,
                 text: "Add Payment Method",
-                ontap: _showAddPaymentMethodDialog,
+                ontap: () => _showAddPaymentMethodDialog(),
                 icon: Icons.add,
               ),
               SizedBox(height: AppSizes.paddingMd),
@@ -276,6 +277,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     }
   }
 
+  // ignore: unused_element
   void _showAddPaymentMethodDialog() {
     CustomDialog.showCustom(
       context: context,
@@ -363,7 +365,6 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   }
 
   void editPaymentMethod(Map<String, dynamic> paymentMethod) {
-    
     CustomSnackBar.showInfo(context, 'Edit payment method form coming soon!');
   }
 

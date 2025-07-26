@@ -12,6 +12,7 @@ import 'package:organicplants/features/search/logic/search_screen_provider.dart'
 import 'package:organicplants/features/splash/presentation/screens/splashscreen.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/shared/logic/theme_provider.dart';
+import 'package:organicplants/shared/logic/user_profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -41,6 +42,7 @@ void main() async {
           create: (_) => ThemeProvider(),
         ), // Your ThemeProvider
         ChangeNotifierProvider(create: (_) => CarouselProvider()),
+        ChangeNotifierProvider(create: (_) => UserProfileProvider()),
       ],
       child: const MyApp(),
     ),
@@ -64,9 +66,9 @@ class MyApp extends StatelessWidget {
           builder: (context, widget) {
             // 👇 Overrides global system font scaling
             return MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                textScaler: TextScaler.linear(1.0),
-              ),
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: TextScaler.linear(1.0)),
               child: widget!,
             );
           },
