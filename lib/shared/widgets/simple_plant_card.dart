@@ -43,11 +43,13 @@ class SimplePlantCard extends StatelessWidget {
         searchProvider.addRecentlyViewedPlant(plant);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductScreen(plants: plant)),
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(plantId: plant.id ?? ''),
+          ),
         );
       },
       onDoubleTap: () {
-        wishlistProvider.toggleWishList(plant);
+        wishlistProvider.toggleWishList(plant.id ?? '');
       },
       child: Container(
         decoration: BoxDecoration(
@@ -94,9 +96,9 @@ class SimplePlantCard extends StatelessWidget {
                               AppSizes.radiusSm,
                             ),
                             child:
-                                plant.images != null && plant.images!.isNotEmpty
+                                plant.images?.isNotEmpty == true
                                     ? CachedNetworkImage(
-                                      imageUrl: plant.images!.first.url ?? '',
+                                      imageUrl: plant.images?.first.url ?? '',
                                       fit: BoxFit.cover,
                                       cacheManager:
                                           MyCustomCacheManager.instance,
@@ -161,7 +163,7 @@ class SimplePlantCard extends StatelessWidget {
                         Positioned(
                           top: 4,
                           right: 4,
-                          child: WishlistIconButton(plant: plant),
+                          child: WishlistIconButton(plantId: plant.id ?? ''),
                         ),
                       ],
                     ),
@@ -205,7 +207,10 @@ class SimplePlantCard extends StatelessWidget {
             Positioned(
               bottom: 2, //-AppSizes.spaceXs,
               right: 2, //-AppSizes.spaceXs,
-              child: AddToCartButton(cartProvider: cartProvider, plant: plant),
+              child: AddToCartButton(
+                cartProvider: cartProvider,
+                plantId: plant.id ?? '',
+              ),
             ),
           ],
         ),

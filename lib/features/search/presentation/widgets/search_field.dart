@@ -127,13 +127,17 @@ class _SearchFieldState extends State<SearchField> {
                                 searchProvider.addRecentSearchHistory(
                                   plant.commonName ?? '',
                                 );
-                                searchProvider.addRecentlyViewedPlant(plant);
+                                searchProvider.addRecentlyViewedPlant(
+                                  plant.id ?? '',
+                                );
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder:
-                                        (_) => ProductScreen(plants: plant),
+                                        (_) => ProductScreen(
+                                          plantId: plant.id ?? '',
+                                        ),
                                   ),
                                 );
                               },
@@ -147,11 +151,10 @@ class _SearchFieldState extends State<SearchField> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8.r),
                                       child:
-                                          plant.images != null &&
-                                                  plant.images!.isNotEmpty
+                                          plant.images?.isNotEmpty == true
                                               ? CachedNetworkImage(
                                                 imageUrl:
-                                                    plant.images!.first.url ??
+                                                    plant.images?.first.url ??
                                                     '',
                                                 width: 38.w,
                                                 height: 38.w,

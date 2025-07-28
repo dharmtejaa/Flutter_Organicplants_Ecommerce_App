@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
@@ -14,15 +15,22 @@ import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
-  final AllPlantsModel plant;
+  final String plantId;
   final bool? scifiname;
 
-  const ProductCard({super.key, required this.plant, this.scifiname});
+  const ProductCard({super.key, required this.plantId, this.scifiname});
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+
+    // If plant is not found, return empty container
+    if (plant == null) {
+      return Container();
+    }
+
     //final isDark = colorScheme.brightness == Brightness.dark;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final wishlistProvider = Provider.of<WishlistProvider>(
@@ -45,15 +53,17 @@ class ProductCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        searchProvider.addRecentlyViewedPlant(plant);
+        searchProvider.addRecentlyViewedPlant(plant.id ?? '');
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductScreen(plants: plant)),
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(plantId: plant.id ?? ''),
+          ),
         );
       },
 
       onDoubleTap: () {
-        wishlistProvider.toggleWishList(plant);
+        wishlistProvider.toggleWishList(plant.id ?? '');
       },
       child: Container(
         width: cardWidth,
@@ -79,7 +89,10 @@ class ProductCard extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                         child: CachedNetworkImage(
-                          imageUrl: plant.images![0].url!,
+                          imageUrl:
+                              plant.images?.isNotEmpty == true
+                                  ? plant.images?.first.url ?? ''
+                                  : '',
                           height: imageHeight,
                           width: double.infinity,
                           fit: BoxFit.cover,
@@ -142,7 +155,7 @@ class ProductCard extends StatelessWidget {
                       Positioned(
                         top: 4,
                         right: 4,
-                        child: WishlistIconButton(plant: plant),
+                        child: WishlistIconButton(plantId: plant.id ?? ''),
                       ),
                     ],
                   ),
@@ -198,7 +211,10 @@ class ProductCard extends StatelessWidget {
             Positioned(
               bottom: 0, //-AppSizes.spaceXs,
               right: 0, //-AppSizes.spaceXs,
-              child: AddToCartButton(cartProvider: cartProvider, plant: plant),
+              child: AddToCartButton(
+                cartProvider: cartProvider,
+                plantId: plant.id!,
+              ),
             ),
           ],
         ),

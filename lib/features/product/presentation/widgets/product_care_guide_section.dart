@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 
 class ProductCareGuideSection extends StatelessWidget {
-  final AllPlantsModel plants;
+  final String plantId;
 
-  const ProductCareGuideSection({super.key, required this.plants});
+  const ProductCareGuideSection({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
     //final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -23,18 +25,18 @@ class ProductCareGuideSection extends StatelessWidget {
           //SizedBox(height: 12.h),
           Text('Plant Highlights', style: textTheme.titleLarge),
           SizedBox(height: 12.h),
-          QuickGuideCard(plants: plants),
+          QuickGuideCard(plantId: plant!.id!),
           SizedBox(height: 14.h),
           // Care Guid
           Text('Plant Care Guide', style: textTheme.titleLarge),
           SizedBox(height: 12.h),
-          CareGuideSection(plant: plants),
+          CareGuideSection(plantId: plantId),
           SizedBox(height: 12.h),
 
           // FAQs
           Text('FAQs', style: textTheme.titleLarge),
           SizedBox(height: 8.h),
-          FAQSection(plant: plants),
+          FAQSection(plantId: plant.id!),
           SizedBox(height: 12.h),
         ],
       ),
@@ -43,13 +45,14 @@ class ProductCareGuideSection extends StatelessWidget {
 }
 
 class QuickGuideCard extends StatelessWidget {
-  final AllPlantsModel plants;
+  final String plantId;
 
-  const QuickGuideCard({super.key, required this.plants});
+  const QuickGuideCard({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
-    final guide = plants.plantQuickGuide!;
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+    final guide = plant!.plantQuickGuide!;
     final colorScheme = Theme.of(context).colorScheme;
 
     final items = [
@@ -163,13 +166,14 @@ class _GuideCard extends StatelessWidget {
 }
 
 class CareGuideSection extends StatelessWidget {
-  final AllPlantsModel plant;
+  final String plantId;
 
-  const CareGuideSection({super.key, required this.plant});
+  const CareGuideSection({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
-    final care = plant.careGuide;
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+    final care = plant!.careGuide;
     if (care == null) return const SizedBox();
     // final colorScheme = Theme.of(context).colorScheme;
     // final textTheme = Theme.of(context).textTheme;
@@ -339,14 +343,15 @@ class _CareCard extends StatelessWidget {
 }
 
 class FAQSection extends StatelessWidget {
-  final AllPlantsModel plant;
+  final String plantId;
 
-  const FAQSection({super.key, required this.plant});
+  const FAQSection({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
     final colorScheme = Theme.of(context).colorScheme;
-    final faqs = plant.faqs;
+    final faqs = plant!.faqs;
     if (faqs == null) return const SizedBox();
 
     return ListView.builder(

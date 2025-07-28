@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_bottom_bar.dart';
 import 'package:organicplants/features/product/presentation/widgets/product_care_guide_section.dart';
@@ -13,9 +14,9 @@ import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
 import 'package:organicplants/shared/buttons/searchbutton.dart';
 
 class ProductScreen extends StatelessWidget {
-  final AllPlantsModel plants;
+  final String plantId;
 
-  ProductScreen({super.key, required this.plants});
+  ProductScreen({super.key, required this.plantId});
 
   final searchController = TextEditingController();
 
@@ -23,13 +24,14 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
         backgroundColor: colorScheme.surface,
         title: Text(
-          plants.commonName ?? "empty",
+          plant?.commonName ?? "empty",
           style: textTheme.headlineMedium,
         ),
         actions: [
@@ -54,10 +56,10 @@ class ProductScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Image Gallery Section
-                ProductImageGallery(plants: plants),
+                ProductImageGallery(plantId: plant!.id!),
                 SizedBox(height: 12.h),
                 // Product Header Info Section
-                ProductHeaderInfo(plants: plants),
+                ProductHeaderInfo(plantId: plant.id!),
                 SizedBox(height: 16.h),
                 // Product Features Section
                 ProductFeaturesSection(searchController: searchController),
@@ -65,12 +67,12 @@ class ProductScreen extends StatelessWidget {
                 Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
                 // Product Description Section
-                ProductDescriptionSection(plants: plants),
+                ProductDescriptionSection(plantId: plantId),
                 SizedBox(height: 12.h),
                 Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
                 // Product Care Guide Section
-                ProductCareGuideSection(plants: plants),
+                ProductCareGuideSection(plantId: plant.id!),
                 // Reviews section
                 SizedBox(height: 12.h),
                 Divider(thickness: 6.h),
@@ -80,7 +82,7 @@ class ProductScreen extends StatelessWidget {
                 SizedBox(height: 12.h),
                 Divider(thickness: 6.h),
                 SizedBox(height: 12.h),
-                ProductSuggestionsSection(currentPlant: plants),
+                ProductSuggestionsSection(plantId: plant.id!),
               ],
             ),
           ),
@@ -89,7 +91,7 @@ class ProductScreen extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            child: ProductBottomBar(plants: plants),
+            child: ProductBottomBar(plantId: plant.id!),
           ),
         ],
       ),

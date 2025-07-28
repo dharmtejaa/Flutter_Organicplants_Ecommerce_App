@@ -178,7 +178,9 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       itemCount: provider.recentViewedPlants.length,
       itemBuilder: (context, index) {
-        return ProductCardGrid(plant: provider.recentViewedPlants[index]);
+        return ProductCardGrid(
+          plantId: provider.recentViewedPlants[index].id ?? '',
+        );
       },
     );
   }

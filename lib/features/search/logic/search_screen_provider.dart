@@ -25,13 +25,22 @@ class SearchScreenProvider extends ChangeNotifier {
   }
 
   // Add plant to recently viewed (first removes duplicate)
-  Future<void> addRecentlyViewedPlant(AllPlantsModel plant) async {
+  void addRecentlyViewedPlant(String plantId) {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+    if (plant == null) return;
+
+    // Remove if already exists
     _recentViewedPlants.removeWhere((p) => p.id == plant.id);
+
+    // Add to the beginning
     _recentViewedPlants.insert(0, plant);
+
     notifyListeners();
   }
 
-  Future<void> removeRecentViewPlant(AllPlantsModel plant) async {
+  Future<void> removeRecentViewPlant(String plantId) async {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+    if (plant == null) return;
     _recentViewedPlants.removeWhere((p) => p.id == plant.id);
     notifyListeners();
   }

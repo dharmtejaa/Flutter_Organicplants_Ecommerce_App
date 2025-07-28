@@ -60,7 +60,7 @@ class PlantSectionWidget extends StatelessWidget {
                 separatorBuilder: (context, index) => SizedBox(width: 6.w),
                 itemBuilder: (context, index) {
                   final plant = displayPlants[index];
-                  return ProductCard(plant: plant);
+                  return ProductCard(plantId: plant.id!);
                 },
               ),
             ),

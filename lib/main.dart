@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
               data: MediaQuery.of(
                 context,
               ).copyWith(textScaler: TextScaler.linear(1.0)),
-              child: widget!,
+              child: widget ?? const SizedBox.shrink(),
             );
           },
           debugShowCheckedModeBanner: false,

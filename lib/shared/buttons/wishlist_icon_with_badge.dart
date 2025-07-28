@@ -13,7 +13,6 @@ class WishlistIconWithBadge extends StatelessWidget {
 
     return Consumer<WishlistProvider>(
       builder: (context, wishlistProvider, child) {
-
         return GestureDetector(
           onTap: () {
             Navigator.push(
@@ -29,31 +28,6 @@ class WishlistIconWithBadge extends StatelessWidget {
                 size: AppSizes.iconMd,
                 color: colorScheme.onSurface,
               ),
-              // Animated badge
-              // if (wishlistCount > 0)
-              //   Positioned(
-              //     right: -7,
-              //     top: -6,
-              //     child: AnimatedSwitcher(
-              //       duration: const Duration(milliseconds: 300),
-              //       transitionBuilder:
-              //           (child, animation) =>
-              //               ScaleTransition(scale: animation, child: child),
-              //       child: CircleAvatar(
-              //         key: ValueKey(wishlistCount),
-              //         radius: 8.r,
-              //         backgroundColor: colorScheme.primary,
-              //         child: Text(
-              //           '$wishlistCount',
-              //           style: const TextStyle(
-              //             fontSize: 8,
-              //             color: Colors.white,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
             ],
           ),
         );

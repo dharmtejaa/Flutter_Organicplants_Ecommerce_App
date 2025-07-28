@@ -7,15 +7,15 @@ import 'package:organicplants/shared/widgets/plantcategory.dart';
 import 'package:organicplants/shared/widgets/simple_plant_card.dart';
 
 class ProductSuggestionsSection extends StatelessWidget {
-  final AllPlantsModel currentPlant;
+  final String plantId;
 
-  const ProductSuggestionsSection({super.key, required this.currentPlant});
+  const ProductSuggestionsSection({super.key, required this.plantId});
 
   List<AllPlantsModel> _getSuggestedPlants() {
+    final AllPlantsModel? currentPlant = AllPlantsGlobalData.getById(plantId);
     List<AllPlantsModel> suggestions = [];
-
     // Priority 1: Same category plants (most relevant)
-    final sameCategoryPlants = getPlantsByCategory(currentPlant.category ?? '');
+    final sameCategoryPlants = getPlantsByCategory(currentPlant!.category!);
     final categorySuggestions =
         sameCategoryPlants
             .where((plant) => plant.id != currentPlant.id)
@@ -140,7 +140,8 @@ class ProductSuggestionsSection extends StatelessWidget {
   }
 
   String _getSuggestionTitle() {
-    if (currentPlant.category != null) {
+    final AllPlantsModel? currentPlant = AllPlantsGlobalData.getById(plantId);
+    if (currentPlant!.category != null) {
       return 'More ${currentPlant.category}';
     }
     return 'You might also like';

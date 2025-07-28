@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
@@ -9,22 +10,28 @@ class AddToCartButton extends StatelessWidget {
   const AddToCartButton({
     super.key,
     required this.cartProvider,
-    required this.plant,
+    required this.plantId,
   });
 
   final CartProvider cartProvider;
-  final AllPlantsModel plant;
+  final String plantId;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
     // final isDark = colorScheme.brightness == Brightness.dark;
 
     return GestureDetector(
       onTap: () {
-        final alreadyInCart = cartProvider.items.containsKey(plant.id);
+        if (plant == null) {
+          CustomSnackBar.showError(context, 'Plant not found');
+          return;
+        }
+
+        final alreadyInCart = cartProvider.isInCart(plant.id);
         if (!alreadyInCart) {
-          cartProvider.addToCart(plant);
+          cartProvider.addToCart(plant.id ?? '');
         } else {
           CustomSnackBar.showInfo(
             context,

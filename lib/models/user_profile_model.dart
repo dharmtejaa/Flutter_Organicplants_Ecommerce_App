@@ -18,7 +18,7 @@ class UserProfileModel {
   factory UserProfileModel.fromMap(Map<String, dynamic> map, String uid) {
     return UserProfileModel(
       uid: uid,
-      fullName: map['fullName'] ?? 'Plant Lover',
+fullName: map['fullName'] ?? 'Plant Lover',
       email: map['email'] ?? '',
       //phoneNumber: map['phoneNumber'] ?? '',
       profileImageUrl:

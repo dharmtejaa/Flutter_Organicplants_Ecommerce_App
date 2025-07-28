@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
@@ -13,10 +14,9 @@ import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class ProductTile extends StatelessWidget {
-  final bool? scifiname;
-  final AllPlantsModel plant;
+  final String plantId;
 
-  const ProductTile({super.key, required this.plant, this.scifiname});
+  const ProductTile({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,13 @@ class ProductTile extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final cartProvider = Provider.of<CartProvider>(context, listen: true);
     final remove = Provider.of<WishlistProvider>(context, listen: false);
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+
+    // If plant is not found, return empty container
+    if (plant == null) {
+      return Container();
+    }
+
     final offerPrice = plant.prices?.offerPrice ?? 0;
     final originalPrice = plant.prices?.originalPrice ?? 0;
     final discountPercent =
@@ -35,7 +42,9 @@ class ProductTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductScreen(plants: plant)),
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(plantId: plant.id ?? ''),
+          ),
         );
       },
       child: Stack(
@@ -79,14 +88,7 @@ class ProductTile extends StatelessWidget {
                         style: textTheme.titleLarge,
                       ),
                       SizedBox(height: 3.h),
-                      // Text(
-                      //   scifiname == true
-                      //       ? plant.scientificName ?? 'Unknown Scientific Name'
-                      //       : plant.category ?? 'Unknown Category',
-                      //   maxLines: 2,
-                      //   overflow: TextOverflow.ellipsis,
-                      //   style: textTheme.bodyMedium,
-                      // ),
+
                       Row(
                         children: [
                           Text(
@@ -109,8 +111,6 @@ class ProductTile extends StatelessWidget {
                       SizedBox(height: 3.h),
                       if (offerPrice < originalPrice)
                         Text('$discount% off', style: textTheme.bodySmall),
-                      //],
-                      //),
                       SizedBox(height: 3.h),
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -135,14 +135,14 @@ class ProductTile extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    remove.toggleWishList(plant);
+                    remove.toggleWishList(plant.id ?? '');
                     CustomSnackBar.showSuccess(
                       context,
                       '${plant.commonName} has been removed from wishList!',
                       plantName: plant.commonName,
                       actionLabel: 'Undo',
                       onAction: () {
-                        remove.toggleWishList(plant);
+                        remove.toggleWishList(plant.id ?? '');
                       },
                     );
                   },
@@ -158,7 +158,10 @@ class ProductTile extends StatelessWidget {
           Positioned(
             bottom: 6,
             right: 6,
-            child: AddToCartButton(cartProvider: cartProvider, plant: plant),
+            child: AddToCartButton(
+              cartProvider: cartProvider,
+              plantId: plant.id ?? '',
+            ),
           ),
         ],
       ),

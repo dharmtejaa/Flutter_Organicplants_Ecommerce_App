@@ -111,7 +111,7 @@ class _PlantCategoryState extends State<PlantCategory> {
     // Check if we can use cached result
     if (_filteredPlantsCache.containsKey(cacheKey) &&
         _lastFilters == _filtersNotifier.value) {
-      return _filteredPlantsCache[cacheKey]!;
+      return _filteredPlantsCache[cacheKey] ?? [];
     }
 
     final filteredPlants = PlantFilterService.getFilteredPlants(
@@ -273,7 +273,7 @@ class _PlantCategoryState extends State<PlantCategory> {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return ProductCardGrid(
-          plant: filteredPlants[index],
+          plantId: filteredPlants[index].id ?? '',
           scifiname: isMainCategory,
         );
       },

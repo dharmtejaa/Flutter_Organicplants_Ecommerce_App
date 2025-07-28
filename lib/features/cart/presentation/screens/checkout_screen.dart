@@ -1,26 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
+import 'package:organicplants/features/cart/data/cart_model.dart';
 import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
-import 'package:organicplants/features/cart/data/cart_items_quantity_model.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/features/profile/presentation/screens/order_history_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final AllPlantsModel? buyNowPlant;
-  final List<CartItem>? cartItems;
+  final String? buyNowPlantId;
+  final List<CartItemModel>? cartItems;
   final double? totalOriginalPrice;
   final double? totalOfferPrice;
   final double? totalDiscount;
   const CheckoutScreen({
     super.key,
-    this.buyNowPlant,
+    this.buyNowPlantId,
     this.cartItems,
     this.totalOriginalPrice,
     this.totalOfferPrice,
@@ -32,7 +33,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  late final List<CartItem> cartItems;
+  late final List<CartItemModel> cartItems;
 
   final Map<String, String> address = {
     'name': 'John Doe',
@@ -54,26 +55,37 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       widget.totalOfferPrice?.toInt() ??
       cartItems.fold(
         0,
-        (sum, item) =>
-            sum +
-            ((item.plant.prices?.offerPrice?.toInt() ?? 0) * (item.quantity)),
+        (sum, item) => sum + ((item.offerPrice.toInt()) * (item.quantity)),
       );
 
   @override
   void initState() {
     super.initState();
-    if (widget.buyNowPlant != null) {
-      final plant = widget.buyNowPlant!;
-      cartItems = [CartItem(plant: plant, quantity: 1)];
+    if (widget.buyNowPlantId != null) {
+      final AllPlantsModel? plant = AllPlantsGlobalData.getById(
+        widget.buyNowPlantId ?? '',
+      );
+      if (plant != null) {
+        cartItems = [
+          CartItemModel(
+            plantId: plant.id ?? '',
+            plantName: plant.commonName ?? '',
+            imageUrl:
+                plant.images?.isNotEmpty == true
+                    ? plant.images?.first.url ?? ''
+                    : '',
+            originalPrice: (plant.prices?.originalPrice ?? 0).toDouble(),
+            offerPrice: (plant.prices?.offerPrice ?? 0).toDouble(),
+            discount: 0.0,
+            rating: (plant.rating ?? 0).toDouble(),
+            quantity: 1,
+          ),
+        ];
+      } else {
+        cartItems = [];
+      }
     } else if (widget.cartItems != null) {
-      cartItems =
-          widget.cartItems!
-              // ignore: unnecessary_null_comparison
-              .where((item) => item != null)
-              .map(
-                (item) => CartItem(plant: item.plant, quantity: item.quantity),
-              )
-              .toList();
+      cartItems = widget.cartItems!;
     } else {
       cartItems = [];
     }
@@ -150,21 +162,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: CachedNetworkImage(
                 height: 45.h,
                 width: 45.w,
-                imageUrl: item.plant.images?[0].url ?? '',
+                imageUrl: item.imageUrl,
                 fit: BoxFit.cover,
                 cacheManager: MyCustomCacheManager.instance,
               ),
             ),
-            title: Text(
-              item.plant.commonName ?? 'Unknown Plant',
-              style: textTheme.titleMedium,
-            ),
+            title: Text(item.plantName, style: textTheme.titleMedium),
             subtitle: Text(
               'Qty: ${item.quantity}',
               style: textTheme.bodyMedium,
             ),
             trailing: Text(
-              '₹${item.plant.prices?.offerPrice?.toInt() ?? 0 * item.quantity}',
+              '₹${item.offerPrice.toInt() * item.quantity}',
               style: textTheme.bodyMedium?.copyWith(
                 color: colorScheme.primary,
                 fontWeight: FontWeight.w600,
@@ -211,11 +220,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(address['name']!, style: textTheme.titleMedium),
+                Text(address['name'] ?? '', style: textTheme.titleMedium),
                 SizedBox(height: 3.h),
-                Text(address['address']!, style: textTheme.bodySmall),
+                Text(address['address'] ?? '', style: textTheme.bodySmall),
                 SizedBox(height: 3.h),
-                Text(address['phone']!, style: textTheme.bodySmall),
+                Text(address['phone'] ?? '', style: textTheme.bodySmall),
               ],
             ),
           ),
@@ -338,13 +347,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             cartItems
                 .map(
                   (item) => {
-                    'name': item.plant.commonName ?? 'Unknown Plant',
+                    'name': item.plantName,
                     'quantity': item.quantity,
-                    'price': '₹${item.plant.prices?.offerPrice?.toInt() ?? 0}',
+                    'price': '₹${item.offerPrice.toInt()}',
                   },
                 )
                 .toList(),
-        'deliveryAddress': address['address'],
+        'deliveryAddress': address['address'] ?? '',
         'trackingNumber': null,
       };
       final textTheme = Theme.of(context).textTheme;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 
 class WishlistProvider extends ChangeNotifier {
@@ -10,8 +11,13 @@ class WishlistProvider extends ChangeNotifier {
     return _wishList.any((plant) => plant.id == plantId);
   }
 
-  void toggleWishList(AllPlantsModel plant) {
-    if (isInWishlist(plant.id!)) {
+  void toggleWishList(String plantId) {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+    if (plant == null) {
+      return;
+    }
+
+    if (isInWishlist(plant.id ?? '')) {
       _wishList.removeWhere((p) => p.id == plant.id);
     } else {
       _wishList.add(plant);

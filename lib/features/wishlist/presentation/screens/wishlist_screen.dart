@@ -55,23 +55,10 @@ class WishlistScreen extends StatelessWidget {
                 physics: BouncingScrollPhysics(),
                 itemCount: value.wishList.length,
                 itemBuilder: (context, index) {
-                  return ProductTile(plant: value.wishList[index]);
+                  return ProductTile(plantId: value.wishList[index].id ?? '');
                 },
               );
         },
-
-        // child: GridView.builder(
-        //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //     crossAxisCount: 2,
-        //     crossAxisSpacing: 5,
-        //     mainAxisSpacing: 15,
-        //     childAspectRatio: 0.6,
-        //   ),
-        //   itemCount: value.wishList.length,
-        //   itemBuilder: (context, index) {
-        //     return ProductCard(plant: value.wishList[index]);
-        //   },
-        // ),
       ),
     );
   }

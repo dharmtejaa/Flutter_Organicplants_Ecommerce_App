@@ -435,7 +435,7 @@ class OrderHistoryScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProductScreen(plants: plant),
+                    builder: (_) => ProductScreen(plantId: plant.id!),
                   ),
                 );
               } else {

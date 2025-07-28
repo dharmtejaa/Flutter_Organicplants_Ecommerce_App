@@ -98,7 +98,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ProductScreen(plants: plant),
+                        builder: (context) => ProductScreen(plantId: plant.id!),
                       ),
                     );
                   } else {

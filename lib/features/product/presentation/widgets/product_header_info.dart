@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/presentation/screens/share_app_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 
 class ProductHeaderInfo extends StatelessWidget {
-  final AllPlantsModel plants;
+  final String plantId;
 
-  const ProductHeaderInfo({super.key, required this.plants});
+  const ProductHeaderInfo({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
-    final offerPrice = (plants.prices?.offerPrice ?? 0).toInt();
-    final originalPrice = (plants.prices?.originalPrice ?? 0).toInt();
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+    final offerPrice = (plant!.prices?.offerPrice ?? 0).toInt();
+    final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
     final discountPercent =
         originalPrice > 0
             ? ((originalPrice - offerPrice) / originalPrice) * 100
@@ -28,12 +30,12 @@ class ProductHeaderInfo extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(plants.commonName ?? '', style: textTheme.displaySmall),
+              Text(plant.commonName ?? '', style: textTheme.displaySmall),
 
               SizedBox(width: 16.w),
               Expanded(
                 child: Text(
-                  '(${plants.scientificName})',
+                  '(${plant.scientificName})',
                   style: textTheme.titleLarge?.copyWith(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w500,
@@ -59,7 +61,7 @@ class ProductHeaderInfo extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Text(
-            plants.category ?? '',
+            plant.category ?? '',
             style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 16.h),
@@ -69,7 +71,7 @@ class ProductHeaderInfo extends StatelessWidget {
             children: [
               ...List.generate(5, (index) {
                 return Icon(
-                  index < plants.rating!.floor()
+                  index < plant.rating!.floor()
                       ? Icons.star_rounded
                       : Icons.star_border_rounded,
                   size: AppSizes.iconSm,
@@ -78,7 +80,7 @@ class ProductHeaderInfo extends StatelessWidget {
               }),
               SizedBox(width: 8.w),
               Text(
-                plants.rating!.toStringAsFixed(1),
+                plant.rating!.toStringAsFixed(1),
                 style: textTheme.bodyMedium,
               ),
             ],

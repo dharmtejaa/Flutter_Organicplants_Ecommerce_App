@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
@@ -15,10 +16,10 @@ import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
 import 'package:provider/provider.dart';
 
 class ProductCardGrid extends StatelessWidget {
-  final AllPlantsModel plant;
+  final String plantId;
   final bool? scifiname;
 
-  const ProductCardGrid({super.key, required this.plant, this.scifiname});
+  const ProductCardGrid({super.key, required this.plantId, this.scifiname});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,12 @@ class ProductCardGrid extends StatelessWidget {
       context,
       listen: false,
     );
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
+
+    // If plant is not found, return empty container
+    if (plant == null) {
+      return Container();
+    }
 
     final offerPrice = (plant.prices?.offerPrice ?? 0).toInt();
     final originalPrice = (plant.prices?.originalPrice ?? 0).toInt();
@@ -46,14 +53,16 @@ class ProductCardGrid extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        searchProvider.addRecentlyViewedPlant(plant);
+        searchProvider.addRecentlyViewedPlant(plant.id ?? '');
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProductScreen(plants: plant)),
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(plantId: plant.id ?? ''),
+          ),
         );
       },
       onDoubleTap: () {
-        wishlistProvider.toggleWishList(plant);
+        wishlistProvider.toggleWishList(plant.id ?? '');
       },
       child: Container(
         //margin: EdgeInsets.only(bottom: AppSizes.vMarginXs),
@@ -77,7 +86,10 @@ class ProductCardGrid extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                         child: CachedNetworkImage(
-                          imageUrl: plant.images![0].url!,
+                          imageUrl:
+                              plant.images?.isNotEmpty == true
+                                  ? plant.images?.first.url ?? ''
+                                  : '',
                           width: double.infinity,
                           height: imageHeight,
                           fit: BoxFit.cover,
@@ -135,7 +147,7 @@ class ProductCardGrid extends StatelessWidget {
                       Positioned(
                         top: 4,
                         right: 4,
-                        child: WishlistIconButton(plant: plant),
+                        child: WishlistIconButton(plantId: plant.id ?? ''),
                       ),
                     ],
                   ),
@@ -190,7 +202,10 @@ class ProductCardGrid extends StatelessWidget {
             Positioned(
               bottom: 0, //-AppSizes.spaceXs,
               right: 0, //-AppSizes.spaceXs,
-              child: AddToCartButton(cartProvider: cartProvider, plant: plant),
+              child: AddToCartButton(
+                cartProvider: cartProvider,
+                plantId: plant.id ?? '',
+              ),
             ),
           ],
         ),

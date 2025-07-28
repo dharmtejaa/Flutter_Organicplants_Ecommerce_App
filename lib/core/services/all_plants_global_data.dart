@@ -138,3 +138,21 @@ final List<Map<String, String>> categories = [
     "filterTag": "Outdoor plant",
   },
 ];
+
+class AllPlantsGlobalData {
+  static List<AllPlantsModel> plantsList = [];
+  static Map<String, AllPlantsModel> plantsMap = {};
+
+  static void initialize(List<AllPlantsModel> plants) {
+    plantsList.clear();
+    plantsList.addAll(plants);
+    plantsMap.clear();
+    plantsMap.addEntries(
+      plants.where((p) => p.id != null).map((p) => MapEntry(p.id!, p)),
+    );
+  }
+
+  static AllPlantsModel? getById(String plantId) => plantsMap[plantId];
+
+  static List<AllPlantsModel> get all => List.unmodifiable(plantsList);
+}

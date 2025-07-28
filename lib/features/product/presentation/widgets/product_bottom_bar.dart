@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
@@ -12,11 +13,12 @@ import 'package:provider/provider.dart';
 import 'package:organicplants/features/cart/presentation/screens/checkout_screen.dart';
 
 class ProductBottomBar extends StatelessWidget {
-  final AllPlantsModel plants;
-  const ProductBottomBar({super.key, required this.plants});
+  final String plantId;
+  const ProductBottomBar({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
     final colorScheme = Theme.of(context).colorScheme;
     final cartProvider = Provider.of<CartProvider>(context);
     return Container(
@@ -30,7 +32,7 @@ class ProductBottomBar extends StatelessWidget {
         children: [
           // Favorite button
           WishlistIconButton(
-            plant: plants,
+            plantId: plant!.id!,
             iconSize: AppSizes.iconLg,
             radius: AppSizes.radiusXxl,
           ),
@@ -38,8 +40,8 @@ class ProductBottomBar extends StatelessWidget {
           Expanded(
             child: CustomButton(
               ontap: () {
-                if (!cartProvider.isInCart(plants.id)) {
-                  cartProvider.addToCart(plants);
+                if (!cartProvider.isInCart(plant.id!)) {
+                  cartProvider.addToCart(plant.id!);
                   // CustomSnackBar.showSuccess(
                   //   context,
                   //   '${plants.commonName} Added to Cart',
@@ -54,7 +56,7 @@ class ProductBottomBar extends StatelessWidget {
                 } else {
                   CustomSnackBar.showInfo(
                     context,
-                    '${plants.commonName} is already in cart',
+                    '${plant.commonName} is already in cart',
                     actionLabel: 'View Cart',
                     onAction: () {
                       Navigator.push(
@@ -68,7 +70,7 @@ class ProductBottomBar extends StatelessWidget {
               backgroundColor: colorScheme.primary,
               icon: Icons.shopping_cart_outlined,
               textColor: colorScheme.onPrimary,
-              text: cartProvider.isInCart(plants.id) ? 'In Cart' : 'Add',
+              text: cartProvider.isInCart(plant.id) ? 'In Cart' : 'Add',
               height: 50.h,
               width: 100.w,
             ),
@@ -86,7 +88,8 @@ class ProductBottomBar extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CheckoutScreen(buyNowPlant: plants),
+                    builder:
+                        (context) => CheckoutScreen(buyNowPlantId: plant.id!),
                   ),
                 );
               },

@@ -48,7 +48,7 @@ class UserProfileProvider with ChangeNotifier {
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
       if (docSnapshot.exists) {
-        _userProfile = UserProfileModel.fromMap(docSnapshot.data()!, uid);
+        _userProfile = UserProfileModel.fromMap(docSnapshot.data() ?? {}, uid);
       } else {
         // Create default profile if user exists in Auth but not in Firestore
         _userProfile = UserProfileModel(
@@ -62,7 +62,18 @@ class UserProfileProvider with ChangeNotifier {
         );
 
         // Save the default profile to Firestore
-        await saveUserProfileToFirestore(_userProfile!);
+        await saveUserProfileToFirestore(
+          _userProfile ??
+              UserProfileModel(
+                uid: uid,
+                fullName: _currentUser?.displayName ?? 'Plant Lover',
+                email: _currentUser?.email ?? '',
+                profileImageUrl:
+                    _currentUser?.photoURL ??
+                    'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753501304/Sprout_head_empty_pfp_eakz4j.jpg',
+                createdAt: DateTime.now(),
+              ),
+        );
       }
     } catch (e) {
       _setError('Failed to load user profile: ${e.toString()}');
@@ -99,11 +110,11 @@ class UserProfileProvider with ChangeNotifier {
       _clearError();
       // Create updated profile
       final updatedProfile = UserProfileModel(
-        uid: _userProfile!.uid,
-        fullName: fullName ?? _userProfile!.fullName,
-        email: email ?? _userProfile!.email,
-        profileImageUrl: profileImageUrl ?? _userProfile!.profileImageUrl,
-        createdAt: _userProfile!.createdAt,
+        uid: _userProfile?.uid ?? '',
+        fullName: fullName ?? _userProfile?.fullName ?? '',
+        email: email ?? _userProfile?.email ?? '',
+        profileImageUrl: profileImageUrl ?? _userProfile?.profileImageUrl ?? '',
+        createdAt: _userProfile?.createdAt ?? DateTime.now(),
       );
 
       // Save to Firestore
@@ -125,7 +136,7 @@ class UserProfileProvider with ChangeNotifier {
   // Refresh user profile
   Future<void> refreshProfile() async {
     if (_currentUser != null) {
-      await _loadUserProfile(_currentUser!.uid);
+      await _loadUserProfile(_currentUser?.uid ?? '');
     }
   }
 

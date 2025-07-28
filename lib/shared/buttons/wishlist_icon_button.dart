@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/models/all_plants_model.dart';
@@ -8,11 +9,11 @@ import 'package:provider/provider.dart';
 class WishlistIconButton extends StatelessWidget {
   final double? radius;
   final double? iconSize;
-  final AllPlantsModel plant;
+  final String plantId;
 
   const WishlistIconButton({
     super.key,
-    required this.plant,
+    required this.plantId,
     this.radius,
     this.iconSize,
   });
@@ -20,14 +21,19 @@ class WishlistIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
 
     return Consumer<WishlistProvider>(
       builder: (context, value, child) {
-        final isWishListed = value.isInWishlist(plant.id!);
+        // If plant is not found, return empty container
+        if (plant == null) {
+          return Container();
+        }
 
+        final isWishListed = value.isInWishlist(plant.id ?? '');
         return GestureDetector(
           onTap: () {
-            value.toggleWishList(plant);
+            value.toggleWishList(plant.id ?? '');
           },
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),

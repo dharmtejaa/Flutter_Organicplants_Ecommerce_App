@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 
 class ProductDescriptionSection extends StatelessWidget {
-  final AllPlantsModel plants;
+  final String plantId;
 
-  const ProductDescriptionSection({super.key, required this.plants});
+  const ProductDescriptionSection({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
@@ -21,7 +23,7 @@ class ProductDescriptionSection extends StatelessWidget {
           Padding(
             padding: AppSizes.paddingAllSm,
             child: Text(
-              plants.description?.intro ?? '',
+              plant!.description?.intro ?? '',
               style: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w400,
               ),
@@ -30,7 +32,7 @@ class ProductDescriptionSection extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           Text('Product Details', style: textTheme.titleLarge),
-          PlantDetails(plant: plants),
+          PlantDetails(plantId: plant.id!),
         ],
       ),
     );
@@ -38,14 +40,15 @@ class ProductDescriptionSection extends StatelessWidget {
 }
 
 class PlantDetails extends StatelessWidget {
-  final AllPlantsModel plant;
+  final String plantId;
 
-  const PlantDetails({super.key, required this.plant});
+  const PlantDetails({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
+    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
     final Map<String, String> detailsMap = {
-      "Plant Name": plant.commonName ?? '',
+      "Plant Name": plant!.commonName ?? '',
       "Scientific Name": plant.scientificName ?? '',
       "Category": plant.category ?? '',
       "Toxicity": plant.toxicity ?? "-",

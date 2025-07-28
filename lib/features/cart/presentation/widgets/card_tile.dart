@@ -6,34 +6,38 @@ import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
-import 'package:organicplants/models/all_plants_model.dart';
+import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class CardTile extends StatelessWidget {
-  final bool? scifiname;
-  final AllPlantsModel plant;
+  final String plantId;
 
-  const CardTile({super.key, required this.plant, this.scifiname});
+  const CardTile({super.key, required this.plantId});
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    final offerPrice = plant.prices?.offerPrice ?? 0;
-    final originalPrice = plant.prices?.originalPrice ?? 0;
-    final discountPercent =
-        originalPrice > 0
-            ? ((originalPrice - offerPrice) / originalPrice) * 100
-            : 0;
-    final discount = discountPercent.toStringAsFixed(0);
+    final searchProvider = Provider.of<SearchScreenProvider>(
+      context,
+      listen: false,
+    );
+    final cartItem = cartProvider.getCartItem(plantId);
+    //final plant = AllPlantsGlobalData.getById(plantId);
+
+    // If cart item or plant is not found, return empty container
+    if (cartItem == null) {
+      return Container();
+    }
 
     return GestureDetector(
       onTap: () {
+        searchProvider.addRecentlyViewedPlant(plantId);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => ProductScreen(plants: plant)),
+          MaterialPageRoute(builder: (_) => ProductScreen(plantId: plantId)),
         );
       },
       child: Stack(
@@ -62,7 +66,10 @@ class CardTile extends StatelessWidget {
                     Radius.circular(AppSizes.radiusSm),
                   ),
                   child: CachedNetworkImage(
-                    imageUrl: plant.images?[0].url ?? '',
+                    imageUrl:
+                        cartItem.imageUrl.isNotEmpty == true
+                            ? cartItem.imageUrl
+                            : '',
                     height: 0.1.sh,
                     width: 0.22.sw,
                     fit: BoxFit.cover,
@@ -77,7 +84,7 @@ class CardTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        plant.commonName ?? 'Unknown Plant',
+                        cartItem.plantName,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: textTheme.titleLarge,
@@ -92,7 +99,7 @@ class CardTile extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '₹${plant.prices?.originalPrice}',
+                            '₹${cartItem.originalPrice}',
                             style: textTheme.bodySmall?.copyWith(
                               decoration: TextDecoration.lineThrough,
                               color: colorScheme.onSurfaceVariant,
@@ -100,7 +107,7 @@ class CardTile extends StatelessWidget {
                           ),
                           SizedBox(width: 8.w),
                           Text(
-                            '₹${plant.prices?.offerPrice}',
+                            '₹${cartItem.offerPrice}',
                             style: textTheme.bodyMedium?.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
@@ -108,8 +115,12 @@ class CardTile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if (offerPrice < originalPrice)
-                        Text('$discount% off', style: textTheme.bodySmall),
+                      if (cartItem.originalPrice > cartItem.offerPrice)
+                        Text(
+                          '${cartItem.discount.toStringAsFixed(0)}% off',
+                          style: textTheme.bodySmall,
+                        ),
+
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -120,7 +131,7 @@ class CardTile extends StatelessWidget {
                           ),
                           SizedBox(width: 2.w),
                           Text(
-                            plant.rating?.toStringAsFixed(1) ?? '0.0',
+                            cartItem.rating.toStringAsFixed(1),
                             style: textTheme.bodySmall?.copyWith(
                               color: colorScheme.onSurface,
                               fontWeight: FontWeight.w500,
@@ -138,13 +149,13 @@ class CardTile extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        cartProvider.removeFromCart(plant.id!);
+                        cartProvider.removeFromCart(plantId);
                         CustomSnackBar.showSuccess(
                           context,
-                          '${plant.commonName} has been removed from cart!',
+                          '${cartItem.plantName} has been removed from cart!',
                           actionLabel: 'Undo',
                           onAction: () {
-                            cartProvider.addToCart(plant);
+                            cartProvider.addToCart(plantId);
                           },
                         );
                       },
@@ -156,12 +167,10 @@ class CardTile extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     _QuantitySelector(
-                      plantId: plant.id!,
-                      quantity: cartProvider.items[plant.id]?.quantity ?? 1,
-                      onDecrease:
-                          () => cartProvider.decreaseQuantity(plant.id!),
-                      onIncrease:
-                          () => cartProvider.increaseQuantity(plant.id!),
+                      plantId: plantId,
+                      quantity: cartItem.quantity,
+                      onDecrease: () => cartProvider.decreaseQuantity(plantId),
+                      onIncrease: () => cartProvider.increaseQuantity(plantId),
                       colorScheme: colorScheme,
                     ),
                   ],

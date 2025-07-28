@@ -99,7 +99,7 @@ class _StoreScreenState extends State<StoreScreen>
     _categoryFilterNotifiers.clear();
     _categoryPriceRanges.clear();
     for (final category in _storeTabs) {
-      final categoryTag = category['filterTag']!;
+      final categoryTag = category['filterTag'] ?? '';
       final basePlants =
           categoryTag == 'ALL_PLANTS_TAB'
               ? allPlantsGlobal
@@ -112,7 +112,8 @@ class _StoreScreenState extends State<StoreScreen>
       // Initialize filter notifier with default values
       final defaultFilters = <FilterType, dynamic>{
         FilterType.sort: 'Name A-Z',
-        FilterType.price: _categoryPriceRanges[categoryTag]!,
+        FilterType.price:
+            _categoryPriceRanges[categoryTag] ?? const RangeValues(0, 1000),
         FilterType.size: 'All Sizes',
         FilterType.attributes: <String>[],
       };
@@ -177,7 +178,7 @@ class _StoreScreenState extends State<StoreScreen>
                             horizontal: AppSizes.paddingXs,
                             vertical: 4.h,
                           ),
-                          child: Text(category['title']!),
+                          child: Text(category['title'] ?? ''),
                         ),
                       );
                     }).toList(),
@@ -275,7 +276,7 @@ class _StoreScreenState extends State<StoreScreen>
 
   void _showFilterBottomSheet() {
     final colorScheme = Theme.of(context).colorScheme;
-    final currentCategory = _storeTabs[_tabController.index]['filterTag']!;
+    final currentCategory = _storeTabs[_tabController.index]['filterTag'] ?? '';
     if (!_categoryFilterNotifiers.containsKey(currentCategory) ||
         !_categoryPriceRanges.containsKey(currentCategory)) {
       showDialog(
@@ -284,7 +285,8 @@ class _StoreScreenState extends State<StoreScreen>
       );
       return;
     }
-    final currentFilters = _categoryFilterNotifiers[currentCategory]!.value;
+    final currentFilters =
+        _categoryFilterNotifiers[currentCategory]?.value ?? {};
 
     showModalBottomSheet(
       context: context,
@@ -305,7 +307,7 @@ class _StoreScreenState extends State<StoreScreen>
   }
 
   void _applyFilters(Map<FilterType, dynamic> filters, String category) {
-    _categoryFilterNotifiers[category]!.value = Map.from(filters);
+    _categoryFilterNotifiers[category]?.value = Map.from(filters);
 
     // Clear cache when filters change
     _filteredPlantsCache.clear();
@@ -313,9 +315,9 @@ class _StoreScreenState extends State<StoreScreen>
   }
 
   bool _hasActiveFilters() {
-    final currentCategory = _storeTabs[_tabController.index]['filterTag']!;
+    final currentCategory = _storeTabs[_tabController.index]['filterTag'] ?? '';
     if (!_categoryFilterNotifiers.containsKey(currentCategory)) return false;
-    final filters = _categoryFilterNotifiers[currentCategory]!.value;
+    final filters = _categoryFilterNotifiers[currentCategory]?.value ?? {};
 
     return filters.entries.any((entry) {
       final key = entry.key;
@@ -344,13 +346,13 @@ class _StoreScreenState extends State<StoreScreen>
     List<AllPlantsModel> basePlants,
     String category,
   ) {
-    final filters = _categoryFilterNotifiers[category]!.value;
+    final filters = _categoryFilterNotifiers[category]?.value ?? {};
     final cacheKey = filters.hashCode.toString();
 
     // Check if we can use cached result
     if (_filteredPlantsCache.containsKey(cacheKey) &&
         _lastFilters[category] == filters) {
-      return _filteredPlantsCache[cacheKey]!;
+      return _filteredPlantsCache[cacheKey] ?? [];
     }
 
     List<AllPlantsModel> plants = List.from(basePlants);
@@ -359,18 +361,21 @@ class _StoreScreenState extends State<StoreScreen>
     if (_searchQuery.isNotEmpty) {
       plants =
           plants.where((plant) {
-            return plant.commonName!.toLowerCase().contains(
-                  _searchQuery.toLowerCase(),
-                ) ||
-                plant.category!.toLowerCase().contains(
-                  _searchQuery.toLowerCase(),
-                ) ||
+            return plant.commonName?.toLowerCase().contains(
+                      _searchQuery.toLowerCase(),
+                    ) ==
+                    true ||
+                plant.category?.toLowerCase().contains(
+                      _searchQuery.toLowerCase(),
+                    ) ==
+                    true ||
                 (plant.tags != null &&
-                    plant.tags!.any(
-                      (tag) => tag.toLowerCase().contains(
-                        _searchQuery.toLowerCase(),
-                      ),
-                    ));
+                    plant.tags?.any(
+                          (tag) => tag.toLowerCase().contains(
+                            _searchQuery.toLowerCase(),
+                          ),
+                        ) ==
+                        true);
           }).toList();
     }
 
@@ -397,7 +402,7 @@ class _StoreScreenState extends State<StoreScreen>
     Map<String, String> category,
     ColorScheme colorScheme,
   ) {
-    final categoryTag = category['filterTag']!;
+    final categoryTag = category['filterTag'] ?? '';
     final isAllPlantsTab = categoryTag == 'ALL_PLANTS_TAB';
     final basePlants =
         isAllPlantsTab
@@ -416,7 +421,8 @@ class _StoreScreenState extends State<StoreScreen>
     return FadeTransition(
       opacity: _fadeAnimation,
       child: ValueListenableBuilder<Map<FilterType, dynamic>>(
-        valueListenable: _categoryFilterNotifiers[categoryTag]!,
+        valueListenable:
+            _categoryFilterNotifiers[categoryTag] ?? ValueNotifier({}),
         builder: (context, filters, _) {
           final plants = _getFilteredPlants(basePlants, categoryTag);
           final hasActiveFilters = _hasActiveFilters();
@@ -437,17 +443,21 @@ class _StoreScreenState extends State<StoreScreen>
                       // Reset to default filters
                       final defaultFilters = <FilterType, dynamic>{
                         FilterType.sort: 'Name A-Z',
-                        FilterType.price: _categoryPriceRanges[categoryTag]!,
+                        FilterType.price:
+                            _categoryPriceRanges[categoryTag] ??
+                            const RangeValues(0, 1000),
                         FilterType.size: 'All Sizes',
                         FilterType.attributes: <String>[],
                       };
-                      _categoryFilterNotifiers[categoryTag]!.value =
+                      _categoryFilterNotifiers[categoryTag]?.value =
                           defaultFilters;
                       _filteredPlantsCache.clear();
                       _lastFilters[categoryTag] = null;
                     },
                     showPlantCount: true,
-                    originalPriceRange: _categoryPriceRanges[categoryTag]!,
+                    originalPriceRange:
+                        _categoryPriceRanges[categoryTag] ??
+                        const RangeValues(0, 1000),
                   ),
                 ),
               // Modern grid or empty state
@@ -481,11 +491,13 @@ class _StoreScreenState extends State<StoreScreen>
               // Reset to default filters
               final defaultFilters = <FilterType, dynamic>{
                 FilterType.sort: 'Name A-Z',
-                FilterType.price: _categoryPriceRanges[categoryTag]!,
+                FilterType.price:
+                    _categoryPriceRanges[categoryTag] ??
+                    const RangeValues(0, 1000),
                 FilterType.size: 'All Sizes',
                 FilterType.attributes: <String>[],
               };
-              _categoryFilterNotifiers[categoryTag]!.value = defaultFilters;
+              _categoryFilterNotifiers[categoryTag]?.value = defaultFilters;
               _filteredPlantsCache.clear();
               _lastFilters[categoryTag] = null;
             },
@@ -529,7 +541,7 @@ class _StoreScreenState extends State<StoreScreen>
                   builder:
                       (context, scale, child) =>
                           Transform.scale(scale: scale, child: child),
-                  child: ProductCardGrid(plant: plants[index]),
+                  child: ProductCardGrid(plantId: plants[index].id ?? ''),
                 );
               }, childCount: plants.length),
             ),

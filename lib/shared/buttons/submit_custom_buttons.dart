@@ -66,7 +66,7 @@ class SubmitCustomButtons extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 8.w),
                   child: CachedNetworkImage(
-                    imageUrl: networkImage!,
+                    imageUrl: networkImage ?? '',
                     width: 24.w,
                     height: 24.h,
                     fit: BoxFit.cover,
@@ -89,7 +89,7 @@ class SubmitCustomButtons extends StatelessWidget {
                       ),
 
                     Text(
-                      text!,
+                      text ?? '',
                       style: textTheme.labelLarge?.copyWith(color: textColor),
                     ),
                   ],

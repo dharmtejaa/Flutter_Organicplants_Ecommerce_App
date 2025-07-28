@@ -40,8 +40,8 @@ class ActiveFiltersWidget extends StatelessWidget {
       // Only show price filter if it's different from the original range
       final isModified =
           originalPriceRange == null ||
-          priceRange.start != originalPriceRange!.start ||
-          priceRange.end != originalPriceRange!.end;
+          priceRange.start != originalPriceRange?.start ||
+          priceRange.end != originalPriceRange?.end;
       if (isModified) {
         activeFilters.add({
           'label': 'Price',

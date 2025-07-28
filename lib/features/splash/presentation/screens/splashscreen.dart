@@ -28,6 +28,7 @@ Future<void> loadSplashInitialData(BuildContext context) async {
   try {
     updateProgress(); // 1
     allPlantsGlobal = await PlantServices.loadAllPlantsApi();
+     AllPlantsGlobalData.initialize(allPlantsGlobal);
 
     updateProgress(); // 2
     indoorPlants = getPlantsByCategory('Indoor plant');
