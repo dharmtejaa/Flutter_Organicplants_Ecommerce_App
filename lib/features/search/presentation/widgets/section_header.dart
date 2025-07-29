@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:organicplants/core/services/app_sizes.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
@@ -16,27 +15,17 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: colorScheme.onSurface,
-            //fontWeight: FontWeight.bold,
-            fontSize: AppSizes.fontMd,
-          ),
-        ),
-        if (showClear)
+        Text(title, style: textTheme.headlineSmall),
+        if (showClear && onClear != null)
           GestureDetector(
             onTap: onClear,
             child: Text(
-              "Clear all",
-              style: TextStyle(
-                fontSize: AppSizes.fontSm,
-                color: colorScheme.onSurface,
-              ),
+              'Clear',
+              style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
             ),
           ),
       ],

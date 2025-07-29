@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
+import 'package:organicplants/features/wishlist/data/wishlist_model.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/features/wishlist/presentation/widgets/product_tile.dart';
 import 'package:organicplants/shared/buttons/cart_icon_with_batdge.dart';
@@ -15,11 +16,6 @@ class WishlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final wishListProvider = Provider.of<WishlistProvider>(
-      context,
-      listen: false,
-    );
-    final wishlistItems = wishListProvider.wishList;
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +37,8 @@ class WishlistScreen extends StatelessWidget {
         ],
       ),
       body: Consumer<WishlistProvider>(
-        builder: (context, value, child) {
+        builder: (context, wishlistProvider, child) {
+          final wishlistItems = wishlistProvider.wishlistItems;
           return wishlistItems.isEmpty
               ? Center(
                 child: NoResultsFound(
@@ -53,9 +50,10 @@ class WishlistScreen extends StatelessWidget {
               )
               : ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: value.wishList.length,
+                itemCount: wishlistItems.length,
                 itemBuilder: (context, index) {
-                  return ProductTile(plantId: value.wishList[index].id ?? '');
+                  final WishlistItemModel item = wishlistItems[index];
+                  return ProductTile(plantId: item.plantId);
                 },
               );
         },

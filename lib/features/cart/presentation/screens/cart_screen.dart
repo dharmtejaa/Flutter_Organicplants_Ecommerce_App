@@ -29,13 +29,6 @@ class CartScreen extends StatelessWidget {
             title: Text("My cart", style: textTheme.headlineMedium),
 
             actions: [
-              IconButton(
-                onPressed: () {
-                  cartProvider.refreshCart();
-                },
-                icon: Icon(Icons.refresh),
-                tooltip: 'Refresh Cart',
-              ),
               SearchButton(),
               SizedBox(width: 10.w),
               WishlistIconWithBadge(),

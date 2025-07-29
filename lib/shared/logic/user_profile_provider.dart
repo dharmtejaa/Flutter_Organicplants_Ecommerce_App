@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:organicplants/models/user_profile_model.dart';
+import 'package:organicplants/features/profile/logic/user_profile_model.dart';
 
 class UserProfileProvider with ChangeNotifier {
   UserProfileModel? _userProfile;
@@ -167,22 +167,22 @@ class UserProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // // Get user display name
-  // String get displayName {
-  //   return _userProfile?.fullName ?? _currentUser?.displayName ?? 'Plant Lover';
-  // }
+  // Get user display name
+  String get displayName {
+    return _userProfile?.fullName ?? _currentUser?.displayName ?? 'Plant Lover';
+  }
 
-  // // Get user email
-  // String get userEmail {
-  //   return _userProfile?.email ?? _currentUser?.email ?? '';
-  // }
+  // Get user email
+  String get userEmail {
+    return _userProfile?.email ?? _currentUser?.email ?? '';
+  }
 
-  // // Get user profile image
-  // String get profileImageUrl {
-  //   return _userProfile?.profileImageUrl ??
-  //       _currentUser?.photoURL ??
-  //       'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753501304/Sprout_head_empty_pfp_eakz4j.jpg';
-  // }
+  // Get user profile image
+  String get profileImageUrl {
+    return _userProfile?.profileImageUrl ??
+        _currentUser?.photoURL ??
+        'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753501304/Sprout_head_empty_pfp_eakz4j.jpg';
+  }
 
   // // Check if user has completed profile
   // bool get hasCompletedProfile {
@@ -195,10 +195,10 @@ class UserProfileProvider with ChangeNotifier {
   //   return _userProfile?.createdAt;
   // }
 
-  // // Get user ID
-  // String? get userId {
-  //   return _currentUser?.uid ?? _userProfile?.uid;
-  // }
+  // Get user ID
+  String? get userId {
+    return _currentUser?.uid ?? _userProfile?.uid;
+  }
 
   // Dispose method
 }

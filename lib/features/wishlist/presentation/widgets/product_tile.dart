@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
+import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
-import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/buttons/add_to_cart_button.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
@@ -22,28 +21,23 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final cartProvider = Provider.of<CartProvider>(context, listen: true);
-    final remove = Provider.of<WishlistProvider>(context, listen: false);
-    final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
-
-    // If plant is not found, return empty container
-    if (plant == null) {
-      return Container();
-    }
-
-    final offerPrice = plant.prices?.offerPrice ?? 0;
-    final originalPrice = plant.prices?.originalPrice ?? 0;
-    final discountPercent =
-        originalPrice > 0
-            ? ((originalPrice - offerPrice) / originalPrice) * 100
-            : 0;
-    final discount = discountPercent.toStringAsFixed(0);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final searchProvider = Provider.of<SearchScreenProvider>(
+      context,
+      listen: false,
+    );
+    final wishlistProvider = Provider.of<WishlistProvider>(
+      context,
+      listen: false,
+    );
+    final wishlistItem = wishlistProvider.getWishlistItem(plantId);
     return GestureDetector(
       onTap: () {
+        searchProvider.addRecentlyViewedPlant(plantId);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductScreen(plantId: plant.id ?? ''),
+            builder: (context) => ProductScreen(plantId: plantId),
           ),
         );
       },
@@ -67,7 +61,10 @@ class ProductTile extends StatelessWidget {
                     Radius.circular(AppSizes.radiusSm),
                   ),
                   child: CachedNetworkImage(
-                    imageUrl: plant.images?[0].url ?? '',
+                    imageUrl:
+                        wishlistItem?.imageUrl.isNotEmpty == true
+                            ? wishlistItem?.imageUrl ?? ''
+                            : '',
                     height: 0.1.sh,
                     width: 0.22.sw,
                     fit: BoxFit.cover,
@@ -82,7 +79,7 @@ class ProductTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        plant.commonName ?? 'Unknown Plant',
+                        wishlistItem?.plantName ?? 'Unknown Plant',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: textTheme.titleLarge,
@@ -92,7 +89,7 @@ class ProductTile extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '₹${plant.prices?.originalPrice}',
+                            '₹${wishlistItem?.originalPrice}',
                             style: textTheme.bodySmall?.copyWith(
                               decoration: TextDecoration.lineThrough,
                               color: colorScheme.onSurfaceVariant,
@@ -100,7 +97,7 @@ class ProductTile extends StatelessWidget {
                           ),
                           SizedBox(width: 8.w),
                           Text(
-                            '₹${plant.prices?.offerPrice}',
+                            '₹${wishlistItem?.offerPrice}',
                             style: textTheme.bodyMedium?.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w600,
@@ -109,8 +106,11 @@ class ProductTile extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 3.h),
-                      if (offerPrice < originalPrice)
-                        Text('$discount% off', style: textTheme.bodySmall),
+                      if (wishlistItem?.discount != null)
+                        Text(
+                          '${wishlistItem?.discount}% off',
+                          style: textTheme.bodySmall,
+                        ),
                       SizedBox(height: 3.h),
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -122,7 +122,7 @@ class ProductTile extends StatelessWidget {
                           ),
                           SizedBox(width: 2.w),
                           Text(
-                            plant.rating?.toStringAsFixed(1) ?? '0.0',
+                            wishlistItem?.rating.toStringAsFixed(1) ?? '0.0',
                             style: textTheme.bodySmall?.copyWith(
                               color: colorScheme.onSurface,
                               fontWeight: FontWeight.w500,
@@ -135,14 +135,14 @@ class ProductTile extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    remove.toggleWishList(plant.id ?? '');
+                    wishlistProvider.toggleWishList(plantId);
                     CustomSnackBar.showSuccess(
                       context,
-                      '${plant.commonName} has been removed from wishList!',
-                      plantName: plant.commonName,
+                      '${wishlistItem?.plantName} has been removed from wishList!',
+                      plantName: wishlistItem?.plantName ?? '',
                       actionLabel: 'Undo',
                       onAction: () {
-                        remove.toggleWishList(plant.id ?? '');
+                        wishlistProvider.toggleWishList(plantId);
                       },
                     );
                   },
@@ -160,7 +160,7 @@ class ProductTile extends StatelessWidget {
             right: 6,
             child: AddToCartButton(
               cartProvider: cartProvider,
-              plantId: plant.id ?? '',
+              plantId: plantId,
             ),
           ),
         ],

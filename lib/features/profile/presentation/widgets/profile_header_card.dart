@@ -174,7 +174,9 @@ class ProfileHeaderCard extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder:
-                                    (context) => PersonalInformationScreen(),
+                                    (context) => PersonalInformationScreen(
+                                      
+                                    ),
                               ),
                             );
                           },

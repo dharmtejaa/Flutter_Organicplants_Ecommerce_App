@@ -20,7 +20,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   final double? width;
   final ValueNotifier<bool>? isObscureNotifier; // 🔁 ValueNotifier
-
+  final bool? enabled;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -38,6 +38,7 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     this.confirmPasswordController,
     this.isObscureNotifier, // 👈 pass this for obscure toggle
+    this.enabled = true,
   });
 
   String? _validateInput(String? value) {
@@ -91,6 +92,7 @@ class CustomTextField extends StatelessWidget {
         valueListenable: notifier,
         builder: (_, isObscure, __) {
           return TextFormField(
+            enabled: enabled ?? true,
             controller: controller,
             obscureText: isObscure,
             keyboardType: keyboardType,

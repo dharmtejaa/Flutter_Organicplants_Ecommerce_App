@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-class CartItemModel {
+class WishlistItemModel {
   final String plantId;
   final String plantName;
   final String imageUrl;
@@ -10,7 +10,7 @@ class CartItemModel {
   final double rating;
   final int quantity;
 
-  CartItemModel({
+  WishlistItemModel({
     required this.plantId,
     required this.plantName,
     required this.imageUrl,
@@ -22,7 +22,7 @@ class CartItemModel {
   });
 
   // Add copyWith method for efficient updates
-  CartItemModel copyWith({
+  WishlistItemModel copyWith({
     String? plantId,
     String? plantName,
     String? imageUrl,
@@ -32,7 +32,7 @@ class CartItemModel {
     double? rating,
     int? quantity,
   }) {
-    return CartItemModel(
+    return WishlistItemModel(
       plantId: plantId ?? this.plantId,
       plantName: plantName ?? this.plantName,
       imageUrl: imageUrl ?? this.imageUrl,
@@ -44,9 +44,9 @@ class CartItemModel {
     );
   }
 
-  factory CartItemModel.fromMap(Map<String, dynamic> map, String uid) {
+  factory WishlistItemModel.fromMap(Map<String, dynamic> map, String uid) {
     try {
-      return CartItemModel(
+      return WishlistItemModel(
         plantId: map['plantId'] ?? '',
         plantName: map['plantName'] ?? 'Unknown Plant',
         imageUrl: map['imageUrl'] ?? '',
@@ -57,10 +57,10 @@ class CartItemModel {
         quantity: map['quantity'] ?? 1,
       );
     } catch (e) {
-      debugPrint('Error parsing CartItemModel from map: $e');
+      debugPrint('Error parsing WishlistItemModel from map: $e');
       debugPrint('Map data: $map');
-      // Return a default item if parsing fails
-    return CartItemModel(
+      // Return a default item if parsing fai ls
+      return WishlistItemModel(
         plantId: map['plantId'] ?? '',
         plantName: map['plantName'] ?? 'Unknown Plant',
         imageUrl: map['imageUrl'] ?? '',
@@ -69,9 +69,10 @@ class CartItemModel {
         discount: 0.0,
         rating: 0.0,
         quantity: 1,
-    );
+      );
     }
   }
+
   Map<String, dynamic> toMap() {
     return {
       'plantId': plantId,

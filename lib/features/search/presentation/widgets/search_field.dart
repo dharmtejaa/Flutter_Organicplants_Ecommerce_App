@@ -14,14 +14,14 @@ import 'package:organicplants/features/product/presentation/screens/product_scre
 import 'package:provider/provider.dart';
 
 class SearchField extends StatefulWidget {
-  final TextEditingController searchController;
-  const SearchField({super.key, required this.searchController});
+  const SearchField({super.key});
 
   @override
   State<SearchField> createState() => _SearchFieldState();
 }
 
 class _SearchFieldState extends State<SearchField> {
+  final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   OverlayEntry? _overlayEntry;
   final ValueNotifier<String> _searchTextNotifier = ValueNotifier('');
@@ -29,7 +29,7 @@ class _SearchFieldState extends State<SearchField> {
   @override
   void initState() {
     super.initState();
-    widget.searchController.addListener(_onSearchChanged);
+    _searchController.addListener(_onSearchChanged);
     _focusNode.addListener(_onFocusChange);
   }
 
@@ -40,8 +40,8 @@ class _SearchFieldState extends State<SearchField> {
   }
 
   void _onSearchChanged() {
-    _searchTextNotifier.value = widget.searchController.text;
-    if (widget.searchController.text.isNotEmpty && _focusNode.hasFocus) {
+    _searchTextNotifier.value = _searchController.text;
+    if (_searchController.text.isNotEmpty && _focusNode.hasFocus) {
       _showOverlay();
     } else {
       _removeOverlay();
@@ -64,9 +64,10 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   void dispose() {
-    widget.searchController.removeListener(_onSearchChanged);
+    _searchController.removeListener(_onSearchChanged);
     _focusNode.removeListener(_onFocusChange);
     _removeOverlay();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -80,14 +81,14 @@ class _SearchFieldState extends State<SearchField> {
       context,
       listen: false,
     );
-    final results = searchProvider.getSuggestions(widget.searchController.text);
+    final results = searchProvider.getSuggestions(_searchController.text);
+
     return OverlayEntry(
       builder:
           (context) => Positioned(
             left: offset.dx,
             top: offset.dy + size.height + 4,
             width: size.width,
-            //height: size.height + 300.h,
             child: Material(
               color: Colors.transparent,
               child:
@@ -101,17 +102,13 @@ class _SearchFieldState extends State<SearchField> {
                           ),
                           boxShadow: AppShadows.searchFieldShadow(context),
                         ),
-                        constraints: BoxConstraints(maxHeight: 350.h),
-                        child: ListView.separated(
-                          padding: EdgeInsets.zero,
+                        constraints: BoxConstraints(
+                          maxHeight: 350.h,
+                        ),
+                        child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: results.length,
-                          separatorBuilder:
-                              (_, __) => Divider(
-                                height: 1,
-                                // ignore: deprecated_member_use
-                                color: colorScheme.outline.withOpacity(0.08),
-                              ),
+                          padding: EdgeInsets.all(8.w),
                           itemBuilder: (context, idx) {
                             final plant = results[idx];
                             return InkWell(
@@ -122,86 +119,79 @@ class _SearchFieldState extends State<SearchField> {
                                 HapticFeedback.lightImpact();
                                 _removeOverlay();
 
-                                widget.searchController.text =
-                                    plant.commonName ?? '';
-                                searchProvider.addRecentSearchHistory(
-                                  plant.commonName ?? '',
-                                );
-                                searchProvider.addRecentlyViewedPlant(
-                                  plant.id ?? '',
-                                );
+                                _searchController.text = plant.commonName ?? '';
+                                searchProvider.addRecentSearchHistory(plant.commonName ?? '');
+                                searchProvider.addRecentlyViewedPlant(plant.id ?? '');
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder:
-                                        (_) => ProductScreen(
-                                          plantId: plant.id ?? '',
-                                        ),
+                                    builder: (_) => ProductScreen(
+                                      plantId: plant.id ?? '',
+                                    ),
                                   ),
                                 );
                               },
-                              child: Padding(
+                              child: Container(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w,
-                                  vertical: 10.h,
+                                  vertical: 12.h,
+                                  horizontal: 16.w,
                                 ),
                                 child: Row(
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8.r),
-                                      child:
-                                          plant.images?.isNotEmpty == true
-                                              ? CachedNetworkImage(
-                                                imageUrl:
-                                                    plant.images?.first.url ??
-                                                    '',
-                                                width: 38.w,
-                                                height: 38.w,
-                                                fit: BoxFit.cover,
-                                                cacheManager:
-                                                    MyCustomCacheManager
-                                                        .instance,
-                                                errorWidget:
-                                                    (
-                                                      context,
-                                                      error,
-                                                      stackTrace,
-                                                    ) => CachedNetworkImage(
-                                                      imageUrl:
-                                                          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
-                                                      width: 38.w,
-                                                      height: 38.w,
-                                                      fit: BoxFit.cover,
-                                                      cacheManager:
-                                                          MyCustomCacheManager
-                                                              .instance,
-                                                    ),
-                                              )
-                                              : CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080574/No_Plant_Found_dmdjsy.png',
-                                                width: 38.w,
-                                                height: 38.w,
-                                                fit: BoxFit.cover,
-                                                cacheManager:
-                                                    MyCustomCacheManager
-                                                        .instance,
-                                              ),
-                                    ),
-                                    SizedBox(width: 14.w),
-                                    Expanded(
-                                      child: Text(
-                                        plant.commonName ?? '',
-                                        style: textTheme.bodyLarge,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      child: CachedNetworkImage(
+                                        imageUrl: plant.images?.firstOrNull?.url ?? '',
+                                        width: 40.w,
+                                        height: 40.h,
+                                        fit: BoxFit.cover,
+                                        cacheManager: MyCustomCacheManager.instance,
+                                        placeholder: (context, url) => Container(
+                                          width: 40.w,
+                                          height: 40.h,
+                                          color: colorScheme.surfaceContainerHighest,
+                                          child: Icon(
+                                            Icons.image,
+                                            color: colorScheme.onSurfaceVariant,
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) => Container(
+                                          width: 40.w,
+                                          height: 40.h,
+                                          color: colorScheme.surfaceContainerHighest,
+                                          child: Icon(
+                                            Icons.error,
+                                            color: colorScheme.onSurfaceVariant,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: colorScheme.primary,
-                                      size: AppSizes.iconSm,
+                                    SizedBox(width: 12.w),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            plant.commonName ?? 'Unknown Plant',
+                                            style: textTheme.bodyMedium?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          if (plant.scientificName != null)
+                                            Text(
+                                              plant.scientificName!,
+                                              style: textTheme.bodySmall?.copyWith(
+                                                color: colorScheme.onSurfaceVariant,
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -210,8 +200,8 @@ class _SearchFieldState extends State<SearchField> {
                           },
                         ),
                       ),
-            ),
-          ),
+        ),
+      ),
     );
   }
 
@@ -231,7 +221,7 @@ class _SearchFieldState extends State<SearchField> {
             children: [
               // Text Field
               TextFormField(
-                controller: widget.searchController,
+                controller: _searchController,
                 focusNode: _focusNode,
                 style: textTheme.bodyLarge,
                 cursorColor: colorScheme.onSurface,
@@ -277,7 +267,7 @@ class _SearchFieldState extends State<SearchField> {
                     size: AppSizes.iconMd,
                   ),
                   suffixIcon:
-                      widget.searchController.text.isEmpty
+                      _searchController.text.isEmpty
                           ? null
                           : IconButton(
                             icon: Icon(
@@ -286,7 +276,7 @@ class _SearchFieldState extends State<SearchField> {
                             ),
                             iconSize: AppSizes.iconMd,
                             onPressed: () {
-                              widget.searchController.clear();
+                              _searchController.clear();
                               searchProvider.updateSearchText('');
                             },
                           ),
@@ -314,7 +304,7 @@ class _SearchFieldState extends State<SearchField> {
               ),
 
               // AnimatedTextKit overlay — only when input is empty
-              if (widget.searchController.text.isEmpty)
+              if (_searchController.text.isEmpty)
                 Positioned(
                   left: 53.w,
                   top: 14.h,

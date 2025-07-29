@@ -1,11 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, duplicate_ignore
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
-import 'package:organicplants/models/user_profile_model.dart';
+import 'package:organicplants/features/profile/logic/user_profile_model.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
@@ -23,12 +24,10 @@ class AuthService {
       );
 
       Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => EntryScreen()),
       );
     } on FirebaseAuthException catch (e) {
-      // ignore: use_build_context_synchronously
       CustomSnackBar.showError(context, e.message.toString());
     }
   }
@@ -39,10 +38,8 @@ class AuthService {
     required String name,
     required String email,
     required String password,
-    //required String confirmPassword,
   }) async {
     try {
-      //Create Firebase Auth User
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
             email: email.trim(),
@@ -51,8 +48,6 @@ class AuthService {
       final uid = credential.user?.uid;
 
       if (uid != null) {
-        //Create User Profile directly in Firestore
-        // The UserProfileProvider will automatically load this when auth state changes
         final newUser = UserProfileModel(
           uid: uid,
           fullName: name,
@@ -62,20 +57,17 @@ class AuthService {
           createdAt: DateTime.now(),
         );
 
-        // Save user profile to Firestore
         await FirebaseFirestore.instance
             .collection('users')
             .doc(uid)
             .set(newUser.toMap());
 
         Navigator.pushReplacement(
-          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(builder: (context) => EntryScreen()),
         );
       }
     } on FirebaseAuthException catch (e) {
-      // ignore: use_build_context_synchronously
       CustomSnackBar.showError(context, e.message.toString());
     }
   }
@@ -98,27 +90,24 @@ class AuthService {
       final user = userCredential.user;
 
       if (user != null) {
-        // The UserProfileProvider will automatically handle the profile creation/loading
-        // when the auth state changes, so we don't need to manually create the profile here
         Navigator.pushReplacement(
-          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(builder: (context) => EntryScreen()),
         );
       }
     } on FirebaseAuthException catch (e) {
-      // ignore: use_build_context_synchronously
       CustomSnackBar.showError(context, e.message.toString());
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      CustomSnackBar.showError(context, e.toString());
+      CustomSnackBar.showError(
+        context,
+        "An error occurred during Google sign-in.",
+      );
     }
   }
 
   // Sign out user
   static Future<void> signOut(BuildContext context) async {
     try {
-      // Show confirmation dialog
       final shouldSignOut = await CustomDialog.showConfirmation(
         context: context,
         title: "Sign Out",
@@ -126,7 +115,6 @@ class AuthService {
         confirmText: "Yes, Sign Out",
         cancelText: "Cancel",
         icon: Icons.logout,
-        iconColor: Theme.of(context).colorScheme.primary,
       );
 
       if (shouldSignOut == true) {
@@ -137,113 +125,104 @@ class AuthService {
         // Sign out from Firebase Auth
         await FirebaseAuth.instance.signOut();
 
-        // Show success message
-        // ignore: use_build_context_synchronously
         CustomSnackBar.showSuccess(context, "Signed out successfully!");
 
-        // Navigate to entry screen
-        Navigator.pushReplacement(
-          // ignore: use_build_context_synchronously
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => EntryScreen()),
+          (route) => false,
         );
       }
     } on FirebaseAuthException catch (e) {
-      // ignore: use_build_context_synchronously
       CustomSnackBar.showError(context, "Failed to sign out: ${e.message}");
     } catch (e) {
-      // ignore: use_build_context_synchronously
       CustomSnackBar.showError(context, "An error occurred: ${e.toString()}");
     }
   }
 
-  // Delete user account
-  static Future<void> deleteAccount(BuildContext context) async {
+  // *** REWRITTEN CLIENT-SIDE DELETE ACCOUNT FUNCTION ***
+  static Future<void> deleteAccount(
+    BuildContext context, {
+    required String password,
+  }) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      CustomSnackBar.showError(context, "No user is currently signed in.");
+      return;
+    }
+
+    // 1. Re-authenticate the user for this sensitive operation.
+    final bool reauthenticated = await reAuthenticateUser(
+      context,
+      email: user.email!,
+      password: password,
+    );
+    if (!reauthenticated) return; // Stop if re-authentication fails.
+
+    // 2. Get final confirmation from the user.
+    final confirmed = await CustomDialog.showConfirmation(
+      context: context,
+      title: "Final Confirmation",
+      content:
+          "This will permanently delete your account and all associated data. This action cannot be undone.",
+      confirmText: "Delete Forever",
+      cancelText: "Cancel",
+      icon: Icons.warning_amber_rounded,
+      iconColor: Theme.of(context).colorScheme.error,
+    );
+    if (confirmed != true) return;
+
     try {
-      final currentUser = FirebaseAuth.instance.currentUser;
+      // 3. Manually delete all user data from Firestore first.
+      final userRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid);
 
-      if (currentUser == null) {
-        CustomSnackBar.showError(context, "No user is currently signed in");
-        return;
-      }
+      // Delete known subcollections
+      await _deleteCollection(userRef.collection('cart'));
+      await _deleteCollection(userRef.collection('wishlist'));
+      await _deleteCollection(userRef.collection('search_history'));
+      // Add any other subcollections you have here
 
-      // Show confirmation dialog
-      final shouldDelete = await CustomDialog.showConfirmation(
-        context: context,
-        title: "Delete Account",
-        content:
-            "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.",
-        confirmText: "Yes, Delete",
-        cancelText: "Cancel",
-        icon: Icons.delete_forever,
-        iconColor: Theme.of(context).colorScheme.error,
+      // Delete the main user document
+      await userRef.delete();
+
+      // 4. Only after successful database deletion, delete the Auth user.
+      await user.delete();
+      await GoogleSignIn.instance.signOut();
+
+      CustomSnackBar.showSuccess(context, "Account deleted successfully!");
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => EntryScreen()),
+        (route) => false,
       );
-
-      if (shouldDelete == true) {
-        // Show second confirmation for critical action
-        final finalConfirmation = await CustomDialog.showConfirmation(
-          context: context,
-          title: "Final Confirmation",
-          content:
-              "This will permanently delete your account and all associated data. Are you absolutely sure?",
-          confirmText: "Yes, Delete Forever",
-          cancelText: "No, Keep Account",
-          icon: Icons.warning,
-          iconColor: Theme.of(context).colorScheme.error,
-        );
-
-        if (finalConfirmation == true) {
-          // Delete user data from Firestore first
-          try {
-            await FirebaseFirestore.instance
-                .collection('users')
-                .doc(currentUser.uid)
-                .delete();
-          } catch (e) {
-            // Log the error but continue with account deletion
-          }
-
-          // Delete user account from Firebase Auth
-          await currentUser.delete();
-
-          // Sign out from Google if user signed in with Google
-          final GoogleSignIn googleSignIn = GoogleSignIn.instance;
-          await googleSignIn.signOut();
-
-          // Show success message
-          CustomSnackBar.showSuccess(context, "Account deleted successfully!");
-
-          // Navigate to entry screen
-          Navigator.pushReplacement(
-            // ignore: use_build_context_synchronously
-            context,
-            MaterialPageRoute(builder: (context) => EntryScreen()),
-          );
-        }
-      }
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = "Failed to delete account";
-
-      switch (e.code) {
-        case 'requires-recent-login':
-          errorMessage = "Please sign in again before deleting your account";
-          break;
-        case 'user-not-found':
-          errorMessage = "User account not found";
-          break;
-        case 'network-request-failed':
-          errorMessage = "Network error. Please check your connection";
-          break;
-        default:
-          errorMessage =
-              e.message ?? "An error occurred while deleting account";
-      }
-
-      // ignore: use_build_context_synchronously
-      CustomSnackBar.showError(context, errorMessage);
+    } on FirebaseException catch (e) {
+      CustomSnackBar.showError(context, "Error during deletion: ${e.message}");
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      CustomSnackBar.showError(context, "An error occurred: ${e.toString()}");
+      CustomSnackBar.showError(
+        context,
+        "An unexpected error occurred: ${e.toString()}",
+      );
+    }
+  }
+
+  // Helper function to delete all documents in a collection
+  static Future<void> _deleteCollection(CollectionReference collection) async {
+    final snapshot =
+        await collection.limit(500).get(); // Get documents in batches
+    if (snapshot.docs.isEmpty) {
+      return; // Collection is already empty
+    }
+    final batch = FirebaseFirestore.instance.batch();
+    for (final doc in snapshot.docs) {
+      batch.delete(doc.reference);
+    }
+    await batch.commit();
+
+    // Recurse if there are more documents to delete
+    if (snapshot.docs.length == 500) {
+      await _deleteCollection(collection);
     }
   }
 
@@ -255,48 +234,79 @@ class AuthService {
   }) async {
     try {
       final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) return false;
 
-      if (currentUser == null) {
-        CustomSnackBar.showError(context, "No user is currently signed in");
-        return false;
-      }
-
-      // Create credential for re-authentication
       final credential = EmailAuthProvider.credential(
         email: email.trim(),
         password: password.trim(),
       );
 
-      // Re-authenticate user
       await currentUser.reauthenticateWithCredential(credential);
-
       CustomSnackBar.showSuccess(context, "Re-authentication successful!");
-
       return true;
     } on FirebaseAuthException catch (e) {
-      String errorMessage = "Re-authentication failed";
-
-      switch (e.code) {
-        case 'wrong-password':
-          errorMessage = "Incorrect password";
-          break;
-        case 'user-not-found':
-          errorMessage = "User not found";
-          break;
-        case 'invalid-email':
-          errorMessage = "Invalid email address";
-          break;
-        default:
-          errorMessage = e.message ?? "Re-authentication failed";
-      }
-
-      // ignore: use_build_context_synchronously
-      CustomSnackBar.showError(context, errorMessage);
+      CustomSnackBar.showError(
+        context,
+        e.message ?? "Re-authentication failed",
+      );
       return false;
     } catch (e) {
-      // ignore: use_build_context_synchronously
       CustomSnackBar.showError(context, "An error occurred: ${e.toString()}");
       return false;
+    }
+  }
+
+  static Future<void> resetPassword(BuildContext context, String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      CustomSnackBar.showSuccess(context, "Password reset email sent!");
+      Navigator.of(context).pop();
+    } on FirebaseAuthException catch (e) {
+      // Debug logging
+      debugPrint('Firebase Auth Error: ${e.code} - ${e.message}');
+      // Hide loading indicator
+      Navigator.of(context).pop();
+      CustomSnackBar.showError(context, e.message.toString());
+      // Show detailed error dialog for debugging
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Email Not Sent"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(e.message.toString()),
+                const SizedBox(height: 16),
+                const Text("Troubleshooting tips:"),
+                const SizedBox(height: 8),
+                const Text("• Verify the email address is correct"),
+                const Text("• Check your internet connection"),
+                const Text("• Try again in a few minutes"),
+                const Text("• Contact support if the problem persists"),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Debug logging
+      debugPrint('Unexpected error during password reset: $e');
+
+      // Hide loading indicator
+      Navigator.of(context).pop();
+
+      CustomSnackBar.showError(
+        context,
+        "An unexpected error occurred: ${e.toString()}",
+      );
     }
   }
 }

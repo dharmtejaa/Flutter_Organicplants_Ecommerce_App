@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +7,13 @@ import 'package:organicplants/features/cart/data/cart_model.dart';
 
 class CartProvider extends ChangeNotifier {
   final List<CartItemModel> _cartItems = [];
-
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
-  List<CartItemModel> get itemList => _cartItems;
+  // Real-time listener
+  StreamSubscription<QuerySnapshot>? _cartListener;
 
+  List<CartItemModel> get itemList => _cartItems;
   String get _uid => _auth.currentUser?.uid ?? '';
 
   CartProvider() {
@@ -25,36 +27,47 @@ class CartProvider extends ChangeNotifier {
         loadCartFromFirestore();
       } else {
         _cartItems.clear();
+        _disposeListener();
         notifyListeners();
       }
     });
   }
 
-  // Manual refresh method for debugging
-  Future<void> refreshCart() async {
-    await loadCartFromFirestore();
+  void _disposeListener() {
+    _cartListener?.cancel();
+    _cartListener = null;
   }
 
   Future<void> loadCartFromFirestore() async {
     if (_uid.isEmpty) return;
 
-    try {
-      final snapshot =
-          await _firestore
-              .collection('users')
-              .doc(_uid)
-              .collection('cart')
-              .get();
+    // Listen to cart changes
+    _cartListener = _firestore
+        .collection('users')
+        .doc(_uid)
+        .collection('cart')
+        .snapshots()
+        .listen(
+          (snapshot) {
+            _cartItems.clear();
+            _cartItems.addAll(
+              snapshot.docs.map(
+                (doc) => CartItemModel.fromMap(doc.data(), _uid),
+              ),
+            );
+            debugPrint('Loaded ${_cartItems.length} items from Firestore');
+            notifyListeners();
+          },
+          onError: (error) {
+            debugPrint('Error listening to cart: $error');
+          },
+        );
+  }
 
-      _cartItems.clear();
-      _cartItems.addAll(
-        snapshot.docs.map((doc) => CartItemModel.fromMap(doc.data(), _uid)),
-      );
-      debugPrint('Loaded ${_cartItems.length} items from Firestore');
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error loading cart from Firestore: $e');
-    }
+  @override
+  void dispose() {
+    _disposeListener();
+    super.dispose();
   }
 
   Future<void> addToCart(String plantId) async {
@@ -193,11 +206,13 @@ class CartProvider extends ChangeNotifier {
 
   double get totalOriginalPrice => _cartItems.fold(
     0.0,
+    // ignore: avoid_types_as_parameter_names
     (sum, item) => sum + item.originalPrice * item.quantity,
   );
 
   double get totalOfferPrice => _cartItems.fold(
     0.0,
+    // ignore: avoid_types_as_parameter_names
     (sum, item) => sum + item.offerPrice * item.quantity,
   );
 
