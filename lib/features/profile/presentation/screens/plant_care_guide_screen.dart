@@ -127,7 +127,11 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
               padding: AppSizes.paddingAllSm,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [colorScheme.primaryContainer, colorScheme.surface],
+                  colors: [
+                    colorScheme.primary.withOpacity(0.95),
+                    Colors.greenAccent.withOpacity(0.7),
+                    colorScheme.primary.withOpacity(0.7),
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

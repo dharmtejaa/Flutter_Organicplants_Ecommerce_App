@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,14 +8,15 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/data/cart_model.dart';
+import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/profile/data/address_model.dart';
 import 'package:organicplants/features/profile/logic/address_provider.dart';
+import 'package:organicplants/features/profile/logic/order_history_provider.dart';
 import 'package:organicplants/features/profile/presentation/screens/add_edit_address_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:provider/provider.dart';
-import 'package:organicplants/features/profile/logic/profile_provider.dart';
-import 'package:organicplants/features/profile/presentation/screens/order_history_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/unified_orders_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -556,29 +559,40 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     await Future.delayed(Duration(seconds: 2));
     isPlacingOrder.value = false;
     if (mounted) {
-      // Add order to ProfileProvider
-      final order = {
-        'id': 'ORD${DateTime.now().millisecondsSinceEpoch}',
-        'date': DateTime.now().toString().substring(0, 10),
-        'status': 'In Transit',
-        'total': '₹$totalPrice',
-        'items':
+      // Add order to OrderHistoryProvider
+      final orderHistoryProvider = Provider.of<OrderHistoryProvider>(
+        context,
+        listen: false,
+      );
+      final order = orderHistoryProvider.createOrderFromCart(
+        cartItems:
             cartItems
                 .map(
                   (item) => {
                     'name': item.plantName,
                     'quantity': item.quantity,
                     'price': '₹${item.offerPrice.toInt()}',
+                    'plantId': item.plantId,
+                    'imageUrl': item.imageUrl,
                   },
                 )
                 .toList(),
-        'deliveryAddress':
+        deliveryAddress:
             '${selectedAddress.house}, ${selectedAddress.street}, ${selectedAddress.city}, ${selectedAddress.state}',
-        'trackingNumber': null,
-      };
+        total: '₹$totalPrice',
+      );
+
+      orderHistoryProvider.addOrder(order);
+
+      // Clear the cart after successful order placement (only for regular cart checkout, not Buy Now)
+      if (widget.buyNowPlantId == null) {
+        final cartProvider = Provider.of<CartProvider>(context, listen: false);
+        cartProvider.clearCart();
+      }
+
       final textTheme = Theme.of(context).textTheme;
       final colorScheme = Theme.of(context).colorScheme;
-      Provider.of<ProfileProvider>(context, listen: false).addOrder(order);
+
       // Show payment success dialog with animation
       await showDialog(
         context: context,
@@ -631,7 +645,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       Navigator.pushAndRemoveUntil(
         // ignore: use_build_context_synchronously
         context,
-        MaterialPageRoute(builder: (context) => OrderHistoryScreen()),
+        MaterialPageRoute(builder: (context) => UnifiedOrdersScreen()),
         (route) => route.isFirst,
       );
     }

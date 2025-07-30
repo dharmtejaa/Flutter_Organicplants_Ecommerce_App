@@ -3,11 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
+import 'package:organicplants/features/auth/logic/auth_service.dart';
+import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/cart/presentation/screens/cart_screen.dart';
+import 'package:organicplants/features/profile/data/user_profile_model.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/buttons/wishlist_icon_button.dart';
 import 'package:organicplants/models/all_plants_model.dart';
+import 'package:organicplants/shared/logic/user_profile_provider.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/cart/presentation/screens/checkout_screen.dart';
@@ -42,17 +46,6 @@ class ProductBottomBar extends StatelessWidget {
               ontap: () {
                 if (!cartProvider.isInCart(plant.id!)) {
                   cartProvider.addToCart(plant.id!);
-                  // CustomSnackBar.showSuccess(
-                  //   context,
-                  //   '${plants.commonName} Added to Cart',
-                  //   actionLabel: 'View Cart',
-                  //   onAction: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(builder: (context) => CartScreen()),
-                  //     );
-                  //   },
-                  // );
                 } else {
                   CustomSnackBar.showInfo(
                     context,
@@ -85,13 +78,32 @@ class ProductBottomBar extends StatelessWidget {
               height: 50.h,
               width: 100.w,
               ontap: () async {
-                Navigator.push(
+                final userProvider = Provider.of<UserProfileProvider>(
                   context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => CheckoutScreen(buyNowPlantId: plant.id!),
-                  ),
+                  listen: false,
                 );
+                final uid = userProvider.currentUser?.uid;
+                if (uid == null) {
+                  CustomSnackBar.showInfo(
+                    context,
+                    'Please login to buy this plant',
+                    actionLabel: 'Login',
+                    onAction: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Loginscreen()),
+                      );
+                    },
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => CheckoutScreen(buyNowPlantId: plant.id!),
+                    ),
+                  );
+                }
               },
             ),
           ),

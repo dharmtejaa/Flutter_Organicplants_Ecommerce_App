@@ -7,6 +7,7 @@ import 'package:organicplants/features/entry/logic/bottom_nav_provider.dart';
 import 'package:organicplants/features/home/logic/onboarding_provider.dart';
 import 'package:organicplants/features/product/logic/carousel_provider.dart';
 import 'package:organicplants/features/profile/logic/address_provider.dart';
+import 'package:organicplants/features/profile/logic/order_history_provider.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/features/search/logic/hint_text_provider.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
@@ -45,6 +46,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CarouselProvider()),
         ChangeNotifierProvider(create: (_) => UserProfileProvider()),
         ChangeNotifierProvider(create: (_) => AddressProvider()),
+        ChangeNotifierProvider(create: (_) => OrderHistoryProvider()),
       ],
       child: const MyApp(),
     ),

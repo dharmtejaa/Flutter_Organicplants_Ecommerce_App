@@ -7,30 +7,31 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
-import 'package:organicplants/features/profile/presentation/screens/loyalty_points_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/my_reviews_screen.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_header_card.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/shared/logic/theme_provider.dart';
-import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_menu_item.dart';
 import 'package:organicplants/features/profile/presentation/screens/personal_information_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/payment_methods_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/notifications_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/order_history_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/unified_orders_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/plant_care_guide_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/about_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/track_orders_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/returns_refunds_screen.dart';
+
 import 'package:organicplants/features/profile/presentation/screens/customer_support_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/faq_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/contact_us_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/terms_of_service_screen.dart';
 import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/my_reviews_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/loyalty_points_screen.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
+import 'package:organicplants/features/cart/logic/cart_provider.dart';
+import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
+import 'package:organicplants/features/profile/logic/order_history_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -40,88 +41,21 @@ class ProfileScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final profileProvider = Provider.of<ProfileProvider>(context);
+    final user = FirebaseAuth.instance.currentUser;
+    final isLoggedIn = user != null;
 
     return Scaffold(
-      // backgroundColor:
-      //     isDark ? DarkThemeColors.richBlack : LightThemeColors.mediumGray,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: 0, bottom: 32.h),
         child: Column(
           children: [
             const ProfileHeaderCard(),
-            // Enhanced Quick Actions with theme-aware colors
             SizedBox(height: 10.h),
 
-            // Enhanced Stats Cards with theme-aware colors
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _enhancedMiniStatCard(
-                    context,
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TrackOrdersScreen(),
-                        ),
-                      );
-                    },
-                    'Orders',
-                    profileProvider.totalOrders.toString(),
-                    Icons.shopping_bag_rounded,
-                    colorScheme.primary,
-                  ),
-                  _enhancedMiniStatCard(
-                    context,
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WishlistScreen(),
-                        ),
-                      );
-                    },
-                    'Wishlist',
-                    profileProvider.wishlistItems.toString(),
-                    Icons.favorite_rounded,
-                    colorScheme.primary,
-                  ),
-                  _enhancedMiniStatCard(
-                    context,
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyReviewsScreen(),
-                        ),
-                      );
-                    },
-                    'Reviews',
-                    profileProvider.reviewsGiven.toString(),
-                    Icons.star_rounded,
-                    colorScheme.primary,
-                  ),
-                  _enhancedMiniStatCard(
-                    context,
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoyaltyPointsScreen(),
-                        ),
-                      );
-                    },
-                    'Points',
-                    profileProvider.formattedLoyaltyPoints,
-                    Icons.card_giftcard_rounded,
-                    colorScheme.primary,
-                  ),
-                ],
-              ),
-            ),
+            // Real-time Stats Cards - Only show if logged in
+            if (isLoggedIn) _buildRealTimeStatsCards(context, colorScheme),
+
+            if (isLoggedIn) SizedBox(height: 10.h),
 
             SizedBox(height: 10.h),
 
@@ -131,134 +65,107 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ProfileMenuSection(
-                    color: colorScheme.primary,
-                    title: 'Shopping & Orders',
+                  // Account & Settings Section - Only show if logged in
+                  if (isLoggedIn)
+                    ProfileMenuSection(
+                      color: AppTheme.secondaryColor,
+                      title: 'Account & Settings',
+                      items: [
+                        ProfileMenuItem(
+                          title: 'Personal Information',
+                          subtitle: 'Manage your profile details',
+                          icon: Icons.person_outline_rounded,
+                          iconColor: Colors.blue,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => PersonalInformationScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        ProfileMenuItem(
+                          title: 'Addresses',
+                          subtitle: 'Manage delivery addresses',
+                          icon: Icons.location_on_outlined,
+                          iconColor: Colors.green,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddressesScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        ProfileMenuItem(
+                          title: 'Payment Methods',
+                          subtitle: 'Manage payment options',
+                          icon: Icons.payment_rounded,
+                          iconColor: Colors.orange,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentMethodsScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        ProfileMenuItem(
+                          title: 'Notifications',
+                          subtitle: 'Manage notification preferences',
+                          icon: Icons.notifications_outlined,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NotificationsScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
 
-                    items: [
-                      ProfileMenuItem(
-                        title: 'Track Orders',
-                        subtitle: 'Track your current orders',
-                        icon: Icons.local_shipping_outlined,
-                        iconColor: Colors.teal,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TrackOrdersScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      ProfileMenuItem(
-                        title: 'Order History',
-                        subtitle: 'View all your past orders',
-                        icon: Icons.history_rounded,
-                        iconColor: Colors.indigo,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderHistoryScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      ProfileMenuItem(
-                        title: 'Returns & Refunds',
-                        subtitle: 'Manage returns and refunds',
-                        icon: Icons.assignment_return_outlined,
-                        iconColor: Colors.amber,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ReturnsRefundsScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      ProfileMenuItem(
-                        title: 'Plant Care Guide',
-                        subtitle: 'Learn how to care for your plants',
-                        icon: Icons.eco_outlined,
-                        iconColor: Colors.lightGreen,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PlantCareGuideScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                  if (isLoggedIn) SizedBox(height: 10.h),
 
-                  SizedBox(height: 10.h),
-
-                  ProfileMenuSection(
-                    color: AppTheme.secondaryColor,
-                    title: 'Account & Settings',
-                    items: [
-                      ProfileMenuItem(
-                        title: 'Personal Information',
-                        subtitle: 'Manage your profile details',
-                        icon: Icons.person_outline_rounded,
-                        iconColor: Colors.blue,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PersonalInformationScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      ProfileMenuItem(
-                        title: 'Addresses',
-                        subtitle: 'Manage delivery addresses',
-                        icon: Icons.location_on_outlined,
-                        iconColor: Colors.green,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddressesScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      ProfileMenuItem(
-                        title: 'Payment Methods',
-                        subtitle: 'Manage payment options',
-                        icon: Icons.payment_rounded,
-                        iconColor: Colors.orange,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PaymentMethodsScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      ProfileMenuItem(
-                        title: 'Notifications',
-                        subtitle: 'Manage notification preferences',
-                        icon: Icons.notifications_outlined,
-                        iconColor: Colors.purple,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NotificationsScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                  // Shopping & Orders Section - Only show if logged in
+                  if (isLoggedIn)
+                    ProfileMenuSection(
+                      color: colorScheme.primary,
+                      title: 'Shopping & Orders',
+                      items: [
+                        ProfileMenuItem(
+                          title: 'My Orders',
+                          subtitle: 'Get your current orders',
+                          icon: Icons.local_shipping_outlined,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UnifiedOrdersScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        ProfileMenuItem(
+                          title: 'Plant Care Guide',
+                          subtitle: 'Learn how to care for your plants',
+                          icon: Icons.eco_outlined,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PlantCareGuideScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
 
                   SizedBox(height: 10.h),
 
@@ -270,7 +177,6 @@ class ProfileScreen extends StatelessWidget {
                         title: "Theme",
                         subtitle: "Choose your preferred theme",
                         icon: Icons.palette_outlined,
-                        iconColor: Colors.deepPurple,
                         trailing: Consumer<ThemeProvider>(
                           builder: (context, themeProvider, child) {
                             return Container(
@@ -404,24 +310,119 @@ class ProfileScreen extends StatelessWidget {
 
                   SizedBox(height: 12.h),
 
-                  ProfileMenuSection(
-                    title: 'Account Actions',
-                    color: AppColors.error,
-                    items: [
-                      ProfileMenuItem(
-                        title: 'Logout',
-                        subtitle: 'Sign out of your account',
-                        icon: Icons.logout_rounded,
-                        iconColor: Colors.redAccent,
-                        onTap: () => _showLogoutDialog(context),
-                      ),
-                    ],
-                  ),
+                  // Account Actions Section - Only show if logged in
+                  if (isLoggedIn)
+                    ProfileMenuSection(
+                      title: 'Account Actions',
+                      color: AppColors.error,
+                      items: [
+                        ProfileMenuItem(
+                          title: 'Logout',
+                          subtitle: 'Sign out of your account',
+                          icon: Icons.logout_rounded,
+                          iconColor: Colors.redAccent,
+                          onTap: () => _showLogoutDialog(context),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Real-time Stats Cards that listen to all providers
+  Widget _buildRealTimeStatsCards(
+    BuildContext context,
+    ColorScheme colorScheme,
+  ) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Consumer3<CartProvider, WishlistProvider, OrderHistoryProvider>(
+        builder: (
+          context,
+          cartProvider,
+          wishlistProvider,
+          orderProvider,
+          child,
+        ) {
+          return Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _enhancedMiniStatCard(
+                    context,
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UnifiedOrdersScreen(),
+                        ),
+                      );
+                    },
+                    'Orders',
+                    orderProvider.orders.length.toString(),
+                    Icons.shopping_bag_rounded,
+                    colorScheme.primary,
+                  ),
+                  _enhancedMiniStatCard(
+                    context,
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WishlistScreen(),
+                        ),
+                      );
+                    },
+                    'Wishlist',
+                    wishlistProvider.wishlistItems.length.toString(),
+                    Icons.favorite_rounded,
+                    colorScheme.primary,
+                  ),
+                  _enhancedMiniStatCard(
+                    context,
+                    () {
+                      // Navigate to cart or show cart
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Cart: ${cartProvider.itemList.length} items',
+                          ),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    },
+                    'Cart',
+                    cartProvider.itemList.length.toString(),
+                    Icons.shopping_cart_rounded,
+                    colorScheme.primary,
+                  ),
+                  _enhancedMiniStatCard(
+                    context,
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerSupportScreen(),
+                        ),
+                      );
+                    },
+                    'Support',
+                    '24/7',
+                    Icons.support_agent_rounded,
+                    colorScheme.primary,
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.h),
+            ],
+          );
+        },
       ),
     );
   }

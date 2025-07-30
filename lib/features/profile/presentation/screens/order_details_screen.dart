@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/product/presentation/screens/product_screen.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
-import 'track_orders_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/unified_orders_screen.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final Map<String, dynamic> order;
@@ -18,57 +20,42 @@ class OrderDetailsScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         title: Text('Order Details', style: textTheme.headlineMedium),
-
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurface),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: AppSizes.paddingAllSm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Order Summary
             Card(
+              shadowColor: colorScheme.shadow,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Padding(
-                padding: EdgeInsets.all(16.w),
+                padding: AppSizes.paddingAllSm,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Order #${order['id']}',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                        color: colorScheme.onSurface,
-                      ),
+                      style: textTheme.headlineSmall,
                     ),
                     SizedBox(height: 8.h),
                     Text(
                       'Placed on ${order['date']}',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
+                      style: textTheme.bodyMedium,
                     ),
                     SizedBox(height: 8.h),
                     Row(
                       children: [
-                        Text(
-                          'Status: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onSurface,
-                          ),
+                        Text('Status: ', style: textTheme.bodyMedium),
+                        _buildStatusChip(
+                          order['status'],
+                          colorScheme,
+                          textTheme,
                         ),
-                        _buildStatusChip(order['status'], colorScheme),
                       ],
                     ),
                   ],
@@ -77,14 +64,7 @@ class OrderDetailsScreen extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
             // Product List
-            Text(
-              'Products',
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w700,
-                color: colorScheme.onSurface,
-              ),
-            ),
+            Text('Products', style: textTheme.headlineSmall),
             SizedBox(height: 8.h),
             ...List.generate(order['items'].length, (index) {
               final item = order['items'][index];
@@ -110,33 +90,62 @@ class OrderDetailsScreen extends StatelessWidget {
                 child: Card(
                   margin: EdgeInsets.only(bottom: 12.h),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
+                    borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                   ),
+                  elevation: 2,
                   child: Padding(
-                    padding: EdgeInsets.all(12.w),
+                    padding: AppSizes.paddingAllSm,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Product image
+                        // Enhanced Product image
                         Container(
-                          width: 56.w,
-                          height: 56.w,
+                          width: 80.w,
+                          height: 80.w,
                           decoration: BoxDecoration(
                             color: colorScheme.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(8.r),
+                            borderRadius: BorderRadius.circular(
+                              AppSizes.radiusMd,
+                            ),
+                            boxShadow: AppShadows.cardShadow(context),
                           ),
                           child:
                               item['image'] != null &&
                                       item['image'].toString().isNotEmpty
                                   ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.r),
+                                    borderRadius: BorderRadius.circular(
+                                      AppSizes.radiusMd,
+                                    ),
                                     child: CachedNetworkImage(
                                       imageUrl: item['image'],
                                       fit: BoxFit.cover,
-                                      width: 56.w,
-                                      height: 56.w,
+                                      width: 80.w,
+                                      height: 80.w,
                                       cacheManager:
                                           MyCustomCacheManager.instance,
+                                      placeholder:
+                                          (context, url) => Container(
+                                            color:
+                                                colorScheme
+                                                    .surfaceContainerHighest,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                color: colorScheme.primary,
+                                              ),
+                                            ),
+                                          ),
+                                      errorWidget:
+                                          (context, url, error) => Container(
+                                            color:
+                                                colorScheme
+                                                    .surfaceContainerHighest,
+                                            child: Icon(
+                                              Icons.local_florist,
+                                              size: 40.r,
+                                              color: colorScheme.primary,
+                                            ),
+                                          ),
                                     ),
                                   )
                                   : (() {
@@ -151,53 +160,99 @@ class OrderDetailsScreen extends StatelessWidget {
                                         plant.images!.isNotEmpty) {
                                       return ClipRRect(
                                         borderRadius: BorderRadius.circular(
-                                          8.r,
+                                          AppSizes.radiusMd,
                                         ),
                                         child: CachedNetworkImage(
                                           imageUrl:
                                               plant.images!.first.url ?? '',
                                           fit: BoxFit.cover,
-                                          width: 56.w,
-                                          height: 56.w,
+                                          width: 80.w,
+                                          height: 80.w,
                                           cacheManager:
                                               MyCustomCacheManager.instance,
+                                          placeholder:
+                                              (context, url) => Container(
+                                                color:
+                                                    colorScheme
+                                                        .surfaceContainerHighest,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                        strokeWidth: 2,
+                                                        color:
+                                                            colorScheme.primary,
+                                                      ),
+                                                ),
+                                              ),
+                                          errorWidget:
+                                              (
+                                                context,
+                                                url,
+                                                error,
+                                              ) => Container(
+                                                color:
+                                                    colorScheme
+                                                        .surfaceContainerHighest,
+                                                child: Icon(
+                                                  Icons.local_florist,
+                                                  size: 40.r,
+                                                  color: colorScheme.primary,
+                                                ),
+                                              ),
                                         ),
                                       );
                                     }
-                                    return Icon(
-                                      Icons.local_florist,
-                                      size: 32.r,
-                                      color: colorScheme.primary,
+                                    return Container(
+                                      color:
+                                          colorScheme.surfaceContainerHighest,
+                                      child: Icon(
+                                        Icons.local_florist,
+                                        size: 40.r,
+                                        color: colorScheme.primary,
+                                      ),
                                     );
                                   })(),
                         ),
-                        SizedBox(width: 12.w),
+                        SizedBox(width: 16.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 item['name'],
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: colorScheme.onSurface,
-                                ),
+                                style: textTheme.titleLarge,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 4.h),
-                              Text(
-                                'Qty: ${item['quantity']}',
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
+                              SizedBox(height: 8.h),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w,
+                                      vertical: 4.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.primary.withOpacity(
+                                        0.1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                        AppSizes.radiusSm,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Qty: ${item['quantity']}',
+                                      style: textTheme.labelMedium?.copyWith(
+                                        color: colorScheme.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 4.h),
+                              SizedBox(height: 8.h),
                               Text(
                                 item['price'],
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
+                                style: textTheme.titleLarge?.copyWith(
                                   color: colorScheme.primary,
                                 ),
                               ),
@@ -214,20 +269,11 @@ class OrderDetailsScreen extends StatelessWidget {
             // Order Total
             Row(
               children: [
-                Text(
-                  'Order Total:',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
+                Text('Order Total:', style: textTheme.headlineSmall),
                 Spacer(),
                 Text(
                   order['total'],
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w700,
+                  style: textTheme.headlineSmall?.copyWith(
                     color: colorScheme.primary,
                   ),
                 ),
@@ -236,74 +282,33 @@ class OrderDetailsScreen extends StatelessWidget {
             SizedBox(height: 24.h),
             // Delivery Info (if available)
             if (order['deliveryAddress'] != null) ...[
-              Text(
-                'Delivery Address',
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
-              ),
+              Text('Delivery Address', style: textTheme.headlineSmall),
               SizedBox(height: 8.h),
               Text(
                 order['deliveryAddress'],
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: colorScheme.onSurfaceVariant,
-                ),
+                style: textTheme.bodyMedium,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
               ),
               SizedBox(height: 16.h),
             ],
             if (order['estimatedDelivery'] != null) ...[
-              Text(
-                'Estimated Delivery',
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                  color: colorScheme.onSurface,
-                ),
-              ),
+              Text('Estimated Delivery', style: textTheme.headlineSmall),
               SizedBox(height: 8.h),
-              Text(
-                order['estimatedDelivery'],
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
+              Text(order['estimatedDelivery'], style: textTheme.bodyMedium),
             ],
-            if (order['trackingNumber'] != null) ...[
-              SizedBox(height: 32.h),
-              Center(
-                child: ElevatedButton.icon(
-                  icon: Icon(Icons.local_shipping_outlined),
-                  label: Text('Track Order'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 32.w,
-                      vertical: 14.h,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TrackOrdersScreen(order: order),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+            SizedBox(height: 32.h),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildStatusChip(String status, ColorScheme colorScheme) {
+  Widget _buildStatusChip(
+    String status,
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
     Color backgroundColor;
     Color textColor;
     switch (status.toLowerCase()) {
@@ -335,11 +340,7 @@ class OrderDetailsScreen extends StatelessWidget {
       ),
       child: Text(
         status,
-        style: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w600,
-          color: textColor,
-        ),
+        style: textTheme.labelMedium?.copyWith(color: textColor),
       ),
     );
   }

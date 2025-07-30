@@ -25,12 +25,14 @@ class ProfileProvider with ChangeNotifier {
   bool _appUpdates = true;
   bool _promotionalOffers = false;
 
-  // Ecommerce Stats
-  final int _totalOrders = 12;
-  final int _wishlistItems = 8;
-  final int _reviewsGiven = 5;
+  // Real-time Ecommerce Stats (will be updated from other providers)
+  int _totalOrders = 0;
+  int _wishlistItems = 0;
+  // ignore: prefer_final_fields
+  int _reviewsGiven = 2; // Static for now
   double _loyaltyPoints = 1250.0;
   String _membershipTier = "Gold";
+  int _cartItems = 0;
 
   // Order Management
   final List<Map<String, dynamic>> _orders = [];
@@ -49,33 +51,13 @@ class ProfileProvider with ChangeNotifier {
   }
 
   // Getters
-  String get userName => _userName;
-  String get userEmail => _userEmail;
-  String get userPhone => _userPhone;
-  String get userAvatar => _userAvatar;
-  String get userAddress => _userAddress;
-  DateTime get userDob => _userDob;
-  String get userGender => _userGender;
-
-  bool get notificationsEnabled => _notificationsEnabled;
-  bool get emailNotifications => _emailNotifications;
-  bool get pushNotifications => _pushNotifications;
-  bool get locationEnabled => _locationEnabled;
-  String get language => _language;
-  String get currency => _currency;
-  bool get smsNotifications => _smsNotifications;
-  bool get deliveryReminders => _deliveryReminders;
-  bool get priceDrops => _priceDrops;
-  bool get newProducts => _newProducts;
-  bool get plantCareTips => _plantCareTips;
-  bool get appUpdates => _appUpdates;
-  bool get promotionalOffers => _promotionalOffers;
 
   int get totalOrders => _totalOrders;
   int get wishlistItems => _wishlistItems;
   int get reviewsGiven => _reviewsGiven;
   double get loyaltyPoints => _loyaltyPoints;
   String get membershipTier => _membershipTier;
+  int get cartItems => _cartItems;
 
   // Methods to update user data
   void updateUserName(String name) {
@@ -95,6 +77,38 @@ class ProfileProvider with ChangeNotifier {
 
   void updateUserAddress(String address) {
     _userAddress = address;
+    notifyListeners();
+  }
+
+  // Methods to update real-time stats
+  void updateTotalOrders(int count) {
+    _totalOrders = count;
+    notifyListeners();
+  }
+
+  void updateWishlistItems(int count) {
+    _wishlistItems = count;
+    notifyListeners();
+  }
+
+  void updateCartItems(int count) {
+    _cartItems = count;
+    notifyListeners();
+  }
+
+  // Method to update all stats at once
+  void updateAllStats({
+    int? totalOrders,
+    int? wishlistItems,
+    int? cartItems,
+
+    double? loyaltyPoints,
+  }) {
+    if (totalOrders != null) _totalOrders = totalOrders;
+    if (wishlistItems != null) _wishlistItems = wishlistItems;
+    if (cartItems != null) _cartItems = cartItems;
+
+    if (loyaltyPoints != null) _loyaltyPoints = loyaltyPoints;
     notifyListeners();
   }
 

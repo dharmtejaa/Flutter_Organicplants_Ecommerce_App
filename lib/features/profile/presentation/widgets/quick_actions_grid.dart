@@ -4,7 +4,7 @@ import 'package:organicplants/features/profile/presentation/widgets/profile_cust
 import 'package:provider/provider.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/logic/profile_provider.dart';
-import 'package:organicplants/features/profile/presentation/screens/order_history_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/unified_orders_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/my_reviews_screen.dart';
 import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/loyalty_points_screen.dart';
@@ -42,7 +42,7 @@ class QuickActionsGrid extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OrderHistoryScreen(),
+                        builder: (context) => UnifiedOrdersScreen(),
                       ),
                     );
                   },

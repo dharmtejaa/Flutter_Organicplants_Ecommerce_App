@@ -219,41 +219,39 @@ class ProfileHeaderCard extends StatelessWidget {
                             color: colorScheme.primary,
                           ),
                         ),
-                        SizedBox(height: 6.h),
-                        Text(
-                          userProfileProvider.userProfile!.email,
-                          style: textTheme.bodyLarge?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
                         SizedBox(height: 14.h),
                         Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 14.w,
-                            vertical: 6.h,
+                            horizontal: 16.w,
+                            vertical: 8.h,
                           ),
                           decoration: BoxDecoration(
-                            color: colorScheme.primary,
+                            color: colorScheme.primary.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(
                               AppSizes.radiusLg,
                             ),
-                            boxShadow: AppShadows.cardShadow(context),
+                            border: Border.all(
+                              color: colorScheme.primary.withOpacity(0.3),
+                              width: 1,
+                            ),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
-                                Icons.workspace_premium,
-                                color: colorScheme.surface,
-                                size: AppSizes.iconXs,
+                                Icons.eco_rounded,
+                                color: colorScheme.primary,
+                                size: AppSizes.iconSm,
                               ),
-                              SizedBox(width: 6.w),
-                              Text(
-                                '$userName member',
-                                style: textTheme.bodySmall?.copyWith(
-                                  color: colorScheme.surface,
-                                  fontWeight: FontWeight.w600,
+                              SizedBox(width: 8.w),
+                              Flexible(
+                                child: Text(
+                                  'Nature is not a place to visit. It is home.',
+                                  style: textTheme.bodySmall?.copyWith(
+                                    color: colorScheme.primary,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FontStyle.italic,
+                                  ),
                                 ),
                               ),
                             ],
@@ -339,21 +337,61 @@ class ProfileHeaderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppSizes.radiusXl),
                   boxShadow: AppShadows.cardShadow(context),
                 ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Loginscreen(),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Loginscreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "LogIn",
+                        style: textTheme.labelLarge?.copyWith(
+                          color: AppTheme.primaryColor,
+                        ),
                       ),
-                    );
-                  },
-                  child: Text(
-                    "LogIn",
-                    style: textTheme.labelLarge?.copyWith(
-                      color: AppTheme.primaryColor,
                     ),
-                  ),
+                    SizedBox(height: 10.h),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+                        border: Border.all(
+                          color: colorScheme.primary.withOpacity(0.3),
+                          width: 1,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.eco_rounded,
+                            color: colorScheme.primary,
+                            size: AppSizes.iconSm,
+                          ),
+                          SizedBox(width: 8.w),
+                          Flexible(
+                            child: Text(
+                              'In every walk with nature, one receives far more than he seeks.',
+                              style: textTheme.bodySmall?.copyWith(
+                                color: colorScheme.primary,
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

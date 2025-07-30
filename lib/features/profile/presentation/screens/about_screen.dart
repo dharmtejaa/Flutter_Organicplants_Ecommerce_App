@@ -344,14 +344,14 @@ class AboutScreen extends StatelessWidget {
             _buildContactItem(
               context,
               "Phone",
-              "+91 98765 43210",
+              "+91 9876543210",
               Icons.phone_rounded,
               () => _launchPhone(context),
             ),
             _buildContactItem(
               context,
               "Address",
-              "123 Green Street, Garden Colony, Mumbai - 400001",
+              "12-34-4, Marvel Nagaram, Pandora",
               Icons.location_on_rounded,
               () => _launchMaps(context),
             ),
@@ -405,7 +405,7 @@ class AboutScreen extends StatelessWidget {
               if (onTap != null)
                 Icon(
                   Icons.arrow_forward_ios,
-                  size: AppSizes.iconSm,
+                  size: AppSizes.iconXs,
                   color: AppColors.mutedText,
                 ),
             ],

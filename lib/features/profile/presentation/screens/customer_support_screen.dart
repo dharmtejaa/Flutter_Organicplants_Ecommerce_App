@@ -80,7 +80,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Customer Support", style: textTheme.headlineMedium),
-       
+
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -101,7 +101,11 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
               padding: AppSizes.paddingAllSm,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [colorScheme.primaryContainer, colorScheme.surface],
+                  colors: [
+                    colorScheme.primary.withOpacity(0.95),
+                    Colors.greenAccent.withOpacity(0.7),
+                    colorScheme.primary.withOpacity(0.7),
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -120,7 +124,7 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                     child: Icon(
                       Icons.support_agent_rounded,
                       size: AppSizes.iconLg,
-                      color: colorScheme.onPrimary,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   SizedBox(height: 16.h),
