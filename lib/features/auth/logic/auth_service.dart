@@ -1,12 +1,11 @@
 // ignore_for_file: use_build_context_synchronously, duplicate_ignore
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
-import 'package:organicplants/features/profile/logic/user_profile_model.dart';
+import 'package:organicplants/features/profile/data/user_profile_model.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
@@ -24,6 +23,7 @@ class AuthService {
       );
 
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => EntryScreen()),
       );
@@ -161,6 +161,7 @@ class AuthService {
 
     // 2. Get final confirmation from the user.
     final confirmed = await CustomDialog.showConfirmation(
+      // ignore: use_build_context_synchronously
       context: context,
       title: "Final Confirmation",
       content:
@@ -168,6 +169,7 @@ class AuthService {
       confirmText: "Delete Forever",
       cancelText: "Cancel",
       icon: Icons.warning_amber_rounded,
+      // ignore: use_build_context_synchronously
       iconColor: Theme.of(context).colorScheme.error,
     );
     if (confirmed != true) return;
@@ -191,16 +193,20 @@ class AuthService {
       await user.delete();
       await GoogleSignIn.instance.signOut();
 
+      // ignore: use_build_context_synchronously
       CustomSnackBar.showSuccess(context, "Account deleted successfully!");
       Navigator.pushAndRemoveUntil(
+        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (_) => EntryScreen()),
         (route) => false,
       );
     } on FirebaseException catch (e) {
+      // ignore: use_build_context_synchronously
       CustomSnackBar.showError(context, "Error during deletion: ${e.message}");
     } catch (e) {
       CustomSnackBar.showError(
+        // ignore: use_build_context_synchronously
         context,
         "An unexpected error occurred: ${e.toString()}",
       );
@@ -243,12 +249,14 @@ class AuthService {
 
       await currentUser.reauthenticateWithCredential(credential);
       CustomSnackBar.showSuccess(context, "Re-authentication successful!");
+      Duration(seconds: 1);
       return true;
     } on FirebaseAuthException catch (e) {
       CustomSnackBar.showError(
         context,
         e.message ?? "Re-authentication failed",
       );
+      Duration(seconds: 1);
       return false;
     } catch (e) {
       CustomSnackBar.showError(context, "An error occurred: ${e.toString()}");

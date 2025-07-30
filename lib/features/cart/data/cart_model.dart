@@ -54,13 +54,13 @@ class CartItemModel {
         offerPrice: (map['offerPrice'] ?? 0).toDouble(),
         discount: (map['discount'] ?? 0).toDouble(),
         rating: (map['rating'] ?? 0).toDouble(),
-        quantity: map['quantity'] ?? 1,
+        quantity: map['quantity'] ?? 0,
       );
     } catch (e) {
       debugPrint('Error parsing CartItemModel from map: $e');
       debugPrint('Map data: $map');
       // Return a default item if parsing fails
-    return CartItemModel(
+      return CartItemModel(
         plantId: map['plantId'] ?? '',
         plantName: map['plantName'] ?? 'Unknown Plant',
         imageUrl: map['imageUrl'] ?? '',
@@ -68,8 +68,8 @@ class CartItemModel {
         offerPrice: 0.0,
         discount: 0.0,
         rating: 0.0,
-        quantity: 1,
-    );
+        quantity: 0,
+      );
     }
   }
   Map<String, dynamic> toMap() {

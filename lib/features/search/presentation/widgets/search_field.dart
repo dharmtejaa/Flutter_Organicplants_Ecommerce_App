@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
+// Import the BottomNavProvider to listen for tab changes
+import 'package:organicplants/features/entry/logic/bottom_nav_provider.dart';
 import 'package:organicplants/features/search/logic/hint_text_provider.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -26,11 +28,32 @@ class _SearchFieldState extends State<SearchField> {
   OverlayEntry? _overlayEntry;
   final ValueNotifier<String> _searchTextNotifier = ValueNotifier('');
 
+  // Reference to the BottomNavProvider
+  BottomNavProvider? _bottomNavProvider;
+
   @override
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
     _focusNode.addListener(_onFocusChange);
+
+    // Listen to the BottomNavProvider to know when the user switches tabs
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _bottomNavProvider = Provider.of<BottomNavProvider>(
+        context,
+        listen: false,
+      );
+      _bottomNavProvider?.addListener(_onBottomNavChange);
+    });
+  }
+
+  /// This new method is called whenever the bottom navigation tab changes.
+  void _onBottomNavChange() {
+    // The search screen is at index 2. If we are no longer on the search screen,
+    // remove focus from the search field, which will trigger the overlay to close.
+    if (_bottomNavProvider?.currentIndex != 2) {
+      _focusNode.unfocus();
+    }
   }
 
   void _onFocusChange() {
@@ -50,6 +73,7 @@ class _SearchFieldState extends State<SearchField> {
 
   void _showOverlay() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       _removeOverlay();
       final overlay = Overlay.of(context);
       _overlayEntry = _buildOverlayEntry();
@@ -66,8 +90,12 @@ class _SearchFieldState extends State<SearchField> {
   void dispose() {
     _searchController.removeListener(_onSearchChanged);
     _focusNode.removeListener(_onFocusChange);
+    // Clean up the listener when the widget is disposed
+    _bottomNavProvider?.removeListener(_onBottomNavChange);
     _removeOverlay();
     _searchController.dispose();
+    // Properly dispose the FocusNode
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -102,9 +130,7 @@ class _SearchFieldState extends State<SearchField> {
                           ),
                           boxShadow: AppShadows.searchFieldShadow(context),
                         ),
-                        constraints: BoxConstraints(
-                          maxHeight: 350.h,
-                        ),
+                        constraints: BoxConstraints(maxHeight: 350.h),
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: results.length,
@@ -120,15 +146,20 @@ class _SearchFieldState extends State<SearchField> {
                                 _removeOverlay();
 
                                 _searchController.text = plant.commonName ?? '';
-                                searchProvider.addRecentSearchHistory(plant.commonName ?? '');
-                                searchProvider.addRecentlyViewedPlant(plant.id ?? '');
+                                searchProvider.addRecentSearchHistory(
+                                  plant.commonName ?? '',
+                                );
+                                searchProvider.addRecentlyViewedPlant(
+                                  plant.id ?? '',
+                                );
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => ProductScreen(
-                                      plantId: plant.id ?? '',
-                                    ),
+                                    builder:
+                                        (_) => ProductScreen(
+                                          plantId: plant.id ?? '',
+                                        ),
                                   ),
                                 );
                               },
@@ -142,51 +173,69 @@ class _SearchFieldState extends State<SearchField> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8.r),
                                       child: CachedNetworkImage(
-                                        imageUrl: plant.images?.firstOrNull?.url ?? '',
+                                        imageUrl:
+                                            plant.images?.firstOrNull?.url ??
+                                            '',
                                         width: 40.w,
                                         height: 40.h,
                                         fit: BoxFit.cover,
-                                        cacheManager: MyCustomCacheManager.instance,
-                                        placeholder: (context, url) => Container(
-                                          width: 40.w,
-                                          height: 40.h,
-                                          color: colorScheme.surfaceContainerHighest,
-                                          child: Icon(
-                                            Icons.image,
-                                            color: colorScheme.onSurfaceVariant,
-                                          ),
-                                        ),
-                                        errorWidget: (context, url, error) => Container(
-                                          width: 40.w,
-                                          height: 40.h,
-                                          color: colorScheme.surfaceContainerHighest,
-                                          child: Icon(
-                                            Icons.error,
-                                            color: colorScheme.onSurfaceVariant,
-                                          ),
-                                        ),
+                                        cacheManager:
+                                            MyCustomCacheManager.instance,
+                                        placeholder:
+                                            (context, url) => Container(
+                                              width: 40.w,
+                                              height: 40.h,
+                                              color:
+                                                  colorScheme
+                                                      .surfaceContainerHighest,
+                                              child: Icon(
+                                                Icons.image,
+                                                color:
+                                                    colorScheme
+                                                        .onSurfaceVariant,
+                                              ),
+                                            ),
+                                        errorWidget:
+                                            (context, url, error) => Container(
+                                              width: 40.w,
+                                              height: 40.h,
+                                              color:
+                                                  colorScheme
+                                                      .surfaceContainerHighest,
+                                              child: Icon(
+                                                Icons.error,
+                                                color:
+                                                    colorScheme
+                                                        .onSurfaceVariant,
+                                              ),
+                                            ),
                                       ),
                                     ),
                                     SizedBox(width: 12.w),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             plant.commonName ?? 'Unknown Plant',
-                                            style: textTheme.bodyMedium?.copyWith(
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            style: textTheme.bodyMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                           if (plant.scientificName != null)
                                             Text(
                                               plant.scientificName!,
-                                              style: textTheme.bodySmall?.copyWith(
-                                                color: colorScheme.onSurfaceVariant,
-                                                fontStyle: FontStyle.italic,
-                                              ),
+                                              style: textTheme.bodySmall
+                                                  ?.copyWith(
+                                                    color:
+                                                        colorScheme
+                                                            .onSurfaceVariant,
+                                                    fontStyle: FontStyle.italic,
+                                                  ),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -200,8 +249,8 @@ class _SearchFieldState extends State<SearchField> {
                           },
                         ),
                       ),
-        ),
-      ),
+            ),
+          ),
     );
   }
 
@@ -257,9 +306,6 @@ class _SearchFieldState extends State<SearchField> {
                   }
                 },
                 decoration: InputDecoration(
-                  // hintStyle: textTheme.bodyLarge?.copyWith(
-                  //   color: colorScheme.onSurface.withOpacity(0.4),
-                  // ),
                   contentPadding: AppSizes.paddingAllSm,
                   prefixIcon: Icon(
                     Icons.search,

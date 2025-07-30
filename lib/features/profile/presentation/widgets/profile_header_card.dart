@@ -4,9 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
+import 'package:organicplants/core/theme/app_theme.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 // ignore: unused_import
 import 'package:organicplants/core/theme/light_theme_colors.dart';
+import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/profile/presentation/screens/personal_information_screen.dart';
 import 'package:organicplants/shared/logic/user_profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -174,9 +176,7 @@ class ProfileHeaderCard extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder:
-                                    (context) => PersonalInformationScreen(
-                                      
-                                    ),
+                                    (context) => PersonalInformationScreen(),
                               ),
                             );
                           },
@@ -339,11 +339,20 @@ class ProfileHeaderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppSizes.radiusXl),
                   boxShadow: AppShadows.cardShadow(context),
                 ),
-                child: Text(
-                  'please login to continue',
-                  style: textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.primary,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Loginscreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "LogIn",
+                    style: textTheme.labelLarge?.copyWith(
+                      color: AppTheme.primaryColor,
+                    ),
                   ),
                 ),
               ),

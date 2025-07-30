@@ -3,31 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
+import 'package:organicplants/features/profile/data/address_model.dart';
+import 'package:organicplants/features/profile/logic/address_provider.dart';
 import 'package:organicplants/features/profile/presentation/screens/add_edit_address_screen.dart';
+import 'package:provider/provider.dart';
 
-class AddressesScreen extends StatefulWidget {
+class AddressesScreen extends StatelessWidget {
   const AddressesScreen({super.key});
-
-  @override
-  State<AddressesScreen> createState() => _AddressesScreenState();
-}
-
-class _AddressesScreenState extends State<AddressesScreen> {
-  // Refactor addresses to ValueNotifier
-  final ValueNotifier<List<Map<String, String>>> addresses = ValueNotifier([
-    {
-      'name': 'John Doe',
-      'address': '123 Green Street, Garden Colony, Mumbai, 400001',
-      'phone': '+91 98765 43210',
-      'type': 'Home',
-    },
-    {
-      'name': 'Jane Smith',
-      'address': '456 Blue Avenue, Lake City, Pune, 411001',
-      'phone': '+91 91234 56789',
-      'type': 'Work',
-    },
-  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -35,148 +17,185 @@ class _AddressesScreenState extends State<AddressesScreen> {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Addresses', style: textTheme.headlineSmall),
+        title: Text('Shipping Addresses', style: textTheme.headlineSmall),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(AppSizes.paddingMd),
-        child: ValueListenableBuilder<List<Map<String, String>>>(
-          valueListenable: addresses,
-          builder: (context, addressList, _) {
-            return addressList.isEmpty
-                ? Center(
-                  child: Text(
-                    'No addresses found. Add a new address!',
-                    style: textTheme.bodyLarge,
-                  ),
-                )
-                : ListView.separated(
-                  itemCount: addressList.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 10.h),
-                  itemBuilder: (context, index) {
-                    final addr = addressList[index];
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
+      body: Consumer<AddressProvider>(
+        builder: (context, addressProvider, child) {
+          final addressData = addressProvider.address;
+          return Padding(
+            padding: EdgeInsets.all(AppSizes.paddingMd),
+            child:
+                addressData.isEmpty
+                    ? Center(
+                      child: Text(
+                        'No addresses found. Add a new address!',
+                        style: textTheme.bodyLarge,
                       ),
-                      elevation: 2,
-                      child: Padding(
-                        padding: EdgeInsets.all(AppSizes.paddingMd),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              addr['type'] == 'Home' ? Icons.home : Icons.work,
-                              color: colorScheme.primary,
-                              size: 28.w,
+                    )
+                    : ListView.separated(
+                      itemCount: addressData.length,
+                      separatorBuilder:
+                          (context, index) => SizedBox(height: 10.h),
+                      itemBuilder: (context, index) {
+                        final AddressModel addr = addressData[index];
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              AppSizes.radiusLg,
                             ),
-                            SizedBox(width: 14.w),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    addr['name'] ?? '',
-                                    style: textTheme.titleLarge,
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    addr['address'] ?? '',
-                                    style: textTheme.bodyMedium,
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    addr['phone'] ?? '',
-                                    style: textTheme.bodyMedium,
-                                  ),
-                                  SizedBox(height: 6.h),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                      vertical: 4.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: colorScheme.primary.withOpacity(
-                                        0.12,
+                          ),
+                          elevation: 2,
+                          child: Padding(
+                            padding: EdgeInsets.all(AppSizes.paddingMd),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  addr.addressType == 'Home'
+                                      ? Icons.home
+                                      : Icons.work,
+                                  color: colorScheme.primary,
+                                  size: 28.w,
+                                ),
+                                SizedBox(width: 14.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        addr.fullName,
+                                        style: textTheme.titleLarge,
                                       ),
-                                      borderRadius: BorderRadius.circular(8.r),
-                                    ),
-                                    child: Text(
-                                      addr['type'] ?? '',
-                                      style: textTheme.labelMedium?.copyWith(
+                                      SizedBox(height: 4.h),
+                                      Text(
+                                        '${addr.house},  ${addr.street}, ${addr.city}, ${addr.state}, ',
+                                        style: textTheme.bodyMedium,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                      ),
+                                      SizedBox(height: 4.h),
+                                      Text(
+                                        addr.phoneNumber,
+                                        style: textTheme.bodyMedium,
+                                      ),
+                                      SizedBox(height: 6.h),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10.w,
+                                          vertical: 4.h,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: colorScheme.primary
+                                              .withOpacity(0.12),
+                                          borderRadius: BorderRadius.circular(
+                                            8.r,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          addr.addressType,
+                                          style: textTheme.labelMedium
+                                              ?.copyWith(
+                                                color: colorScheme.primary,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
                                         color: colorScheme.primary,
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
-                                    color: colorScheme.primary,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) => AddEditAddressScreen(
-                                              initialData: addr,
-                                            ),
-                                      ),
-                                    );
-                                  },
-                                  tooltip: 'Edit',
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.delete_outline,
-                                    color: colorScheme.error,
-                                  ),
-                                  onPressed: () {
-                                    final updated =
-                                        List<Map<String, String>>.from(
-                                          addressList,
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) =>
+                                                    AddEditAddressScreen(
+                                                      address: addressData,
+                                                      index: index,
+                                                    ),
+                                          ),
                                         );
-                                    updated.removeAt(index);
-                                    addresses.value = updated;
-                                  },
-                                  tooltip: 'Delete',
+                                      },
+                                      tooltip: 'Edit',
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.delete_outline,
+                                        color: colorScheme.error,
+                                      ),
+                                      onPressed: () {
+                                        _showDeleteConfirmation(
+                                          context,
+                                          addr.addressId,
+                                        );
+                                      },
+                                      tooltip: 'Delete',
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-          },
-        ),
+                          ),
+                        );
+                      },
+                    ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final newAddress = await Navigator.push(
+          Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddEditAddressScreen()),
+            MaterialPageRoute(
+              builder: (context) => const AddEditAddressScreen(),
+            ),
           );
-          if (newAddress != null && newAddress is Map<String, String>) {
-            final updated = List<Map<String, String>>.from(addresses.value);
-            updated.add(newAddress);
-            addresses.value = updated;
-            ScaffoldMessenger.of(
-              // ignore: use_build_context_synchronously
-              context,
-            ).showSnackBar(SnackBar(content: Text('Address added!')));
-          }
         },
-        icon: Icon(Icons.add_location_alt_rounded),
-        label: Text('Add Address'),
+        icon: const Icon(Icons.add_location_alt_rounded),
+        label: const Text('Add Address'),
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,
       ),
+    );
+  }
+
+  void _showDeleteConfirmation(BuildContext context, DateTime addressId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Deletion'),
+          content: const Text('Are you sure you want to delete this address?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                Provider.of<AddressProvider>(
+                  context,
+                  listen: false,
+                ).removeFromAddress(addressId);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

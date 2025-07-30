@@ -6,6 +6,9 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/features/cart/data/cart_model.dart';
+import 'package:organicplants/features/profile/data/address_model.dart';
+import 'package:organicplants/features/profile/logic/address_provider.dart';
+import 'package:organicplants/features/profile/presentation/screens/add_edit_address_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:provider/provider.dart';
@@ -34,12 +37,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   late final List<CartItemModel> cartItems;
-
-  final Map<String, String> address = {
-    'name': 'John Doe',
-    'address': '123 Green Street, Garden Colony, Mumbai, 400001',
-    'phone': '+91 98765 43210',
-  };
+  AddressModel? selectedAddress;
 
   // Refactor selectedPayment to ValueNotifier
   final ValueNotifier<String> selectedPayment = ValueNotifier('');
@@ -122,7 +120,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Icons.location_on,
                   colorScheme,
                 ),
-                _buildAddressCard(colorScheme, textTheme),
+                _buildAddressSection(colorScheme, textTheme),
                 SizedBox(height: 16.h),
                 // Payment Method
                 _buildSectionHeader(
@@ -200,49 +198,243 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _buildAddressCard(ColorScheme colorScheme, TextTheme textTheme) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(bottom: 10.h, top: 10.h),
-      padding: AppSizes.paddingAllSm,
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(AppSizes.radiusMd),
-        boxShadow: AppShadows.cardShadow(context),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(Icons.home, color: colorScheme.primary, size: AppSizes.iconSm),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(address['name'] ?? '', style: textTheme.titleMedium),
-                SizedBox(height: 3.h),
-                Text(address['address'] ?? '', style: textTheme.bodySmall),
-                SizedBox(height: 3.h),
-                Text(address['phone'] ?? '', style: textTheme.bodySmall),
+  Widget _buildAddressSection(ColorScheme colorScheme, TextTheme textTheme) {
+    return Consumer<AddressProvider>(
+      builder: (context, addressProvider, child) {
+        final addresses = addressProvider.address;
+        final selectedAddress =
+            addressProvider.selectedAddress ?? addressProvider.defaultAddress;
+
+        return Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 10.h, top: 10.h),
+          padding: AppSizes.paddingAllSm,
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+            boxShadow: AppShadows.cardShadow(context),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: colorScheme.primary,
+                        size: AppSizes.iconSm,
+                      ),
+                      SizedBox(width: 8.w),
+                      Text('Delivery Address', style: textTheme.titleMedium),
+                    ],
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddEditAddressScreen(),
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.add, size: 16),
+                    label: Text('Add New'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 12.h),
+              if (selectedAddress != null) ...[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.home,
+                      color: colorScheme.primary,
+                      size: AppSizes.iconSm,
+                    ),
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            selectedAddress.fullName,
+                            style: textTheme.titleMedium,
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            '${selectedAddress.house}, ${selectedAddress.street}',
+                            style: textTheme.bodySmall,
+                          ),
+                          SizedBox(height: 2.h),
+                          Text(
+                            '${selectedAddress.city}, ${selectedAddress.state}',
+                            style: textTheme.bodySmall,
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            selectedAddress.phoneNumber,
+                            style: textTheme.bodySmall,
+                          ),
+                          SizedBox(height: 4.h),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 4.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              selectedAddress.addressType,
+                              style: textTheme.bodySmall?.copyWith(
+                                color: colorScheme.primary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuButton<String>(
+                      icon: Icon(Icons.more_vert, color: colorScheme.onSurface),
+                      onSelected: (value) {
+                        if (value == 'edit') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddressesScreen(),
+                            ),
+                          );
+                        } else if (value == 'select') {
+                          _showAddressSelectionDialog(
+                            context,
+                            addresses,
+                            addressProvider,
+                          );
+                        }
+                      },
+                      itemBuilder:
+                          (context) => [
+                            PopupMenuItem(
+                              value: 'select',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.list, size: 16),
+                                  SizedBox(width: 8.w),
+                                  Text('Select Address'),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.edit, size: 16),
+                                  SizedBox(width: 8.w),
+                                  Text('Manage Addresses'),
+                                ],
+                              ),
+                            ),
+                          ],
+                    ),
+                  ],
+                ),
+              ] else ...[
+                Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.location_off_outlined,
+                        size: 48,
+                        color: colorScheme.onSurface.withOpacity(0.5),
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        'No address selected',
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddEditAddressScreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.add, size: 16),
+                        label: Text('Add Address'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: colorScheme.primary,
+                          foregroundColor: colorScheme.onPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showAddressSelectionDialog(
+    BuildContext context,
+    List<AddressModel> addresses,
+    AddressProvider addressProvider,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Delivery Address'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: addresses.length,
+              itemBuilder: (context, index) {
+                final address = addresses[index];
+                return ListTile(
+                  leading: Icon(Icons.home),
+                  title: Text(address.fullName),
+                  subtitle: Text(
+                    '${address.house}, ${address.street}\n${address.city}, ${address.state}',
+                  ),
+                  trailing:
+                      addressProvider.selectedAddress?.addressId ==
+                              address.addressId
+                          ? Icon(
+                            Icons.check_circle,
+                            color: Theme.of(context).colorScheme.primary,
+                          )
+                          : null,
+                  onTap: () {
+                    addressProvider.setSelectedAddress(address);
+                    Navigator.pop(context);
+                  },
+                );
+              },
             ),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddressesScreen()),
-              );
-            },
-            icon: Icon(
-              Icons.edit,
-              color: colorScheme.primary,
-              size: AppSizes.iconSm,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancel'),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 
@@ -333,6 +525,33 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void _placeOrder() async {
+    final addressProvider = Provider.of<AddressProvider>(
+      context,
+      listen: false,
+    );
+    final selectedAddress =
+        addressProvider.selectedAddress ?? addressProvider.defaultAddress;
+
+    if (selectedAddress == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please select a delivery address'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+      return;
+    }
+
+    if (selectedPayment.value.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please select a payment method'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+      return;
+    }
+
     isPlacingOrder.value = true;
     await Future.delayed(Duration(seconds: 2));
     isPlacingOrder.value = false;
@@ -353,7 +572,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   },
                 )
                 .toList(),
-        'deliveryAddress': address['address'] ?? '',
+        'deliveryAddress':
+            '${selectedAddress.house}, ${selectedAddress.street}, ${selectedAddress.city}, ${selectedAddress.state}',
         'trackingNumber': null,
       };
       final textTheme = Theme.of(context).textTheme;

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_types_as_parameter_names
+
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,8 +11,6 @@ class CartProvider extends ChangeNotifier {
   final List<CartItemModel> _cartItems = [];
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-
-  // Real-time listener
   StreamSubscription<QuerySnapshot>? _cartListener;
 
   List<CartItemModel> get itemList => _cartItems;
@@ -20,42 +20,66 @@ class CartProvider extends ChangeNotifier {
     _initializeAuthListener();
   }
 
-  // Initialize Firebase Auth listener
+  // Listens for login/logout events to manage the cart state.
   void _initializeAuthListener() {
     _auth.authStateChanges().listen((User? user) {
+      _disposeListener(); // Always cancel the old listener
+
       if (user != null) {
-        loadCartFromFirestore();
+        // User has logged in
+        _mergeGuestCartWithFirestore(user.uid);
       } else {
+        // User has logged out, clear the cart for a new guest session
         _cartItems.clear();
-        _disposeListener();
         notifyListeners();
       }
     });
   }
 
-  void _disposeListener() {
-    _cartListener?.cancel();
-    _cartListener = null;
+  // Merges in-memory guest cart with the user's Firestore cart upon login.
+  Future<void> _mergeGuestCartWithFirestore(String uid) async {
+    if (_cartItems.isEmpty) {
+      // No guest cart to merge, just load the Firestore cart.
+      loadCartFromFirestore(uid);
+      return;
+    }
+
+    // A temporary copy of guest items to be merged.
+    final List<CartItemModel> guestItemsToMerge = List.from(_cartItems);
+    _cartItems.clear(); // Clear local state before loading from Firestore
+
+    final cartRef = _firestore.collection('users').doc(uid).collection('cart');
+    final batch = _firestore.batch();
+
+    for (final guestItem in guestItemsToMerge) {
+      final docRef = cartRef.doc(guestItem.plantId);
+      // Use set with merge to add new items or update quantities if they already exist.
+      batch.set(docRef, guestItem.toMap(), SetOptions(merge: true));
+    }
+
+    try {
+      await batch.commit();
+    } catch (e) {
+      debugPrint("Error merging guest cart with Firestore: $e");
+    } finally {
+      // Whether merge succeeds or fails, load the definitive state from Firestore.
+      loadCartFromFirestore(uid);
+    }
   }
 
-  Future<void> loadCartFromFirestore() async {
-    if (_uid.isEmpty) return;
-
-    // Listen to cart changes
+  // Sets up a real-time stream to the user's Firestore cart.
+  void loadCartFromFirestore(String uid) {
     _cartListener = _firestore
         .collection('users')
-        .doc(_uid)
+        .doc(uid)
         .collection('cart')
         .snapshots()
         .listen(
           (snapshot) {
             _cartItems.clear();
-            _cartItems.addAll(
-              snapshot.docs.map(
-                (doc) => CartItemModel.fromMap(doc.data(), _uid),
-              ),
-            );
-            debugPrint('Loaded ${_cartItems.length} items from Firestore');
+            for (var doc in snapshot.docs) {
+              _cartItems.add(CartItemModel.fromMap(doc.data(), uid));
+            }
             notifyListeners();
           },
           onError: (error) {
@@ -64,35 +88,26 @@ class CartProvider extends ChangeNotifier {
         );
   }
 
-  @override
-  void dispose() {
-    _disposeListener();
-    super.dispose();
-  }
-
   Future<void> addToCart(String plantId) async {
     final plant = AllPlantsGlobalData.getById(plantId);
-    if (plant == null || _uid.isEmpty) {
-      debugPrint(
-        'addToCart: Plant not found or user not authenticated. PlantId: $plantId, UID: $_uid',
-      );
-      return;
-    }
+    if (plant == null) return;
 
     final existingIndex = _cartItems.indexWhere(
       (item) => item.plantId == plantId,
     );
 
     if (existingIndex != -1) {
+      // If item already exists, just increase its quantity.
       increaseQuantity(plantId);
       return;
     }
 
+    // Create a new cart item.
     final originalPrice = plant.prices?.originalPrice ?? 0;
     final offerPrice = plant.prices?.offerPrice ?? 0;
     final discount =
         originalPrice > 0
-            ? ((originalPrice - offerPrice) / originalPrice * 100).toInt()
+            ? ((originalPrice - offerPrice) / originalPrice * 100)
             : 0;
 
     final cartItem = CartItemModel(
@@ -106,8 +121,10 @@ class CartProvider extends ChangeNotifier {
       quantity: 1,
     );
 
+    // Add to local list first for immediate UI update.
     _cartItems.add(cartItem);
 
+    // If the user is logged in, also save to Firestore.
     if (_uid.isNotEmpty) {
       try {
         await _firestore
@@ -116,13 +133,11 @@ class CartProvider extends ChangeNotifier {
             .collection('cart')
             .doc(plantId)
             .set(cartItem.toMap());
-        debugPrint(
-          'Successfully added item to Firestore: ${cartItem.plantName}',
-        );
       } catch (e) {
-        debugPrint('Error saving to Firestore: $e');
-        // Remove from local cart if Firestore save fails
-        _cartItems.removeWhere((item) => item.plantId == plantId);
+        debugPrint('Error adding to Firestore: $e');
+        _cartItems.removeWhere(
+          (item) => item.plantId == plantId,
+        ); // Rollback on error
       }
     }
     notifyListeners();
@@ -149,7 +164,6 @@ class CartProvider extends ChangeNotifier {
     final updatedItem = _cartItems[index].copyWith(
       quantity: _cartItems[index].quantity + 1,
     );
-
     _cartItems[index] = updatedItem;
 
     if (_uid.isNotEmpty) {
@@ -165,12 +179,17 @@ class CartProvider extends ChangeNotifier {
 
   Future<void> decreaseQuantity(String plantId) async {
     final index = _cartItems.indexWhere((item) => item.plantId == plantId);
-    if (index == -1 || _cartItems[index].quantity <= 1) return;
+    if (index == -1) return;
+
+    if (_cartItems[index].quantity <= 1) {
+      // If quantity is 1, remove the item completely.
+      removeFromCart(plantId);
+      return;
+    }
 
     final updatedItem = _cartItems[index].copyWith(
       quantity: _cartItems[index].quantity - 1,
     );
-
     _cartItems[index] = updatedItem;
 
     if (_uid.isNotEmpty) {
@@ -188,42 +207,33 @@ class CartProvider extends ChangeNotifier {
     _cartItems.clear();
 
     if (_uid.isNotEmpty) {
-      final batch = _firestore.batch();
       final cartRef = _firestore
           .collection('users')
           .doc(_uid)
           .collection('cart');
-
       final snapshot = await cartRef.get();
+      final batch = _firestore.batch();
       for (var doc in snapshot.docs) {
         batch.delete(doc.reference);
       }
-
       await batch.commit();
     }
     notifyListeners();
   }
 
+  // --- Getters ---
   double get totalOriginalPrice => _cartItems.fold(
     0.0,
-    // ignore: avoid_types_as_parameter_names
     (sum, item) => sum + item.originalPrice * item.quantity,
   );
-
   double get totalOfferPrice => _cartItems.fold(
     0.0,
-    // ignore: avoid_types_as_parameter_names
     (sum, item) => sum + item.offerPrice * item.quantity,
   );
-
   double get totalDiscount => totalOriginalPrice - totalOfferPrice;
-
   int get cartItemsCount => _cartItems.length;
-
-  bool isInCart(String? plantId) {
-    if (plantId == null) return false;
-    return _cartItems.any((item) => item.plantId == plantId);
-  }
+  bool isInCart(String? plantId) =>
+      plantId != null && _cartItems.any((item) => item.plantId == plantId);
 
   CartItemModel? getCartItem(String plantId) {
     try {
@@ -231,5 +241,16 @@ class CartProvider extends ChangeNotifier {
     } catch (e) {
       return null;
     }
+  }
+
+  void _disposeListener() {
+    _cartListener?.cancel();
+    _cartListener = null;
+  }
+
+  @override
+  void dispose() {
+    _disposeListener();
+    super.dispose();
   }
 }
