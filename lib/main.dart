@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,15 +9,18 @@ import 'package:organicplants/features/home/logic/onboarding_provider.dart';
 import 'package:organicplants/features/product/logic/carousel_provider.dart';
 import 'package:organicplants/features/profile/logic/address_provider.dart';
 import 'package:organicplants/features/profile/logic/order_history_provider.dart';
-import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/features/search/logic/hint_text_provider.dart';
 import 'package:organicplants/features/search/logic/search_screen_provider.dart';
 import 'package:organicplants/features/splash/presentation/screens/splashscreen.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
 import 'package:organicplants/shared/logic/theme_provider.dart';
 import 'package:organicplants/shared/logic/user_profile_provider.dart';
+import 'package:organicplants/features/notifications/logic/notification_service.dart';
+import 'package:organicplants/features/notifications/logic/notification_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+Future<void> _backgroundMessaging(RemoteMessage message) async {}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +34,8 @@ void main() async {
       storageBucket: "organicplants143.firebasestorage.app",
     ),
   );
+  FirebaseMessaging.onBackgroundMessage(_backgroundMessaging);
+
   runApp(
     MultiProvider(
       providers: [
@@ -39,7 +45,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => HintTextProvider()),
         ChangeNotifierProvider(create: (_) => WishlistProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(),
         ), // Your ThemeProvider
@@ -47,6 +52,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserProfileProvider()),
         ChangeNotifierProvider(create: (_) => AddressProvider()),
         ChangeNotifierProvider(create: (_) => OrderHistoryProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: const MyApp(),
     ),
@@ -67,6 +73,7 @@ class MyApp extends StatelessWidget {
           context,
         ); // Get the theme provider
         return MaterialApp(
+          navigatorKey: navigatorKey, // Add the navigator key here
           builder: (context, widget) {
             // 👇 Overrides global system font scaling
             return MediaQuery(
@@ -82,7 +89,7 @@ class MyApp extends StatelessWidget {
           themeMode:
               themeProvider
                   .themeMode, // This will dynamically change based on provider
-          home: const Splashscreen(),
+          home: const NotificationService(child: Splashscreen()),
         );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:organicplants/features/profile/data/user_profile_model.dart';
 
@@ -17,6 +18,7 @@ class UserProfileProvider with ChangeNotifier {
   bool get isAuthenticated => _isAuthenticated;
   bool get hasProfile => _userProfile != null;
   String? get lastError => _lastError;
+  String? get fcmToken => _userProfile?.fcmToken;
 
   UserProfileProvider() {
     _initializeAuthListener();
@@ -51,10 +53,12 @@ class UserProfileProvider with ChangeNotifier {
         _userProfile = UserProfileModel.fromMap(docSnapshot.data() ?? {}, uid);
       } else {
         // Create default profile if user exists in Auth but not in Firestore
+        final fcmToken = await FirebaseMessaging.instance.getToken();
         _userProfile = UserProfileModel(
           uid: uid,
           fullName: _currentUser?.displayName ?? 'Plant Lover',
           email: _currentUser?.email ?? '',
+          fcmToken: fcmToken,
           profileImageUrl:
               _currentUser?.photoURL ??
               'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753501304/Sprout_head_empty_pfp_eakz4j.jpg',
@@ -62,18 +66,7 @@ class UserProfileProvider with ChangeNotifier {
         );
 
         // Save the default profile to Firestore
-        await saveUserProfileToFirestore(
-          _userProfile ??
-              UserProfileModel(
-                uid: uid,
-                fullName: _currentUser?.displayName ?? 'Plant Lover',
-                email: _currentUser?.email ?? '',
-                profileImageUrl:
-                    _currentUser?.photoURL ??
-                    'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753501304/Sprout_head_empty_pfp_eakz4j.jpg',
-                createdAt: DateTime.now(),
-              ),
-        );
+        await saveUserProfileToFirestore(_userProfile!);
       }
     } catch (e) {
       _setError('Failed to load user profile: ${e.toString()}');
@@ -94,11 +87,28 @@ class UserProfileProvider with ChangeNotifier {
     }
   }
 
+  // Update FCM token
+  Future<void> updateFCMToken(String newToken) async {
+    if (_userProfile == null) return;
+
+    try {
+      _userProfile = _userProfile!.copyWith(fcmToken: newToken);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_userProfile!.uid)
+          .update({'fcmToken': newToken});
+      notifyListeners();
+    } catch (e) {
+      print('Error updating FCM token: $e');
+    }
+  }
+
   // Update user profile
   Future<bool> updateUserProfile({
     String? fullName,
     String? email,
     String? profileImageUrl,
+    String? fcmToken,
   }) async {
     if (_userProfile == null) {
       _setError('No user profile found');
@@ -113,6 +123,7 @@ class UserProfileProvider with ChangeNotifier {
         uid: _userProfile?.uid ?? '',
         fullName: fullName ?? _userProfile?.fullName ?? '',
         email: email ?? _userProfile?.email ?? '',
+        fcmToken: fcmToken ?? _userProfile?.fcmToken ?? '',
         profileImageUrl: profileImageUrl ?? _userProfile?.profileImageUrl ?? '',
         createdAt: _userProfile?.createdAt ?? DateTime.now(),
       );
@@ -183,17 +194,6 @@ class UserProfileProvider with ChangeNotifier {
         _currentUser?.photoURL ??
         'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753501304/Sprout_head_empty_pfp_eakz4j.jpg';
   }
-
-  // // Check if user has completed profile
-  // bool get hasCompletedProfile {
-  //   if (_userProfile == null) return false;
-  //   return _userProfile!.fullName.isNotEmpty && _userProfile!.email.isNotEmpty;
-  // }
-
-  // // Get user creation date
-  // DateTime? get createdAt {
-  //   return _userProfile?.createdAt;
-  // }
 
   // Get user ID
   String? get userId {

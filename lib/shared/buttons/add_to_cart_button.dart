@@ -20,8 +20,7 @@ class AddToCartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
-    // final isDark = colorScheme.brightness == Brightness.dark;
-
+   
     return GestureDetector(
       onTap: () {
         if (plant == null) {

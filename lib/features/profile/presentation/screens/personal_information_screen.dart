@@ -144,58 +144,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                 fillColor: colorScheme.surface,
                 enabled: false,
               ),
-              //SizedBox(height: 16.h),
-              // Phone Number Field
-              // CustomTextField(
-              //   hintText: "Phone Number",
-              //   controller: _phoneController,
-              //   prefixIcon: Icons.phone_outlined,
-              //   keyboardType: TextInputType.phone,
-              //   fillColor: colorScheme.surface,
-              //   maxLength: 10,
-              // ),
-              //SizedBox(height: 16.h),
-              // Date of Birth Field
-              // CustomTextField(
-              //   hintText: "01/01/1999",
-              //   controller: _dateOfBirthController,
-              //   prefixIcon: Icons.calendar_today_outlined,
-              //   keyboardType: TextInputType.datetime,
-              //   fillColor: colorScheme.surface,
-              //   readOnly: true,
-              // ),
-              //SizedBox(height: 32.h),
-              // Additional Information
-              // Text(
-              //   "Additional Information",
-              //   style: TextStyle(
-              //     fontSize: 18.sp,
-              //     fontWeight: FontWeight.w600,
-              //     color: colorScheme.onSurface,
-              //   ),
-              // ),
-              //SizedBox(height: 16.h),
-              //gender
-              // _buildDropdownField(
-              //   label: "Gender",
-              //   value: "Male",
-              //   fillColor: colorScheme.surface,
-              //   items: ["Male", "Female", "Other", "Prefer not to say"],
-              //   onChanged: (value) {
-              //     // Handle gender change
-              //   },
-              // ),
-              //SizedBox(height: 16.h),
-              // Preferred Contact Method
-              // _buildDropdownField(
-              //   label: "Preferred Contact Method",
-              //   value: "Email",
-              //   fillColor: colorScheme.surface,
-              //   items: ["Email", "Phone", "SMS"],
-              //   onChanged: (value) {
-              //     // Handle contact method change
-              //   },
-              // ),
               SizedBox(height: 170.h),
               // Delete Account Section
               Container(

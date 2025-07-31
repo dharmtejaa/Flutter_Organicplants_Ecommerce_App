@@ -4,8 +4,6 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:organicplants/shared/widgets/gesture_detector_button.dart';
-import 'package:provider/provider.dart';
-import 'package:organicplants/features/profile/logic/profile_provider.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -16,9 +14,6 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  // final bool _pushNotifications = true;
-  // final bool _emailNotifications = true;
-  // final bool _smsNotifications = false;
   // Refactor all notification booleans to ValueNotifier
   final ValueNotifier<bool> _orderUpdates = ValueNotifier(false);
   final ValueNotifier<bool> _deliveryReminders = ValueNotifier(false);
@@ -52,73 +47,67 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // General Notifications
-            Consumer<ProfileProvider>(
-              builder:
-                  (context, provider, child) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //SizedBox(height: 24.h),
-                      _buildSectionHeader(
-                        "Order & Shopping",
-                        Icons.shopping_bag_outlined,
-                      ),
-                      SizedBox(height: 12.h),
-                      _buildNotificationTile(
-                        "Order Updates",
-                        "Get notified about order status changes",
-                        Icons.local_shipping_outlined,
-                        _orderUpdates,
-                      ),
-                      _buildNotificationTile(
-                        "Delivery Reminders",
-                        "Reminders about upcoming deliveries",
-                        Icons.delivery_dining_outlined,
-                        _deliveryReminders,
-                      ),
-                      _buildNotificationTile(
-                        "Price Drops",
-                        "Get notified when items in your wishlist go on sale",
-                        Icons.trending_down_outlined,
-                        _priceDrops,
-                      ),
-                      SizedBox(height: 24.h),
-                      _buildSectionHeader(
-                        "Content & Updates",
-                        Icons.content_copy_outlined,
-                      ),
-                      SizedBox(height: 12.h),
-                      _buildNotificationTile(
-                        "New Products",
-                        "Be the first to know about new plant arrivals",
-                        Icons.new_releases_outlined,
-                        _newProducts,
-                      ),
-                      _buildNotificationTile(
-                        "Plant Care Tips",
-                        "Weekly tips for better plant care",
-                        Icons.eco_outlined,
-                        _plantCareTips,
-                      ),
-                      _buildNotificationTile(
-                        "App Updates",
-                        "Important app updates and maintenance",
-                        Icons.system_update_outlined,
-                        _appUpdates,
-                      ),
-                      SizedBox(height: 24.h),
-                      _buildSectionHeader(
-                        "Promotional",
-                        Icons.local_offer_outlined,
-                      ),
-                      SizedBox(height: 12.h),
-                      _buildNotificationTile(
-                        "Promotional Offers",
-                        "Special discounts and promotional offers",
-                        Icons.discount_outlined,
-                        _promotionalOffers,
-                      ),
-                    ],
-                  ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //SizedBox(height: 24.h),
+                _buildSectionHeader(
+                  "Order & Shopping",
+                  Icons.shopping_bag_outlined,
+                ),
+                SizedBox(height: 12.h),
+                _buildNotificationTile(
+                  "Order Updates",
+                  "Get notified about order status changes",
+                  Icons.local_shipping_outlined,
+                  _orderUpdates,
+                ),
+                _buildNotificationTile(
+                  "Delivery Reminders",
+                  "Reminders about upcoming deliveries",
+                  Icons.delivery_dining_outlined,
+                  _deliveryReminders,
+                ),
+                _buildNotificationTile(
+                  "Price Drops",
+                  "Get notified when items in your wishlist go on sale",
+                  Icons.trending_down_outlined,
+                  _priceDrops,
+                ),
+                SizedBox(height: 24.h),
+                _buildSectionHeader(
+                  "Content & Updates",
+                  Icons.content_copy_outlined,
+                ),
+                SizedBox(height: 12.h),
+                _buildNotificationTile(
+                  "New Products",
+                  "Be the first to know about new plant arrivals",
+                  Icons.new_releases_outlined,
+                  _newProducts,
+                ),
+                _buildNotificationTile(
+                  "Plant Care Tips",
+                  "Weekly tips for better plant care",
+                  Icons.eco_outlined,
+                  _plantCareTips,
+                ),
+                _buildNotificationTile(
+                  "App Updates",
+                  "Important app updates and maintenance",
+                  Icons.system_update_outlined,
+                  _appUpdates,
+                ),
+                SizedBox(height: 24.h),
+                _buildSectionHeader("Promotional", Icons.local_offer_outlined),
+                SizedBox(height: 12.h),
+                _buildNotificationTile(
+                  "Promotional Offers",
+                  "Special discounts and promotional offers",
+                  Icons.discount_outlined,
+                  _promotionalOffers,
+                ),
+              ],
             ),
 
             SizedBox(height: 24.h),
@@ -398,5 +387,4 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       },
     );
   }
-
 }

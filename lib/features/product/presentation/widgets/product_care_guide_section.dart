@@ -14,7 +14,7 @@ class ProductCareGuideSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
-    //final colorScheme = Theme.of(context).colorScheme;
+
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
@@ -175,8 +175,7 @@ class CareGuideSection extends StatelessWidget {
     final AllPlantsModel? plant = AllPlantsGlobalData.getById(plantId);
     final care = plant!.careGuide;
     if (care == null) return const SizedBox();
-    // final colorScheme = Theme.of(context).colorScheme;
-    // final textTheme = Theme.of(context).textTheme;
+
     final items = [
       _CareItem(
         icon: Icons.water_drop_outlined,
@@ -382,7 +381,6 @@ class _FAQCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: AppSizes.paddingAllSm,

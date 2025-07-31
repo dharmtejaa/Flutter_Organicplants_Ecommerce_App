@@ -25,7 +25,6 @@ class EntryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    //final textTheme = Theme.of(context).textTheme;
     final currentIndex = context.select<BottomNavProvider, int>(
       (p) => p.currentIndex,
     );

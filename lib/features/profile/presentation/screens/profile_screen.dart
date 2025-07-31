@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,19 +14,16 @@ import 'package:organicplants/features/profile/presentation/widgets/profile_menu
 import 'package:organicplants/features/profile/presentation/screens/personal_information_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/addresses_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/payment_methods_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/notifications_screen.dart';
+import 'package:organicplants/features/profile/presentation/screens/notification_setting_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/unified_orders_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/plant_care_guide_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/about_screen.dart';
-
 import 'package:organicplants/features/profile/presentation/screens/customer_support_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/faq_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/contact_us_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/privacy_policy_screen.dart';
 import 'package:organicplants/features/profile/presentation/screens/terms_of_service_screen.dart';
 import 'package:organicplants/features/wishlist/presentation/screens/wishlist_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/my_reviews_screen.dart';
-import 'package:organicplants/features/profile/presentation/screens/loyalty_points_screen.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/features/cart/logic/cart_provider.dart';
 import 'package:organicplants/features/wishlist/logic/wishlist_provider.dart';
@@ -101,6 +97,20 @@ class ProfileScreen extends StatelessWidget {
                           },
                         ),
                         ProfileMenuItem(
+                          title: 'My Orders',
+                          subtitle: 'Get your current orders',
+                          icon: Icons.local_shipping_outlined,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UnifiedOrdersScreen(),
+                              ),
+                            );
+                          },
+                        ),
+
+                        ProfileMenuItem(
                           title: 'Payment Methods',
                           subtitle: 'Manage payment options',
                           icon: Icons.payment_rounded,
@@ -131,41 +141,6 @@ class ProfileScreen extends StatelessWidget {
                     ),
 
                   if (isLoggedIn) SizedBox(height: 10.h),
-
-                  // Shopping & Orders Section - Only show if logged in
-                  if (isLoggedIn)
-                    ProfileMenuSection(
-                      color: colorScheme.primary,
-                      title: 'Shopping & Orders',
-                      items: [
-                        ProfileMenuItem(
-                          title: 'My Orders',
-                          subtitle: 'Get your current orders',
-                          icon: Icons.local_shipping_outlined,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UnifiedOrdersScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                        ProfileMenuItem(
-                          title: 'Plant Care Guide',
-                          subtitle: 'Learn how to care for your plants',
-                          icon: Icons.eco_outlined,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PlantCareGuideScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
 
                   SizedBox(height: 10.h),
 
@@ -212,6 +187,19 @@ class ProfileScreen extends StatelessWidget {
                     title: 'Support & Help',
                     color: AppColors.info,
                     items: [
+                      ProfileMenuItem(
+                        title: 'Plant Care Guide',
+                        subtitle: 'Learn how to care for your plants',
+                        icon: Icons.eco_outlined,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlantCareGuideScreen(),
+                            ),
+                          );
+                        },
+                      ),
                       ProfileMenuItem(
                         title: 'Customer Support',
                         subtitle: 'Get help and support',

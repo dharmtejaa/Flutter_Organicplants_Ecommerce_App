@@ -1,15 +1,13 @@
+// ignore_for_file: deprecated_member_use, duplicate_ignore
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
-import 'package:organicplants/core/theme/app_theme.dart';
-import 'package:organicplants/core/theme/appcolors.dart';
-// ignore: unused_import
-import 'package:organicplants/core/theme/light_theme_colors.dart';
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/profile/presentation/screens/personal_information_screen.dart';
+import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/logic/user_profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -76,17 +74,17 @@ class ProfileHeaderCard extends StatelessWidget {
             Positioned(
               top: 80.h,
               left: -50.w,
-              child: _decorativeBlob(AppColors.warning, 140),
+              child: _decorativeBlob(colorScheme.primary, 140),
             ),
             Positioned(
               top: 120.h,
               right: -40.w,
-              child: _decorativeBlob(AppColors.success, 100),
+              child: _decorativeBlob(colorScheme.primary, 100),
             ),
             Positioned(
               top: 30.h,
               right: 60.w,
-              child: _decorativeBlob(AppColors.warning, 60),
+              child: _decorativeBlob(colorScheme.primary, 60),
             ),
             // Enhanced decorative elements with theme-aware colors
             Column(
@@ -339,23 +337,6 @@ class ProfileHeaderCard extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Loginscreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "LogIn",
-                        style: textTheme.labelLarge?.copyWith(
-                          color: AppTheme.primaryColor,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
                     Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16.w,
@@ -390,6 +371,22 @@ class ProfileHeaderCard extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                    SizedBox(height: 10.h),
+                    CustomButton(
+                      ontap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Loginscreen(),
+                          ),
+                        );
+                      },
+                      backgroundColor: colorScheme.primary,
+                      textColor: colorScheme.onPrimary,
+                      text: 'Login',
+                      height: 30.h,
+                      width: 80.w,
                     ),
                   ],
                 ),

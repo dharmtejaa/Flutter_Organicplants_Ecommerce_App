@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
-// ignore: unnecessary_import
-import 'dart:ui';
 
 class ProfileMenuItem extends StatelessWidget {
   final String title;

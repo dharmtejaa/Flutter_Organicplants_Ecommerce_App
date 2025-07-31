@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,8 +9,6 @@ import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/app_shadows.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/features/profile/presentation/screens/order_details_screen.dart';
 
 class UnifiedOrdersScreen extends StatefulWidget {

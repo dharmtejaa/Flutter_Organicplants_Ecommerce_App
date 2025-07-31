@@ -4,7 +4,6 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/shared/widgets/custom_dialog.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
-// ignore: unused_import
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
 
@@ -128,7 +127,6 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     return Card(
       color: colorScheme.surface,
       margin: EdgeInsets.only(bottom: AppSizes.radiusMd),
-      //elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSizes.radiusMd),
       ),
@@ -367,57 +365,4 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   void editPaymentMethod(Map<String, dynamic> paymentMethod) {
     CustomSnackBar.showInfo(context, 'Edit payment method form coming soon!');
   }
-
-  //   void deletePaymentMethod(Map<String, dynamic> paymentMethod) {
-  //     final colorScheme = Theme.of(context).colorScheme;
-  //     final textTheme = Theme.of(context).textTheme;
-
-  //     showDialog(
-  //       context: context,
-  //       builder:
-  //           (context) => AlertDialog(
-  //             title: Text(
-  //               'Delete Payment Method',
-  //               style: textTheme.headlineSmall?.copyWith(
-  //                 color: colorScheme.error,
-  //               ),
-  //             ),
-  //             content: Text(
-  //               'Are you sure you want to delete this payment method?',
-  //               style: textTheme.bodyMedium,
-  //             ),
-  //             actions: [
-  //               TextButton(
-  //                 onPressed: () => Navigator.pop(context),
-  //                 child: Text(
-  //                   'Cancel',
-  //                   style: textTheme.labelLarge?.copyWith(
-  //                     color: colorScheme.primary,
-  //                   ),
-  //                 ),
-  //               ),
-  //               ElevatedButton(
-  //                 onPressed: () {
-  //                   setState(() {
-  //                     _paymentMethods.removeWhere(
-  //                       (method) => method['id'] == paymentMethod['id'],
-  //                     );
-  //                   });
-  //                   Navigator.pop(context);
-  //                   CustomSnackBar.showInfo(
-  //                     context,
-  //                     'Payment method deleted successfully!',
-  //                   );
-  //                 },
-  //                 style: ElevatedButton.styleFrom(
-  //                   backgroundColor: colorScheme.error,
-  //                   foregroundColor: colorScheme.onError,
-  //                 ),
-  //                 child: Text('Delete', style: textTheme.labelLarge),
-  //               ),
-  //             ],
-  //           ),
-  //     );
-  //   }
-  // }
 }

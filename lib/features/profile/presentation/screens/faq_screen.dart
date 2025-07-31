@@ -97,7 +97,7 @@ class _FAQScreenState extends State<FAQScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("FAQ", style: textTheme.headlineMedium),
-       
+
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -228,8 +228,8 @@ class _FAQScreenState extends State<FAQScreen> {
           },
           backgroundColor: colorScheme.surface,
           selectedColor: colorScheme.primary,
-          checkmarkColor: colorScheme.onPrimary,
-          
+          checkmarkColor: colorScheme.onSurface,
+
           side: BorderSide(color: colorScheme.surface),
         );
       },

@@ -181,9 +181,8 @@ class CartProvider extends ChangeNotifier {
     final index = _cartItems.indexWhere((item) => item.plantId == plantId);
     if (index == -1) return;
 
-    if (_cartItems[index].quantity <= 1) {
-      // If quantity is 1, remove the item completely.
-      removeFromCart(plantId);
+    // If quantity is 1, don't allow further decrease
+    if (_cartItems[index].quantity == 1) {
       return;
     }
 

@@ -5,7 +5,7 @@ import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/core/services/plant_filter_service.dart';
-import 'package:organicplants/features/profile/presentation/screens/notification_screen.dart';
+import 'package:organicplants/features/notifications/presentation/screens/notification_screen.dart';
 import 'package:organicplants/models/all_plants_model.dart';
 import 'package:organicplants/shared/widgets/active_filters_widget.dart';
 import 'package:organicplants/shared/widgets/filter_bottom_sheet.dart';

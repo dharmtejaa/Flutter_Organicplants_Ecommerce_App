@@ -94,23 +94,6 @@ class SubmitCustomButtons extends StatelessWidget {
                     ),
                   ],
                 ),
-              // Center(
-              //   child:
-              //       isLoading
-              //           ? SizedBox(
-              //             width: 20,
-              //             height: 20,
-              //             child: CircularProgressIndicator(
-              //               strokeWidth: 2,
-              //               valueColor: AlwaysStoppedAnimation<Color>(
-              //                 textColor ?? colorScheme.onPrimary,
-              //               ),
-              //             ),
-              //           )
-              //           : text != null
-              //           ? Text(text!, style: textTheme.labelLarge)
-              //           : null,
-              // ),
             ],
           ),
         ),

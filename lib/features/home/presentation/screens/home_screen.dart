@@ -6,7 +6,7 @@ import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
 import 'package:organicplants/features/home/presentation/widgets/auto_banner_with_notifier.dart';
 import 'package:organicplants/features/home/presentation/widgets/search_by_category.dart';
-import 'package:organicplants/features/profile/presentation/screens/notification_screen.dart';
+import 'package:organicplants/features/notifications/presentation/screens/notification_screen.dart';
 import 'package:organicplants/features/home/presentation/widgets/plant_section_widget.dart';
 import 'package:organicplants/shared/logic/user_profile_provider.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';

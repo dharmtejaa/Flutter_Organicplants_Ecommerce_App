@@ -1,11 +1,8 @@
-// ignore_for_file: unused_import
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
-import 'package:organicplants/core/theme/app_shadows.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
@@ -92,23 +89,6 @@ class CustomButton extends StatelessWidget {
                     ),
                   ],
                 ),
-              // Center(
-              //   child:
-              //       isLoading
-              //           ? SizedBox(
-              //             width: 20,
-              //             height: 20,
-              //             child: CircularProgressIndicator(
-              //               strokeWidth: 2,
-              //               valueColor: AlwaysStoppedAnimation<Color>(
-              //                 textColor ?? colorScheme.onPrimary,
-              //               ),
-              //             ),
-              //           )
-              //           : text != null
-              //           ? Text(text!, style: textTheme.labelLarge)
-              //           : null,
-              // ),
             ],
           ),
         ),

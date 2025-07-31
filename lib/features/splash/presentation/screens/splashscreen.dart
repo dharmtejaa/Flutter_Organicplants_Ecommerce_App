@@ -10,6 +10,7 @@ import 'package:organicplants/core/services/plant_services.dart';
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:organicplants/features/notifications/logic/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Top-level ValueNotifier and timer for splash progress
@@ -17,7 +18,7 @@ final ValueNotifier<double> splashProgress = ValueNotifier(0.0);
 bool _splashNavigated = false;
 
 Future<void> loadSplashInitialData(BuildContext context) async {
-  const totalSteps = 12;
+  const totalSteps = 13; // Increased to include notification service
   int completedSteps = 0;
 
   void updateProgress() {
@@ -28,7 +29,7 @@ Future<void> loadSplashInitialData(BuildContext context) async {
   try {
     updateProgress(); // 1
     allPlantsGlobal = await PlantServices.loadAllPlantsApi();
-     AllPlantsGlobalData.initialize(allPlantsGlobal);
+    AllPlantsGlobalData.initialize(allPlantsGlobal);
 
     updateProgress(); // 2
     indoorPlants = getPlantsByCategory('Indoor plant');
@@ -62,6 +63,9 @@ Future<void> loadSplashInitialData(BuildContext context) async {
 
     updateProgress(); // 12
     sunLovingPlants = getPlantsByTag('Sun_Loving');
+
+    updateProgress(); // 13
+    // Initialize notification service
 
     await Future.delayed(const Duration(milliseconds: 400));
   } catch (e) {
