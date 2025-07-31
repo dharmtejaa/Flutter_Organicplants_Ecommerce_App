@@ -28,7 +28,7 @@ class AddressesScreen extends StatelessWidget {
                 addressData.isEmpty
                     ? Center(
                       child: Text(
-                        'No addresses found. Add a new address!',
+                        'No addresses found.\nAdd a new address!',
                         style: textTheme.bodyLarge,
                       ),
                     )
