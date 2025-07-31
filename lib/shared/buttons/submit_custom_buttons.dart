@@ -62,7 +62,7 @@ class SubmitCustomButtons extends StatelessWidget {
             children: [
               // if (icon != null)
               //   Icon(icon, size: AppSizes.iconMd, color: colorScheme.onPrimary),
-              if (networkImage != null)
+              if (networkImage != null && !isLoading)
                 Padding(
                   padding: EdgeInsets.only(right: 8.w),
                   child: CachedNetworkImage(
@@ -71,6 +71,17 @@ class SubmitCustomButtons extends StatelessWidget {
                     height: 24.h,
                     fit: BoxFit.cover,
                     cacheManager: MyCustomCacheManager.instance,
+                  ),
+                ),
+              if (isLoading)
+                SizedBox(
+                  width: 24.w,
+                  height: 24.h,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.w,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      textColor ?? colorScheme.onPrimary,
+                    ),
                   ),
                 ),
               if (text != null && !isLoading)

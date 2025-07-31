@@ -80,7 +80,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                 fullName: nameController.text.trim(),
                 profileImageUrl: userProfileProvider.profileImageUrl,
               );
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => EntryScreen()),
               );

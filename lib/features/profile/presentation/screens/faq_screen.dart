@@ -290,17 +290,10 @@ class _FAQScreenState extends State<FAQScreen> {
         title: Text(faq['question'], style: textTheme.titleMedium),
         subtitle: Padding(
           padding: EdgeInsets.only(top: 4.h),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-            decoration: BoxDecoration(
-              color: _getCategoryColor(faq['category']).withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-            ),
-            child: Text(
-              faq['category'],
-              style: textTheme.bodySmall?.copyWith(
-                color: _getCategoryColor(faq['category']),
-              ),
+          child: Text(
+            faq['category'],
+            style: textTheme.bodySmall?.copyWith(
+              color: _getCategoryColor(faq['category']),
             ),
           ),
         ),

@@ -1,14 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
-import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/features/notifications/logic/notification_provider.dart';
 import 'package:organicplants/features/notifications/presentation/screens/notification_screen.dart';
 import 'package:organicplants/features/splash/presentation/screens/splashscreen.dart';
 import 'package:organicplants/shared/buttons/custombutton.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:organicplants/shared/logic/user_profile_provider.dart';
 
 // Global navigator key to access context from anywhere
@@ -46,17 +45,11 @@ class _NotificationServiceState extends State<NotificationService> {
 
   /// Request notification permission
   Future<void> _requestPermission() async {
-    final settings = await FirebaseMessaging.instance.requestPermission(
+    await FirebaseMessaging.instance.requestPermission(
       alert: true,
       badge: true,
       sound: true,
     );
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('✅ Notification permission granted');
-    } else {
-      print('❌ Notification permission denied');
-    }
   }
 
   /// Setup Firebase messaging
@@ -66,20 +59,16 @@ class _NotificationServiceState extends State<NotificationService> {
     // Get FCM token and update user profile
     String? token = await messaging.getToken();
     if (token != null) {
-      print('📱 FCM Token: $token');
       _updateUserFCMToken(token);
     }
 
     // Foreground messages (when app is open)
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('📨 Foreground message received: ${message.notification?.title}');
-
       // Save notification to Firestore using the global provider
       _saveNotificationToFirestore(
         message.notification?.title ?? 'No Title',
         message.notification?.body ?? 'No Body',
       );
-
       // Show dialog when app is open using navigator key
       _showNotificationDialog(
         message.notification?.title ?? 'No Title',
@@ -89,8 +78,6 @@ class _NotificationServiceState extends State<NotificationService> {
 
     // Background messages (when app is opened from notification)
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('🔄 Background message received');
-
       // Save notification to Firestore
       _saveNotificationToFirestore(
         message.notification?.title ?? 'No Title',
@@ -98,6 +85,7 @@ class _NotificationServiceState extends State<NotificationService> {
       );
       if (context.mounted) {
         Navigator.push(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(builder: (context) => const NotificationScreen()),
         );
@@ -107,14 +95,13 @@ class _NotificationServiceState extends State<NotificationService> {
     //app is closed or is in terminate state
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
-        print('🔄 Terminated message received');
-
         // Save notification to Firestore
         _saveNotificationToFirestore(
           message.notification?.title ?? 'No Title',
           message.notification?.body ?? 'No Body',
         );
-        Navigator.push(
+        Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(builder: (context) => const Splashscreen()),
         );
@@ -139,7 +126,6 @@ class _NotificationServiceState extends State<NotificationService> {
     // Check if user is logged in
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      print('❌ User not logged in, cannot save notification');
       return;
     }
 
@@ -183,7 +169,7 @@ class _NotificationServiceState extends State<NotificationService> {
                       gradient: LinearGradient(
                         colors: [
                           colorScheme.primary,
-                          colorScheme.primary.withOpacity(0.8),
+                          colorScheme.primary.withValues(alpha: 0.8),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,

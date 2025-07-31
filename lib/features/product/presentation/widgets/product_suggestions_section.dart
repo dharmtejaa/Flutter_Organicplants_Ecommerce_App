@@ -3,9 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/models/all_plants_model.dart';
+import 'package:organicplants/shared/widgets/plant_card_grid.dart';
 import 'package:organicplants/shared/widgets/plantcategory.dart';
-import 'package:organicplants/shared/widgets/simple_plant_card.dart';
-
 class ProductSuggestionsSection extends StatelessWidget {
   final String plantId;
 
@@ -34,7 +33,7 @@ class ProductSuggestionsSection extends StatelessWidget {
                       plant.id != currentPlant.id &&
                       !suggestions.any((s) => s.id == plant.id),
                 )
-                .take(1)
+                .take(3)
                 .toList();
         suggestions.addAll(tagSuggestions);
       }
@@ -51,7 +50,7 @@ class ProductSuggestionsSection extends StatelessWidget {
                       plant.id != currentPlant.id &&
                       !suggestions.any((s) => s.id == plant.id),
                 )
-                .take(1)
+                .take(3)
                 .toList();
         suggestions.addAll(airPurifyingSuggestions);
       }
@@ -65,7 +64,7 @@ class ProductSuggestionsSection extends StatelessWidget {
                       plant.id != currentPlant.id &&
                       !suggestions.any((s) => s.id == plant.id),
                 )
-                .take(1)
+                .take(3)
                 .toList();
         suggestions.addAll(lowMaintenanceSuggestions);
       }
@@ -79,7 +78,7 @@ class ProductSuggestionsSection extends StatelessWidget {
                       plant.id != currentPlant.id &&
                       !suggestions.any((s) => s.id == plant.id),
                 )
-                .take(1)
+                .take(3)
                 .toList();
         suggestions.addAll(petFriendlySuggestions);
       }
@@ -93,7 +92,7 @@ class ProductSuggestionsSection extends StatelessWidget {
                       plant.id != currentPlant.id &&
                       !suggestions.any((s) => s.id == plant.id),
                 )
-                .take(1)
+                .take(3)
                 .toList();
         suggestions.addAll(sunLovingSuggestions);
       }
@@ -116,7 +115,7 @@ class ProductSuggestionsSection extends StatelessWidget {
                     (plant.prices!.offerPrice ?? 0) <=
                         (currentPrice + priceRange),
               )
-              .take(2)
+              .take(3)
               .toList();
       suggestions.addAll(similarPricePlants);
     }
@@ -130,21 +129,13 @@ class ProductSuggestionsSection extends StatelessWidget {
                   !suggestions.any((s) => s.id == plant.id) &&
                   (plant.rating ?? 0) >= 4.0,
             )
-            .take(1)
+            .take(3)
             .toList();
     suggestions.addAll(popularPlants);
 
     // Remove duplicates and limit to 6 suggestions
     final uniqueSuggestions = suggestions.toSet().toList();
-    return uniqueSuggestions.take(6).toList();
-  }
-
-  String _getSuggestionTitle() {
-    final AllPlantsModel? currentPlant = AllPlantsGlobalData.getById(plantId);
-    if (currentPlant!.category != null) {
-      return 'More ${currentPlant.category}';
-    }
-    return 'You might also like';
+    return uniqueSuggestions.take(15).toList();
   }
 
   @override
@@ -167,7 +158,7 @@ class ProductSuggestionsSection extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  _getSuggestionTitle(),
+                  "Suggested Plants",
                   style: textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -235,7 +226,7 @@ class ProductSuggestionsSection extends StatelessWidget {
                 final plant = suggestedPlants[index];
                 return SizedBox(
                   width: 150.w,
-                  child: SimplePlantCard(plant: plant),
+                  child: ProductCardGrid(plantId: plant.id!),
                 );
               },
             ),

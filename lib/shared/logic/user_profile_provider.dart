@@ -99,7 +99,7 @@ class UserProfileProvider with ChangeNotifier {
           .update({'fcmToken': newToken});
       notifyListeners();
     } catch (e) {
-      print('Error updating FCM token: $e');
+      debugPrint('Error updating FCM token: $e');
     }
   }
 
@@ -201,4 +201,9 @@ class UserProfileProvider with ChangeNotifier {
   }
 
   // Dispose method
+  @override
+  void dispose() {
+    // Clean up any resources if needed
+    super.dispose();
+  }
 }

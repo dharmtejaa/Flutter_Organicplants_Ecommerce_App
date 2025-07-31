@@ -19,7 +19,6 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-   
 
     return Scaffold(
       appBar: AppBar(
@@ -118,7 +117,7 @@ class SearchScreen extends StatelessWidget {
 
                     if (searchProvider.searchResult.isNotEmpty) {
                       searchProvider.setNoResultsFound(false);
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder:

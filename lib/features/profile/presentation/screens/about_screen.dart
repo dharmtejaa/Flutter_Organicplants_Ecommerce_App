@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/app_sizes.dart';
 import 'package:organicplants/core/services/my_custom_cache_manager.dart';
+import 'package:organicplants/core/theme/app_shadows.dart';
 import 'package:organicplants/core/theme/appcolors.dart';
 import 'package:organicplants/features/profile/presentation/widgets/profile_custom_icon.dart';
 import 'package:organicplants/shared/widgets/custom_snackbar.dart';
@@ -41,31 +42,22 @@ class AboutScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    colorScheme.primary.withOpacity(0.95),
-                    Colors.greenAccent.withOpacity(0.7),
-                    colorScheme.primary.withOpacity(0.7),
+                    Color.fromARGB(255, 14, 172, 114),
+                    Color.fromARGB(255, 21, 208, 140),
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
                 ),
                 borderRadius: BorderRadius.circular(32.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.primary.withOpacity(0.18),
-                    blurRadius: 18,
-                    offset: Offset(0, 8),
-                  ),
-                ],
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.18),
-                  width: 1.2,
-                ),
+                boxShadow: AppShadows.cardShadow(context),
               ),
               child: Column(
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
+                      color: colorScheme.onPrimaryContainer.withValues(
+                        alpha: 0.2,
+                      ),
                       shape: BoxShape.circle,
                     ),
                     padding: EdgeInsets.all(10.w),
@@ -74,20 +66,32 @@ class AboutScreen extends StatelessWidget {
                           'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080823/app_logo_lxl2fw.png',
                       height: 48.h,
                       width: 48.h,
-                      color: colorScheme.onSurface,
+                      color: colorScheme.onPrimary,
                       colorBlendMode: BlendMode.srcIn,
                       cacheManager: MyCustomCacheManager.instance,
                     ),
                   ),
                   SizedBox(height: 20.h),
-                  Text("Organic Plants", style: textTheme.headlineMedium),
+                  Text(
+                    "Organic Plants",
+                    style: textTheme.headlineLarge?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
                   SizedBox(height: 10.h),
                   Text(
                     "Bringing Nature to Your Home",
-                    style: textTheme.bodyMedium,
+                    style: textTheme.titleLarge?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
                   ),
                   SizedBox(height: 18.h),
-                  Text("Version 1.0.0", style: textTheme.bodyMedium),
+                  Text(
+                    "Version 1.0.0",
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -97,7 +101,7 @@ class AboutScreen extends StatelessWidget {
               context,
               "Our Story",
               Icons.history_edu_rounded,
-              "Organic Plants was founded with a simple\n\nmission: to make the joy of plant parenthood accessible to everyone. We believe that every home deserves the beauty and benefits that plants bring.\n\nOur journey began in 2020 when we noticed that many people wanted to bring plants into their homes but were intimidated by the complexity of plant care. We set out to change that by providing not just beautiful, healthy plants, but also the knowledge and support needed to help them thrive.",
+              "Organic Plants was founded with a simple\n\nmission: to make the joy of plant parenthood accessible to everyone. We believe that every home deserves the beauty and benefits that plants bring.\n\nOur journey began in 2025 when we noticed that many people wanted to bring plants into their homes but were intimidated by the complexity of plant care. We set out to change that by providing not just beautiful, healthy plants, but also the knowledge and support needed to help them thrive.",
             ),
 
             SizedBox(height: 16.h),

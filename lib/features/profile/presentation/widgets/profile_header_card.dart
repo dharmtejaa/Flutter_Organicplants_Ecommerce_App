@@ -211,49 +211,16 @@ class ProfileHeaderCard extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Hi, ${userName.toString()}!',
+                          'Hi, ${userName.toString()}',
                           style: textTheme.headlineMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.primary,
                           ),
                         ),
                         SizedBox(height: 14.h),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                            vertical: 8.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: colorScheme.primary.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(
-                              AppSizes.radiusLg,
-                            ),
-                            border: Border.all(
-                              color: colorScheme.primary.withOpacity(0.3),
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.eco_rounded,
-                                color: colorScheme.primary,
-                                size: AppSizes.iconSm,
-                              ),
-                              SizedBox(width: 8.w),
-                              Flexible(
-                                child: Text(
-                                  'Nature is not a place to visit. It is home.',
-                                  style: textTheme.bodySmall?.copyWith(
-                                    color: colorScheme.primary,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        Text(
+                          'Nature is not a place to visit. It is home.',
+                          style: textTheme.titleMedium,
                         ),
                       ],
                     ),
@@ -282,10 +249,10 @@ class ProfileHeaderCard extends StatelessWidget {
             height: 240.h,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 146, 241, 197),
-                  Color.fromARGB(255, 35, 172, 101),
-                ],
+                  colors: [
+                    Color.fromARGB(255, 146, 241, 197),
+                    Color.fromARGB(255, 35, 172, 101),
+                  ],
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
               ),
@@ -337,41 +304,11 @@ class ProfileHeaderCard extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(AppSizes.radiusLg),
-                        border: Border.all(
-                          color: colorScheme.primary.withOpacity(0.3),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.eco_rounded,
-                            color: colorScheme.primary,
-                            size: AppSizes.iconSm,
-                          ),
-                          SizedBox(width: 8.w),
-                          Flexible(
-                            child: Text(
-                              'In every walk with nature, one receives far more than he seeks.',
-                              style: textTheme.bodySmall?.copyWith(
-                                color: colorScheme.primary,
-                                fontWeight: FontWeight.w500,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      'In every walk with nature, one receives far more than he seeks.',
+                      style: textTheme.titleMedium,
                     ),
+
                     SizedBox(height: 10.h),
                     CustomButton(
                       ontap: () {

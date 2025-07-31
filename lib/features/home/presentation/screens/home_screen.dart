@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:organicplants/core/services/all_plants_global_data.dart';
@@ -30,6 +31,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final user = FirebaseAuth.instance.currentUser;
+    final isLoggedIn = user != null;
 
     // Ensure no focus is active when home screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {});
@@ -81,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                       userName = 'Nature Lover';
                     }
                     return Text(
-                      '${getGreeting()}, $userName!',
+                      '${getGreeting()}, $userName',
                       style: textTheme.bodySmall,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -92,23 +95,22 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+
         actions: [
-          //SearchButton(),
-          //SizedBox(width: 10.w),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NotificationScreen()),
-              );
-            },
-            icon: Icon(
-              Icons.notifications_none_rounded,
-              size: AppSizes.iconMd,
-              color: colorScheme.onSurface,
+          if (isLoggedIn)
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NotificationScreen()),
+                );
+              },
+              icon: Icon(
+                Icons.notifications_none_rounded,
+                size: AppSizes.iconMd,
+                color: colorScheme.onSurface,
+              ),
             ),
-          ),
-          //SizedBox(width: 10.w),
         ],
       ),
 

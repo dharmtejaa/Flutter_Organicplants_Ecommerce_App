@@ -127,12 +127,11 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    colorScheme.primary.withOpacity(0.95),
-                    Colors.greenAccent.withOpacity(0.7),
-                    colorScheme.primary.withOpacity(0.7),
+                    Color.fromARGB(255, 14, 172, 114),
+                    Color.fromARGB(255, 21, 208, 140),
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
                 ),
                 borderRadius: BorderRadius.circular(AppSizes.radiusLg),
               ),
@@ -144,13 +143,15 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                       Icon(
                         Icons.eco_rounded,
                         size: AppSizes.iconLg,
-                        color: colorScheme.onSurface,
+                        color: colorScheme.onPrimary,
                       ),
                       SizedBox(width: 12.w),
                       Expanded(
                         child: Text(
                           "Welcome to Plant Care",
-                          style: textTheme.headlineMedium,
+                          style: textTheme.headlineMedium?.copyWith(
+                            color: colorScheme.onPrimary,
+                          ),
                         ),
                       ),
                     ],
@@ -158,7 +159,9 @@ class _PlantCareGuideScreenState extends State<PlantCareGuideScreen> {
                   SizedBox(height: 8.h),
                   Text(
                     "Learn essential tips and tricks to keep your plants healthy and thriving. Whether you're a beginner or experienced gardener, we have everything you need to know.",
-                    style: textTheme.bodyMedium,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
                   ),
                 ],
               ),

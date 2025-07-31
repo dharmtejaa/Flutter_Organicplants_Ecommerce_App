@@ -10,7 +10,6 @@ import 'package:organicplants/core/services/plant_services.dart';
 import 'package:organicplants/features/auth/presentation/screens/loginscreen.dart';
 import 'package:organicplants/features/entry/presentation/screen/entry_screen.dart';
 import 'package:organicplants/features/onboarding/presentation/screens/onboarding_screen.dart';
-import 'package:organicplants/features/notifications/logic/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Top-level ValueNotifier and timer for splash progress

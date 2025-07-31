@@ -23,7 +23,6 @@ class NotificationProvider extends ChangeNotifier {
   void initializeNotifications() {
     final userId = _currentUserId;
     if (userId == null) {
-      print('❌ No user logged in, cannot load notifications');
       return;
     }
 
@@ -46,7 +45,6 @@ class NotificationProvider extends ChangeNotifier {
   Future<void> loadNotifications() async {
     final userId = _currentUserId;
     if (userId == null) {
-      print('❌ No user logged in, cannot load notifications');
       return;
     }
 
@@ -65,7 +63,7 @@ class NotificationProvider extends ChangeNotifier {
               .map((doc) => NotificationModel.fromFirestore(doc))
               .toList();
     } catch (e) {
-      print('Error loading notifications: $e');
+      debugPrint('Error loading notifications: $e');
     } finally {
       _setLoading(false);
     }
@@ -75,7 +73,6 @@ class NotificationProvider extends ChangeNotifier {
   Future<void> saveNotification(String title, String body) async {
     final userId = _currentUserId;
     if (userId == null) {
-      print('❌ No user logged in, cannot save notification');
       return;
     }
 
@@ -92,10 +89,8 @@ class NotificationProvider extends ChangeNotifier {
           .doc(userId)
           .collection('notifications')
           .add(notification.toFirestore());
-
-      print('✅ Notification saved to user collection');
     } catch (e) {
-      print('❌ Error saving notification: $e');
+      debugPrint('❌ Error saving notification: $e');
     }
   }
 
@@ -103,7 +98,6 @@ class NotificationProvider extends ChangeNotifier {
   Future<void> deleteNotification(String notificationId) async {
     final userId = _currentUserId;
     if (userId == null) {
-      print('❌ No user logged in, cannot delete notification');
       return;
     }
 
@@ -114,10 +108,8 @@ class NotificationProvider extends ChangeNotifier {
           .collection('notifications')
           .doc(notificationId)
           .delete();
-
-      print('✅ Notification deleted');
     } catch (e) {
-      print('❌ Error deleting notification: $e');
+      debugPrint('❌ Error deleting notification: $e');
     }
   }
 
@@ -125,7 +117,6 @@ class NotificationProvider extends ChangeNotifier {
   Future<void> clearAllNotifications() async {
     final userId = _currentUserId;
     if (userId == null) {
-      print('❌ No user logged in, cannot clear notifications');
       return;
     }
 
@@ -143,9 +134,8 @@ class NotificationProvider extends ChangeNotifier {
       }
 
       await batch.commit();
-      print('✅ All notifications cleared');
     } catch (e) {
-      print('❌ Error clearing notifications: $e');
+      debugPrint('❌ Error clearing notifications: $e');
     }
   }
 
@@ -158,6 +148,7 @@ class NotificationProvider extends ChangeNotifier {
   @override
   void dispose() {
     _notificationsSubscription?.cancel();
+    _notificationsSubscription = null;
     super.dispose();
   }
 }

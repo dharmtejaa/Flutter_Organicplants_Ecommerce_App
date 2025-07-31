@@ -10,15 +10,30 @@ import 'package:organicplants/features/auth/presentation/screens/loginscreen.dar
 import 'package:organicplants/shared/buttons/submit_custom_buttons.dart';
 import 'package:organicplants/shared/widgets/custom_textfield.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
+class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
+
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  // Add ValueNotifier for loading state
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    _isLoading.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final emailController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(),
@@ -29,32 +44,23 @@ class ForgotPasswordScreen extends StatelessWidget {
               left: AppSizes.paddingMd,
               bottom: AppSizes.paddingSm,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichText(
-                  text: TextSpan(
-                    text: "Forgot Password? \n",
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Forgot Password?",
                     style: textTheme.displayLarge,
-                    children: [
-                      TextSpan(
-                        text:
-                            "Don't worry! We'll send you a secure link\nto reset your password",
-                        style: textTheme.headlineMedium?.copyWith(
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-                // CachedNetworkImage(
-                //   imageUrl:
-                //       'https://res.cloudinary.com/daqvdhmw8/image/upload/v1753080572/ltree_hyjza1.png',
-                //   width: 0.3.sw,
-                //   height: 0.2.sh,
-                //   cacheManager: MyCustomCacheManager.instance,
-                // ),
+                SizedBox(height: 10.h),
+                Text(
+                  "Don't worry! We'll send you a secure link\nto reset your password",
+                  style: textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
           ),
@@ -84,39 +90,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                         prefixIcon: Icons.email_outlined,
                       ),
                       SizedBox(height: 10.h),
-
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     Expanded(
-                      //       child: Divider(
-                      //         thickness: 3,
-                      //         indent: 15,
-                      //         endIndent: 10,
-                      //       ),
-                      //     ),
-                      //     Padding(
-                      //       padding: const EdgeInsets.symmetric(
-                      //         horizontal: 6.0,
-                      //       ),
-                      //       child: Text(
-                      //         'Or',
-                      //         style: textTheme.labelLarge?.copyWith(
-                      //           color: colorScheme.onSurface,
-                      //           fontWeight: FontWeight.w400,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     Expanded(
-                      //       child: Divider(
-                      //         thickness: 3,
-                      //         indent: 10,
-                      //         endIndent: 15,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       SizedBox(height: 16.h),
                       // //coninue with google sign in
                       // SubmitCustomButtons(
@@ -132,20 +105,28 @@ class ForgotPasswordScreen extends StatelessWidget {
                       //   isBorder: true,
                       //   //icon: Icons.google,
                       // ),
-                      SizedBox(height: 400.h),
-                      //sign up  button
-                      SubmitCustomButtons(
-                        width: 323.w,
-                        ontap: () async {
-                          if (formKey.currentState!.validate()) {
-                            await AuthService.resetPassword(
-                              context,
-                              emailController.text.trim(),
-                            );
-                          }
+                      SizedBox(height: 380.h),
+                      //reset password button
+                      ValueListenableBuilder<bool>(
+                        valueListenable: _isLoading,
+                        builder: (context, isLoading, child) {
+                          return SubmitCustomButtons(
+                            width: 323.w,
+                            ontap: () async {
+                              if (formKey.currentState!.validate()) {
+                                _isLoading.value = true;
+                                await AuthService.resetPassword(
+                                  context,
+                                  emailController.text.trim(),
+                                );
+                                _isLoading.value = false;
+                              }
+                            },
+                            backgroundColor: colorScheme.primary,
+                            text: 'Reset Password',
+                            isLoading: isLoading,
+                          );
                         },
-                        backgroundColor: colorScheme.primary,
-                        text: 'Reset Password',
                       ),
                       SizedBox(height: 10.h),
                       Padding(
@@ -154,7 +135,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                         child: RichText(
                           text: TextSpan(
-                            text: "Already have an account? ",
+                            text: "Remember your password? ",
                             style: textTheme.labelLarge?.copyWith(
                               color: colorScheme.onSurface,
                               fontWeight: FontWeight.w400,

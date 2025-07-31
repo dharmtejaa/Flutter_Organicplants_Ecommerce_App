@@ -33,9 +33,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
         actions: [
           Consumer<NotificationProvider>(
             builder: (context, provider, child) {
-              if (provider.notifications.isEmpty)
+              if (provider.notifications.isEmpty) {
                 return const SizedBox.shrink();
-
+              }
               return PopupMenuButton<String>(
                 icon: const Icon(Icons.more_vert),
                 onSelected: (value) async {
@@ -168,6 +168,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 onPressed: () async {
                   Navigator.pop(context);
                   await provider.clearAllNotifications();
+                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('All notifications cleared')),
                   );

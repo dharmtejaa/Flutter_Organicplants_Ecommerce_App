@@ -200,11 +200,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       child: Container(
         constraints: BoxConstraints(maxHeight: 0.85.sh),
         decoration: BoxDecoration(
-          color: colorScheme.tertiary,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(AppSizes.radiusLg),
           ),
-          boxShadow: AppShadows.bottomNavShadow(context),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -243,7 +241,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         icon: Icon(
                           Icons.close,
                           size: AppSizes.iconMd,
-                          color: colorScheme.onSurface,
+                          color: colorScheme.primary,
                         ),
                         onPressed: () => Navigator.pop(context),
                         padding: EdgeInsets.zero,

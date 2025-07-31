@@ -46,14 +46,9 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             const ProfileHeaderCard(),
-            SizedBox(height: 10.h),
 
             // Real-time Stats Cards - Only show if logged in
             if (isLoggedIn) _buildRealTimeStatsCards(context, colorScheme),
-
-            if (isLoggedIn) SizedBox(height: 10.h),
-
-            SizedBox(height: 10.h),
 
             // Enhanced Menu Sections with theme-aware colors
             Padding(
@@ -109,7 +104,6 @@ class ProfileScreen extends StatelessWidget {
                             );
                           },
                         ),
-
                         ProfileMenuItem(
                           title: 'Payment Methods',
                           subtitle: 'Manage payment options',
@@ -141,8 +135,6 @@ class ProfileScreen extends StatelessWidget {
                     ),
 
                   if (isLoggedIn) SizedBox(height: 10.h),
-
-                  SizedBox(height: 10.h),
 
                   ProfileMenuSection(
                     title: 'App Settings',
@@ -180,9 +172,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   SizedBox(height: 12.h),
-
                   ProfileMenuSection(
                     title: 'Support & Help',
                     color: AppColors.info,

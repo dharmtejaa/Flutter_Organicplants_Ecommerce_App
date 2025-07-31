@@ -32,6 +32,17 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final formKey = GlobalKey<FormState>();
 
+  // Add ValueNotifier for loading states
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
+  final ValueNotifier<bool> _isGoogleLoading = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    _isLoading.dispose();
+    _isGoogleLoading.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -60,7 +71,7 @@ class _SignupScreenState extends State<SignupScreen> {
               child: GestureDetectorButton(
                 textColor: AppTheme.primaryColor,
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => EntryScreen()),
                   );
@@ -105,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
             ),
-            // EXPANDABLE BOTTOM CONTAINER
+            // BOTTOM CONTENT
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -124,11 +135,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(height: 10.h),
-                        //full name
+                        //name field
                         CustomTextField(
                           hintText: 'Name',
                           controller: nameController,
-                          prefixIcon: Icons.person_outline,
+                          keyboardType: TextInputType.name,
+                          prefixIcon: Icons.person_outlined,
                         ),
                         SizedBox(height: 10.h),
                         //email field
@@ -139,9 +151,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           prefixIcon: Icons.email_outlined,
                         ),
                         SizedBox(height: 10.h),
-                        //password filed
+                        //password field
                         CustomTextField(
-                          hintText: 'New Password',
+                          hintText: 'Password',
                           controller: passwordController,
                           keyboardType: TextInputType.visiblePassword,
                           prefixIcon: Icons.lock_outline,
@@ -149,7 +161,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           obsecureText: true,
                         ),
                         SizedBox(height: 10.h),
-                        //confirm password
+                        //confirm password field
                         CustomTextField(
                           hintText: 'Confirm Password',
                           controller: confirmPasswordController,
@@ -195,44 +207,61 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         SizedBox(height: 16.h),
                         //coninue with google sign in
-                        SubmitCustomButtons(
-                          width: 323.w,
-                          ontap: () async {
-                            await AuthService.signInWithGoogle(context);
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _isGoogleLoading,
+                          builder: (context, isLoading, child) {
+                            return SubmitCustomButtons(
+                              width: 323.w,
+                              ontap: () async {
+                                _isGoogleLoading.value = true;
+                                await AuthService.signInWithGoogle(context);
+                                _isGoogleLoading.value = false;
+                              },
+                              backgroundColor:
+                                  colorScheme.surfaceContainerHighest,
+                              text: 'Continue with Google',
+                              networkImage:
+                                  "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753412480/google_gy8mpr.png",
+                              textColor: colorScheme.onSurface,
+                              isBorder: true,
+                              isLoading: isLoading,
+                              //icon: Icons.google,
+                            );
                           },
-                          backgroundColor: colorScheme.surfaceContainerHighest,
-                          text: 'Continue with Google',
-                          networkImage:
-                              "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753412480/google_gy8mpr.png",
-                          textColor: colorScheme.onSurface,
-                          isBorder: true,
-                          //icon: Icons.google,
                         ),
                         SizedBox(height: 50.h),
                         //sign up  button
-                        SubmitCustomButtons(
-                          width: 323.w,
-                          ontap: () async {
-                            if (formKey.currentState!.validate()) {
-                              // Additional validation for password matching
-                              if (passwordController.text !=
-                                  confirmPasswordController.text) {
-                                CustomSnackBar.showWarning(
-                                  context,
-                                  'Passwords do not match!',
-                                );
-                                return;
-                              }
-                              await AuthService.signUpWithEmailAndPassword(
-                                context,
-                                name: nameController.text.trim(),
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              );
-                            }
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _isLoading,
+                          builder: (context, isLoading, child) {
+                            return SubmitCustomButtons(
+                              width: 323.w,
+                              ontap: () async {
+                                if (formKey.currentState!.validate()) {
+                                  // Additional validation for password matching
+                                  if (passwordController.text !=
+                                      confirmPasswordController.text) {
+                                    CustomSnackBar.showWarning(
+                                      context,
+                                      'Passwords do not match!',
+                                    );
+                                    return;
+                                  }
+                                  _isLoading.value = true;
+                                  await AuthService.signUpWithEmailAndPassword(
+                                    context,
+                                    name: nameController.text.trim(),
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  );
+                                  _isLoading.value = false;
+                                }
+                              },
+                              backgroundColor: colorScheme.primary,
+                              text: 'Sign Up',
+                              isLoading: isLoading,
+                            );
                           },
-                          backgroundColor: colorScheme.primary,
-                          text: 'Sign Up',
                         ),
                         SizedBox(height: 10.h),
                         Padding(

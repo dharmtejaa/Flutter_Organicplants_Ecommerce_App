@@ -103,9 +103,8 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    colorScheme.primary.withOpacity(0.95),
-                    Colors.greenAccent.withOpacity(0.7),
-                    colorScheme.primary.withOpacity(0.7),
+                    Color.fromARGB(255, 14, 172, 114),
+                    Color.fromARGB(255, 21, 208, 140),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -125,15 +124,22 @@ class _CustomerSupportScreenState extends State<CustomerSupportScreen> {
                     child: Icon(
                       Icons.support_agent_rounded,
                       size: AppSizes.iconLg,
-                      color: colorScheme.onSurface,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
                   SizedBox(height: 16.h),
-                  Text("How can we help you?", style: textTheme.headlineMedium),
+                  Text(
+                    "How can we help you?",
+                    style: textTheme.headlineMedium?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
                   SizedBox(height: 8.h),
                   Text(
                     "Our support team is here to assist you 24/7",
-                    style: textTheme.bodyMedium,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
                   ),
                 ],
               ),

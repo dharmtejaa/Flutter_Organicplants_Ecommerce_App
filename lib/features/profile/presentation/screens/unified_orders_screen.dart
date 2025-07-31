@@ -135,7 +135,7 @@ class _UnifiedOrdersScreenState extends State<UnifiedOrdersScreen>
           SizedBox(height: AppSizes.spaceHeightLg),
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => EntryScreen()),
               );

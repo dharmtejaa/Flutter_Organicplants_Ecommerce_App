@@ -24,6 +24,11 @@ class _LoginscreenState extends State<Loginscreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  // Add ValueNotifier for loading state
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
+  final ValueNotifier<bool> _isGoogleLoading = ValueNotifier(false);
+
   //logi with user email and password
 
   // final auth = FirebaseAuth.instance;
@@ -33,6 +38,13 @@ class _LoginscreenState extends State<Loginscreen> {
   // final ValueNotifier<bool> _isLoading = ValueNotifier(false);
   // final ValueNotifier<bool> _isPhoneValid = ValueNotifier(false);
   // final ValueNotifier<String> _errorMessage = ValueNotifier('');
+
+  @override
+  void dispose() {
+    _isLoading.dispose();
+    _isGoogleLoading.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +119,7 @@ class _LoginscreenState extends State<Loginscreen> {
               child: GestureDetectorButton(
                 textColor: AppTheme.primaryColor,
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => EntryScreen()),
                   );
@@ -129,11 +141,11 @@ class _LoginscreenState extends State<Loginscreen> {
                 children: [
                   RichText(
                     text: TextSpan(
-                      text: "Login \n",
+                      text: "Welcome Back \n",
                       style: textTheme.displayLarge,
                       children: [
                         TextSpan(
-                          text: "to get Started",
+                          text: "Login in to continue",
                           style: textTheme.displayMedium?.copyWith(
                             color: colorScheme.onSurface,
                             fontWeight: FontWeight.w500,
@@ -152,7 +164,7 @@ class _LoginscreenState extends State<Loginscreen> {
                 ],
               ),
             ),
-            // EXPANDABLE BOTTOM CONTAINER
+            // BOTTOM CONTENT
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -246,34 +258,51 @@ class _LoginscreenState extends State<Loginscreen> {
                         ),
                         SizedBox(height: 16.h),
                         //coninue with google account sign in
-                        SubmitCustomButtons(
-                          width: 323.w,
-                          ontap: () async {
-                            await AuthService.signInWithGoogle(context);
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _isGoogleLoading,
+                          builder: (context, isLoading, child) {
+                            return SubmitCustomButtons(
+                              width: 323.w,
+                              ontap: () async {
+                                _isGoogleLoading.value = true;
+                                await AuthService.signInWithGoogle(context);
+                                _isGoogleLoading.value = false;
+                              },
+                              backgroundColor:
+                                  colorScheme.surfaceContainerHighest,
+                              text: 'Continue with Google',
+                              networkImage:
+                                  "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753412480/google_gy8mpr.png",
+                              textColor: colorScheme.onSurface,
+                              isBorder: true,
+                              isLoading: isLoading,
+                              //icon: Icons.google,
+                            );
                           },
-                          backgroundColor: colorScheme.surfaceContainerHighest,
-                          text: 'Continue with Google',
-                          networkImage:
-                              "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753412480/google_gy8mpr.png",
-                          textColor: colorScheme.onSurface,
-                          isBorder: true,
-                          //icon: Icons.google,
                         ),
                         SizedBox(height: 110.h),
                         //login button
-                        SubmitCustomButtons(
-                          width: 323.w,
-                          ontap: () async {
-                            if (formKey.currentState!.validate()) {
-                              await AuthService.loginWithEmailAndPassword(
-                                context,
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              );
-                            }
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _isLoading,
+                          builder: (context, isLoading, child) {
+                            return SubmitCustomButtons(
+                              width: 323.w,
+                              ontap: () async {
+                                if (formKey.currentState!.validate()) {
+                                  _isLoading.value = true;
+                                  await AuthService.loginWithEmailAndPassword(
+                                    context,
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  );
+                                  _isLoading.value = false;
+                                }
+                              },
+                              backgroundColor: colorScheme.primary,
+                              text: 'LogIn',
+                              isLoading: isLoading,
+                            );
                           },
-                          backgroundColor: colorScheme.primary,
-                          text: 'LogIn',
                         ),
                         SizedBox(height: 10.h),
                         Padding(

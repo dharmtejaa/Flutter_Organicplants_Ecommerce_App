@@ -127,10 +127,9 @@ class AuthService {
 
         CustomSnackBar.showSuccess(context, "Signed out successfully!");
 
-        Navigator.pushAndRemoveUntil(
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => EntryScreen()),
-          (route) => false,
+          MaterialPageRoute(builder: (context) => const EntryScreen()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -195,11 +194,10 @@ class AuthService {
 
       // ignore: use_build_context_synchronously
       CustomSnackBar.showSuccess(context, "Account deleted successfully!");
-      Navigator.pushAndRemoveUntil(
+      Navigator.pushReplacement(
         // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (_) => EntryScreen()),
-        (route) => false,
       );
     } on FirebaseException catch (e) {
       // ignore: use_build_context_synchronously
@@ -249,14 +247,12 @@ class AuthService {
 
       await currentUser.reauthenticateWithCredential(credential);
       CustomSnackBar.showSuccess(context, "Re-authentication successful!");
-      Duration(seconds: 1);
       return true;
     } on FirebaseAuthException catch (e) {
       CustomSnackBar.showError(
         context,
         e.message ?? "Re-authentication failed",
       );
-      Duration(seconds: 1);
       return false;
     } catch (e) {
       CustomSnackBar.showError(context, "An error occurred: ${e.toString()}");
